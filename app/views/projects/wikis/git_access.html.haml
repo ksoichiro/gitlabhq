@@ -2,11 +2,11 @@
 .row
   .col-sm-6
     %h3.page-title
-      %strong= @gollum_wiki.path_with_namespace
+      %strong= @project_wiki.path_with_namespace
       へのGitでのアクセス
 
   .col-sm-6
-    = render "shared/clone_panel", project: @gollum_wiki
+    = render "shared/clone_panel", project: @project_wiki
 
 .git-empty
   %fieldset
@@ -18,8 +18,8 @@
     %legend このWikiをクローン:
     %pre.dark
       :preserve
-        git clone #{ content_tag(:span, default_url_to_repo(@gollum_wiki), class: 'clone')}
-        cd #{@gollum_wiki.path}
+        git clone #{ content_tag(:span, default_url_to_repo(@project_wiki), class: 'clone')}
+        cd #{@project_wiki.path}
 
     %legend Gollumを開始してローカルで編集:
     %pre.dark

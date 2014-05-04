@@ -30,12 +30,16 @@
             %span.help-block.light
               LDAPユーザではメールアドレスは読み取り専用です。
           - else
-            = f.text_field :email, class: "form-control", required: true
+            - if @user.temp_oauth_email?
+              = f.text_field :email, class: "form-control", required: true, value: nil
+            - else
+              = f.text_field :email, class: "form-control", required: true
             - if @user.unconfirmed_email.present?
               %span.help-block
                 確認のメールを
                 %strong #{@user.unconfirmed_email}
-                へ送信しました。
+                へ送信しました。続行する前にメール文中のリンクをクリックしてください
+
             - else
               %span.help-block メールアドレスはアバターの検出にも使用されます(アップロードされていない場合)。
       .form-group

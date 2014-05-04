@@ -23,27 +23,3 @@
   .context
     %cite.cgray
       = render partial: 'projects/merge_requests/show/context', locals: { merge_request: @merge_request }
-
-- if @merge_request.closed?
-  .alert.alert-info
-    %span
-      %i.icon-remove
-      #{link_to_member(@project, @merge_request.closed_event.author)}
-      が
-      #{time_ago_with_tooltip(@merge_request.closed_event.created_at)}
-      にクローズしました
-- if @merge_request.merged?
-  .alert.alert-info
-    %span
-      %i.icon-ok
-      #{link_to_member(@project, @merge_request.merge_event.author)}
-      が
-      #{time_ago_with_tooltip(@merge_request.merge_event.created_at)}
-      にマージしました
-- if !@closes_issues.empty? && @merge_request.open?
-  .alert.alert-info.alert-info
-    %span
-      %i.icon-ok
-      このマージリクエストを承認すると課題がクローズされます
-      = succeed '.' do
-        != gfm(@closes_issues.map { |i| "##{i.iid}" }.to_sentence)

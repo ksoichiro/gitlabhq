@@ -18,7 +18,7 @@
     - else
       %ul.well-list= render Commit.decorate(@commits), project: @project
 
-  %h4 Diff
+  %h4 Changes
   - if @diffs.present?
     = render "projects/commits/diffs", diffs: @diffs, project: @project
   - elsif @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE

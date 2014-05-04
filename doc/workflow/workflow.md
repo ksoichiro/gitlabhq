@@ -3,6 +3,7 @@
   ```bash
   git clone git@example.com:project-name.git
   ```
+
 2. 機能追加用のブランチを作成します
 
   ```bash
@@ -16,7 +17,7 @@
   ```
 
 4. ブランチをGitLabにプッシュします
-  
+
   ```bash
   git push origin $feature_name
   ```

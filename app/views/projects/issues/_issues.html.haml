@@ -54,7 +54,7 @@
   .clearfix
     .issues_bulk_update.hide
       = form_tag bulk_update_project_issues_path(@project), method: :post  do
-        = select_tag('update[status]', options_for_select([['オープン', 'opened'], ['解決', 'closed']]), prompt: "ステータス")
+        = select_tag('update[status]', options_for_select([['オープン', 'open'], ['解決', 'closed']]), prompt: "ステータス")
         = project_users_select_tag('update[assignee_id]', placeholder: '担当者')
         = select_tag('update[milestone_id]', bulk_update_milestone_options, prompt: "マイルストーン")
         = hidden_field_tag 'update[issues_ids]', []

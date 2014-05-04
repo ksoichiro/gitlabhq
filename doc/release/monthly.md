@@ -17,6 +17,10 @@ NOTE: This is a guide for GitLab developers. If you are trying to install GitLab
 
 #### 3. Do users need to update dependencies like `git`?
 
+- Check the [GitLab Shell version](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/tasks/gitlab/check.rake#L782)
+
+- Check the [Git version](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/tasks/gitlab/check.rake#L794)
+
 #### 4. Get latest code
 
 #### 5. Does GitLab shell need to be updated?
@@ -54,23 +58,48 @@ Check if changed since last release (~22nd of last month depending on when last 
 
 * [![Coverage Status](https://coveralls.io/repos/gitlabhq/gitlabhq/badge.png?branch=master)](https://coveralls.io/r/gitlabhq/gitlabhq)
 
-## Make a release branch
+## Release Schedule
 
 After making the release branch new commits are cherry-picked from master. When the release gets closer we get more selective what is cherry-picked. The days of the month are approximately as follows:
 
-* 17th: feature freeze (stop merging new features in master)
-* 18th: UI freeze (stop merging changes to the user interface)
-* 19th: code freeze (stop merging non-essential code improvements)
-* 20th: release candidate 1 (VERSION x.x.0.rc1, tag, tweet and upgrade Cloud)
-* 21st: optional release candidate 2 (x.x.0.rc2, only if rc1 had problems)
-* 22nd: release (VERSION x.x.0, create x-x-stable branch, tag, blog and tweet)
-* 23nd: optional patch releases (x.x.1, x.x.2, etc., only if there are serious regressions)
-* 24-end of month: release Enterprise Edition and upgrade GitLab Cloud to latest patch
-* 1-7th: official merge window (see contributing guide)
-* 8-16th: bugfixes and sponsored features
+* 1-7th: Official merge window (see contributing guide).
+* 8-14th: Work on bugfixes, sponsored features and GitLab EE.
+* 15th: Code freeze
+    - Stop merging into master, except essential bugfixes
+    - Select a Release Manager
+* 18th: Release Candidate 1
+    - Set VERSION to x.x.0.rc1
+    - Create annotated tag x.x.0.rc1
+    - Push the changes to GitLab.com, dev.gitlab.com, GitHub
+    - Tweet about the release
+    - Create a new branch on cloud for rc1
+    - Deploy the new branch on Cloud after tests pass
+* 20st: Optional release candidate 2 (x.x.0.rc2, only if rc1 had problems)
+* 22nd: Release
+    - Create x-x-stable branch and push to the repositories
+    - QA
+    - Fix anything coming out of the QA
+    - Set VERSION to x.x.0
+    - Create annotated tag x.x.0
+    - Push VERSION + Tag to master, merge into x-x-stable
+    - Publish blog for new release
+    - Tweet to blog (see below)
+* 23nd: optional patch releases (x.x.1, x.x.2, etc., only if there are serious problems)
+* 24-end of month: release GitLab EE and GitLab CI
 
 # Write a blog post
 
 * Mention what GitLab is on the second line: GitLab is open source software to collaborate on code.
 * Select and thank the the Most Valuable Person (MVP) of this release.
 * Add a note if there are security fixes: This release fixes an important security issue and we advise everyone to upgrade as soon as possible.
+
+# Tweet
+
+Send out a tweet to share the good news with the world. For a major/minor release, list the features in short and link to the blog post.
+
+For a RC, make sure to explain what a RC is.
+
+A patch release tweet should specify the fixes it brings and link to the corresponding blog post.
+
+
+

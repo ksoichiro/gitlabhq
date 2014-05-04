@@ -1,63 +1,68 @@
 # encoding: utf-8
+require 'project_wiki'
+
 class Projects::WikisController < Projects::ApplicationController
   before_filter :authorize_read_wiki!
   before_filter :authorize_write_wiki!, only: [:edit, :create, :history]
   before_filter :authorize_admin_wiki!, only: :destroy
-  before_filter :load_gollum_wiki
+  before_filter :load_project_wiki
 
   def pages
-    @wiki_pages = @gollum_wiki.pages
+    @wiki_pages = Kaminari.paginate_array(@project_wiki.pages).page(params[:page]).per(30)
   end
 
   def show
-    @wiki = @gollum_wiki.find_page(params[:id], params[:version_id])
+    @page = @project_wiki.find_page(params[:id], params[:version_id])
 
-    if @wiki
+    if @page
       render 'show'
     else
       return render('empty') unless can?(current_user, :write_wiki, @project)
-      @wiki = WikiPage.new(@gollum_wiki)
-      @wiki.title = params[:id]
+      @page = WikiPage.new(@project_wiki)
+      @page.title = params[:id]
 
       render 'edit'
     end
   end
 
   def edit
-    @wiki = @gollum_wiki.find_page(params[:id])
+    @page = @project_wiki.find_page(params[:id])
   end
 
   def update
-    @wiki = @gollum_wiki.find_page(params[:id])
+    @page = @project_wiki.find_page(params[:id])
 
     return render('empty') unless can?(current_user, :write_wiki, @project)
 
-    if @wiki.update(content, format, message)
-      redirect_to [@project, @wiki], notice: 'Wikiが更新されました'
+    if @page.update(content, format, message)
+      redirect_to [@project, @page], notice: 'Wikiが更新されました'
     else
       render 'edit'
     end
   end
 
   def create
-    @wiki = WikiPage.new(@gollum_wiki)
+    @page = WikiPage.new(@project_wiki)
 
-    if @wiki.create(wiki_params)
-      redirect_to project_wiki_path(@project, @wiki), notice: 'Wikiが更新されました'
+    if @page.create(wiki_params)
+      redirect_to project_wiki_path(@project, @page), notice: 'Wikiが更新されました'
     else
       render action: "edit"
     end
   end
 
   def history
-    @wiki = @gollum_wiki.find_page(params[:id])
+    @page = @project_wiki.find_page(params[:id])
 
-    redirect_to(project_wiki_path(@project, :home), notice: "ページが見つかりません") unless @wiki
+    unless @page
+      redirect_to(project_wiki_path(@project, :home), notice: "ページが見つかりません")
+    end
   end
 
   def destroy
-    @wiki = @gollum_wiki.find_page(params[:id])
-    @wiki.delete if @wiki
+    @page = @project_wiki.find_page(params[:id])
+    @page.delete if @page
+
     redirect_to project_wiki_path(@project, :home), notice: "ページが削除されました"
   end
 
@@ -66,12 +71,12 @@ class Projects::WikisController < Projects::ApplicationController
 
   private
 
-  def load_gollum_wiki
-    @gollum_wiki = GollumWiki.new(@project, current_user)
+  def load_project_wiki
+    @project_wiki = ProjectWiki.new(@project, current_user)
 
     # Call #wiki to make sure the Wiki Repo is initialized
-    @gollum_wiki.wiki
-  rescue GollumWiki::CouldNotCreateWikiError => ex
+    @project_wiki.wiki
+  rescue ProjectWiki::CouldNotCreateWikiError => ex
     flash[:notice] = "Wikiのリポジトリを作成できませんでした。後ほどもう一度お試しください"
     redirect_to @project
     return false
@@ -92,5 +97,4 @@ class Projects::WikisController < Projects::ApplicationController
   def message
     params[:wiki][:message]
   end
-
 end

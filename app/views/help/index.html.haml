@@ -23,8 +23,8 @@
         クイックヘルプ
       %ul.well-list
         %li
-          = mail_to gitlab_config.support_email, "サポート窓口"
-          にメールで連絡
+          = link_to "Webサイトのヘルプ", "https://www.gitlab.com/getting-help/"
+          を見る
         %li
           ページトップの
           = link_to "検索バー", '#', onclick: "$('#search').focus();"
@@ -32,15 +32,6 @@
         %li
           = link_to "ショートカット", '#', onclick: "new Shortcuts()"
           を使う
-        %li
-          = link_to "メーリングリスト", "https://groups.google.com/forum/#!forum/gitlabhq"
-          または
-          = link_to "Stack Overflow", "http://stackoverflow.com/questions/tagged/gitlab"
-          で質問
-        %li
-          GitLabの
-          = link_to "課題", "https://gitlab.com/gitlab-org/gitlab-ce/issues"
-          を確認
 
   .col-md-4
     .ui-box

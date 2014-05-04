@@ -42,4 +42,4 @@
     = f.submit '保存', class: 'btn btn-save'
     &nbsp;
     - if @service.valid? && @service.activated? && @service.can_test?
-      = link_to '設定をテスト', test_project_service_path(@project, @service.to_param), class: 'btn btn-small'
+      = link_to '設定をテスト', test_project_service_path(@project, @service.to_param), class: 'btn'

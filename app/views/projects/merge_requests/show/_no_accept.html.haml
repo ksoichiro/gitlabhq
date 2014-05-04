@@ -1,14 +1,16 @@
-.alert.alert-danger
-  %p
-    このマージリクエストは以下の理由により承認できません。
-    - unless @merge_request.source_branch_exists?
-      %span.label.label-inverse= @merge_request.source_branch
-      ブランチが
-      %span.label.label-info= @merge_request.source_project_path
-      に存在しません
-    - else
-      %span.label.label-inverse= @merge_request.target_branch
-      ブランチが
-      %span.label.label-info= @merge_request.target_project_path
-      に存在しません
+%h4
+  マージ不可
+%p
+  このマージリクエストは以下の理由により承認できません。
+  - unless @merge_request.source_branch_exists?
+    %span.label.label-inverse= @merge_request.source_branch
+    ブランチが
+    %span.label.label-info= @merge_request.source_project_path
+    に存在しません
+  - else
+    %span.label.label-inverse= @merge_request.target_branch
+    ブランチが
+    %span.label.label-info= @merge_request.target_project_path
+    に存在しません
+  %br
   %strong このマージリクエストをクローズするか、存在するブランチを選び直してください。

@@ -13,28 +13,30 @@ module API
           end
           not_found!
         end
-
-        def not_fork?(target_project_id, user_project)
-          target_project_id.nil? || target_project_id == user_project.id.to_s
-        end
-
-        def target_matches_fork(target_project_id,user_project)
-          user_project.forked? && user_project.forked_from_project.id.to_s == target_project_id
-        end
       end
 
       # List merge requests
       #
       # Parameters:
       #   id (required) - The ID of a project
+      #   state (optional) - Return requests "merged", "opened" or "closed"
       #
       # Example:
       #   GET /projects/:id/merge_requests
+      #   GET /projects/:id/merge_requests?state=opened
+      #   GET /projects/:id/merge_requests?state=closed
       #
       get ":id/merge_requests" do
         authorize! :read_merge_request, user_project
 
-        present paginate(user_project.merge_requests), with: Entities::MergeRequest
+        mrs = case params["state"]
+              when "opened" then user_project.merge_requests.opened
+              when "closed" then user_project.merge_requests.closed
+              when "merged" then user_project.merge_requests.merged
+              else user_project.merge_requests
+        end
+
+        present paginate(mrs), with: Entities::MergeRequest
       end
 
       # Show MR
@@ -70,29 +72,15 @@ module API
       #   POST /projects/:id/merge_requests
       #
       post ":id/merge_requests" do
-        set_current_user_for_thread do
-          authorize! :write_merge_request, user_project
-          required_attributes! [:source_branch, :target_branch, :title]
-          attrs = attributes_for_keys [:source_branch, :target_branch, :assignee_id, :title, :target_project_id, :description]
-          merge_request = user_project.merge_requests.new(attrs)
-          merge_request.author = current_user
-          merge_request.source_project = user_project
-          target_project_id = attrs[:target_project_id]
-          if not_fork?(target_project_id, user_project)
-            merge_request.target_project = user_project
-          else
-            if target_matches_fork(target_project_id,user_project)
-              merge_request.target_project = Project.find_by(id: attrs[:target_project_id])
-            else
-              render_api_error!('(Bad Request) Specified target project that is not the source project, or the source fork of the project.', 400)
-            end
-          end
+        authorize! :write_merge_request, user_project
+        required_attributes! [:source_branch, :target_branch, :title]
+        attrs = attributes_for_keys [:source_branch, :target_branch, :assignee_id, :title, :target_project_id, :description]
+        merge_request = ::MergeRequests::CreateService.new(user_project, current_user, attrs).execute
 
-          if merge_request.save
-            present merge_request, with: Entities::MergeRequest
-          else
-            handle_merge_request_errors! merge_request.errors
-          end
+        if merge_request.valid?
+          present merge_request, with: Entities::MergeRequest
+        else
+          handle_merge_request_errors! merge_request.errors
         end
       end
 
@@ -111,18 +99,32 @@ module API
       #   PUT /projects/:id/merge_request/:merge_request_id
       #
       put ":id/merge_request/:merge_request_id" do
-        set_current_user_for_thread do
-          attrs = attributes_for_keys [:source_branch, :target_branch, :assignee_id, :title, :state_event, :description]
-          merge_request = user_project.merge_requests.find(params[:merge_request_id])
+        attrs = attributes_for_keys [:source_branch, :target_branch, :assignee_id, :title, :state_event, :description]
+        merge_request = user_project.merge_requests.find(params[:merge_request_id])
+        authorize! :modify_merge_request, merge_request
+        merge_request = ::MergeRequests::UpdateService.new(user_project, current_user, attrs).execute(merge_request)
 
-          authorize! :modify_merge_request, merge_request
-
-          if merge_request.update_attributes attrs
-            present merge_request, with: Entities::MergeRequest
-          else
-            handle_merge_request_errors! merge_request.errors
-          end
+        if merge_request.valid?
+          present merge_request, with: Entities::MergeRequest
+        else
+          handle_merge_request_errors! merge_request.errors
         end
+      end
+
+      # Get a merge request's comments
+      #
+      # Parameters:
+      #   id (required) - The ID of a project
+      #   merge_request_id (required) - ID of MR
+      # Examples:
+      #   GET /projects/:id/merge_request/:merge_request_id/comments
+      #
+      get ":id/merge_request/:merge_request_id/comments" do
+        merge_request = user_project.merge_requests.find(params[:merge_request_id])
+
+        authorize! :read_merge_request, merge_request
+
+        present paginate(merge_request.notes), with: Entities::MRNote
       end
 
       # Post comment to merge request

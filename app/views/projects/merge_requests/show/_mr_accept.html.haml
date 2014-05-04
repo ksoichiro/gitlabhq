@@ -1,15 +1,21 @@
 - unless @allowed_to_merge
-  .bs-callout
-    %strong このマージリクエストをマージする権限がありません
+  - if @project.archived?
+    %p
+      %strong Archived projects cannot be committed to!
+  - else
+    .automerge_widget.cannot_be_merged.hide
+      %strong This can't be merged automatically, even if it could be merged you don't have the permission to do so.
+    .automerge_widget.can_be_merged.hide
+      %strong This can be merged automatically but you don't have the permission to do so.
 
 
 - if @show_merge_controls
   .automerge_widget.can_be_merged.hide
-    .bs-callout.bs-callout-success.clearfix
+    .clearfix
       = form_for [:automerge, @project, @merge_request], remote: true, method: :get do |f|
         %h4
           このリクエストは、承認すれば自動的にマージすることができます。
-        %p
+        %div
           手動でマージしたい場合は
           %strong
             = link_to "こちらをクリック", "#modal_merge_info", class: "how_to_merge_link vlink", title: "How To Merge", "data-toggle" => "modal"
@@ -42,32 +48,31 @@
 
 
   .automerge_widget.no_satellite.hide
-    .bs-callout.bs-callout-danger
+    %p
       %span
         %strong このリポジトリにはサテライトがありません。管理者に確認してこの問題を解決してください。
 
   .automerge_widget.cannot_be_merged.hide
-    .bs-callout.bs-callout-disabled
-      %h4
-        このリクエストはGitLabではマージできません。
-      %span
-        このリクエストは手動で
-        %strong
-          = link_to "コマンドライン", "#modal_merge_info", class: "how_to_merge_link", title: "マージ方法", "data-toggle" => "modal"
-        からマージする必要があります。
+    %h4
+      このリクエストはGitLabではマージできません。
+    %p
+      このリクエストは手動で
+      %strong
+        = link_to "コマンドライン", "#modal_merge_info", class: "how_to_merge_link", title: "マージ方法", "data-toggle" => "modal"
+      からマージする必要があります。
 
   .automerge_widget.unchecked
-    .bs-callout.bs-callout-warning
+    %p
       %strong
         %i.icon-spinner.icon-spin
         自動マージが可能か確認しています…
 
   .automerge_widget.already_cannot_be_merged.hide
-    .bs-callout.bs-callout-info
+    %p
       %strong このマージリクエストはマージできません。ページを再読み込みしてください。
 
   .merge-in-progress.hide
-    .bs-callout.bs-callout-success
+    %p
       %i.icon-spinner.icon-spin
       &nbsp;
       マージを実行中です。お待ちください。ページは自動的に更新されます。&nbsp;

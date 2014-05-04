@@ -12,8 +12,6 @@ gem "rails", "~> 4.0.0"
 
 gem "protected_attributes"
 gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
 
 # Default values for AR models
 gem "default_value_for", "~> 3.0.0"
@@ -32,7 +30,7 @@ gem 'omniauth-github'
 
 # Extracting information from a git repository
 # Provide access to Gitlab::Git library
-gem "gitlab_git", '~> 5.7.1'
+gem "gitlab_git", '~> 5.8'
 
 # Ruby/Rack Git Smart-HTTP Server Handler
 gem 'gitlab-grack', '~> 2.0.0.pre', require: 'grack'
@@ -41,7 +39,7 @@ gem 'gitlab-grack', '~> 2.0.0.pre', require: 'grack'
 gem 'gitlab_omniauth-ldap', '1.0.4', require: "omniauth-ldap"
 
 # Git Wiki
-gem "gitlab-gollum-lib", "~> 1.1.0", require: 'gollum-lib'
+gem 'gollum-lib', '~> 3.0.0'
 
 # Language detection
 gem "gitlab-linguist", "~> 3.0.0", require: "linguist"
@@ -49,7 +47,7 @@ gem "gitlab-linguist", "~> 3.0.0", require: "linguist"
 # API
 gem "grape", "~> 0.6.1"
 # Replace with rubygems when nesteted entities get released
-gem "grape-entity", "~> 0.4.1", ref: 'd904381c951e86250c3f44213b349a3dd8e83fb1', git: 'https://github.com/intridea/grape-entity.git' 
+gem "grape-entity", "~> 0.4.2"
 gem 'rack-cors', require: 'rack/cors'
 
 # Email validation
@@ -72,7 +70,7 @@ gem "haml-rails"
 gem "carrierwave"
 
 # for aws storage
-gem "fog", "~> 1.3.1", group: :aws
+gem "fog", "~> 1.14", group: :aws
 
 # Authorization
 gem "six"
@@ -82,7 +80,7 @@ gem "seed-fu"
 
 # Markdown to HTML
 gem "redcarpet",     "~> 2.2.2"
-gem "github-markup", "~> 0.7.4", require: 'github/markup', git: 'https://github.com/gitlabhq/markup.git', ref: '61ade389c1e1c159359338f570d18464a44ddbc4' 
+gem "github-markup"
 
 # Asciidoc to HTML
 gem  "asciidoctor"
@@ -102,7 +100,7 @@ gem "acts-as-taggable-on"
 # Background jobs
 gem 'slim'
 gem 'sinatra', require: nil
-gem 'sidekiq'
+gem 'sidekiq', '2.17.0'
 
 # HTTP requests
 gem "httparty"
@@ -133,7 +131,7 @@ gem "gitlab-flowdock-git-hook", "~> 0.4.2"
 gem "gemnasium-gitlab-service", "~> 0.2"
 
 # Slack integration
-gem "slack-notifier", "~> 0.2.0"
+gem "slack-notifier", "~> 0.3.2"
 
 # d3
 gem "d3_rails", "~> 3.1.4"
@@ -142,7 +140,7 @@ gem "d3_rails", "~> 3.1.4"
 gem "underscore-rails", "~> 1.4.4"
 
 # Sanitize user input
-gem "sanitize"
+gem "sanitize", '~> 2.0'
 
 # Protect against bruteforcing
 gem "rack-attack"
@@ -217,7 +215,6 @@ group :development, :test do
   # PhantomJS driver for Capybara
   gem 'poltergeist', '~> 1.4.1'
 
-  gem 'spork', '~> 1.0rc'
   gem 'jasmine', '2.0.0.rc5'
 
   gem "spring", '1.1.1'

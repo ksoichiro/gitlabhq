@@ -9,6 +9,7 @@
       %ul
         %li 安定したブランチを守る
         %li ブランチにマージする前のコードレビューを強制する
+        %li 強制プッシュからブランチを守る
       %p プロジェクトの権限についての詳細は #{link_to "こちら", help_permissions_path, class: "underlined-link"} からご確認ください。
 
     - if can? current_user, :admin_project, @project

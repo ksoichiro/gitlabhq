@@ -28,10 +28,3 @@
           - @commits.each do |commit|
             = render "projects/commits/commit", commit: commit, project: @merge_request.source_project
 
-- else
-  .nothing-here-block
-    %span.label-branch #{@merge_request.source_branch}
-    と
-    %span.label-branch #{@merge_request.target_branch}
-    の間でマージするものはありません
-  %br

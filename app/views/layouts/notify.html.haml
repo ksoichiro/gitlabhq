@@ -21,6 +21,6 @@
         \—
         %br
         - if @project
-          この通知は、あなたが #{link_to @project.name_with_namespace, project_url(@project)} プロジェクトのメンバーであるため送信されています。
+          この通知は、あなたが #{link_to_unless @target_url, @project.name_with_namespace, project_url(@project)} プロジェクトのメンバーであるため送信されています。
         - if @target_url
           #{link_to "GitLabで表示", @target_url}
