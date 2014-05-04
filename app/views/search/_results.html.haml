@@ -1,9 +1,9 @@
 %h4
-  #{@search_results[:total_results]} results found
   - if @project
-    for #{link_to @project.name_with_namespace, @project}
+    #{link_to @project.name_with_namespace, @project} プロジェクト内で
   - elsif @group
-    for #{link_to @group.name, @group}
+    #{link_to @group.name, @group} グループ内で
+  #{@search_results[:total_results]} 件が見つかりました
 
 %hr
 

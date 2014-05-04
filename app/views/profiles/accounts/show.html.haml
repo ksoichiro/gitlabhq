@@ -1,34 +1,35 @@
 %h3.page-title
-  Account settings
+  アカウント設定
 %p.light
-  You can change your username and private token here.
+  ユーザ名とプライベートトークンを変更することができます。
   - if current_user.ldap_user?
-    Some options are unavailable for LDAP accounts
+    いくつかのオプションはLDAPアカウントでは利用できません。
 %hr
 
 
 .account-page
   %fieldset.update-token
     %legend
-      Private token
+      プライベートトークン
     %div
       = form_for @user, url: reset_private_token_profile_path, method: :put do |f|
         .data
           %p
-            Your private token is used to access application resources without authentication.
+            プライベートトークンは認証なしでアプリケーションのリソースにアクセスするのに使われます。
             %br
-            It can be used for atom feeds or the API.
+            ATOMフィードやAPIでのアクセスに利用できます。
             %span.cred
-              Keep it secret!
+              厳重に保管してください
+            。
 
           %p.cgray
             - if current_user.private_token
               = text_field_tag "token", current_user.private_token, class: "form-control"
               %div
-                = f.submit 'Reset', data: { confirm: "Are you sure?" }, class: "btn btn-primary btn-build-token"
+                = f.submit 'リセット', data: { confirm: "Are you sure?" }, class: "btn btn-primary btn-build-token"
             - else
               %span You don`t have one yet. Click generate to fix it.
-              = f.submit 'Generate', class: "btn success btn-build-token"
+              = f.submit '生成', class: "btn success btn-build-token"
 
 
   - if show_profile_social_tab?
@@ -43,21 +44,21 @@
   - if show_profile_username_tab?
     %fieldset.update-username
       %legend
-        Username
+        ユーザ名
       = form_for @user, url: update_username_profile_path,  method: :put, remote: true do |f|
         %p
-          Changing your username will change path to all personal projects!
+          注意：ユーザ名を変更すると、あなたの所有するすべてのプロジェクトのパスが変更されます。
         %div
           = f.text_field :username, required: true, class: 'form-control'
           &nbsp;
         .loading-gif.hide
           %p
             %i.icon-spinner.icon-spin
-            Saving new username
+            ユーザ名を保存しています
         %p.light
           = user_url(@user)
         %div
-          = f.submit 'Save username', class: "btn btn-save"
+          = f.submit 'ユーザ名を保存', class: "btn btn-save"
 
   - if show_profile_remove_tab?
     %fieldset.remove-account

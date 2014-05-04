@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SnippetsController < ApplicationController
   before_filter :snippet, only: [:show, :edit, :destroy, :update, :raw]
 
@@ -107,6 +108,6 @@ class SnippetsController < ApplicationController
   end
 
   def set_title
-    @title = 'Snippets'
+    @title = 'スニペット'
   end
 end

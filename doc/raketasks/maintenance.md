@@ -1,13 +1,13 @@
-### Gather information about GitLab and the system it runs on
+### GitLabやシステムに関する情報の収集
 
-This command gathers information about your GitLab installation and the System
-it runs on. These may be useful when asking for help or reporting issues.
+このコマンドは、GitLabと、GitLabを実行するシステムの情報を収集します。
+これらはヘルプを求めたり問題をレポートするのに便利です。
 
 ```
 bundle exec rake gitlab:env:info RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 System information
@@ -38,24 +38,24 @@ Git:		/usr/bin/git
 ```
 
 
-### Check GitLab configuration
+### GitLab設定の確認
 
-Runs the following rake tasks:
+以下の rake タスクを実行します。
 
 * gitlab:env:check
 * gitlab:gitlab_shell:check
 * gitlab:sidekiq:check
 * gitlab:app:check
 
-It will check that each component was setup according to the installation guide and suggest fixes for issues found.
+各コンポーネントがインストールガイドの通りにインストールされたかどうかチェックし、問題があれば修正方法を提示します。
 
-You may also have a look at our [Trouble Shooting Guide](https://github.com/gitlabhq/gitlab-public-wiki/wiki/Trouble-Shooting-Guide).
+[Trouble Shooting Guide](https://github.com/gitlabhq/gitlab-public-wiki/wiki/Trouble-Shooting-Guide) も確認しておいた方が良いでしょう。
 
 ```
 bundle exec rake gitlab:check RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 Checking Environment ...
@@ -102,34 +102,34 @@ Checking GitLab ... Finished
 ```
 
 
-### (Re-)Create satellite repos
+### サテライトリポジトリの(再)作成
 
-This will create satellite repos for all your projects.
-If necessary, remove the `tmp/repo_satellites` directory and rerun the command below.
+このコマンドはすべてのプロジェクトのサテライトリポジトリを作成します。  
+必要に応じて、 `tmp/repo_satellites` ディレクトリを削除して以下のコマンドを再実行します。
 
 ```
 bundle exec rake gitlab:satellites:create RAILS_ENV=production
 ```
 
-### Import bare repositories into GitLab project instance
+### ベアリポジトリのGitLabプロジェクトインスタンスへのインポート
 
-Notes:
+注意:
 
-* project owner will be a first admin
-* groups will be created as needed
-* group owner will be the first admin
-* existing projects will be skipped
+* プロジェクトの所有者は最初の管理者になります
+* 必要に応じてグループが作成されます
+* グループの所有者が最初の管理者になります
+* 既存のプロジェクトはスキップされます
 
-How to use:
+利用方法:
 
-1. copy your bare repos under git repos_path (see `config/gitlab.yml` gitlab_shell -> repos_path)
-2. run the command below
+1. ベアリポジトリをGitリポジトリのパス( `config/gitlab.yml` の gitlab_shell -> repos_path を参照)にコピーします
+2. 以下のコマンドを実行します
 
 ```
 bundle exec rake gitlab:import:repos RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 Processing abcd.git

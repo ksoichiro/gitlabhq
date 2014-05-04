@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'gitlab/satellite/satellite'
 
 class Projects::MergeRequestsController < Projects::ApplicationController
@@ -80,7 +81,7 @@ class Projects::MergeRequestsController < Projects::ApplicationController
     @merge_request.author = current_user
     @target_branches ||= []
     if @merge_request.save
-      redirect_to [@merge_request.target_project, @merge_request], notice: 'Merge request was successfully created.'
+      redirect_to [@merge_request.target_project, @merge_request], notice: 'マージリクエストが作成されました'
     else
       @source_project = @merge_request.source_project
       @target_project = @merge_request.target_project
@@ -95,9 +96,9 @@ class Projects::MergeRequestsController < Projects::ApplicationController
       @merge_request.allow_broken = true
 
       if @merge_request.close
-        opts = { notice: 'Merge request was successfully closed.' }
+        opts = { notice: 'マージリクエストがクローズされました' }
       else
-        opts = { alert: 'Failed to close merge request.' }
+        opts = { alert: 'マージリクエストのクローズに失敗しました' }
       end
 
       redirect_to [@merge_request.target_project, @merge_request], opts
@@ -115,7 +116,7 @@ class Projects::MergeRequestsController < Projects::ApplicationController
       respond_to do |format|
         format.js
         format.html do
-          redirect_to [@merge_request.target_project, @merge_request], notice: 'Merge request was successfully updated.'
+          redirect_to [@merge_request.target_project, @merge_request], notice: 'マージリクエストが更新されました'
         end
       end
     else

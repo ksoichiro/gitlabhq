@@ -1,3 +1,4 @@
+# encoding: utf-8
 class GroupsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:show, :issues, :members, :merge_requests]
   respond_to :html
@@ -27,7 +28,7 @@ class GroupsController < ApplicationController
 
     if @group.save
       @group.add_owner(current_user)
-      redirect_to @group, notice: 'Group was successfully created.'
+      redirect_to @group, notice: 'グループが作成されました'
     else
       render action: "new"
     end
@@ -81,7 +82,7 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update_attributes(params[:group])
-      redirect_to @group, notice: 'Group was successfully updated.'
+      redirect_to @group, notice: 'グループが更新されました'
     else
       render action: "edit"
     end
@@ -90,7 +91,7 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy
 
-    redirect_to root_path, notice: 'Group was removed.'
+    redirect_to root_path, notice: 'グループが削除されました'
   end
 
   protected
@@ -131,7 +132,7 @@ class GroupsController < ApplicationController
   end
 
   def set_title
-    @title = 'New Group'
+    @title = '新しいグループ'
   end
 
   def determine_layout

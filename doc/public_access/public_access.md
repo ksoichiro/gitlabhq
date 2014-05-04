@@ -1,28 +1,28 @@
-Gitlab allows you to open selected projects to be accessed **publicly** or **internally**.
-Projects with either of these visibility levels will be listen in the [public access directory](/public).
-Internal projects will only be available to authenticated users.
+GitLabは選択されたプロジェクトを ***公開*** または ***内部のみ*** の範囲でアクセスできるように公開範囲を広げることができます。
+どちらかの可視性が設定されているプロジェクトは [公開プロジェクト一覧](/public) に一覧表示されています。
+内部のみのプロジェクトは、ログインしたユーザだけが利用することができます。
 
-#### Public projects
-Public projects can be cloned **without any** authentication.
-It will also be listen on the [public access directory](/public).
-**Any logged in user** will have [Guest](/help/permissions) permissions on the repository.
+#### 公開プロジェクト
+公開プロジェクトは ***一切の認証なしで*** クローンすることができます。
+公開プロジェクトは [公開プロジェクト一覧](/public) にも一覧表示されます。
+***ログインしたユーザは誰でも*** リポジトリに対して [Guest](/help/permissions) のアクセス権を持ちます。
 
-#### Internal projects
-Internal projects can be cloned by any logged in user.
-It will also be listed on the [public access directory](/public) for logged in users.
-Any logged in user will have [Guest](/help/permissions) permissions on the repository.
+#### 内部プロジェクト
+内部プロジェクトはログインしたユーザであれば誰でもクローンすることができます。
+内部プロジェクトは、ログインしたユーザの場合 [公開プロジェクト一覧](/public) にも表示されます。
+ログインしたユーザは誰でもリポジトリに対して [Guest](/help/permissions) のアクセス権を持ちます。
 
-#### How to change project visibility
-1. Go to your project dashboard
-2. Click on the "Edit" tab
-3. Change "Visibility Level"
+#### プロジェクトの可視性レベルの変更方法
+1. プロジェクトのダッシュボードに移動します
+2. "編集"をクリックします
+3. "可視性レベル"を変更します
 
-#### Visibility of users
-The public page of users, located at `/u/username` is visible if either:
+#### ユーザの可視性
+ユーザの公開ページは `/u/username` にあり、以下の場合に閲覧することができます。
 
-* You are logged in.
-* You are logged out, and the target user is authorized to (is Guest, Reporter, etc.) at least one public project.
+* ログインしている場合。
+* ログアウトしており、対象のユーザが1つ以上の公開プロジェクトで認可されている(Guest, Reporter など)場合。
 
-Otherwise, you will be redirected to the sign in page.
+その他の場合はサインインのページにリダイレクトされます。
 
-When visiting the public page of an user, you will only see listed projects which you can view yourself.
+ユーザの公開ページを表示したとき、あなたが見ることのできるプロジェクトだけが一覧表示されます。

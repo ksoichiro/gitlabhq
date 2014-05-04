@@ -1,27 +1,27 @@
 = render layout: 'help/layout' do
-  %h3.page-title GitLab Rake Tasks
+  %h3.page-title GitLab Rake タスク
 
   %p.slead
-    GitLab provides some specific rake tasks to enable special features or perform maintenance tasks.
+    GitLab は特殊な機能やメンテナンスを実行するための rake タスクを提供しています。
 
   %ul.nav.nav-tabs.log-tabs
     %li.active
-      = link_to "Features", "#features", 'data-toggle' => 'tab'
+      = link_to "機能", "#features", 'data-toggle' => 'tab'
     %li
-      = link_to "Maintenance", "#maintenance", 'data-toggle' => 'tab'
+      = link_to "メンテナンス", "#maintenance", 'data-toggle' => 'tab'
     %li
-      = link_to "User Management", "#user_management", 'data-toggle' => 'tab'
+      = link_to "ユーザ管理", "#user_management", 'data-toggle' => 'tab'
     %li
-      = link_to "Backup & Restore", "#backup_restore", 'data-toggle' => 'tab'
+      = link_to "バックアップ & リストア", "#backup_restore", 'data-toggle' => 'tab'
     %li
-      = link_to "Cleanup", "#cleanup", 'data-toggle' => 'tab'
+      = link_to "クリーンアップ", "#cleanup", 'data-toggle' => 'tab'
 
   .tab-content
     .tab-pane.active#features
       .file-holder
         .file-title
           %i.icon-file
-          Features
+          機能
         .file-content.wiki
           = preserve do
             = markdown File.read(Rails.root.join("doc", "raketasks", "features.md"))
@@ -30,7 +30,7 @@
       .file-holder
         .file-title
           %i.icon-file
-          Maintenance
+          メンテナンス
         .file-content.wiki
           = preserve do
             = markdown File.read(Rails.root.join("doc", "raketasks", "maintenance.md"))
@@ -39,7 +39,7 @@
       .file-holder
         .file-title
           %i.icon-file
-          User Management
+          ユーザ管理
         .file-content.wiki
           = preserve do
             = markdown File.read(Rails.root.join("doc", "raketasks", "user_management.md"))
@@ -48,7 +48,7 @@
       .file-holder
         .file-title
           %i.icon-file
-          Cleanup
+          クリーンアップ
         .file-content.wiki
           = preserve do
             = markdown File.read(Rails.root.join("doc", "raketasks", "cleanup.md"))
@@ -57,7 +57,7 @@
       .file-holder
         .file-title
           %i.icon-file
-          Backup & Restore
+          バックアップ & リストア
         .file-content.wiki
           = preserve do
             = markdown File.read(Rails.root.join("doc", "raketasks", "backup_restore.md"))

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require_relative "base_service"
 
 module Files
@@ -10,17 +11,17 @@ module Files
                 end
 
       unless allowed
-        return error("You are not allowed to push into this branch")
+        return error("このブランチへのプッシュは許可されていません")
       end
 
       unless repository.branch_names.include?(ref)
-        return error("You can only create files if you are on top of a branch")
+        return error("ブランチ上にしかファイルは作成できません")
       end
 
       blob = repository.blob_at_branch(ref, path)
 
       unless blob
-        return error("You can only edit text files")
+        return error("テキストファイルのみ編集できます")
       end
 
       delete_file_action = Gitlab::Satellite::DeleteFileAction.new(current_user, project, ref, path)
@@ -33,7 +34,7 @@ module Files
       if deleted_successfully
         success
       else
-        error("Your changes could not be committed, because the file has been changed")
+        error("ファイルが変更されたため、変更をコミットできません")
       end
     end
   end

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: projects
@@ -84,11 +85,11 @@ class Project < ActiveRecord::Base
   validates :description, length: { maximum: 2000 }, allow_blank: true
   validates :name, presence: true, length: { within: 0..255 },
             format: { with: Gitlab::Regex.project_name_regex,
-                      message: "only letters, digits, spaces & '_' '-' '.' allowed. Letter or digit should be first" }
+                      message: "には英数字, スペース, '_' '-' '.' だけが入力できます。先頭は英数字のみです" }
   validates :path, presence: true, length: { within: 0..255 },
             exclusion: { in: Gitlab::Blacklist.path },
             format: { with: Gitlab::Regex.path_regex,
-                      message: "only letters, digits & '_' '-' '.' allowed. Letter or digit should be first" }
+                      message: "には英数字, '_' '-' '.' だけが入力できます。先頭は英数字のみです" }
   validates :issues_enabled, :wall_enabled, :merge_requests_enabled,
             :wiki_enabled, inclusion: { in: [true, false] }
   validates :issues_tracker_id, length: { maximum: 255 }, allow_blank: true
@@ -96,7 +97,7 @@ class Project < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :namespace_id
   validates_uniqueness_of :path, scope: :namespace_id
   validates :import_url,
-    format: { with: URI::regexp(%w(git http https)), message: "should be a valid url" },
+    format: { with: URI::regexp(%w(git http https)), message: "は有効なURLでなければなりません" },
     if: :import?
   validate :check_limit, on: :create
 
@@ -240,10 +241,10 @@ class Project < ActiveRecord::Base
 
   def check_limit
     unless creator.can_create_project?
-      errors[:limit_reached] << ("Your own projects limit is #{creator.projects_limit}! Please contact administrator to increase it")
+      errors[:limit_reached] << ("あなたが作成できるプロジェクトの上限は #{creator.projects_limit} 個です！管理者に上限を増やすように連絡してください")
     end
   rescue
-    errors[:base] << ("Can't check your ability to create project")
+    errors[:base] << ("プロジェクトの作成権限が確認できませんでした")
   end
 
   def to_param
@@ -406,7 +407,7 @@ class Project < ActiveRecord::Base
   def valid_repo?
     repository.exists?
   rescue
-    errors.add(:path, "Invalid repository path")
+    errors.add(:path, "リポジトリのパスが無効です")
     false
   end
 

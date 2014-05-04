@@ -4,11 +4,11 @@
   - if @snippet.private?
     %span.label.label-success
       %i.icon-lock
-      private
+      プライベート
 
   .pull-right
-    = link_to new_snippet_path, class: "btn btn-new btn-small", title: "New Snippet" do
-      Add new snippet
+    = link_to new_snippet_path, class: "btn btn-new btn-small", title: "新しいスニペット" do
+      新しいスニペットを追加
 
 
 .append-bottom-20
@@ -23,9 +23,9 @@
   .back-link
     - if @snippet.author == current_user
       = link_to user_snippets_path(current_user) do
-        &larr; my snippets
+        &larr; マイスニペット
     - else
       = link_to snippets_path do
-        &larr; discover snippets
+        &larr; スニペットを探す
 
 %div= render 'blob'

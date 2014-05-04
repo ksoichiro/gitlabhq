@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Notification
   #
   # Notification levels
@@ -16,10 +18,10 @@ class Notification
 
     def options_with_labels
       {
-        disabled: N_DISABLED,
-        participating: N_PARTICIPATING,
-        watch: N_WATCH,
-        global: N_GLOBAL
+        "無効" => N_DISABLED,
+        "参加中" => N_PARTICIPATING,
+        "ウォッチ" => N_WATCH,
+        "グローバル" => N_GLOBAL
       }
     end
 

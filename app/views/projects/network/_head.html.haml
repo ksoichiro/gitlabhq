@@ -3,8 +3,8 @@
     = render partial: 'shared/ref_switcher', locals: {destination: 'graph'}
   .col-md-10
     = form_tag project_network_path(@project, @id), method: :get, class: 'form-inline network-form' do |f|
-      = label_tag :extended_sha1 , "Looking for", class: 'light inline-label'
-      = text_field_tag :extended_sha1, @options[:extended_sha1], placeholder: "Input an extended SHA1 syntax", class: "search-input form-control input-mx-250"
+      = label_tag :extended_sha1 , "検索対象：", class: 'light inline-label'
+      = text_field_tag :extended_sha1, @options[:extended_sha1], placeholder: "Extended SHA1記法で入力", class: "search-input form-control input-mx-250"
       = button_tag type: 'submit', class: 'btn btn-success' do
         %i.icon-search
 
@@ -12,4 +12,4 @@
         .checkbox.light
           = label_tag :filter_ref do
             = check_box_tag :filter_ref, 1, @options[:filter_ref]
-            %span Begin with the selected commit
+            %span 選択されたコミットで開始

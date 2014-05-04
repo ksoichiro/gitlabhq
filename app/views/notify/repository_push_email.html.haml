@@ -1,6 +1,6 @@
-%h3 #{@author.name} pushed to #{@branch} at #{@project.name_with_namespace}
+%h3 #{@author.name} が #{@project.name_with_namespace} の #{@branch} ブランチへプッシュしました
 
-%h4 Commits:
+%h4 コミット:
 
 %ul
   - @commits.each do |commit|
@@ -23,6 +23,6 @@
     %br
 
 - if @compare.timeout
-  %h5 Huge diff. To prevent performance issues it was hidden
+  %h5 差分が大きいため、パフォーマンス悪化を防ぐため差分は表示されていません。
 - elsif @compare.commits_over_limit?
-  %h5 Diff for big amount of commits is disabled
+  %h5 コミット数が多いため、差分は表示されていません。

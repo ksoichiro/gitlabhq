@@ -5,29 +5,29 @@
     %ul.dropdown-menu
       - if @project.issues_enabled && can?(current_user, :write_issue, @project)
         %li
-          = link_to url_for_new_issue, title: "New Issue" do
-            New issue
+          = link_to url_for_new_issue, title: "課題を作成" do
+            課題を作成
       - if @project.merge_requests_enabled && can?(current_user, :write_merge_request, @project)
         %li
-          = link_to new_project_merge_request_path(@project), title: "New Merge Request" do
-            New merge request
+          = link_to new_project_merge_request_path(@project), title: "マージリクエストを作成" do
+            マージリクエストを作成
       - if @project.snippets_enabled && can?(current_user, :write_snippet, @project)
         %li
-          = link_to new_project_snippet_path(@project), title: "New Snippet" do
-            New snippet
+          = link_to new_project_snippet_path(@project), title: "スニペットを作成" do
+            スニペットを作成
       - if can?(current_user, :admin_team_member, @project)
         %li
-          = link_to new_project_team_member_path(@project), title: "New project member" do
-            New project member
+          = link_to new_project_team_member_path(@project), title: "メンバーを追加" do
+            メンバーを追加
       - if can? current_user, :push_code, @project
         %li.divider
         %li
           = link_to new_project_branch_path(@project) do
             %i.icon-code-fork
-            Git branch
+            Gitブランチ
         %li
           = link_to new_project_tag_path(@project) do
             %i.icon-tag
-            Git tag
+            Gitタグ
 
 

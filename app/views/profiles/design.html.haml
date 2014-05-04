@@ -1,44 +1,44 @@
 %h3.page-title
-  My appearance settings
+  デザイン設定
 %p.light
-  Appearance settings saved to your profile and available across all devices
+  デザイン設定はあなたのプロフィールに保存され、どの端末からでも利用できます。
 %hr
 
 = form_for @user, url: profile_path, remote: true, method: :put do |f|
   %fieldset.application-theme
     %legend
-      Application theme
+      アプリケーションテーマ
     .themes_opts
       = label_tag do
         .prev.default
         = f.radio_button :theme_id, 1
-        Default
+        デフォルト
 
       = label_tag do
         .prev.classic
         = f.radio_button :theme_id, 2
-        Classic
+        クラシック
 
       = label_tag do
         .prev.modern
         = f.radio_button :theme_id, 3
-        Modern
+        モダン
 
       = label_tag do
         .prev.gray
         = f.radio_button :theme_id, 4
-        Gray
+        グレー
 
       = label_tag do
         .prev.violet
         = f.radio_button :theme_id, 5
-        Violet
+        バイオレット
     %br
     .clearfix
 
   %fieldset.code-preview-theme
     %legend
-      Code preview theme
+      コードプレビューテーマ
     .code_highlight_opts
       - color_schemes.each do |color_scheme_id, color_scheme|
         = label_tag do

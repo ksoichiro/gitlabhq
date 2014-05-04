@@ -23,7 +23,7 @@ class window.ContributorsStatGraph
     commits = $('<span/>', {
       class: 'graph-author-commits-count'
     })
-    commits.text(author.commits + " commits")
+    commits.text(author.commits + " コミット")
 
     additions = $('<span/>', {
       class: 'graph-additions'
@@ -75,7 +75,7 @@ class window.ContributorsStatGraph
     @field = field
   change_date_header: ->
     x_domain = ContributorsGraph.prototype.x_domain
-    print_date_format = d3.time.format("%B %e %Y")
+    print_date_format = d3.time.format("%Y/%m/%d")
     print = print_date_format(x_domain[0]) + " - " + print_date_format(x_domain[1])
     $("#date_header").text(print)
   redraw_author_commit_info: (author) ->

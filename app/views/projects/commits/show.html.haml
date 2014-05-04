@@ -2,9 +2,9 @@
 
 - if @path.present?
   %ul.breadcrumb.commit-breadcrumb
-    %li.light
-      History for
     = commits_breadcrumbs
+    %li.light
+      の履歴
 
 %div{id: dom_id(@project)}
   #commits-list= render "commits"

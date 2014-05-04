@@ -1,31 +1,32 @@
-### Enable usernames and namespaces for user projects
+### ユーザのプロジェクトでのユーザ名とネームスペースを有効化
 
-This command will enable the namespaces feature introduced in v4.0. It will move every project in its namespace folder.
+このコマンドは、v4.0 で導入されたネームスペースの機能を有効にします。
+すべてのプロジェクトをネームスペースフォルダに移動します。
 
-Note:
+注意:
 
-* Because the **repository location will change**, you will need to **update all your git url's** to point to the new location.
-* Username can be changed at [Profile / Account](/profile/account)
+* **リポジトリの場所が変更されるため** 、新しい場所を指すように **すべてのGitのURLを更新** する必要があります。
+* ユーザ名は [プロフィール / アカウント設定](/profile/account) から変更することができます。
 
-**Example:**
+**例:**
 
-Old path: `git@example.org:myrepo.git`
-New path: `git@example.org:username/myrepo.git` or `git@example.org:groupname/myrepo.git`
+古いパス: `git@example.org:myrepo.git`
+新しいパス: `git@example.org:username/myrepo.git` または `git@example.org:groupname/myrepo.git`
 
 ```
 bundle exec rake gitlab:enable_namespaces RAILS_ENV=production
 ```
 
 
-### Rebuild project satellites
+### プロジェクトサテライトの再構築
 
-This command will build missing satellites for projects. After this you will be able to **merge a merge request** via GitLab and use the **online editor**.
+このコマンドは存在しないプロジェクトサテライトを構築します。このコマンドを実行した後、 **マージリクエストのマージ** をGitLabを通じて **オンラインエディタ** から実行できるようになります。
 
 ```
 bundle exec rake gitlab:satellites:create RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 Creating satellite for abcd.git

@@ -1,5 +1,5 @@
 %h3.page-title
-  = @snippet.new_record? ? "New Snippet" : "Edit Snippet ##{@snippet.id}"
+  = @snippet.new_record? ? "新しいスニペット" : "スニペット ##{@snippet.id} を編集"
 %hr
 .snippet-form-holder
   = form_for [@project, @snippet], as: :project_snippet, url: url, html: {class: "form-horizontal snippet-form"} do |f|
@@ -10,11 +10,11 @@
             %li= msg
 
     .form-group
-      = f.label :title, class: 'control-label'
+      = f.label :title, 'タイトル', class: 'control-label'
       .col-sm-10= f.text_field :title, placeholder: "Example Snippet", class: 'form-control', required: true
     .form-group
       .file-editor
-        = f.label :file_name, "File", class: 'control-label'
+        = f.label :file_name, "ファイル", class: 'control-label'
         .col-sm-10
           .file-holder.snippet
             .file-title
@@ -25,14 +25,14 @@
 
     .form-actions
       - if @snippet.new_record?
-        = f.submit 'Create snippet', class: "btn-create btn"
+        = f.submit 'スニペットを作成', class: "btn-create btn"
       - else
-        = f.submit 'Save', class: "btn-save btn"
+        = f.submit '保存', class: "btn-save btn"
 
       - unless @snippet.new_record?
         .pull-right.prepend-left-20
-          = link_to 'Remove snippet', project_snippet_path(@project, @snippet), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn pull-right btn-remove delete-snippet prepend-left-10", id: "destroy_snippet_#{@snippet.id}"
-      = link_to "Cancel", project_snippets_path(@project), class: "btn btn-cancel"
+          = link_to 'スニペットを削除', project_snippet_path(@project, @snippet), data: { confirm: '本当に削除しますか？' }, method: :delete, class: "btn pull-right btn-remove delete-snippet prepend-left-10", id: "destroy_snippet_#{@snippet.id}"
+      = link_to "キャンセル", project_snippets_path(@project), class: "btn btn-cancel"
 
 :javascript
   var editor = ace.edit("editor");

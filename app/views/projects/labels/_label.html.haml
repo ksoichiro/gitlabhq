@@ -9,5 +9,5 @@
   .pull-right
     - unless frequency.zero?
       = link_to project_issues_path(label_name: label.name) do
-        = pluralize(frequency, 'issue')
+        #{frequency} 件の課題
         = "»"

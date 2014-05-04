@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: namespaces
@@ -25,12 +26,12 @@ class Namespace < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true,
             length: { within: 0..255 },
             format: { with: Gitlab::Regex.name_regex,
-                      message: "only letters, digits, spaces & '_' '-' '.' allowed." }
+                      message: "英数字, スペース, '_' '-' '.' だけが入力できます" }
   validates :description, length: { within: 0..255 }
   validates :path, uniqueness: { case_sensitive: false }, presence: true, length: { within: 1..255 },
             exclusion: { in: Gitlab::Blacklist.path },
             format: { with: Gitlab::Regex.path_regex,
-                      message: "only letters, digits & '_' '-' '.' allowed. Letter should be first" }
+                      message: "英数字, '_' '-' '.' だけが入力できます。先頭は英数字のみです" }
 
   delegate :name, to: :owner, allow_nil: true, prefix: true
 

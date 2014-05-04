@@ -9,15 +9,15 @@
           = f.text_area :note, size: 255, class: 'note_text js-note-text js-gfm-input turn-on'
         .note-form-actions
           .buttons
-            = f.submit 'Add Comment', class: "btn comment-btn btn-grouped js-comment-button"
+            = f.submit 'コメントする', class: "btn comment-btn btn-grouped js-comment-button"
 
           .note-form-option
             %a.choose-btn.btn.btn-small.js-choose-note-attachment-button
               %i.icon-paper-clip
-                %span Choose File ...
+                %span ファイルを選択...
             &nbsp;
-            %span.file_name.js-attachment-filename File name...
+            %span.file_name.js-attachment-filename ファイル名...
             = f.file_field :attachment, class: "js-note-attachment-input hidden"
 
-          .hint.pull-right CTRL + Enter to send message
+          .hint.pull-right CTRL + Enter でメッセージ送信
         .clearfix

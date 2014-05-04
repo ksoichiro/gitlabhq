@@ -3,12 +3,12 @@
     %span.light API
     %span
       \/
-    = @category.titleize
+    = @category_i18n
 
   .file-holder
     .file-title
       %i.icon-file
-      = @category
+      = @category_i18n
     .file-content.wiki
       = preserve do
         = markdown File.read(Rails.root.join("doc", "api", "#{@category}.md"))

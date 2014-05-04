@@ -4,32 +4,34 @@
     .discussion-actions
       = link_to "javascript:;", class: "js-details-target turn-on js-toggler-target" do
         %i.icon-eye-close
-        Hide discussion
+        ディスカッションを非表示
       = link_to "javascript:;", class: "js-details-target turn-off js-toggler-target" do
         %i.icon-eye-open
-        Show discussion
+        ディスカッションを表示
     = image_tag avatar_icon(note.author_email), class: "avatar s32"
     %div
       = link_to_member(@project, note.author, avatar: false)
       - if note.for_merge_request?
         - if note.diff
-          started a discussion on this merge request diff
+          がこのマージリクエストの差分
           = link_to_merge_request_diff_line_note(note)
+          についてディスカッションを始めました
         - else
-          started
+          がこのマージリクエストの差分について
           %strong
             %i.icon-remove
-            outdated
-          discussion on this merge request diff
+            無効な
+          ディスカッションを始めました
       - elsif note.for_commit?
-        started a discussion on commit
+        がコミット
         #{link_to note.noteable.short_id, project_commit_path(note.project, note.noteable)}
         = link_to_commit_diff_line_note(note) if note.for_diff_line?
+        についてディスカッションを始めました
       - else
-        %cite.cgray started a discussion
+        %cite.cgray がディスカッションを始めました
     %div
       - last_note = discussion_notes.last
-      last updated by
+      最終更新者：
       = link_to_member(@project, last_note.author, avatar: false)
       %span.discussion-last-update
         #{time_ago_with_tooltip(last_note.updated_at, 'bottom', 'discussion_updated_ago')}
@@ -38,7 +40,7 @@
       - if note.active?
         = render "projects/notes/discussion_diff", discussion_notes: discussion_notes, note: note
       - else
-        = link_to 'show outdated discussion', '#', class: 'js-show-outdated-discussion'
+        = link_to '無効なディスカッションを表示', '#', class: 'js-show-outdated-discussion'
         %div.hide.outdated-discussion
           .notes{ rel: discussion_notes.first.discussion_id }
             = render discussion_notes
@@ -51,7 +53,7 @@
     -# will be shown when the other one is hidden
     .discussion-hidden.content.hide
       .note
-        %em Hidden discussion.
+        %em ディスカッションは非表示にされています
         = link_to "javascript:;", class: "js-details-target js-toggler-target" do
           %i.icon-eye-open
-          Show
+          表示

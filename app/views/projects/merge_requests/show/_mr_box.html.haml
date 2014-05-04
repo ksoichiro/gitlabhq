@@ -2,14 +2,14 @@
   .state
     %span.state-label
       - if @merge_request.merged?
-        Merged
+        マージ済み
       - elsif @merge_request.closed?
-        Closed
+        クローズ
       - else
-        Open
+        オープン
 
     %span.creator
-      Created by #{link_to_member(@project, @merge_request.author)} #{time_ago_with_tooltip(@merge_request.created_at)}
+      #{link_to_member(@project, @merge_request.author)} が #{time_ago_with_tooltip(@merge_request.created_at)} に作成
 
   %h4.title
     = gfm escape_once(@merge_request.title)
@@ -28,18 +28,22 @@
   .alert.alert-info
     %span
       %i.icon-remove
-      Closed by #{link_to_member(@project, @merge_request.closed_event.author)}
-      #{time_ago_with_tooltip(@merge_request.closed_event.created_at)}.
+      #{link_to_member(@project, @merge_request.closed_event.author)}
+      が
+      #{time_ago_with_tooltip(@merge_request.closed_event.created_at)}
+      にクローズしました
 - if @merge_request.merged?
   .alert.alert-info
     %span
       %i.icon-ok
-      Merged by #{link_to_member(@project, @merge_request.merge_event.author)}
-      #{time_ago_with_tooltip(@merge_request.merge_event.created_at)}.
+      #{link_to_member(@project, @merge_request.merge_event.author)}
+      が
+      #{time_ago_with_tooltip(@merge_request.merge_event.created_at)}
+      にマージしました
 - if !@closes_issues.empty? && @merge_request.open?
   .alert.alert-info.alert-info
     %span
       %i.icon-ok
-      Accepting this merge request will close #{@closes_issues.size == 1 ? 'issue' : 'issues'}
+      このマージリクエストを承認すると課題がクローズされます
       = succeed '.' do
         != gfm(@closes_issues.map { |i| "##{i.iid}" }.to_sentence)

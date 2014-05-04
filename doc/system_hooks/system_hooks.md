@@ -1,10 +1,10 @@
-Your GitLab instance can perform HTTP POST requests on the following events: `create_project`, `delete_project`, `create_user`, `delete_user` and `change_team_member`.
+GitLabインスタンスは、`create_project`, `delete_project`, `create_user`, `delete_user`, `change_team_member` のイベントが発生したときにHTTP POSTリクエストを実行できます。
 
-System hooks can be used, e.g. for logging or changing information in a LDAP server.
+システムフックは、例えばログインやLDAPサーバ情報変更に利用することができます。
 
-#### Hooks request example:
+#### フックリクエストの例:
 
-**Project created:**
+**プロジェクトの作成:**
 
 ```json
 {
@@ -19,7 +19,7 @@ System hooks can be used, e.g. for logging or changing information in a LDAP ser
 }
 ```
 
-**Project destroyed:**
+**プロジェクトの削除:**
 
 ```json
 {
@@ -34,7 +34,7 @@ System hooks can be used, e.g. for logging or changing information in a LDAP ser
 }
 ```
 
-**New Team Member:**
+**新しいメンバーの追加:**
 
 ```json
 {
@@ -49,7 +49,7 @@ System hooks can be used, e.g. for logging or changing information in a LDAP ser
 }
 ```
 
-**Team Member Removed:**
+**メンバーの削除:**
 
 ```json
 {
@@ -64,7 +64,7 @@ System hooks can be used, e.g. for logging or changing information in a LDAP ser
 }
 ```
 
-**User created:**
+**ユーザの作成:**
 
 ```json
 { 
@@ -76,7 +76,7 @@ System hooks can be used, e.g. for logging or changing information in a LDAP ser
 }
 ```
 
-**User removed:**
+**ユーザの削除:**
 
 ```json
 { 

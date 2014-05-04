@@ -5,30 +5,30 @@
         %ul.nav.nav-pills.nav-stacked
           %li{class: ("active" if params[:scope] == 'all')}
             = link_to project_filter_path(scope: 'all') do
-              Everyone's
+              すべて
           %li{class: ("active" if params[:scope] == 'assigned-to-me')}
             = link_to project_filter_path(scope: 'assigned-to-me') do
-              Assigned to me
+              自分の課題
           %li{class: ("active" if params[:scope] == 'created-by-me')}
             = link_to project_filter_path(scope: 'created-by-me') do
-              Created by me
+              自分が作成
 
     %fieldset
-      %legend State
+      %legend ステータス
       %ul.nav.nav-pills
         %li{class: ("active" if params[:state] == 'opened')}
           = link_to project_filter_path(state: 'opened') do
-            Open
+            オープン
         %li{class: ("active" if params[:state] == 'closed')}
           = link_to project_filter_path(state: 'closed') do
-            Closed
+            解決
         %li{class: ("active" if params[:state] == 'all')}
           = link_to project_filter_path(state: 'all') do
-            All
+            すべて
 
     - if defined?(labels)
       %fieldset
-        %legend Labels
+        %legend ラベル
         %ul.nav.nav-pills.nav-stacked.nav-small.labels-filter
           - issue_label_names.each do |label_name|
             %li{class: label_filter_class(label_name)}
@@ -42,14 +42,14 @@
 
           - if issue_label_names.empty?
             .light-well
-              Add first label to your issues
+              最初のラベルを追加
               %br
-              or #{link_to 'generate', generate_project_labels_path(@project), method: :post} default set of labels
+              または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project), method: :post}
 
     %fieldset
       - if %w(state scope milestone_id assignee_id label_name).select { |k| params[k].present? }.any?
         = link_to project_entities_path, class: 'cgray pull-right' do
           %i.icon-remove
-          %strong Clear filter
+          %strong 絞り込みを解除
 
 

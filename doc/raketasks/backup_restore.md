@@ -1,13 +1,13 @@
-### Create a backup of the GitLab system
+### GitLabシステムのバックアップの作成
 
-Creates a backup archive of the database and all repositories. This archive will be saved in backup_path (see `config/gitlab.yml`).
-The filename will be `[TIMESTAMP]_gitlab_backup.tar`. This timestamp can be used to restore an specific backup.
+データベースとすべてのリポジトリのバックアップアーカイブを作成します。このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
+ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
 
 ```
 bundle exec rake gitlab:backup:create RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 Dumping database tables:
@@ -36,19 +36,19 @@ Deleting tmp directories...[DONE]
 Deleting old backups... [SKIPPING]
 ```
 
-### Restore a previously created backup
+### 以前のバックアップへのリストア
 
 ```
 bundle exec rake gitlab:backup:restore RAILS_ENV=production
 ```
 
-Options:
+オプション:
 
 ```
 BACKUP=timestamp_of_backup (required if more than one backup exists)
 ```
 
-Example output:
+出力例:
 
 ```
 Unpacking backup... [DONE]
@@ -79,7 +79,7 @@ Restoring repositories:
 Deleting tmp directories...[DONE]
 ```
 
-### Configure cron to make daily backups
+### 日次バックアップを行うためのcronの設定
 
 ```
 cd /home/git/gitlab
@@ -87,7 +87,7 @@ sudo -u git -H editor config/gitlab.yml # Enable keep_time in the backup section
 sudo -u git crontab -e # Edit the crontab for the git user
 ```
 
-Add the following lines at the bottom:
+以下の行を末尾に追加します。
 
 ```
 # Create a full backup of the GitLab repositories and SQL database every day at 2am

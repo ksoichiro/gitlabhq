@@ -1,5 +1,5 @@
 %li
-  merge request:
+  マージリクエスト:
   = link_to [merge_request.target_project, merge_request] do
     %span ##{merge_request.iid}
     %strong.term
@@ -9,4 +9,4 @@
   - else
     %span.light (#{merge_request.source_branch} &rarr; #{merge_request.target_branch})
   - if merge_request.closed?
-    %span.label Closed
+    %span.label クローズ

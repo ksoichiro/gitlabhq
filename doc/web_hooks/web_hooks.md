@@ -1,18 +1,18 @@
-Project web hooks allow you to trigger an URL if new code is pushed or a new issue is created.
+プロジェクトWebフックを使うと、新しいコードのプッシュや課題の作成をトリガーとして指定のURLへリクエストすることができます。
 
 ---
 
-You can configure web hook to listen for specific events like pushes, issues, merge requests.
-GitLab will send POST request with data to web hook URL.
-Web Hooks can be used to update an external issue tracker, trigger CI builds, update a backup mirror, or even deploy to your production server.
+プッシュ、課題、マージリクエストといったイベントから特定のものに対してWebフックを設定することができます。
+GitLab はWebフックのURLに対して POST リクエストでデータを送信します。
+Webフックは、外部の課題トラッカーの更新、CIビルドの起動、バックアップミラーの更新、本番サーバへのデプロイなどに利用することができます。
 
 ---
 
-#### Push events
+#### プッシュイベント
 
-Triggered when you push to the repository except pushing tags.
+リポジトリへのタグ以外のプッシュで実行されます。
 
-**Request body:**
+**リクエストボディ:**
 
 ```json
 {
@@ -54,11 +54,11 @@ Triggered when you push to the repository except pushing tags.
 }
 ```
 
-#### Issues events
+#### 課題イベント
 
-Triggered when a new issue is created or an existing issue was updated/closed/reopened.
+課題の作成/更新/クローズ/再オープンで実行されます。
 
-**Request body:**
+**リクエストボディ:**
 
 ```json
 {
@@ -81,11 +81,11 @@ Triggered when a new issue is created or an existing issue was updated/closed/re
 }
 ```
 
-#### Merge request events
+#### マージリクエストイベント
 
-Triggered when a new merge request is created or an existing merge request was updated/merges/closed.
+マージリクエストの作成/更新/マージ/クローズで実行されます。
 
-**Request body:**
+**リクエストボディ:**
 
 ```json
 {

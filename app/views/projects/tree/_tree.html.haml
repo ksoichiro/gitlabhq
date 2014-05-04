@@ -11,7 +11,7 @@
         = link_to title, '#'
   - if current_user && @repository.branch_names.include?(@ref) && current_user.can?(:push_code, @project)
     %li
-      = link_to project_new_tree_path(@project, @id), title: 'New file', id: 'new-file-link' do
+      = link_to project_new_tree_path(@project, @id), title: '新しいファイル', id: 'new-file-link' do
         %small
           %i.icon-plus.light
 
@@ -19,10 +19,10 @@
   %table#tree-slider{class: "table_#{@hex_path} tree-table" }
     %thead
       %tr
-        %th Name
-        %th Last Update
+        %th ファイル名
+        %th 最終更新
         %th.hidden-sm
-          Last Commit
+          最終コミット
           %span.last-commit
             &nbsp;
             %i.icon-angle-right
@@ -31,7 +31,7 @@
               = link_to @commit.short_id, project_commit_path(@project, @commit)
               &ndash;
               = truncate(@commit.title, length: 50)
-        %th= link_to "history", project_commits_path(@project, @id), class: "pull-right"
+        %th= link_to "履歴", project_commits_path(@project, @id), class: "pull-right"
 
     - if @path.present?
       %tr.tree-item
