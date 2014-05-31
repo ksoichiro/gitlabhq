@@ -44,7 +44,7 @@
             .light-well
               最初のラベルを追加
               %br
-              または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project), method: :post}
+              または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project, redirect: redirect), method: :post}
 
     %fieldset
       - if %w(state scope milestone_id assignee_id label_name).select { |k| params[k].present? }.any?

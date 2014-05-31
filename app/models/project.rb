@@ -204,6 +204,7 @@ class Project < ActiveRecord::Base
       when 'oldest' then reorder('projects.created_at ASC')
       when 'recently_updated' then reorder('projects.updated_at DESC')
       when 'last_updated' then reorder('projects.updated_at ASC')
+      when 'largest_repository' then reorder('projects.repository_size DESC')
       else reorder("namespaces.path, projects.name ASC")
       end
     end
@@ -281,8 +282,11 @@ class Project < ActiveRecord::Base
     self.id
   end
 
+  # Tags are shared by issues and merge requests
   def issues_labels
-    @issues_labels ||= (issues_default_labels + issues.tags_on(:labels)).uniq.sort_by(&:name)
+    @issues_labels ||= (issues_default_labels +
+                        merge_requests.tags_on(:labels) +
+                        issues.tags_on(:labels)).uniq.sort_by(&:name)
   end
 
   def issue_exists?(issue_id)
@@ -562,5 +566,9 @@ class Project < ActiveRecord::Base
 
   def forked_from?(project)
     forked? && project == forked_from_project
+  end
+
+  def update_repository_size
+    update_attribute(:repository_size, repository.size)
   end
 end

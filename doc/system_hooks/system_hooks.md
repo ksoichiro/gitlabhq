@@ -16,6 +16,7 @@ GitLabインスタンスは、`create_project`, `delete_project`, `create_user`,
                 "path": "stormcloud",
  "path_with_namespace": "jsmith/stormcloud",
           "project_id": 74,
+  "project_visibility": "private",
 }
 ```
 
@@ -31,6 +32,7 @@ GitLabインスタンスは、`create_project`, `delete_project`, `create_user`,
                 "path": "underscore",
  "path_with_namespace": "jsmith/underscore",
           "project_id": 73,
+  "project_visibility": "internal",
 }
 ```
 
@@ -38,14 +40,15 @@ GitLabインスタンスは、`create_project`, `delete_project`, `create_user`,
 
 ```json
 {
-     "created_at": "2012-07-21T07:30:56Z",
-     "event_name": "user_add_to_team",
- "project_access": "Master",
-     "project_id": 74, 
-   "project_name": "StoreCloud",
-   "project_path": "storecloud", 
-    "user_email": "johnsmith@gmail.com",
-     "user_name": "John Smith",
+         "created_at": "2012-07-21T07:30:56Z",
+         "event_name": "user_add_to_team",
+     "project_access": "Master",
+         "project_id": 74,
+       "project_name": "StoreCloud",
+       "project_path": "storecloud",
+         "user_email": "johnsmith@gmail.com",
+          "user_name": "John Smith",
+ "project_visibility": "private",
 }
 ```
 
@@ -53,14 +56,15 @@ GitLabインスタンスは、`create_project`, `delete_project`, `create_user`,
 
 ```json
 {
-     "created_at": "2012-07-21T07:30:56Z",
-     "event_name": "user_remove_from_team",
- "project_access": "Master",
-     "project_id": 74, 
-   "project_name": "StoreCloud",
-   "project_path": "storecloud", 
-    "user_email": "johnsmith@gmail.com",
-     "user_name": "John Smith",
+         "created_at": "2012-07-21T07:30:56Z",
+         "event_name": "user_remove_from_team",
+     "project_access": "Master",
+         "project_id": 74,
+       "project_name": "StoreCloud",
+       "project_path": "storecloud",
+         "user_email": "johnsmith@gmail.com",
+          "user_name": "John Smith",
+ "project_visibility": "private",
 }
 ```
 

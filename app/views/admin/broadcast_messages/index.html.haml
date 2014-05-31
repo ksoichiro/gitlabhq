@@ -22,12 +22,12 @@
     = f.label :color, "背景色", class: 'control-label'
     .col-sm-10
       = f.text_field :color, placeholder: "#AA33EE", class: "form-control"
-      .light #記号で始まる2桁ずつ3組の16進数で表記します。
+      .light #記号で始まる6文字の16進数で表記します。
   .form-group.js-toggle-colors-container.hide
     = f.label :font, "文字色", class: 'control-label'
     .col-sm-10
       = f.text_field :font, placeholder: "#224466", class: "form-control"
-      .light #記号で始まる2桁ずつ3組の16進数で表記します。
+      .light #記号で始まる6文字の16進数で表記します。
   .form-group
     = f.label :starts_at, '開始日', class: 'control-label'
     .col-sm-10.datetime-controls

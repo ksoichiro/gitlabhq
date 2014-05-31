@@ -24,9 +24,9 @@ Version:	5.1.0.beta2
 Revision:	4da8b37
 Directory:	/home/git/gitlab
 DB Adapter:	mysql2
-URL:		http://localhost
-HTTP Clone URL:	http://localhost/some-project.git
-SSH Clone URL:	git@localhost:some-project.git
+URL:		http://example.com
+HTTP Clone URL:	http://example.com/some-project.git
+SSH Clone URL:	git@example.com:some-project.git
 Using LDAP:	no
 Using Omniauth:	no
 
@@ -109,33 +109,4 @@ Checking GitLab ... Finished
 
 ```
 bundle exec rake gitlab:satellites:create RAILS_ENV=production
-```
-
-### ベアリポジトリのGitLabプロジェクトインスタンスへのインポート
-
-注意:
-
-* プロジェクトの所有者は最初の管理者になります
-* 必要に応じてグループが作成されます
-* グループの所有者が最初の管理者になります
-* 既存のプロジェクトはスキップされます
-
-利用方法:
-
-1. ベアリポジトリをGitリポジトリのパス( `config/gitlab.yml` の gitlab_shell -> repos_path を参照)にコピーします
-2. 以下のコマンドを実行します
-
-```
-bundle exec rake gitlab:import:repos RAILS_ENV=production
-```
-
-出力例:
-
-```
-Processing abcd.git
- * Created abcd (abcd.git)
-Processing group/xyz.git
- * Created Group group (2)
- * Created xyz (group/xyz.git)
-[...]
 ```

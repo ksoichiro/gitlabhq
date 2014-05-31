@@ -9,6 +9,6 @@
           %span Page slug
         = text_field_tag :new_wiki_path, nil, placeholder: 'セットアップ方法', class: 'form-control', required: true, :'data-wikis-path' => project_wikis_path(@project)
         %p.hint
-          スペースやスラッシュを使わないでください。
+          スペースを使わないでください。
       .modal-footer
         = link_to '作成', '#', class: 'build-new-wiki btn btn-create'

@@ -15,7 +15,7 @@ module SelectsHelper
     css_class << (opts[:class] || '')
     value = opts[:selected] || ''
     placeholder = opts[:placeholder] || 'ユーザを選択'
-
-    hidden_field_tag(id, value, class: css_class, 'data-placeholder' => placeholder)
+    project_id = opts[:project_id] || @project.id
+    hidden_field_tag(id, value, class: css_class, 'data-placeholder' => placeholder, 'data-project-id' => project_id)
   end
 end
