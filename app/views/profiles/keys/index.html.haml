@@ -6,13 +6,13 @@
   SSHキーによって、あなたのコンピュータとGitLabはセキュアに接続されます。
   %br
   SSHキーを追加する前に
-  = link_to "SSHキーを生成してください", help_ssh_path
+  = link_to "SSHキーを生成してください", help_page_path("ssh", "README")
   。
 %hr
 
 
-.ui-box
-  .title
+.panel.panel-default
+  .panel-heading
     SSHキー (#{@keys.count})
   %ul.well-list#keys-table
     = render @keys

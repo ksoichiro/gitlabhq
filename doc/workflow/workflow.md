@@ -1,27 +1,31 @@
-1. プロジェクトをクローンします
+# ワークフロー
 
-  ```bash
-  git clone git@example.com:project-name.git
-  ```
+1.  プロジェクトをクローンします
 
-2. 機能追加用のブランチを作成します
+    ```bash
+    git clone git@example.com:project-name.git
+    ```
 
-  ```bash
-  git checkout -b $feature_name
-  ```
+1.  機能追加用のブランチを作成します
 
-3. コードを書いて変更をコミットします
+    ```bash
+    git checkout -b $feature_name
+    ```
 
-  ```bash
-  git commit -am "My feature is ready"
-  ```
+1.  コードを書いて変更をコミットします
 
-4. ブランチをGitLabにプッシュします
+    ```bash
+    git commit -am "My feature is ready"
+    ```
 
-  ```bash
-  git push origin $feature_name
-  ```
+1.  ブランチをGitLabにプッシュします
 
-5. コミットのページでコードをレビューします
-6. マージリクエストを作成します
-7. チームリーダがコードレビューしメインのブランチにマージします
+    ```bash
+    git push origin $feature_name
+    ```
+
+1.  コミットのページでコードをレビューします
+
+1.  マージリクエストを作成します
+
+1.  チームリーダがコードレビューしメインのブランチにマージします

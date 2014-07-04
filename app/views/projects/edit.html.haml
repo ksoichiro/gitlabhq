@@ -4,9 +4,9 @@
     %div
       %h3.page-title
         プロジェクト設定:
-      %p.light "プロジェクトの移譲"のようないくつかの機能は"危険な設定"エリア内で非表示になっています。
+      %p.light "プロジェクトの移譲"のようないくつかの機能は危険エリア内で非表示になっています。
       %hr
-      .form-holder
+      .panel-body
         = form_for @project, remote: true, html: { class: "edit_project form-horizontal" } do |f|
           %fieldset
             .form-group.project_name_holder
@@ -74,13 +74,6 @@
                   %span.descr プロジェクトのドキュメントページ
 
             .form-group
-              = f.label :wall_enabled, "ウォール", class: 'control-label'
-              .col-sm-10
-                .checkbox
-                  = f.check_box :wall_enabled
-                  %span.descr プロジェクト内でブロードキャストできるシンプルなチャットシステム
-
-            .form-group
               = f.label :snippets_enabled, "スニペット", class: 'control-label'
               .col-sm-10
                 .checkbox
@@ -105,13 +98,13 @@
 
       .js-toggle-content.hide
         - if can? current_user, :archive_project, @project
-          .ui-box.ui-box-danger
-            .title
+          .panel.panel-default.panel.panel-warning
+            .panel-heading
               - if @project.archived?
                 プロジェクトのアーカイブを解除
               - else
                 プロジェクトをアーカイブ
-            .body
+            .panel-body
               - if @project.archived?
                 %p
                   プロジェクトのアーカイブを解除すると、リポジトリはアクティブになります。
@@ -131,15 +124,34 @@
                   %strong アーカイブされたプロジェクトにはコミットできません！
                 = link_to 'アーカイブ', archive_project_path(@project),
                     data: { confirm: "本当にこのプロジェクトをアーカイブしますか？\nアーカイブされたプロジェクトにはコミットすることができません。" },
-                    method: :post, class: "btn btn-remove"
+                    method: :post, class: "btn btn-warning"
         - else
           .nothing-here-block プロジェクトの所有者だけがプロジェクトをアーカイブすることができます。
 
+        .panel.panel-default.panel.panel-warning
+          .panel-heading Rename repository
+          .errors-holder
+          .panel-body
+            = form_for(@project, html: { class: 'form-horizontal' }) do |f|
+              .form-group
+                = f.label :path, class: 'control-label' do
+                  %span Path
+                .col-sm-9
+                  .form-group
+                    .input-group
+                      = f.text_field :path, class: 'form-control'
+                      %span.input-group-addon .git
+                  %ul
+                    %li Be careful. Renaming a project's repository can have unintended side effects.
+                    %li You will need to update your local repositories to point to the new location.
+              .form-actions
+                = f.submit 'Rename', class: "btn btn-warning"
+
         - if can?(current_user, :change_namespace, @project)
-          .ui-box.ui-box-danger
-            .title プロジェクトを移譲
+          .panel.panel-default.panel.panel-danger
+            .panel-heading プロジェクトを移譲
             .errors-holder
-            .form-holder
+            .panel-body
               = form_for(@project, url: transfer_project_path(@project), method: :put, remote: true, html: { class: 'transfer-project form-horizontal' }) do |f|
                 .form-group
                   = f.label :namespace_id, class: 'control-label' do
@@ -156,29 +168,10 @@
         - else
           .nothing-here-block プロジェクトの所有者だけがプロジェクトを移譲することができます。
 
-        .ui-box.ui-box-danger
-          .title リポジトリの名前変更
-          .errors-holder
-          .form-holder
-            = form_for(@project, html: { class: 'form-horizontal' }) do |f|
-              .form-group
-                = f.label :path, class: 'control-label' do
-                  %span パス
-                .col-sm-9
-                  .form-group
-                    .input-group
-                      = f.text_field :path, class: 'form-control'
-                      %span.input-group-addon .git
-                  %ul
-                    %li リポジトリの名前変更は意図しない副作用を招く可能性があります。ご注意ください。
-                    %li ローカルリポジトリが新しい場所を指すように修正する必要があります。
-              .form-actions
-                = f.submit '名前変更', class: "btn btn-remove"
-
         - if can?(current_user, :remove_project, @project)
-          .ui-box.ui-box-danger
-            .title プロジェクトを削除
-            .body
+          .panel.panel-default.panel.panel-danger
+            .panel-heading プロジェクトを削除
+            .panel-body
               %p
                 プロジェクトを削除すると、リポジトリや課題、マージリクエストなどの関連するリソースすべてが削除されます。
                 %br

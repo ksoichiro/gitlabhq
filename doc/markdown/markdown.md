@@ -1,9 +1,6 @@
-----------------------------------------------
+# Markdown
 
-目次
-=================
-
-----------------------------------------------
+## 目次
 
 **[GitLab Flavored Markdown](#gitlab-flavored-markdown-gfm)**
 
@@ -18,7 +15,6 @@
 [絵文字](#emoji)
 
 [GitLabでの参照](#special-gitlab-references)
-
 
 **[標準のMarkdown](#standard-markdown)**
 
@@ -44,28 +40,23 @@
 
 **[リファレンス](#references)**
 
-----------------------------------------------
+## GitLab Flavored Markdown (GFM)
 
-GitLab Flavored Markdown (GFM)
-==============================
-GitLabでは、"GitLab Flavored Markdown" (GFM)と呼ばれるものを開発しました。
-これは、いくつかの重要な点で便利な機能を追加するために標準の Markdown を拡張するものです。
+GitLabでは、"GitLab Flavored Markdown" (GFM)と呼ばれるものを開発しました。これは、いくつかの重要な点で便利な機能を追加するために標準の Markdown を拡張するものです。
 
 GFM は以下の場所で使うことができます。
 
-* コミットメッセージ
-* コメント
-* ウォールの投稿
-* 課題
-* マージリクエスト
-* マイルストーン
-* Wikiページ
+- コミットメッセージ
+- コメント
+- 課題
+- マージリクエスト
+- マイルストーン
+- Wikiページ
 
-依存するソフトウェアをインストールして、GitLab上の他のリッチテキストファイルでも使うことができます。
-詳しい情報は、 [github-markup gem readme](https://github.com/gitlabhq/markup#markups) を参照してください。
+依存するソフトウェアをインストールして、GitLab上の他のリッチテキストファイルでも使うことができます。詳しい情報は、 [github-markup gem readme](https://github.com/gitlabhq/markup#markups) を参照してください。
 
-改行
---------
+## 改行
+
 GFMは [段落と改行の取り扱い](http://daringfireball.net/projects/markdown/syntax#p) での Markdown 仕様にならっています。
 
 段落は単純に1行以上の空行で分けられた、1行以上のテキストです。
@@ -80,8 +71,8 @@ Violets are blue
 
 Sugar is sweet
 
-単語内の複数のアンダースコア
------------------------------
+## 単語内の複数のアンダースコア
+
 単語の _一部_ だけをイタリック体にしてしまうのは便利とは言えません。複数のアンダースコアを含むコードと名前を扱う場合には特にそうです。このため、GFMは単語内の複数のアンダースコアを無視します。
 
     perform_complicated_task
@@ -90,10 +81,9 @@ Sugar is sweet
 perform_complicated_task
 do_this_and_do_that_and_another_thing
 
-URLの自動リンク
----------------
-GFM は、標準的なURLをコピー＆ペーストすると自動的にリンクします。
-つまり、(テキストのリンクの代わりに)URLをリンクしたければ、単純にURLを記述すればそのURLへのリンクができあがります。
+## URLの自動リンク
+
+GFM は、標準的なURLをコピー＆ペーストすると自動的にリンクします。つまり、(テキストのリンクの代わりに)URLをリンクしたければ、単純にURLを記述すればそのURLへのリンクができあがります。
 
     http://www.google.com
 
@@ -161,8 +151,7 @@ s = "There is no highlighting for this."
 But let's throw in a <b>tag</b>.
 ```
 
-絵文字
------
+## 絵文字
 
         時には、あなたの :speech_balloon: を :cool: にして、 :sparkles: を追加したいこともあるでしょう。そんなあなたに :gift: があります。
         
@@ -184,26 +173,25 @@ But let's throw in a <b>tag</b>.
 
 サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
 
-GitLabでの参照
------
+## GitLabでの特別な参照
 
 GFM は特別な参照を認識します。
+
 例えばプロジェクト内のチームメンバー、課題、コミットメッセージを簡単に参照することができます。
+
 GFM は参照をリンクに変換するため、それらの参照に対して簡単にナビゲーションすることができます。
 
 GFM は以下を認識します。
 
-* @foo : チームメンバーへの参照
-* #123 : 課題への参照
-* !123 : マージリクエストへの参照
-* $123 : スニペットへの参照
-* 1234567 : コミットへの参照
-* \[file\](path/to/file) : ファイルへの参照
+- @foo : チームメンバーへの参照
+- #123 : 課題への参照
+- !123 : マージリクエストへの参照
+- $123 : スニペットへの参照
+- 1234567 : コミットへの参照
+- \[file\](path/to/file) : ファイルへの参照
 
-----------------------------------
 # 標準のMarkdown
 
-----------------------------------
 ## ヘッダ
 
 ```no-highlight
@@ -246,12 +234,12 @@ H2の別表現
 
 コンテンツのヘッダから生成されたIDは以下のルールになっています。
 
-1) 先頭のハッシュ `#` を削除し、行の残りの部分をヘッダでなかった場合のように処理します
-2) その結果から、すべてのHTMLタグを削除し、ただしタグの中のコンテンツは残すように処理します
-3) すべての文字を小文字に変換します
-4) `[a-z0-9_-]` 以外のすべての文字をハイフン `-` に変換します
-5) 連続するハイフンを1つのハイフンに変換します
-6) 先頭と末尾のハイフンを削除します
+1. 先頭のハッシュ `#` を削除し、行の残りの部分をヘッダでなかった場合のように処理します
+2. その結果から、すべてのHTMLタグを削除し、ただしタグの中のコンテンツは残すように処理します
+3. すべての文字を小文字に変換します
+4. `[a-z0-9_-]` 以外のすべての文字をハイフン `-` に変換します
+5. 連続するハイフンを1つのハイフンに変換します
+6. 先頭と末尾のハイフンを削除します
 
 例:
 
@@ -374,8 +362,7 @@ ab_c-d-e-anchor
 
 **注意**
 
-相対パスのリンクでは、Wikiページ内のプロジェクトファイルやプロジェクトファイル内のWikiページを参照することはできません。
-理由は、GitLabではWikiが常に別のGitリポジトリに分けられているためです。例えば
+相対パスのリンクでは、Wikiページ内のプロジェクトファイルやプロジェクトファイル内のWikiページを参照することはできません。理由は、GitLabではWikiが常に別のGitリポジトリに分けられているためです。例えば
 
 `[リファレンススタイルのリンクです][style]`
 
@@ -396,10 +383,12 @@ ab_c-d-e-anchor
 私たちのロゴです。
 
 インラインスタイル:
+
 ![alt text](/assets/logo-white.png)
 
 リファレンススタイル:
-![alt text1][logo]
+
+![alt text][logo]
 
 [logo]: /assets/logo-white.png
 
@@ -515,10 +504,8 @@ ___
 | セル 1   | セル 2   |
 | セル 3   | セル 4   |
 
-------------
-
 ## リファレンス
 
-* このドキュメントは [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) に多いに参考にしています。
-* Daring Fireball の [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) は標準の Markdown について詳細に説明しているすばらしいリソースです。
-* [Dillinger.io](http://dillinger.io) は標準の Markdown をテストできる便利なツールです。
+- このドキュメントは [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) に多いに参考にしています。
+- Daring Fireball の [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) は標準の Markdown について詳細に説明しているすばらしいリソースです。
+- [Dillinger.io](http://dillinger.io) は標準の Markdown をテストできる便利なツールです。

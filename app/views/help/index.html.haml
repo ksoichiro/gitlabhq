@@ -18,8 +18,8 @@
 
 .row
   .col-md-4
-    .ui-box
-      .title
+    .panel.panel-default
+      .panel-heading
         クイックヘルプ
       %ul.well-list
         %li
@@ -33,53 +33,12 @@
           = link_to "ショートカット", '#', onclick: "new Shortcuts()"
           を使う
 
-  .col-md-4
-    .ui-box
-      .title
-        ユーザ向けドキュメント
-      %ul.well-list
-        %li
-          %strong= link_to "ワークフロー", help_workflow_path
-          %p GitとGitLabの使い方を学びます。
-
-        %li
-          %strong= link_to "SSHキー", help_ssh_path
-          %p プロジェクトへのセキュアなアクセス方法を設定します。
-
-        %li
-          %strong= link_to "GitLab Markdown", help_markdown_path
-          %p GitLabの高度なフォーマットシステムでできることを学びます。
-
-        %li
-          %strong= link_to "アクセス権", help_permissions_path
-          %p GitLabのアクセス権レベルについて学びます。
-
-        %li
-          %strong= link_to "API", help_api_file_path(category: 'README')
-          %p シンプルで強力なAPIを使ってGitLabにアクセスする方法を確認します。
-
-        %li
-          %strong= link_to "Webフック", help_web_hooks_path
-          %p 新しいコードがプッシュされたときに通知させます。
-
-  .col-md-4
-    .ui-box
-      .title
-        管理者向けドキュメント
-      %ul.well-list
-
-        %li
-          %strong= link_to "Rakeタスク", help_raketasks_path
-          %p 管理をより簡単にするためにGitLabが用意しているタスクを確認します。
-
-        %li
-          %strong= link_to "システムフック", help_system_hooks_path
-          %p 特定の管理タスクが実行されるときに通知させます。
-
-        %li
-          %strong= link_to "公開アクセス", help_public_access_path
-          %p プロジェクトを公開する方法を学びます。
-
-        %li
-          %strong= link_to "セキュリティ", help_security_path
-          %p GitLabインスタンスをセキュアにするためにすることを学びます。
+  .col-md-8
+    .panel.panel-default.documentation-index
+      .panel-heading Documentation
+      .panel-body
+        = preserve do
+          - readme_text = File.read(Rails.root.join("doc", "README.md"))
+          - text = readme_text.dup
+          - readme_text.scan(/\]\(([^(]+)\)/) { |match| text.gsub!(match.first, "help/#{match.first}") }
+          = markdown text

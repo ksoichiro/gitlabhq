@@ -70,7 +70,9 @@ class Projects::IssuesController < Projects::ApplicationController
           render :new
         end
       end
-      format.js
+      format.js do |format|
+        @link = @issue.attachment.url.to_js
+      end
     end
   end
 
@@ -85,6 +87,12 @@ class Projects::IssuesController < Projects::ApplicationController
         else
           render :edit
         end
+      end
+      format.json do
+        render json: {
+          saved: @issue.valid?,
+          assignee_avatar_url: @issue.assignee.try(:avatar_url)
+        }
       end
     end
   end

@@ -6,6 +6,6 @@
         %span= day.stamp("2010/08/28")
       %p #{commits.count}コミット
     .col-md-10
-      %ul.well-list
+      %ul.bordered-list
         = render commits, project: @project
   %hr.lists-separator

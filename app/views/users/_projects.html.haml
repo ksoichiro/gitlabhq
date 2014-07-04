@@ -1,6 +1,6 @@
-.ui-box
-  .title プロジェクト
+.panel.panel-default
+  .panel-heading 個人プロジェクト
   %ul.well-list
-    - @projects.each do |project|
+    - projects.each do |project|
       %li
         = link_to_project project

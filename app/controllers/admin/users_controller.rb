@@ -9,7 +9,8 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def show
-    @projects = user.authorized_projects
+    @personal_projects = user.personal_projects
+    @joined_projects = user.projects.joined(@user)
   end
 
   def new

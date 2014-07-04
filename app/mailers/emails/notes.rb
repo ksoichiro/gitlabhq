@@ -31,14 +31,5 @@ module Emails
            to: recipient(recipient_id),
            subject: subject("#{@merge_request.title} (##{@merge_request.iid})"))
     end
-
-    def note_wall_email(recipient_id, note_id)
-      @note = Note.find(note_id)
-      @project = @note.project
-      @target_url = project_wall_url(@note.project, anchor: "note_#{@note.id}")
-      mail(from: sender(@note.author_id),
-           to: recipient(recipient_id),
-           subject: subject("Note on wall"))
-    end
   end
 end

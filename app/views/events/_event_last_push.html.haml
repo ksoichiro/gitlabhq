@@ -1,13 +1,14 @@
 - if show_last_push_widget?(event)
   .event-last-push
-    %span あなたは
-    = link_to project_commits_path(event.project, event.ref_name) do
-      %strong= truncate(event.ref_name, length: 28)
-    ブランチを
-    %strong= link_to_project event.project
-    プロジェクトに
-    #{time_ago_with_tooltip(event.created_at)}
-    にプッシュしました。
+    .event-last-push-text
+      %span あなたは
+      = link_to project_commits_path(event.project, event.ref_name) do
+        %strong= event.ref_name
+      ブランチを
+      %strong= link_to_project event.project
+      プロジェクトに
+      #{time_ago_with_tooltip(event.created_at)}
+      にプッシュしました。
 
     .pull-right
       = link_to new_mr_path_from_push_event(event), title: "新しいマージリクエスト", class: "btn btn-create btn-small" do

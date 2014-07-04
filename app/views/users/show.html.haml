@@ -13,11 +13,14 @@
       %br
       %small 登録日: #{@user.created_at.stamp("2031/11/12")}
     .clearfix
-    %h4 グループ:
-    = render 'groups', groups: @groups
-    %hr
+
+    - if @groups.any?
+      %h4 グループ:
+      = render 'groups', groups: @groups
+      %hr
     %h4 アクティビティ:
     = render @events
   .col-md-4
     = render 'profile', user: @user
-    = render 'projects'
+    - if @projects.present?
+      = render 'projects', projects: @projects

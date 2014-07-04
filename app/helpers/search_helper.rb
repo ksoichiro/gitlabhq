@@ -34,15 +34,15 @@ module SearchHelper
   # Autocomplete results for internal help pages
   def help_autocomplete
     [
-      { label: "ヘルプ: API Help",           url: help_api_path },
-      { label: "ヘルプ: Markdown Help",      url: help_markdown_path },
-      { label: "ヘルプ: Permissions Help",   url: help_permissions_path },
-      { label: "ヘルプ: Public Access Help", url: help_public_access_path },
-      { label: "ヘルプ: Rake Tasks Help",    url: help_raketasks_path },
-      { label: "ヘルプ: SSH Keys Help",      url: help_ssh_path },
-      { label: "ヘルプ: System Hooks Help",  url: help_system_hooks_path },
-      { label: "ヘルプ: Web Hooks Help",     url: help_web_hooks_path },
-      { label: "ヘルプ: Workflow Help",      url: help_workflow_path },
+      { label: "ヘルプ: API Help",           url: help_page_path("api", "README") },
+      { label: "ヘルプ: Markdown Help",      url: help_page_path("markdown", "markdown") },
+      { label: "ヘルプ: Permissions Help",   url: help_page_path("permissions", "permissions") },
+      { label: "ヘルプ: Public Access Help", url: help_page_path("public_access", "public_access") },
+      { label: "ヘルプ: Rake Tasks Help",    url: help_page_path("raketasks", "README") },
+      { label: "ヘルプ: SSH Keys Help",      url: help_page_path("ssh", "README") },
+      { label: "ヘルプ: System Hooks Help",  url: help_page_path("system_hooks", "system_hooks") },
+      { label: "ヘルプ: Web Hooks Help",     url: help_page_path("web_hooks", "web_hooks") },
+      { label: "ヘルプ: Workflow Help",      url: help_page_path("workflow", "README") },
     ]
   end
 
@@ -62,7 +62,6 @@ module SearchHelper
         { label: "#{prefix} - マイルストーン",   url: project_milestones_path(@project) },
         { label: "#{prefix} - スニペット",       url: project_snippets_path(@project) },
         { label: "#{prefix} - メンバー",         url: project_team_index_path(@project) },
-        { label: "#{prefix} - ウォール",         url: project_wall_path(@project) },
         { label: "#{prefix} - Wiki",             url: project_wikis_path(@project) },
       ]
     else
@@ -82,7 +81,7 @@ module SearchHelper
 
   # Autocomplete results for the current user's projects
   def projects_autocomplete(term, limit = 5)
-    Project.accessible_to(current_user).search_by_title(term).non_archived.limit(limit).map do |p|
+    ProjectsFinder.new.execute(current_user).search_by_title(term).non_archived.limit(limit).map do |p|
       {
         label: "プロジェクト: #{search_result_sanitize(p.name_with_namespace)}",
         url: project_path(p)

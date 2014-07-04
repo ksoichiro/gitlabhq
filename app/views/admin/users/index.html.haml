@@ -28,10 +28,10 @@
       = link_to 'リセット', admin_users_path, class: "btn btn-cancel"
 
   .col-md-9
-    .ui-box
-      .title
+    .panel.panel-default
+      .panel-heading
         ユーザ (#{@users.total_count})
-        .pull-right
+        .panel-head-actions
           = link_to '新しいユーザ', new_admin_user_path, class: "btn btn-new"
       %ul.well-list
         - @users.each do |user|

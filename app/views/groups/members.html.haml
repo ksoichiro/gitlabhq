@@ -5,7 +5,7 @@
   %p.light
     このグループのメンバーはこのグループのすべてのプロジェクトにアクセスできます。
     アクセス権についての詳細は、
-    %strong= link_to "こちら", help_permissions_path, class: "vlink"
+    %strong= link_to "こちら", help_page_path("permissions", "permissions"), class: "vlink"
     から確認できます。
 
 %hr
@@ -25,8 +25,8 @@
     .js-toggle-content.hide.new-group-member-holder
       = render "new_group_member"
 
-.ui-box.prepend-top-20
-  .title
+.panel.panel-default.prepend-top-20
+  .panel-heading
     %strong #{@group.name}
     グループのメンバー
     %small

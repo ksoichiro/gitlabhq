@@ -87,5 +87,11 @@
               %hr
               = link_to 'アバターを削除', profile_avatar_path, data: { confirm: "アバターを削除します。よろしいですか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"
 
+      - if @user.public_profile?
+        .bs-callout.bs-callout-info
+          %h4 Public profile
+          %p Your profile is publicly visible because you joined public project(s)
+
+
   .form-actions
     = f.submit '変更を保存', class: "btn btn-save"

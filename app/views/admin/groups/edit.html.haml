@@ -1,31 +1,3 @@
-%h3.page-title グループを編集
+%h3.page-title グループを編集: #{@group.name}
 %hr
-= form_for [:admin, @group], html: { class: "form-horizontal" } do |f|
-  - if @group.errors.any?
-    .alert.alert-danger
-      %span= @group.errors.full_messages.first
-  .form-group.group_name_holder
-    = f.label :name, class: 'control-label' do
-      グループ名
-    .col-sm-10
-      = f.text_field :name, placeholder: "Example Group", class: "form-control"
-
-  .form-group.group-description-holder
-    = f.label :description, "詳細", class: 'control-label'
-    .col-sm-10
-      = f.text_area :description, maxlength: 250, class: "form-control js-gfm-input", rows: 4
-
-  .form-group.group_name_holder
-    = f.label :path, class: 'control-label' do
-      %span.cred グループのパス
-    .col-sm-10
-      = f.text_field :path, placeholder: "example-group", class: "form-control danger"
-      %ul.cred
-        %li グループのパスを変更すると予期しない副作用が生じる可能性があります。
-        %li グループのパスを変更すると関連するすべてのプロジェクトのディレクトリ名が変更されます。
-        %li グループとグループ内のすべてのプロジェクトのWeb URLが変更されます。
-        %li グループ内のリポジトリのGitのパスも変更されます。
-
-  .form-actions
-    = f.submit '変更を保存', class: "btn btn-primary"
-    = link_to  'キャンセル', admin_groups_path, class: "btn btn-cancel"
+= render 'form'

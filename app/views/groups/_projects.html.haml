@@ -1,8 +1,8 @@
-.ui-box
-  .title
+.panel.panel-default
+  .panel-heading
     プロジェクト (#{projects.count})
-    - if can? current_user, :manage_group, @group
-      %span.pull-right
+    - if can? current_user, :create_projects, @group
+      .panel-head-actions
         = link_to new_project_path(namespace_id: @group.id), class: "btn btn-new" do
           %i.icon-plus
           新しいプロジェクト
@@ -16,6 +16,6 @@
             = visibility_level_icon(project.visibility_level)
           %span.str-truncated
             %span.project-name
-              = truncate(project.name, length: 25)
+              = project.name
           %span.arrow
             %i.icon-angle-right

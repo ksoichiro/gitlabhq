@@ -1,7 +1,8 @@
-### GitLabやシステムに関する情報の収集
+# メンテナンス
 
-このコマンドは、GitLabと、GitLabを実行するシステムの情報を収集します。
-これらはヘルプを求めたり問題をレポートするのに便利です。
+## GitLabやシステムに関する情報の収集
+
+このコマンドは、GitLabと、GitLabを実行するシステムの情報を収集します。これらはヘルプを求めたり問題をレポートするのに便利です。
 
 ```
 bundle exec rake gitlab:env:info RAILS_ENV=production
@@ -14,8 +15,8 @@ System information
 System:		Debian 6.0.7
 Current User:	git
 Using RVM:	no
-Ruby Version:	1.9.3p392
-Gem Version:	1.8.23
+Ruby Version: 2.0.0-p481
+Gem Version:  1.8.23
 Bundler Version:1.3.5
 Rake Version:	10.0.4
 
@@ -37,15 +38,14 @@ Hooks:		/home/git/gitlab-shell/hooks/
 Git:		/usr/bin/git
 ```
 
-
-### GitLab設定の確認
+## GitLab設定の確認
 
 以下の rake タスクを実行します。
 
-* gitlab:env:check
-* gitlab:gitlab_shell:check
-* gitlab:sidekiq:check
-* gitlab:app:check
+- `gitlab:env:check`
+- `gitlab:gitlab_shell:check`
+- `gitlab:sidekiq:check`
+- `gitlab:app:check`
 
 各コンポーネントがインストールガイドの通りにインストールされたかどうかチェックし、問題があれば修正方法を提示します。
 
@@ -101,10 +101,10 @@ Redis version >= 2.0.0? ... yes
 Checking GitLab ... Finished
 ```
 
+## サテライトリポジトリの(再)作成
 
-### サテライトリポジトリの(再)作成
+このコマンドはすべてのプロジェクトのサテライトリポジトリを作成します。
 
-このコマンドはすべてのプロジェクトのサテライトリポジトリを作成します。  
 必要に応じて、 `tmp/repo_satellites` ディレクトリを削除して以下のコマンドを再実行します。
 
 ```

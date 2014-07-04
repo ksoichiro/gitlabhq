@@ -11,14 +11,8 @@
     %strong= event.ref_name
   - else
     = link_to project_commits_path(event.project, event.ref_name) do
-      %strong= truncate(event.ref_name, length: 30)
-  を
-  - if event.push_action_name == "pushed new"
-    新規にプッシュしました
-  - elsif event.push_action_name == "deleted"
-    削除しました
-  - else
-    プッシュしました
+      %strong= event.ref_name
+  をプッシュしました
 
 - if event.push_with_commits?
   - project = event.project

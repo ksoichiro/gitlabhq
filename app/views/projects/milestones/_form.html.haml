@@ -21,8 +21,12 @@
       .form-group
         = f.label :description, "説明", class: "control-label"
         .col-sm-10
-          = f.text_area :description, maxlength: 2000, class: "form-control", rows: 10
-          %p.hint マイルストーンは #{link_to "GitLab Flavored Markdown", help_markdown_path, target: '_blank'} 記法でパースされます。
+          = f.text_area :description, maxlength: 2000, class: "form-control markdown-area", rows: 10
+          .hint
+            .pull-left マイルストーンは #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'} 記法でパースされます。
+            .pull-left ドラッグ＆ドロップまたは#{link_to "選択して", '#', class: 'markdown-selector' }画像(JPG, PNG, GIF)を添付します。
+          .clearfix
+          .error-alert
     .col-md-6
       .form-group
         = f.label :due_date, "期限", class: "control-label"
@@ -45,3 +49,5 @@
     dateFormat: "yy-mm-dd",
     onSelect: function(dateText, inst) { $("#milestone_due_date").val(dateText) }
   }).datepicker("setDate", $.datepicker.parseDate('yy-mm-dd', $('#milestone_due_date').val()));
+
+  window.project_image_path_upload = "#{upload_image_project_path @project}";

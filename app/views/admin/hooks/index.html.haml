@@ -2,7 +2,7 @@
   システムフック
 
 %p.light
-  #{link_to "システムフック", help_system_hooks_path, class: "vlink"} を使うと
+  #{link_to "システムフック", help_page_path("system_hooks", "system_hooks"), class: "vlink"} を使うと
   GitLabがユーザやプロジェクトを作成したイベントを別のアクションに紐付けることができます。
 
 %hr
@@ -22,8 +22,8 @@
 %hr
 
 -if @hooks.any?
-  .ui-box
-    .title
+  .panel.panel-default
+    .panel-heading
       システムフック (#{@hooks.count})
     %ul.well-list
       - @hooks.each do |hook|

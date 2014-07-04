@@ -9,8 +9,9 @@
         メンバーをインポート
 
 %p.light
+  Read more about project permissions
   プロジェクトのアクセス権についての詳細は、
-  %strong= link_to "こちら", help_permissions_path, class: "vlink"
+  %strong= link_to "こちら", help_page_path("permissions", "permissions"), class: "vlink"
   から確認できます。
 = render "team", members: @users_projects
 - if @group

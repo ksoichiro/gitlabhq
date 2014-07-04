@@ -1,6 +1,9 @@
-### GitLabシステムのバックアップの作成
+# バックアップ・リストア
+
+## GitLabシステムのバックアップの作成
 
 データベースとすべてのリポジトリのバックアップアーカイブを作成します。このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
+
 ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
 
 ```
@@ -36,7 +39,7 @@ Deleting tmp directories...[DONE]
 Deleting old backups... [SKIPPING]
 ```
 
-### 以前のバックアップへのリストア
+## 以前のバックアップへのリストア
 
 ```
 bundle exec rake gitlab:backup:restore RAILS_ENV=production
@@ -79,7 +82,7 @@ Restoring repositories:
 Deleting tmp directories...[DONE]
 ```
 
-### 日次バックアップを行うためのcronの設定
+## 日次バックアップを行うためのcronの設定
 
 ```
 cd /home/git/gitlab

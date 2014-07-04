@@ -32,13 +32,13 @@
 
 .issue-box{ class: issue_box_class(@issue) }
   .state.clearfix
-    .state-label.col-sm-2.col-xs-12
+    .state-label
       - if @issue.closed?
         解決
       - else
         オープン
 
-    %span.creator.col-sm-9.col-xs-12
+    .creator
       #{link_to_member(@project, @issue.author)}が#{time_ago_with_tooltip(@issue.created_at)}に作成
 
   %h4.title

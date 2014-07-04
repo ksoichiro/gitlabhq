@@ -91,6 +91,22 @@ class Note < ActiveRecord::Base
       create(note_options, without_protection: true)
     end
 
+    def create_milestone_change_note(noteable, project, author, milestone)
+      body = if milestone.nil?
+               '_Milestone removed_'
+             else
+               "_Milestone changed to #{milestone.title}_"
+             end
+
+      create({
+        noteable: noteable,
+        project: project,
+        author: author,
+        note: body,
+        system: true
+      }, without_protection: true)
+    end
+
     def create_assignee_change_note(noteable, project, author, assignee)
       body = assignee.nil? ? '_担当者が削除されました_' : "_@#{assignee.username} に再度割り当てられました_"
 
@@ -123,11 +139,15 @@ class Note < ActiveRecord::Base
 
       discussions
     end
-  end
 
-  # Determine whether or not a cross-reference note already exists.
-  def self.cross_reference_exists?(noteable, mentioner)
-    where(noteable_id: noteable.id, system: true, note: "_#{mentioner.gfm_reference} で言及されました_").any?
+    def build_discussion_id(type, id, line_code)
+      [:discussion, type.try(:underscore), id, line_code].join("-").to_sym
+    end
+
+    # Determine whether or not a cross-reference note already exists.
+    def cross_reference_exists?(noteable, mentioner)
+      where(noteable_id: noteable.id, system: true, note: "_#{mentioner.gfm_reference} で言及されました_").any?
+    end
   end
 
   def commit_author
@@ -195,7 +215,7 @@ class Note < ActiveRecord::Base
   end
 
   def discussion_id
-    @discussion_id ||= [:discussion, noteable_type.try(:underscore), noteable_id || commit_id, line_code].join("-").to_sym
+    @discussion_id ||= Note.build_discussion_id(noteable_type, noteable_id || commit_id, line_code)
   end
 
   # Returns true if this is a downvote note,
@@ -230,10 +250,6 @@ class Note < ActiveRecord::Base
 
   def for_merge_request_diff_line?
     for_merge_request? && for_diff_line?
-  end
-
-  def for_wall?
-    noteable_type.blank?
   end
 
   # override to return commits, which are not active record
@@ -276,8 +292,6 @@ class Note < ActiveRecord::Base
   def noteable_type_name
     if noteable_type.present?
       noteable_type.downcase
-    else
-      "wall"
     end
   end
 
