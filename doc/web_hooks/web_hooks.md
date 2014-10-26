@@ -76,7 +76,9 @@ WebフックをSSLエンドポイントへ送信した場合、自己署名の�
     "description": "Create new API for manipulations with repository",
     "milestone_id": null,
     "state": "opened",
-    "iid": 23
+    "iid": 23,
+    "url": "http://example.com/diaspora/issues/23",
+    "action": "open"
   }
 }
 ```

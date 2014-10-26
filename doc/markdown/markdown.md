@@ -139,23 +139,23 @@ But let's throw in a <b>tag</b>.
 
 ## 絵文字
 
-        時には、あなたの :speech_balloon: を :cool: にして、 :sparkles: を追加したいこともあるでしょう。そんなあなたに :gift: があります。
-        
-        :exclamation: あなたはGFMがサポートされた場所ならどこでも、絵文字を使うことができます :sunglasses:
-        
-        :bug: の指摘や :monkey:パッチの警告に使うこともできます。そして、もし誰かが本当に :snail: なコードを改善したら、彼らに :bouquet: か :candy: を送りましょう。皆あなたを :heart: になるでしょう。
-        
-        あなたが絵文字について :new: な場合、 :fearful: にならないでください。あなたも簡単に絵文字の :circus_tent: に入ることができます。サポートされたコードを使うだけです。 :book:
-        
-        サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
+	時には、 :ninja: になり :speech_balloon: に :glowing_star: を追加したいこともあるでしょう。そんなあなたにプレゼントがあります。
 
-時には、あなたの :speech_balloon: を :cool: にして、 :sparkles: を追加したいこともあるでしょう。そんなあなたに :gift: があります。
+	:high_voltage_sign: あなたはGFMがサポートされた場所ならどこでも、絵文字を使うことができます :victory_hand:
 
-:exclamation: あなたはGFMがサポートされた場所ならどこでも、絵文字を使うことができます :sunglasses:
+	:bug: の指摘や :speak_no_evil_monkey: パッチの警告に使うこともできます。そして、もし誰かが本当に :snail: なコードを改善したら、彼らに :cake: を送りましょう。皆あなたを :heart: になるでしょう。
 
-:bug: の指摘や :monkey:パッチの警告に使うこともできます。そして、もし誰かが本当に :snail: なコードを改善したら、彼らに :bouquet: か :candy: を送りましょう。皆あなたを :heart: になるでしょう。
+	あなたが絵文字の初心者だとしても、 :fearful_face: にならないでください。あなたも簡単に絵文字の :family: に入ることができます。サポートされたコードを使うだけです。
 
-あなたが絵文字について :new: な場合、 :fearful: にならないでください。あなたも簡単に絵文字の :circus_tent: に入ることができます。サポートされたコードを使うだけです。 :book:
+	サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
+
+時には、 :ninja: になり :speech_balloon: に :glowing_star: を追加したいこともあるでしょう。そんなあなたにプレゼントがあります。
+
+:high_voltage_sign: あなたはGFMがサポートされた場所ならどこでも、絵文字を使うことができます :victory_hand:
+
+:bug: の指摘や :speak_no_evil_monkey: パッチの警告に使うこともできます。そして、もし誰かが本当に :snail: なコードを改善したら、彼らに :cake: を送りましょう。皆あなたを :heart: になるでしょう。
+
+あなたが絵文字の初心者だとしても、 :fearful_face: にならないでください。あなたも簡単に絵文字の :family: に入ることができます。サポートされたコードを使うだけです。
 
 サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
 
@@ -170,6 +170,7 @@ GFM は参照をリンクに変換するため、それらの参照に対して�
 GFM は以下を認識します。
 
 - @foo : チームメンバーへの参照
+- @all : チーム全体への参照
 - #123 : 課題への参照
 - !123 : マージリクエストへの参照
 - $123 : スニペットへの参照

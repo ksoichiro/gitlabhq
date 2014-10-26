@@ -34,23 +34,26 @@
 
     - if defined?(labels)
       %fieldset
-        %legend ラベル
+        %legend
+          ラベル
+          %small.pull-right
+            = link_to project_labels_path(@project), class: 'light' do
+              %i.icon-edit
         %ul.nav.nav-pills.nav-stacked.nav-small.labels-filter
-          - issue_label_names.each do |label_name|
-            %li{class: label_filter_class(label_name)}
-              = link_to labels_filter_path(label_name) do
-                %span{class: "label #{label_css_class(label_name)}"}
-                  %i.icon-tag
-                = label_name
-                - if selected_label?(label_name)
+          - @project.labels.order_by_name.each do |label|
+            %li{class: label_filter_class(label.name)}
+              = link_to labels_filter_path(label.name) do
+                = render_colored_label(label)
+                - if selected_label?(label.name)
                   .pull-right
                     %i.icon-remove
 
-          - if issue_label_names.empty?
-            .light-well
-              最初のラベルを追加
-              %br
-              または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project, redirect: redirect), method: :post}
+        - if @project.labels.empty?
+          .light-well
+            = link_to 'ラベルページ', project_labels_path(@project)
+            に最初のラベルを作成
+            %br
+            または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project, redirect: redirect), method: :post}
 
     %fieldset
       - if %w(state scope milestone_id assignee_id label_name).select { |k| params[k].present? }.any?

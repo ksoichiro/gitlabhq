@@ -33,12 +33,12 @@
 
           %fieldset.features
             %legend
-              ラベル:
+              タグ:
             .form-group
-              = f.label :label_list, "ラベル", class: 'control-label'
+              = f.label :tag_list, "タグ", class: 'control-label'
               .col-sm-10
-                = f.text_field :label_list, maxlength: 2000, class: "form-control"
-                %p.hint ラベルはカンマで区切って複数記述できます
+                = f.text_field :tag_list, maxlength: 2000, class: "form-control"
+                %p.hint ラベルはカンマで区切ります
 
           %fieldset.features
             %legend

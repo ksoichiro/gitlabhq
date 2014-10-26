@@ -12,11 +12,4 @@
 
 - if @user.created_by_id
   %p
-    パスワード................................
-    %code= @password
-
-  %p
-    ログイン後にパスワードを変更してください。
-
-%p
-  = link_to "クリックしてログイン", root_url
+    = link_to "クリックしてパスワードを設定", edit_password_url(@user, :reset_password_token => @token)

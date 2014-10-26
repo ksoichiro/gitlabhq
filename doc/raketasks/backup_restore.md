@@ -4,7 +4,8 @@
 
 ## GitLabシステムのバックアップの作成
 
-データベースとすべてのリポジトリのバックアップアーカイブを作成します。このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
+データベースとすべてのリポジトリのバックアップアーカイブを作成します。
+このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
 
 ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
 
@@ -44,6 +45,13 @@ Creating backup archive: $TIMESTAMP_gitlab_backup.tar [DONE]
 Deleting tmp directories...[DONE]
 Deleting old backups... [SKIPPING]
 ```
+
+## 設定ファイルの保存
+
+バックアップでは設定ファイルは保存されないことに注意してください。
+Omnibus-GitLab を使用している場合は、 [READMEの設定のバックアップ方法](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#backup-and-restore-omnibus-gitlab-configuration) を参照してください。
+Cookbookでインストールしている場合は、Chefに設定のコピーがあるはずです。
+手動でインストールした場合は、gitlab.ymlファイル、SSLキー、証明書のバックアップを検討してください。
 
 ## 以前のバックアップへのリストア
 

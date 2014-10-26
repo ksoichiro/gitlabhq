@@ -34,7 +34,7 @@ module Files
       if created_successfully
         success
       else
-        error("ファイルが変更されたため、変更をコミットできません")
+        error("ファイルが変更されたため、変更をコミットできませんでした。別のプロセスにファイルが変更されたか、コミットするものがありません")
       end
     end
   end

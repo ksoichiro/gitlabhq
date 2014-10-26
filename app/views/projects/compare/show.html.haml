@@ -27,9 +27,9 @@
         比較するものはありません
       %p.slead
         - if params[:to] == params[:from]
-          比較するには違うブランチ名を指定してください。
-        - else
           %span.label-branch #{params[:from]}
           と
           %span.label-branch #{params[:to]}
           が同一です。
+        - else
+          比較するには違うブランチ名を指定してください。
