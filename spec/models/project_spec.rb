@@ -27,9 +27,6 @@
 require 'spec_helper'
 
 describe Project do
-  before { enable_observers }
-  after { disable_observers }
-
   describe "Associations" do
     it { should belong_to(:group) }
     it { should belong_to(:namespace) }
@@ -51,8 +48,6 @@ describe Project do
   end
 
   describe "Mass assignment" do
-    it { should_not allow_mass_assignment_of(:namespace_id) }
-    it { should_not allow_mass_assignment_of(:creator_id) }
   end
 
   describe "Validation" do

@@ -5,6 +5,10 @@
 このコマンドは、GitLabと、GitLabを実行するシステムの情報を収集します。これらはヘルプを求めたり問題をレポートするのに便利です。
 
 ```
+# omnibus-gitlab
+sudo gitlab-rake gitlab:env:info
+
+# installation from source or cookbook
 bundle exec rake gitlab:env:info RAILS_ENV=production
 ```
 
@@ -52,8 +56,14 @@ Git:		/usr/bin/git
 [Trouble Shooting Guide](https://github.com/gitlabhq/gitlab-public-wiki/wiki/Trouble-Shooting-Guide) も確認しておいた方が良いでしょう。
 
 ```
+# omnibus-gitlab
+sudo gitlab-rake gitlab:check
+
+# installation from source or cookbook
 bundle exec rake gitlab:check RAILS_ENV=production
 ```
+
+注意: プロジェクト名を出力しない場合は、 gitlab:check に対して SANITIZE=true を使用してください。
 
 出力例:
 

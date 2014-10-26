@@ -21,7 +21,7 @@ class Projects::IssuesController < Projects::ApplicationController
     terms = params['issue_search']
 
     @issues = issues_filtered
-    @issues = @issues.where("title LIKE ?", "%#{terms}%") if terms.present?
+    @issues = @issues.where("title LIKE ? OR description LIKE ?", "%#{terms}%", "%#{terms}%") if terms.present?
     @issues = @issues.page(params[:page]).per(20)
 
     assignee_id, milestone_id = params[:assignee_id], params[:milestone_id]
@@ -43,7 +43,11 @@ class Projects::IssuesController < Projects::ApplicationController
   end
 
   def new
-    @issue = @project.issues.new(params[:issue])
+    params[:issue] ||= ActionController::Parameters.new(
+      assignee_id: ""
+    )
+
+    @issue = @project.issues.new(issue_params)
     respond_with(@issue)
   end
 
@@ -60,7 +64,7 @@ class Projects::IssuesController < Projects::ApplicationController
   end
 
   def create
-    @issue = Issues::CreateService.new(project, current_user, params[:issue]).execute
+    @issue = Issues::CreateService.new(project, current_user, issue_params).execute
 
     respond_to do |format|
       format.html do
@@ -77,7 +81,7 @@ class Projects::IssuesController < Projects::ApplicationController
   end
 
   def update
-    @issue = Issues::UpdateService.new(project, current_user, params[:issue]).execute(issue)
+    @issue = Issues::UpdateService.new(project, current_user, issue_params).execute(issue)
 
     respond_to do |format|
       format.js
@@ -144,5 +148,12 @@ class Projects::IssuesController < Projects::ApplicationController
     else
       raise ActiveRecord::RecordNotFound.new
     end
+  end
+
+  def issue_params
+    params.require(:issue).permit(
+      :title, :assignee_id, :position, :description,
+      :milestone_id, :label_list, :state_event
+    )
   end
 end

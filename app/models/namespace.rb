@@ -17,8 +17,6 @@
 class Namespace < ActiveRecord::Base
   include Gitlab::ShellAdapter
 
-  attr_accessible :name, :description, :path
-
   has_many :projects, dependent: :destroy
   belongs_to :owner, class_name: "User"
 
@@ -26,12 +24,12 @@ class Namespace < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true,
             length: { within: 0..255 },
             format: { with: Gitlab::Regex.name_regex,
-                      message: "英数字, スペース, '_' '-' '.' だけが入力できます" }
+                      message: Gitlab::Regex.name_regex_message }
   validates :description, length: { within: 0..255 }
   validates :path, uniqueness: { case_sensitive: false }, presence: true, length: { within: 1..255 },
             exclusion: { in: Gitlab::Blacklist.path },
             format: { with: Gitlab::Regex.path_regex,
-                      message: "英数字, '_' '-' '.' だけが入力できます。先頭は英数字のみです" }
+                      message: Gitlab::Regex.path_regex_message }
 
   delegate :name, to: :owner, allow_nil: true, prefix: true
 

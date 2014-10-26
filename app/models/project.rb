@@ -28,22 +28,19 @@
 class Project < ActiveRecord::Base
   include Gitlab::ShellAdapter
   include Gitlab::VisibilityLevel
+  include Gitlab::ConfigHelper
+  extend Gitlab::ConfigHelper
   extend Enumerize
 
   default_value_for :archived, false
-  default_value_for :issues_enabled, true
-  default_value_for :merge_requests_enabled, true
-  default_value_for :wiki_enabled, true
+  default_value_for :visibility_level, gitlab_config_features.visibility_level
+  default_value_for :issues_enabled, gitlab_config_features.issues
+  default_value_for :merge_requests_enabled, gitlab_config_features.merge_requests
+  default_value_for :wiki_enabled, gitlab_config_features.wiki
   default_value_for :wall_enabled, false
-  default_value_for :snippets_enabled, true
+  default_value_for :snippets_enabled, gitlab_config_features.snippets
 
   ActsAsTaggableOn.strict_case_match = true
-
-  attr_accessible :name, :path, :description, :issues_tracker, :label_list,
-    :issues_enabled, :merge_requests_enabled, :snippets_enabled, :issues_tracker_id,
-    :wiki_enabled, :visibility_level, :import_url, :last_activity_at, as: [:default, :admin]
-
-  attr_accessible :namespace_id, :creator_id, as: :admin
 
   acts_as_taggable_on :labels, :issues_default_labels
 
@@ -94,13 +91,16 @@ class Project < ActiveRecord::Base
   validates :description, length: { maximum: 2000 }, allow_blank: true
   validates :name, presence: true, length: { within: 0..255 },
             format: { with: Gitlab::Regex.project_name_regex,
-                      message: "には英数字, スペース, '_' '-' '.' だけが入力できます。先頭は英数字のみです" }
+                      message: Gitlab::Regex.project_regex_message }
   validates :path, presence: true, length: { within: 0..255 },
             exclusion: { in: Gitlab::Blacklist.path },
             format: { with: Gitlab::Regex.path_regex,
-                      message: "には英数字, '_' '-' '.' だけが入力できます。先頭は英数字のみです" }
+                      message: Gitlab::Regex.path_regex_message }
   validates :issues_enabled, :merge_requests_enabled,
             :wiki_enabled, inclusion: { in: [true, false] }
+  validates :visibility_level,
+    exclusion: { in: gitlab_config.restricted_visibility_levels },
+    if: -> { gitlab_config.restricted_visibility_levels.any? }
   validates :issues_tracker_id, length: { maximum: 255 }, allow_blank: true
   validates :namespace, presence: true
   validates_uniqueness_of :name, scope: :namespace_id
@@ -244,7 +244,7 @@ class Project < ActiveRecord::Base
   end
 
   def check_limit
-    unless creator.can_create_project?
+    unless creator.can_create_project? or namespace.kind == 'group'
       errors[:limit_reached] << ("あなたが作成できるプロジェクトの上限は #{creator.projects_limit} 個です！管理者に上限を増やすように連絡してください")
     end
   rescue
@@ -256,7 +256,7 @@ class Project < ActiveRecord::Base
   end
 
   def web_url
-    [Gitlab.config.gitlab.url, path_with_namespace].join("/")
+    [gitlab_config.url, path_with_namespace].join("/")
   end
 
   def web_url_without_protocol
@@ -392,7 +392,11 @@ class Project < ActiveRecord::Base
     services.each do |service|
 
       # Call service hook only if it is active
-      service.execute(data) if service.active
+      begin
+        service.execute(data) if service.active
+      rescue => e
+        logger.error(e)
+      end
     end
   end
 
@@ -477,7 +481,7 @@ class Project < ActiveRecord::Base
   end
 
   def http_url_to_repo
-    [Gitlab.config.gitlab.url, "/", path_with_namespace, ".git"].join('')
+    [gitlab_config.url, "/", path_with_namespace, ".git"].join('')
   end
 
   # Check if current branch name is marked as protected in the system

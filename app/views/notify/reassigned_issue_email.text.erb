@@ -2,4 +2,4 @@
 
 <%= url_for(project_issue_url(@issue.project, @issue)) %>
 
-担当者は <%= "#{@previous_assignee.name} から" if @previous_assignee %> に <%= @issue.assignee_name %> 変更されました
+担当者は <%= "from #{@previous_assignee.name}" if @previous_assignee %> から <%= "#{@issue.assignee_id ? @issue.assignee_name : '担当者なし'}" %> に変更されました

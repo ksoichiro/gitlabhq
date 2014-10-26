@@ -1,7 +1,7 @@
 %ul
   = nav_link(path: 'profiles#show', html_options: {class: 'home'}) do
     = link_to profile_path, title: "プロフィール" do
-      %i.icon-home
+      プロフィール
   = nav_link(controller: :accounts) do
     = link_to "アカウント", profile_account_path
   = nav_link(controller: :emails) do

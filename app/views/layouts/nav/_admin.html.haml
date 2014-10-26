@@ -1,13 +1,13 @@
 %ul
   = nav_link(controller: :dashboard, html_options: {class: 'home'}) do
     = link_to admin_root_path, title: "統計" do
-      %i.icon-home
+      概要
   = nav_link(controller: :projects) do
     = link_to "プロジェクト", admin_projects_path
-  = nav_link(controller: :groups) do
-    = link_to "グループ", admin_groups_path
   = nav_link(controller: :users) do
     = link_to "ユーザ", admin_users_path
+  = nav_link(controller: :groups) do
+    = link_to "グループ", admin_groups_path
   = nav_link(controller: :logs) do
     = link_to "ログ", admin_logs_path
   = nav_link(controller: :broadcast_messages) do

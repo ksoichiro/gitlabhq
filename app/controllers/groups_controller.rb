@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(params[:group])
+    @group = Group.new(group_params)
     @group.path = @group.name.dup.parameterize if @group.name
 
     if @group.save
@@ -85,7 +85,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    if @group.update_attributes(params[:group])
+    if @group.update_attributes(group_params)
       redirect_to edit_group_path(@group), notice: 'グループが更新されました'
     else
       render action: "edit"
@@ -159,5 +159,9 @@ class GroupsController < ApplicationController
     end
     params[:state] = 'opened' if params[:state].blank?
     params[:group_id] = @group.id
+  end
+
+  def group_params
+    params.require(:group).permit(:name, :description, :path, :avatar)
   end
 end

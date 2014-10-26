@@ -26,8 +26,6 @@ class Note < ActiveRecord::Base
 
   default_value_for :system, false
 
-  attr_accessible :note, :noteable, :noteable_id, :noteable_type, :project_id,
-                  :attachment, :line_code, :commit_id
   attr_mentionable :note
 
   belongs_to :project
@@ -58,18 +56,19 @@ class Note < ActiveRecord::Base
 
   serialize :st_diff
   before_create :set_diff, if: ->(n) { n.line_code.present? }
+  after_update :set_references
 
   class << self
     def create_status_change_note(noteable, project, author, status, source)
       body = "_#{source.gfm_reference + 'が' if source}ステータスを#{status}に変更しました_"
 
-      create({
+      create(
         noteable: noteable,
         project: project,
         author: author,
         note: body,
         system: true
-      }, without_protection: true)
+      )
     end
 
     # +noteable+ was referenced from +mentioner+, by including GFM in either +mentioner+'s description or an associated Note.
@@ -88,7 +87,7 @@ class Note < ActiveRecord::Base
         note_options.merge!(noteable: noteable)
       end
 
-      create(note_options, without_protection: true)
+      create(note_options)
     end
 
     def create_milestone_change_note(noteable, project, author, milestone)
@@ -98,13 +97,13 @@ class Note < ActiveRecord::Base
                "_Milestone changed to #{milestone.title}_"
              end
 
-      create({
+      create(
         noteable: noteable,
         project: project,
         author: author,
         note: body,
         system: true
-      }, without_protection: true)
+      )
     end
 
     def create_assignee_change_note(noteable, project, author, assignee)
@@ -116,7 +115,7 @@ class Note < ActiveRecord::Base
         author: author,
         note: body,
         system: true
-      }, without_protection: true)
+      })
     end
 
     def discussions_from_notes(notes)
@@ -179,10 +178,28 @@ class Note < ActiveRecord::Base
     @diff ||= Gitlab::Git::Diff.new(st_diff) if st_diff.respond_to?(:map)
   end
 
+  # Check if such line of code exists in merge request diff
+  # If exists - its active discussion
+  # If not - its outdated diff
   def active?
-    # TODO: determine if discussion is outdated
-    # according to recent MR diff or not
-    true
+    return true unless self.diff
+
+    noteable.diffs.each do |mr_diff|
+      next unless mr_diff.new_path == self.diff.new_path
+
+      Gitlab::DiffParser.new(mr_diff.diff.lines.to_a, mr_diff.new_path).
+        each do |full_line, type, line_code, line_new, line_old|
+        if full_line == diff_line
+          return true
+        end
+      end
+    end
+
+    false
+  end
+
+  def outdated?
+    !active?
   end
 
   def diff_file_index
@@ -314,5 +331,9 @@ class Note < ActiveRecord::Base
     Event.where(target_id: self.id, target_type: 'Note').
       order('id DESC').limit(100).
       update_all(updated_at: Time.now)
+  end
+
+  def set_references
+    notice_added_references(project, author)
   end
 end

@@ -1,43 +1,42 @@
-.login-box
-  %h3.page-title サインイン
-  - if ldap_enabled? && gitlab_config.signin_enabled
-    %ul.nav.nav-tabs
-      %li.active
-        = link_to 'LDAP', '#tab-ldap', 'data-toggle' => 'tab'
-      %li
-        = link_to 'Standard', '#tab-signin', 'data-toggle' => 'tab'
-    .tab-content
-      %div#tab-ldap.tab-pane.active
-        = render partial: 'devise/sessions/new_ldap'
-      %div#tab-signin.tab-pane
-        = render partial: 'devise/sessions/new_base'
+.login-box.panel.panel-primary
+  .panel-heading
+    %h3.panel-title サインイン
+  .panel-body
+    - if ldap_enabled? && gitlab_config.signin_enabled
+      %ul.nav.nav-tabs
+        %li.active
+          = link_to 'LDAP', '#tab-ldap', 'data-toggle' => 'tab'
+        %li
+          = link_to 'スタンダード', '#tab-signin', 'data-toggle' => 'tab'
+      .tab-content
+        %div#tab-ldap.tab-pane.active
+          = render partial: 'devise/sessions/new_ldap'
+        %div#tab-signin.tab-pane
+          = render partial: 'devise/sessions/new_base'
 
-  - elsif ldap_enabled?
-    = render partial: 'devise/sessions/new_ldap'
+    - elsif ldap_enabled?
+      = render partial: 'devise/sessions/new_ldap'
+    - elsif gitlab_config.signin_enabled
+      = render partial: 'devise/sessions/new_base'
+    - else
+      %div
+        認証方法が設定されていません
 
-  - elsif gitlab_config.signin_enabled
-    = render partial: 'devise/sessions/new_base'
+    = render 'devise/sessions/oauth_providers' if Gitlab.config.omniauth.enabled && devise_mapping.omniauthable?
 
-  - else
-    %div
-      No authentication methods configured.
+  .panel-footer
+    - if gitlab_config.signup_enabled
+      %p
+        %span.light
+          アカウントを登録しますか？
+        %strong
+          = link_to "サインアップ", new_registration_path(resource_name)
 
-
-  = render 'devise/sessions/oauth_providers' if Gitlab.config.omniauth.enabled && devise_mapping.omniauthable?
-  %hr
-
-  - if gitlab_config.signup_enabled
     %p
-      %span.light
-        Don't have an account?
-      %strong
-        = link_to "サインアップ", new_registration_path(resource_name)
-
-  %p
-    %span.light 確認のメールを受信していませんか？
-    = link_to "もう一度送信", new_confirmation_path(resource_name)
+      %span.light 確認のメールを受信していませんか？
+      = link_to "もう一度送信", new_confirmation_path(resource_name)
 
 
-  - if extra_config.has_key?('sign_in_text')
-    %hr
-    = markdown(extra_config.sign_in_text)
+    - if extra_config.has_key?('sign_in_text')
+      %hr
+      = markdown(extra_config.sign_in_text)

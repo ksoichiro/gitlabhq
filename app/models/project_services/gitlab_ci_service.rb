@@ -19,8 +19,6 @@
 #
 
 class GitlabCiService < CiService
-  attr_accessible :project_url
-
   validates :project_url, presence: true, if: :activated?
   validates :token, presence: true, if: :activated?
 

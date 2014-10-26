@@ -15,9 +15,9 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    params[:user].delete(:email) if @user.ldap_user?
+    user_params.except!(:email) if @user.ldap_user?
 
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:notice] = "プロフィールが更新されました"
     else
       flash[:alert] = "プロフィールの更新に失敗しました"
@@ -42,7 +42,7 @@ class ProfilesController < ApplicationController
   end
 
   def update_username
-    @user.update_attributes(username: params[:user][:username])
+    @user.update_attributes(username: user_params[:username])
 
     respond_to do |format|
       format.js
@@ -57,5 +57,13 @@ class ProfilesController < ApplicationController
 
   def authorize_change_username!
     return render_404 unless @user.can_change_username?
+  end
+
+  def user_params
+    params.require(:user).permit(
+      :email, :password, :password_confirmation, :bio, :name, :username,
+      :skype, :linkedin, :twitter, :website_url, :color_scheme_id, :theme_id,
+      :avatar, :hide_no_ssh_key,
+    )
   end
 end

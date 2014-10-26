@@ -65,8 +65,6 @@ describe User do
   end
 
   describe "Mass assignment" do
-    it { should_not allow_mass_assignment_of(:projects_limit) }
-    it { should allow_mass_assignment_of(:projects_limit).as(:admin) }
   end
 
   describe 'validations' do
@@ -145,7 +143,6 @@ describe User do
 
   describe 'projects' do
     before do
-      ActiveRecord::Base.observers.enable(:user_observer)
       @user = create :user
       @project = create :project, namespace: @user.namespace
       @project_2 = create :project, group: create(:group) # Grant MASTER access to the user
@@ -168,7 +165,6 @@ describe User do
 
   describe 'groups' do
     before do
-      ActiveRecord::Base.observers.enable(:user_observer)
       @user = create :user
       @group = create :group
       @group.add_owner(@user)
@@ -181,7 +177,6 @@ describe User do
 
   describe 'group multiple owners' do
     before do
-      ActiveRecord::Base.observers.enable(:user_observer)
       @user = create :user
       @user2 = create :user
       @group = create :group
@@ -195,7 +190,6 @@ describe User do
 
   describe 'namespaced' do
     before do
-      ActiveRecord::Base.observers.enable(:user_observer)
       @user = create :user
       @project = create :project, namespace: @user.namespace
     end
@@ -247,59 +241,23 @@ describe User do
       it { user.first_name.should == 'John' }
     end
 
-    describe 'without defaults' do
+    describe 'with defaults' do
       let(:user) { User.new }
 
-      it "should not apply defaults to user" do
-        user.projects_limit.should == 10
-        user.can_create_group.should be_true
+      it "should apply defaults to user" do
+        user.projects_limit.should == Gitlab.config.gitlab.default_projects_limit
+        user.can_create_group.should == Gitlab.config.gitlab.default_can_create_group
+        user.theme_id.should == Gitlab.config.gitlab.default_theme
+      end
+    end
+
+    describe 'with default overrides' do
+      let(:user) { User.new(projects_limit: 123, can_create_group: false, can_create_team: true, theme_id: Gitlab::Theme::BASIC) }
+
+      it "should apply defaults to user" do
+        user.projects_limit.should == 123
+        user.can_create_group.should be_false
         user.theme_id.should == Gitlab::Theme::BASIC
-      end
-    end
-    context 'as admin' do
-      describe 'with defaults' do
-        let(:user) { User.build_user({}, as: :admin) }
-
-        it "should apply defaults to user" do
-          user.projects_limit.should == Gitlab.config.gitlab.default_projects_limit
-          user.can_create_group.should == Gitlab.config.gitlab.default_can_create_group
-          user.theme_id.should == Gitlab.config.gitlab.default_theme
-        end
-      end
-
-      describe 'with default overrides' do
-        let(:user) { User.build_user({projects_limit: 123, can_create_group: true, can_create_team: true, theme_id: Gitlab::Theme::BASIC}, as: :admin) }
-
-        it "should apply defaults to user" do
-          Gitlab.config.gitlab.default_projects_limit.should_not == 123
-          Gitlab.config.gitlab.default_can_create_group.should_not be_true
-          Gitlab.config.gitlab.default_theme.should_not == Gitlab::Theme::BASIC
-          user.projects_limit.should == 123
-          user.can_create_group.should be_true
-          user.theme_id.should == Gitlab::Theme::BASIC
-        end
-      end
-    end
-
-    context 'as user' do
-      describe 'with defaults' do
-        let(:user) { User.build_user }
-
-        it "should apply defaults to user" do
-          user.projects_limit.should == Gitlab.config.gitlab.default_projects_limit
-          user.can_create_group.should == Gitlab.config.gitlab.default_can_create_group
-          user.theme_id.should == Gitlab.config.gitlab.default_theme
-        end
-      end
-
-      describe 'with default overrides' do
-        let(:user) { User.build_user(projects_limit: 123, can_create_group: true, theme_id: Gitlab::Theme::BASIC) }
-
-        it "should apply defaults to user" do
-          user.projects_limit.should == Gitlab.config.gitlab.default_projects_limit
-          user.can_create_group.should == Gitlab.config.gitlab.default_can_create_group
-          user.theme_id.should == Gitlab.config.gitlab.default_theme
-        end
       end
     end
   end
@@ -339,7 +297,7 @@ describe User do
       user.all_ssh_keys.should include(key.key)
     end
   end
-    
+
   describe :avatar_type do
     let(:user) { create(:user) }
 

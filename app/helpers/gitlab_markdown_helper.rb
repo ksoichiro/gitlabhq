@@ -63,10 +63,14 @@ module GitlabMarkdownHelper
     paths = extract_paths(text)
 
     paths.uniq.each do |file_path|
-      new_path = rebuild_path(file_path)
-      # Finds quoted path so we don't replace other mentions of the string
-      # eg. "doc/api" will be replaced and "/home/doc/api/text" won't
-      text.gsub!("\"#{file_path}\"", "\"/#{new_path}\"")
+      # If project does not have repository
+      # its nothing to rebuild
+      if @repository.exists? && !@repository.empty?
+        new_path = rebuild_path(file_path)
+        # Finds quoted path so we don't replace other mentions of the string
+        # eg. "doc/api" will be replaced and "/home/doc/api/text" won't
+        text.gsub!("\"#{file_path}\"", "\"/#{new_path}\"")
+      end
     end
 
     text
@@ -91,7 +95,12 @@ module GitlabMarkdownHelper
   end
 
   def link_to_ignore?(link)
-    ignored_protocols.map{ |protocol| link.include?(protocol) }.any?
+    if link =~ /\#\w+/
+      # ignore anchors like <a href="#my-header">
+      true
+    else
+      ignored_protocols.map{ |protocol| link.include?(protocol) }.any?
+    end
   end
 
   def ignored_protocols
@@ -129,7 +138,7 @@ module GitlabMarkdownHelper
   # If we are at doc/api/README.md and the README.md contains relative links like [Users](users.md)
   # this takes the request path(doc/api/README.md), and replaces the README.md with users.md so the path looks like doc/api/users.md
   # If we are at doc/api and the README.md shown in below the tree view
-  # this takes the rquest path(doc/api) and adds users.md so the path looks like doc/api/users.md
+  # this takes the request path(doc/api) and adds users.md so the path looks like doc/api/users.md
   def build_nested_path(path, request_path)
     return request_path if path == ""
     return path unless request_path
@@ -169,7 +178,7 @@ module GitlabMarkdownHelper
   def current_sha
     if @commit
       @commit.id
-    else
+    elsif @repository && !@repository.empty?
       @repository.head_commit.sha
     end
   end

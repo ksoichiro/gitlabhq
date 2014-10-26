@@ -4,39 +4,25 @@
 
 **[GitLab Flavored Markdown](#gitlab-flavored-markdown-gfm)**
 
-[改行](#newlines)
-
-[単語内の複数のアンダースコア](#multiple-underscores-in-words)
-
-[URLの自動リンク](#url-autolinking)
-
-[コードとシンタックスハイライト](#code-and-syntax-highlighting)
-
-[絵文字](#emoji)
-
-[GitLabでの参照](#special-gitlab-references)
+* [改行](#newlines)
+* [単語内の複数のアンダースコア](#multiple-underscores-in-words)
+* [URLの自動リンク](#url-autolinking)
+* [コードとシンタックスハイライト](#code-and-syntax-highlighting)
+* [絵文字](#emoji)
+* [GitLabでの参照](#special-gitlab-references)
 
 **[標準のMarkdown](#standard-markdown)**
 
-[ヘッダ](#headers)
-
-[強調](#emphasis)
-
-[リスト](#lists)
-
-[リンク](#links)
-
-[画像](#images)
-
-[引用](#blockquotes)
-
-[インライン HTML](#inline-html)
-
-[水平線](#horizontal-rule)
-
-[改行](#line-breaks)
-
-[表](#tables)
+* [ヘッダ](#headers)
+* [強調](#emphasis)
+* [リスト](#lists)
+* [リンク](#links)
+* [画像](#images)
+* [引用](#blockquotes)
+* [インライン HTML](#inline-html)
+* [水平線](#horizontal-rule)
+* [改行](#line-breaks)
+* [表](#tables)
 
 **[リファレンス](#references)**
 

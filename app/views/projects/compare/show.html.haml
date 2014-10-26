@@ -18,22 +18,11 @@
     - else
       %ul.well-list= render Commit.decorate(@commits), project: @project
 
-  %h4 Changes
-  - if @diffs.present?
-    = render "projects/commits/diffs", diffs: @diffs, project: @project
-  - elsif @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE
-    .bs-callout.bs-callout-danger
-      %h4 この比較には #{MergeRequestDiff::COMMITS_SAFE_SIZE} コミット以上が含まれています。
-      %p パフォーマンスを維持するため、差分行は表示されません。
-  - elsif @timeout
-    .bs-callout.bs-callout-danger
-      %h4 この比較の差分は大きすぎます。
-      %p 差分を確認するにはコマンドラインをご利用ください。
-
+  = render "projects/commits/diffs", diffs: @diffs, project: @project
 
 - else
   .light-well
-    %center
+    .center
       %h4
         比較するものはありません
       %p.slead

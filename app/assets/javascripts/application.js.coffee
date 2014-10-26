@@ -23,7 +23,7 @@
 #= require g.raphael-min
 #= require g.bar-min
 #= require branch-graph
-#= require highlightjs.min
+#= require highlight.pack
 #= require ace/ace
 #= require d3
 #= require underscore
@@ -142,6 +142,14 @@ $ ->
   $(".diff-content").on "click", ".supp_diff_link", ->
     $(@).next('table').show()
     $(@).remove()
+
+  # Show/hide comments on diff
+  $("body").on "click", ".js-toggle-diff-comments", (e) ->
+    $(@).find('i').
+      toggleClass('icon-chevron-down').
+      toggleClass('icon-chevron-up')
+    $(@).closest(".diff-file").find(".notes_holder").toggle()
+    e.preventDefault()
 
 (($) ->
   # Disable an element and add the 'disabled' Bootstrap class

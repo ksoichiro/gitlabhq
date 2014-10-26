@@ -19,21 +19,3 @@
 ```
 bundle exec rake gitlab:enable_namespaces RAILS_ENV=production
 ```
-
-## プロジェクトサテライトの再構築
-
-このコマンドは存在しないプロジェクトサテライトを構築します。このコマンドを実行した後、 **マージリクエストのマージ** をGitLabを通じて **オンラインエディタ** から実行できるようになります。
-
-```
-bundle exec rake gitlab:satellites:create RAILS_ENV=production
-```
-
-出力例:
-
-```
-Creating satellite for abcd.git
-[git clone output]
-Creating satellite for abcd2.git
-[git clone output]
-done
-```

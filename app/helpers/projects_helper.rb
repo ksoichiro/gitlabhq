@@ -222,4 +222,10 @@ module ProjectsHelper
       "なし"
     end
   end
+
+  def contribution_guide_url(project)
+    if project && project.repository.contribution_guide
+      project_blob_path(project, tree_join(project.default_branch, project.repository.contribution_guide.name))
+    end
+  end
 end

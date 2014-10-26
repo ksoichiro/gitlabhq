@@ -1,15 +1,18 @@
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "login-box" }) do |f|
-  %h3 パスワードの変更
-  .devise-errors
-    = devise_error_messages!
-  = f.hidden_field :reset_password_token
-  %div
-    = f.password_field :password, class: "form-control top", placeholder: "新しいパスワード", required: true
-  %div
-    = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "新しいパスワードの確認", required: true
-  %div
-  .clearfix.append-bottom-10
-    = f.submit "パスワードを変更", class: "btn btn-primary"
-    = link_to "サインイン", new_session_path(resource_name), class: "btn pull-right"
-  %div
-    = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
+.login-box.panel.panel-default
+  .panel-heading
+    %h3.panel-title パスワードの変更
+  .panel-body
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+      .devise-errors
+        = devise_error_messages!
+      = f.hidden_field :reset_password_token
+      %div
+        = f.password_field :password, class: "form-control top", placeholder: "新しいパスワード", required: true
+      %div
+        = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "新しいパスワードの確認", required: true
+      .clearfix.append-bottom-10
+        = f.submit "パスワードを変更", class: "btn btn-primary"
+  .panel-footer
+    %p
+      = link_to "確認方法のメールを受信していませんか？", new_confirmation_path(resource_name)
+    = render 'devise/shared/sign_in_link'

@@ -50,30 +50,24 @@ require 'carrierwave/orm/activerecord'
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
+  include Gitlab::ConfigHelper
+  extend Gitlab::ConfigHelper
+  include TokenAuthenticatable
+
   default_value_for :admin, false
-  default_value_for :can_create_group, true
+  default_value_for :can_create_group, gitlab_config.default_can_create_group
   default_value_for :can_create_team, false
   default_value_for :hide_no_ssh_key, false
+  default_value_for :projects_limit, gitlab_config.default_projects_limit
+  default_value_for :theme_id, gitlab_config.default_theme
 
-  devise :database_authenticatable, :token_authenticatable, :lockable, :async,
+  devise :database_authenticatable, :lockable, :async,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :confirmable, :registerable
-
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :bio, :name, :username,
-                  :skype, :linkedin, :twitter, :website_url, :color_scheme_id, :theme_id, :force_random_password,
-                  :extern_uid, :provider, :password_expires_at, :avatar, :hide_no_ssh_key,
-                  as: [:default, :admin]
-
-  attr_accessible :projects_limit, :can_create_group,
-                  as: :admin
 
   attr_accessor :force_random_password
 
   # Virtual attribute for authenticating by either username or email
   attr_accessor :login
-
-  # Add login to attr_accessible
-  attr_accessible :login
-
 
   #
   # Relations
@@ -120,7 +114,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: { case_sensitive: false },
             exclusion: { in: Gitlab::Blacklist.path },
             format: { with: Gitlab::Regex.username_regex,
-                      message: "only letters, digits & '_' '-' '.' allowed. Letter should be first" }
+                      message: Gitlab::Regex.username_regex_message }
 
   validates :notification_level, inclusion: { in: Notification.notification_levels }, presence: true
   validate :namespace_uniq, if: ->(user) { user.username_changed? }
@@ -132,6 +126,10 @@ class User < ActiveRecord::Base
   before_validation :sanitize_attrs
 
   before_save :ensure_authentication_token
+  after_save :ensure_namespace_correct
+  after_create :post_create_hook
+  after_destroy :post_destroy_hook
+
 
   alias_attribute :private_token, :authentication_token
 
@@ -219,20 +217,8 @@ class User < ActiveRecord::Base
       where('users.username = ? OR users.id = ?', name_or_id.to_s, name_or_id.to_i).first
     end
 
-    def build_user(attrs = {}, options= {})
-      if options[:as] == :admin
-        User.new(defaults.merge(attrs.symbolize_keys), options)
-      else
-        User.new(attrs, options).with_defaults
-      end
-    end
-
-    def defaults
-      {
-        projects_limit: Gitlab.config.gitlab.default_projects_limit,
-        can_create_group: Gitlab.config.gitlab.default_can_create_group,
-        theme_id: Gitlab.config.gitlab.default_theme
-      }
+    def build_user(attrs = {})
+      User.new(attrs)
     end
   end
 
@@ -310,7 +296,7 @@ class User < ActiveRecord::Base
   end
 
   def can_change_username?
-    Gitlab.config.gitlab.username_changing_enabled
+    gitlab_config.username_changing_enabled
   end
 
   def can_create_project?
@@ -368,7 +354,7 @@ class User < ActiveRecord::Base
   end
 
   def several_namespaces?
-    owned_groups.any?
+    owned_groups.any? || masters_groups.any?
   end
 
   def namespace_id
@@ -485,9 +471,41 @@ class User < ActiveRecord::Base
 
   def avatar_url(size = nil)
     if avatar.present?
-      URI::join(Gitlab.config.gitlab.url, avatar.url).to_s
+      [gitlab_config.url, avatar.url].join("/")
     else
       GravatarService.new.execute(email, size)
     end
+  end
+
+  def ensure_namespace_correct
+    # Ensure user has namespace
+    self.create_namespace!(path: self.username, name: self.username) unless self.namespace
+
+    if self.username_changed?
+      self.namespace.update_attributes(path: self.username, name: self.username)
+    end
+  end
+
+  def post_create_hook
+    log_info("User \"#{self.name}\" (#{self.email}) was created")
+    notification_service.new_user(self)
+    system_hook_service.execute_hooks_for(self, :create)
+  end
+
+  def post_destroy_hook
+    log_info("User \"#{self.name}\" (#{self.email})  was removed")
+    system_hook_service.execute_hooks_for(self, :destroy)
+  end
+
+  def notification_service
+    NotificationService.new
+  end
+
+  def log_info message
+    Gitlab::AppLogger.info message
+  end
+
+  def system_hook_service
+    SystemHooksService.new
   end
 end

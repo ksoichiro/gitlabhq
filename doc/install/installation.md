@@ -95,8 +95,8 @@ Remove the old Ruby 1.8 if present
 Download Ruby and compile it:
 
     mkdir /tmp/ruby && cd /tmp/ruby
-    curl --progress ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p481.tar.gz | tar xz
-    cd ruby-2.0.0-p481
+    curl --progress ftp://ftp.ruby-lang.org/pub/ruby/2.1/ruby-2.1.2.tar.gz | tar xz
+    cd ruby-2.1.2
     ./configure --disable-install-rdoc
     make
     sudo make install
@@ -141,12 +141,12 @@ We recommend using a PostgreSQL database. For MySQL check [MySQL setup guide](da
 ### Clone the Source
 
     # Clone GitLab repository
-    sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 7-0-stable gitlab
+    sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 7-1-stable gitlab
 
     # Go to gitlab dir
     cd /home/git/gitlab
 
-**Note:** You can change `7-0-stable` to `master` if you want the *bleeding edge* version, but never install master on a production server!
+**Note:** You can change `7-1-stable` to `master` if you want the *bleeding edge* version, but never install master on a production server!
 
 ### Configure it
 
@@ -243,7 +243,7 @@ GitLab Shell is an ssh access and repository management software developed speci
     # By default, the gitlab-shell config is generated from your main gitlab config.
     #
     # Note: When using GitLab with HTTPS please change the following:
-    # - Provide paths to the certificates under `ca_file` and `ca_path options.
+    # - Provide paths to the certificates under `ca_file` and `ca_path` options.
     # - The `gitlab_url` option must point to the https endpoint of GitLab.
     # - In case you are using self signed certificate set `self_signed_cert` to `true`.
     # See #using-https for all necessary details.
@@ -330,6 +330,8 @@ To make sure you didn't miss anything run a more thorough check with:
     sudo -u git -H bundle exec rake gitlab:check RAILS_ENV=production
 
 If all items are green, then congratulations on successfully installing GitLab!
+
+NOTE: Supply `SANITIZE=true` environment variable to `gitlab:check` to omit project names from the output of the check command.
 
 ### Initial Login
 

@@ -3,7 +3,10 @@
   担当者は
   - if @previous_assignee
     %strong #{@previous_assignee.name}
-    から
-  %strong #{@issue.assignee_name}
+  から
+  - if @issue.assignee_id
+    %strong #{@issue.assignee_name}
+  - else
+    %strong 担当者なし
   になりました。
 

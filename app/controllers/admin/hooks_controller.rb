@@ -6,7 +6,7 @@ class Admin::HooksController < Admin::ApplicationController
   end
 
   def create
-    @hook = SystemHook.new(params[:hook])
+    @hook = SystemHook.new(hook_params)
 
     if @hook.save
       redirect_to admin_hooks_path, notice: 'フックは正常に作成されました'
@@ -37,5 +37,9 @@ class Admin::HooksController < Admin::ApplicationController
     @hook.execute(data)
 
     redirect_to :back
+  end
+
+  def hook_params
+    params.require(:hook).permit(:url)
   end
 end

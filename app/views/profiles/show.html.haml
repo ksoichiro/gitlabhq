@@ -69,12 +69,14 @@
             %p.light
               - if @user.avatar?
                 アバターを変更
-                %br
-                またはアバターを #{link_to "gravatar.com", "http://gravatar.com"} に戻す
+                - if Gitlab.config.gravatar.enabled
+                  %br
+                  またはアバターを #{link_to "gravatar.com", "http://gravatar.com"} に戻す
               - else
                 アバターをアップロード
-                %br
-                または #{link_to "gravatar.com", "http://gravatar.com"} で変更
+                - if Gitlab.config.gravatar.enabled
+                  %br
+                  または #{link_to "gravatar.com", "http://gravatar.com"} で変更
             %hr
             %a.choose-btn.btn.btn-small.js-choose-user-avatar-button
               %i.icon-paper-clip

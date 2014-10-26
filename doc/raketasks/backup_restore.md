@@ -1,5 +1,7 @@
 # バックアップ・リストア
 
+![backup banner](backup_hrz.png)
+
 ## GitLabシステムのバックアップの作成
 
 データベースとすべてのリポジトリのバックアップアーカイブを作成します。このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
@@ -7,6 +9,10 @@
 ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
 
 ```
+# omnibus-gitlab
+sudo gitlab-rake gitlab:backup:create
+
+# installation from source or cookbook
 bundle exec rake gitlab:backup:create RAILS_ENV=production
 ```
 
@@ -42,6 +48,10 @@ Deleting old backups... [SKIPPING]
 ## 以前のバックアップへのリストア
 
 ```
+# omnibus-gitlab
+sudo gitlab-rake gitlab:backup:restore
+
+# installation from source or cookbook
 bundle exec rake gitlab:backup:restore RAILS_ENV=production
 ```
 
@@ -83,6 +93,8 @@ Deleting tmp directories...[DONE]
 ```
 
 ## 日次バックアップを行うためのcronの設定
+
+For omnibus-gitlab, see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#scheduling-a-backup .
 
 ```
 cd /home/git/gitlab

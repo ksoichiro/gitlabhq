@@ -7,17 +7,23 @@
       - if commit.description?
         %a.text-expander.js-toggle-button ...
 
-    = link_to "コードを表示 »", project_tree_path(project, commit), class: "pull-right"
+    = link_to_browse_code(project, commit)
+
     .notes_count
-      - notes = project.notes.for_commit_id(commit.id)
-      - if notes.any?
+      - if @note_counts
+        - note_count = @note_counts.fetch(commit.id, 0)
+      - else
+        - notes = project.notes.for_commit_id(commit.id)
+        - note_count = notes.count
+
+      - if note_count > 0
         %span.label.label-gray
-          %i.icon-comment
-          = notes.count
+          %i.icon-comment= note_count
 
   - if commit.description?
     .commit-row-description.js-toggle-content
-      = simple_format(commit.description)
+      %pre
+        = commit.description
 
   .commit-row-info
     = commit_author_link(commit, avatar: true, size: 16)

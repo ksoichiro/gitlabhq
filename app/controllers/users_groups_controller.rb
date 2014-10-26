@@ -16,7 +16,7 @@ class UsersGroupsController < ApplicationController
 
   def update
     @member = @group.users_groups.find(params[:id])
-    @member.update_attributes(params[:users_group])
+    @member.update_attributes(member_params)
   end
 
   def destroy
@@ -42,5 +42,9 @@ class UsersGroupsController < ApplicationController
     unless can?(current_user, :manage_group, group)
       return render_404
     end
+  end
+
+  def member_params
+    params.require(:users_group).permit(:group_access, :user_id)
   end
 end

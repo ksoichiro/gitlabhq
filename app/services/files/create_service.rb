@@ -22,7 +22,10 @@ module Files
       file_path = path
 
       unless file_name =~ Gitlab::Regex.path_regex
-        return error("ファイル名に利用できない文字が含まれているため、変更をコミットできません")
+        return error(
+          'ファイル名に利用できない文字が含まれているため、変更をコミットできません。ファイル名には' +
+          Gitlab::Regex.path_regex_message
+        )
       end
 
       blob = repository.blob_at_branch(ref, file_path)

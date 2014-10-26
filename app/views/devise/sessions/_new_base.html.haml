@@ -7,8 +7,6 @@
         = f.check_box :remember_me
         %span パスワードを記憶
   %div
-    = f.submit "サインイン", class: "btn-create btn"
+    = f.submit "サインイン", class: "btn-save btn"
     .pull-right
       = link_to "パスワードを忘れた場合", new_password_path(resource_name), class: "btn"
-
-
