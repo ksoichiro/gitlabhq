@@ -6,7 +6,7 @@
       %label.checkbox.remember_me{for: "user_remember_me"}
         = f.check_box :remember_me
         %span パスワードを記憶
+        .pull-right
+          = link_to "パスワードを忘れた場合", new_password_path(resource_name)
   %div
-    = f.submit "サインイン", class: "btn-save btn"
-    .pull-right
-      = link_to "パスワードを忘れた場合", new_password_path(resource_name), class: "btn"
+    = f.submit "サインイン", class: "btn btn-save"

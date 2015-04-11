@@ -179,6 +179,8 @@ module ApplicationHelper
   def search_placeholder
     if @project && @project.persisted?
       "プロジェクト内を検索"
+    elsif @snippet || @snippets || @show_snippets
+      'スニペットを検索'
     elsif @group && @group.persisted?
       "グループ内を検索"
     else

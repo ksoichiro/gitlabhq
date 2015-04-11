@@ -1,7 +1,7 @@
-.login-box.panel.panel-success
-  .panel-heading
-    %h3.panel-title サインアップ
-  .panel-body
+.login-box
+  .login-heading
+    %h3 サインアップ
+  .login-body
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       .devise-errors
         = devise_error_messages!
@@ -17,7 +17,7 @@
         = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "パスワード(確認)", required: true
       %div
         = f.submit "サインアップ", class: "btn-create btn"
-  .panel-footer
+  .login-footer
     %p
       %span.light
         アカウントをお持ちですか？

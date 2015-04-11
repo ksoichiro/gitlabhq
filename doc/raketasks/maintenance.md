@@ -115,8 +115,10 @@ Checking GitLab ... Finished
 
 このコマンドはすべてのプロジェクトのサテライトリポジトリを作成します。
 
-必要に応じて、 `tmp/repo_satellites` ディレクトリを削除して以下のコマンドを再実行します。
+必要に応じて、 `repo_satellites` ディレクトリを削除して以下のコマンドを再実行します。
 
 ```
-bundle exec rake gitlab:satellites:create RAILS_ENV=production
+sudo -u git -H mkdir -p /home/git/gitlab-satellites
+sudo -u git -H bundle exec rake gitlab:satellites:create RAILS_ENV=production
+sudo chmod u+rwx,g=rx,o-rwx /home/git/gitlab-satellites
 ```

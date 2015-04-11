@@ -37,8 +37,8 @@
           を見る
         %li
           ページトップの
-          = link_to "検索バー", '#', onclick: "$('#search').focus();"
+          = link_to '検索バー', '#', onclick: 'Shortcuts.focusSearch(event)'
           を使う
         %li
-          = link_to "ショートカット", '#', onclick: "new Shortcuts()"
+          = link_to 'ショートカット', '#', onclick: 'Shortcuts.showHelp(event)'
           を使う

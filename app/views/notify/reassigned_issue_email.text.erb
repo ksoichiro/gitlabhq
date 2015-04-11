@@ -1,5 +1,1 @@
-課題 <%= @issue.iid %> の担当を再割り当て
-
-<%= url_for(project_issue_url(@issue.project, @issue)) %>
-
-担当者は <%= "from #{@previous_assignee.name}" if @previous_assignee %> から <%= "#{@issue.assignee_id ? @issue.assignee_name : '担当者なし'}" %> に変更されました
+<%= render 'reassigned_issuable_email', issuable: @issue %>

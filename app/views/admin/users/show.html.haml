@@ -71,6 +71,14 @@
                   未確認
 
             %li
+              %span.light 現在のサインイン:
+              %strong
+                - if @user.current_sign_in_at
+                  = @user.current_sign_in_at.stamp("2031/11/12")
+                - else
+                  サインインなし
+
+            %li
               %span.light 最終サインイン:
               %strong
                 - if @user.last_sign_in_at

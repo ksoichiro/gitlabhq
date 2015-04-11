@@ -3,30 +3,207 @@
     .modal-content
       .modal-header
         %a.close{href: "#", "data-dismiss" => "modal"} ×
-        %h3 キーボードショートカット
-      .modal-body
-        %h5 グローバルショートカット
-        %p
-          %span.label.label-inverse s
-          &ndash;
-          検索バーにフォーカス
-        %p
-          %span.label.label-inverse ?
-          &ndash;
-          このダイアログを表示
+        %h4 
+          キーボードショートカット
+          %small 
+            = link_to '(すべて表示)', '#', class: 'js-more-help-button'
+      .modal-body.shortcuts-cheatsheet
+        .col-lg-4
+          %table.shortcut-mappings
+            %tbody
+              %tr
+                %th
+                %th グローバルショートカット
+              %tr
+                %td.shortcut 
+                  .key s
+                %td 検索バーにフォーカス
+              %tr
+                %td.shortcut 
+                  .key ?
+                %td このダイアログを表示
+            %tbody
+              %tr
+                %th
+                %th プロジェクトのファイル閲覧
+              %tr
+                %td.shortcut
+                  .key
+                    %i.icon-arrow-up
+                %td 選択位置を上に移動
+              %tr
+                %td.shortcut
+                  .key
+                    %i.icon-arrow-down
+                %td 選択位置を下に移動
+              %tr
+                %td.shortcut 
+                  .key enter
+                %td 選択項目を開く
 
-        %h5 プロジェクトのファイル閲覧
-        %p
-          %span.label.label-inverse
-            %i.icon-arrow-up
-          &ndash;
-          選択位置を上に移動
-        %p
-          %span.label.label-inverse
-            %i.icon-arrow-down
-          &ndash;
-          選択位置を下に移動
-        %p
-          %span.label.label-inverse Enter
-          &ndash;
-          選択項目を開く
+        .col-lg-4
+          %table.shortcut-mappings
+            %tbody{ class: 'hidden-shortcut project', style: 'display:none' }
+              %tr
+                %th
+                %th グローバルダッシュボード
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key a
+                %td
+                  アクティビティフィードを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key p
+                %td
+                  プロジェクトを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key i
+                %td
+                  課題を表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key m
+                %td
+                  マージリクエストを表示
+            %tbody
+              %tr
+                %th
+                %th プロジェクト
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key p
+                %td
+                  プロジェクトのアクティビティフィードを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key f
+                %td
+                  ファイルを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key c
+                %td
+                  コミットを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key n
+                %td
+                  ネットワークグラフを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key g
+                %td
+                  グラフを表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key i
+                %td
+                  課題を表示
+              %tr
+                %td.shortcut 
+                  .key g
+                  .key m
+                %td
+                  マージリクエストを表示
+              %tr
+                %td.shortcut
+                  .key g
+                  .key s
+                %td
+                  スニペットを表示
+        .col-lg-4
+          %table.shortcut-mappings
+            %tbody{ class: 'hidden-shortcut network', style: 'display:none' }
+              %tr
+                %th
+                %th ネットワークグラフ
+              %tr
+                %td.shortcut
+                  .key
+                    %i.icon-arrow-left
+                  \/
+                  .key h
+                %td 左へスクロール
+              %tr
+                %td.shortcut
+                  .key
+                    %i.icon-arrow-right
+                  \/
+                  .key l
+                %td 右へスクロール
+              %tr
+                %td.shortcut
+                  .key
+                    %i.icon-arrow-up
+                  \/
+                  .key k
+                %td 上へスクロール
+              %tr
+                %td.shortcut
+                  .key
+                    %i.icon-arrow-down
+                  \/
+                  .key j
+                %td 下へスクロール
+              %tr
+                %td.shortcut
+                  .key
+                    shift
+                    %i.icon-arrow-up
+                  \/
+                  .key
+                    shift k
+                %td 最上部にスクロール
+              %tr
+                %td.shortcut
+                  .key
+                    shift
+                    %i.icon-arrow-down
+                  \/
+                  .key
+                    shift j
+                %td 最下部にスクロール
+            %tbody{ class: 'hidden-shortcut issues', style: 'display:none' }
+              %tr
+                %th
+                %th 課題
+              %tr
+                %td.shortcut 
+                  .key a
+                %td 担当者を変更
+              %tr
+                %td.shortcut 
+                  .key m
+                %td マイルストーンを変更
+            %tbody{ class: 'hidden-shortcut merge_reuests', style: 'display:none' }
+              %tr
+                %th
+                %th マージリクエスト
+              %tr
+                %td.shortcut 
+                  .key a
+                %td 担当者を変更
+              %tr
+                %td.shortcut 
+                  .key m
+                %td マイルストーンを変更
+
+
+:javascript
+  $('.js-more-help-button').click(function(e){
+      $(this).remove()
+      $('.hidden-shortcut').show()
+      e.preventDefault()
+  });
