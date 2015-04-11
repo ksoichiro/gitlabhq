@@ -1,35 +1,35 @@
-# Project features
+# プロジェクトの機能
 
-When in a Project -> Settings, you will find Features on the bottom of the page that you can toggle.
+プロジェクトの設定画面には、ページ下部に、ON/OFFを切り替えられる機能があります。
 
-Below you will find a more elaborate explanation of each of these.
+以下では、各機能をより詳しく説明します。
 
-## Issues
+## 課題
 
-Issues is a really powerful, but lightweight issue tracking system.
+"課題"は本当に強力ですが軽量な課題トラッキングシステムです。
 
-You can make tickets, assign them to people, file them under milestones, order them with labels and have discussion in them.
+チケットを作成し、メンバーにアサインし、マイルストーンを設定し、ラベルをつけてディスカッションすることができます。
 
-They integrate deeply into GitLab and are easily referenced from anywhere by using `#` and the issue number.
+課題はGitLabに深く統合されており、`#`と課題番号を使うことで、どこからでも簡単に参照することができます。
 
-## Merge Requests
+## マージリクエスト
 
-Using a merge request, you can review and discuss code before it is merged in the branch of your code.
+マージリクエストを使うと、ブランチ上のソースコードをマージする前にレビューし、ディスカッションすることができます。
 
-As with issues, it can be assigned; people, issues, etc. can be referenced; milestones attached.
+課題と同じように、メンバーや課題などをアサインすることができ、マイルストーンとともに参照できます。
 
-We see it as an integral part of working together on code and couldn't work without it.
+私たちは、これをソースコード上での共同作業に欠かすことのできない重要な部分だと考えています。
 
 ## Wiki
 
-This is a separate system for documentation, built right into GitLab.
+これはドキュメンテーションのための別のシステムですが、GitLabの一部として組み込まれています。
 
-It is source controlled and is very convenient if you don't want to keep you documentation in your source code, but you do want to keep it in your GitLab project.
+Wikiはソースコードとして管理され、ドキュメントをソースコードの一部には入れたくないけれどもGitLabのプロジェクトの一部としておきたい場合に便利です。
 
-## Snippets
+## スニペット
 
-Snippets are little bits of code or text.
+スニペットはソースコードやテキストの断片です。
 
-This is a nice place to put code or text that is used semi-regularly within the project, but does not belong in source control.
+スニペットは、プロジェクトで半定期的に参照するけれどもソースコード管理はしないようなソースコードやテキストを置いておくのに良い場所です。
 
-For example, a specific config file that is used by > the team that is only valid for the people that work on the code.
+例えば、あるコードを扱うメンバーにのみ有効な特定の設定ファイルなどです。

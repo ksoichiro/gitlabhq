@@ -21,7 +21,7 @@
                 説明
                 %span.light (任意)
               .col-sm-10
-                = f.text_area :description, placeholder: "Awesome project", class: "form-control", rows: 3, maxlength: 250
+                = f.text_area :description, placeholder: "すばらしいプロジェクト", class: "form-control", rows: 3, maxlength: 250
 
             - if @project.repository.exists? && @project.repository.branch_names.any?
               .form-group
@@ -129,23 +129,23 @@
           .nothing-here-block プロジェクトの所有者だけがプロジェクトをアーカイブすることができます。
 
         .panel.panel-default.panel.panel-warning
-          .panel-heading Rename repository
+          .panel-heading リポジトリの名前変更
           .errors-holder
           .panel-body
             = form_for(@project, html: { class: 'form-horizontal' }) do |f|
               .form-group
                 = f.label :path, class: 'control-label' do
-                  %span Path
+                  %span パス
                 .col-sm-9
                   .form-group
                     .input-group
                       = f.text_field :path, class: 'form-control'
                       %span.input-group-addon .git
                   %ul
-                    %li Be careful. Renaming a project's repository can have unintended side effects.
-                    %li You will need to update your local repositories to point to the new location.
+                    %li リポジトリの名前変更は意図しない副作用を招く可能性があります。ご注意ください。
+                    %li ローカルリポジトリが新しい場所を指すように修正する必要があります。
               .form-actions
-                = f.submit 'Rename', class: "btn btn-warning"
+                = f.submit '名前変更', class: "btn btn-warning"
 
         - if can?(current_user, :change_namespace, @project)
           .panel.panel-default.panel.panel-danger

@@ -3,12 +3,12 @@
 %hr
 
 .bs-callout.bs-callout-info
-  %p Protected branches designed to
+  %p 保護ブランチは以下の目的のために設計されています。
   %ul
-    %li prevent push for all except #{link_to "masters", help_page_path("permissions", "permissions"), class: "vlink"}
-    %li prevent branch from force push
-    %li prevent branch from removal
-  %p Read more about project permissions #{link_to "here", help_page_path("permissions", "permissions"), class: "underlined-link"}
+    %li #{link_to "Master", help_page_path("permissions", "permissions"), class: "vlink"}権限のメンバー以外によるプッシュを防ぐ
+    %li 強制プッシュからブランチを守る
+    %li ブランチの削除から守る
+  %p プロジェクトの権限についての詳細は #{link_to "こちら", help_page_path("permissions", "permissions"), class: "underlined-link"} からご確認ください。
 
 - if can? current_user, :admin_project, @project
   = form_for [@project, @protected_branch], html: { class: 'form-horizontal' } do |f|
@@ -21,7 +21,7 @@
     .form-group
       = f.label :name, "ブランチ", class: 'control-label'
       .col-sm-10
-        = f.select(:name, @project.open_branches.map { |br| [br.name, br.name] } , {include_blank: "Select branch"}, {class: "select2"})
+        = f.select(:name, @project.open_branches.map { |br| [br.name, br.name] } , {include_blank: "ブランチを選択"}, {class: "select2"})
     .form-actions
       = f.submit '保護', class: "btn-create btn"
 - unless @branches.empty?

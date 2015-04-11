@@ -14,15 +14,15 @@
       = f.text_area :description, maxlength: 250, class: "form-control js-gfm-input", rows: 4, tabindex: 2
 
   .form-group.group-description-holder
-    = f.label :avatar, "Group avatar", class: 'control-label'
+    = f.label :avatar, "グループアバター", class: 'control-label'
     .col-sm-10
       %a.choose-btn.btn.btn-small.js-choose-group-avatar-button
         %i.icon-paper-clip
-        %span Choose File ...
+        %span ファイルを選択...
       &nbsp;
-      %span.file_name.js-avatar-filename File name...
+      %span.file_name.js-avatar-filename ファイル名...
       = f.file_field :avatar, class: "js-group-avatar-input hidden"
-      .light The maximum file size allowed is 100KB.
+      .light ファイルの最大サイズは100KBです
 
   .form-group
     .col-sm-2

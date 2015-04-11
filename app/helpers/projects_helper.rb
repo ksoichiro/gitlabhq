@@ -129,9 +129,9 @@ module ProjectsHelper
 
     toggle_html = content_tag('span', class: 'toggle') do
       toggle_text = if starred
-                      'Unstar'
+                      'スターを解除'
                     else
-                      'Star'
+                      'スターをつける'
                     end
 
       content_tag('i', ' ', class: 'icon-star') + toggle_text

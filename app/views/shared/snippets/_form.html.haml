@@ -12,19 +12,19 @@
 
     - unless @snippet.respond_to?(:project)
       .form-group
-        = f.label "Access", class: 'control-label'
+        = f.label "公開範囲", class: 'control-label'
         .col-sm-10
           = f.label :private_true, class: 'radio-label' do
             = f.radio_button :private, true
             %span
-              %strong Private
-              (only you can see this snippet)
+              %strong プライベート
+              (このスニペットはあなたにしか見えません)
           %br
           = f.label :private_false, class: 'radio-label' do
             = f.radio_button :private, false
             %span
-              %strong Public
-              (GitLab users can see this snippet)
+              %strong 公開
+              (GitLabユーザはこのスニペットを見ることができます)
 
     .form-group
       .file-editor
