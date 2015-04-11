@@ -23,8 +23,8 @@
           = f.label :description, "Description"
         = f.text_area :description, class: "form-control js-gfm-input markdown-area", rows: 10
         .clearfix.hint
-          .pull-left Description is parsed with #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}.
-          .pull-right Attach images (JPG, PNG, GIF) by dragging & dropping or #{link_to "selecting them", '#', class: 'markdown-selector' }.
+          .pull-left 説明は#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}形式でパースされます。
+          .pull-right ドラッグ & ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector' }して画像 (JPG, PNG, GIF) を添付
         .error-alert
       .form-group
         .issue-assignee
@@ -51,9 +51,9 @@
     .panel-footer
       - if contribution_guide_url(@target_project)
         %p
-          Please review the
-          %strong #{link_to "guidelines for contribution", contribution_guide_url(@target_project)}
-          to this repository.
+          このリポジトリの
+          %strong #{link_to "コントリビューション・ガイドライン", contribution_guide_url(@target_project)}
+          を確認してください
       = f.hidden_field :source_project_id
       = f.hidden_field :target_project_id
       = f.hidden_field :target_branch

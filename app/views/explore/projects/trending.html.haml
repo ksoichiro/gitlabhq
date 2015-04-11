@@ -1,11 +1,11 @@
 .explore-trending-block
   %p.lead
     %i.icon-comments-alt
-    See most discussed projects for last month
+    この1ヶ月で最も議論されたプロジェクトを見てみましょう
   %hr
   .public-projects
     %ul.bordered-list
       = render @trending_projects
 
   .center
-    = link_to 'Show all projects', explore_projects_path, class: 'btn btn-primary'
+    = link_to 'すべてのプロジェクトを表示', explore_projects_path, class: 'btn btn-primary'

@@ -92,9 +92,9 @@ class Note < ActiveRecord::Base
 
     def create_milestone_change_note(noteable, project, author, milestone)
       body = if milestone.nil?
-               '_Milestone removed_'
+               '_マイルストーンが削除されました_'
              else
-               "_Milestone changed to #{milestone.title}_"
+               "_マイルストーンが#{milestone.title}に変更されました_"
              end
 
       create(

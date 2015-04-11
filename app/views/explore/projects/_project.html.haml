@@ -8,7 +8,7 @@
 
       - if current_page?(starred_explore_projects_path)
         %strong.pull-right
-          = pluralize project.star_count, 'star'
+          = "#{project.star_count}スター"
 
     - if project.description.present?
       %p.project-description.str-truncated
@@ -16,11 +16,11 @@
 
     .repo-info
       - unless project.empty_repo?
-        = link_to pluralize(project.repository.round_commit_count, 'commit'), project_commits_path(project, project.default_branch)
+        = link_to "#{project.repository.round_commit_count}コミット", project_commits_path(project, project.default_branch)
         &middot;
-        = link_to pluralize(project.repository.branch_names.count, 'branch'), project_branches_path(project)
+        = link_to "#{project.repository.branch_names.count}ブランチ", project_branches_path(project)
         &middot;
-        = link_to pluralize(project.repository.tag_names.count, 'tag'), project_tags_path(project)
+        = link_to "#{project.repository.tag_names.count}タグ", project_tags_path(project)
       - else
         %i.icon-warning-sign
-        Empty repository
+        空のリポジトリ

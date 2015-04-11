@@ -4,25 +4,25 @@
       %span= @group.errors.full_messages.first
   .form-group.group_name_holder
     = f.label :name, class: 'control-label' do
-      Group name
+      グループ名
     .col-sm-10
       = f.text_field :name, placeholder: "Example Group", class: "form-control"
 
   .form-group.group-description-holder
-    = f.label :description, "Details", class: 'control-label'
+    = f.label :description, "詳細", class: 'control-label'
     .col-sm-10
       = f.text_area :description, maxlength: 250, class: "form-control js-gfm-input", rows: 4
 
   .form-group.group-description-holder
-    = f.label :avatar, "Group avatar", class: 'control-label'
+    = f.label :avatar, "グループアバター", class: 'control-label'
     .col-sm-10
       %a.choose-btn.btn.btn-small.js-choose-group-avatar-button
         %i.icon-paper-clip
-        %span Choose File ...
+        %span ファイルを選択...
       &nbsp;
-      %span.file_name.js-avatar-filename File name...
+      %span.file_name.js-avatar-filename ファイル名...
       = f.file_field :avatar, class: "js-group-avatar-input hidden"
-      .light The maximum file size allowed is 100KB.
+      .light ファイルの最大サイズは100KBです
 
   - if @group.new_record?
     .form-group
@@ -30,28 +30,28 @@
       .col-sm-10
         .bs-callout.bs-callout-info
           %ul
-            %li A group is a collection of several projects
-            %li Groups are private by default
-            %li Members of a group may only view projects they have permission to access
-            %li Group project URLs are prefixed with the group namespace
-            %li Existing projects may be moved into a group
+            %li グループは複数のプロジェクトの集合です。
+            %li グループはデフォルトではプライベートです。
+            %li グループのメンバーはアクセス権のあるプロジェクトだけ参照することができます。
+            %li グループのプロジェクトのURLにはグループのネームスペースのプレフィクスが付きます。
+            %li 既存のプロジェクトをグループに移すこともできます。
     .form-actions
-      = f.submit 'Create group', class: "btn btn-create"
-      = link_to  'Cancel', admin_groups_path, class: "btn btn-cancel"
+      = f.submit 'グループを作成', class: "btn btn-create"
+      = link_to  'キャンセル', admin_groups_path, class: "btn btn-cancel"
 
   - else
     .form-group.group_name_holder
       = f.label :path, class: 'control-label' do
-        %span Group path
+        %span グループのパス
       .col-sm-10
         = f.text_field :path, placeholder: "example-group", class: "form-control danger"
         .bs-callout.bs-callout-danger
           %ul
-            %li Changing group path can have unintended side effects.
-            %li Renaming group path will rename directory for all related projects
-            %li It will change web url for access group and group projects.
-            %li It will change the git path to repositories under this group.
+            %li グループのパスを変更すると予期しない副作用が生じる可能性があります。
+            %li グループのパスを変更すると関連するすべてのプロジェクトのディレクトリ名が変更されます。
+            %li グループとグループ内のすべてのプロジェクトのWeb URLが変更されます。
+            %li グループ内のリポジトリのGitのパスも変更されます。
     .form-actions
-      = f.submit 'Save changes', class: "btn btn-primary"
-      = link_to  'Cancel', admin_group_path(@group), class: "btn btn-cancel"
+      = f.submit '変更を保存', class: "btn btn-primary"
+      = link_to  'キャンセル', admin_group_path(@group), class: "btn btn-cancel"
 

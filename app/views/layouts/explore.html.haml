@@ -1,4 +1,4 @@
-- page_title = 'Explore'
+- page_title = '探索'
 !!! 5
 %html{ lang: "en"}
   = render "layouts/head", title: page_title
@@ -12,19 +12,19 @@
       .content
         .explore-title
           %h3
-            Explore GitLab
+            GitLabを探索
           %p.lead
-            Discover projects and groups. Share your projects with others
+            プロジェクトとグループを見つけましょう。あなたのプロジェクトをシェアしましょう
 
 
         %ul.nav.nav-tabs
           = nav_link(path: 'projects#trending') do
-            = link_to 'Trending Projects', explore_root_path
+            = link_to 'トレンドプロジェクト', explore_root_path
           = nav_link(path: 'projects#starred') do
-            = link_to 'Most Starred Projects', starred_explore_projects_path
+            = link_to 'スターの多いプロジェクト', starred_explore_projects_path
           = nav_link(path: 'projects#index') do
-            = link_to 'All Projects', explore_projects_path
+            = link_to 'すべてのプロジェクト', explore_projects_path
           = nav_link(controller: :groups) do
-            = link_to 'All Groups', explore_groups_path
+            = link_to 'すべてのグループ', explore_groups_path
 
         = yield

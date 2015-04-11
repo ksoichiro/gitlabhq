@@ -2,9 +2,9 @@
 
 - if can? current_user, :admin_label, @project
   = link_to new_project_label_path(@project), class: "pull-right btn btn-new" do
-    New label
+    新しいラベル
 %h3.page-title
-  Labels
+  ラベル
 %hr
 
 - if @labels.present?

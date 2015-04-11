@@ -188,9 +188,9 @@ class Notes
     preview = form.find(".js-note-preview")
     noteText = form.find(".js-note-text").val()
     if noteText.trim().length is 0
-      preview.text "Nothing to preview."
+      preview.text "プレビューする内容がありません"
     else
-      preview.text "Loading..."
+      preview.text "読み込み中..."
       $.post($(this).data("url"),
         note: noteText
       ).success (previewData) ->

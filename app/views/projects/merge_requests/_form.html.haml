@@ -5,9 +5,9 @@
       - if @repository.contribution_guide && !@merge_request.persisted?
         - contribution_guide_url = project_blob_path(@project, tree_join(@repository.root_ref, @repository.contribution_guide.name))
         .alert.alert-info
-          Please review the
-          %strong #{link_to "guidelines for contribution", contribution_guide_url}
-          to this repository.
+          このリポジトリの
+          %strong #{link_to "コントリビューション・ガイドライン", contribution_guide_url}
+          を確認してください
 
       -if @merge_request.errors.any?
         .alert.alert-danger

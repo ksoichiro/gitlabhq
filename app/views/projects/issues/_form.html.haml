@@ -6,7 +6,7 @@
     .row
       .col-sm-10.col-sm-offset-2
         .alert.alert-info
-          = "Please review the <strong>#{link_to "guidelines for contribution", contribution_guide_url}</strong> to this repository.".html_safe
+          = "このリポジトリの<strong>#{link_to "コントリビューション・ガイドライン", contribution_guide_url}</strong>を確認してください".html_safe
 
   = form_for [@project, @issue], html: { class: 'form-horizontal issue-form' } do |f|
     -if @issue.errors.any?
