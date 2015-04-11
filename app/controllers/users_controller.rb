@@ -23,6 +23,7 @@ class UsersController < ApplicationController
       where(project_id: authorized_projects_ids).limit(20)
 
     @title = @user.name
+    @groups = @projects.map(&:group).compact.uniq
   end
 
   def determine_layout

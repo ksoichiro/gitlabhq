@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: notes
@@ -59,7 +60,7 @@ class Note < ActiveRecord::Base
 
   class << self
     def create_status_change_note(noteable, project, author, status, source)
-      body = "_Status changed to #{status}#{' by ' + source.gfm_reference if source}_"
+      body = "_#{source.gfm_reference + 'が' if source}ステータスを#{status}に変更しました_"
 
       create(
         noteable: noteable,
@@ -76,7 +77,7 @@ class Note < ActiveRecord::Base
       note_options = {
         project: project,
         author: author,
-        note: "_mentioned in #{mentioner.gfm_reference}_",
+        note: "_#{mentioner.gfm_reference} で言及されました_",
         system: true
       }
 
@@ -91,9 +92,9 @@ class Note < ActiveRecord::Base
 
     def create_milestone_change_note(noteable, project, author, milestone)
       body = if milestone.nil?
-               '_Milestone removed_'
+               '_マイルストーンが削除されました_'
              else
-               "_Milestone changed to #{milestone.title}_"
+               "_マイルストーンが#{milestone.title}に変更されました_"
              end
 
       create(
@@ -106,7 +107,7 @@ class Note < ActiveRecord::Base
     end
 
     def create_assignee_change_note(noteable, project, author, assignee)
-      body = assignee.nil? ? '_Assignee removed_' : "_Reassigned to @#{assignee.username}_"
+      body = assignee.nil? ? '_担当者が削除されました_' : "_@#{assignee.username} に再度割り当てられました_"
 
       create({
         noteable: noteable,
@@ -144,7 +145,7 @@ class Note < ActiveRecord::Base
 
     # Determine whether or not a cross-reference note already exists.
     def cross_reference_exists?(noteable, mentioner)
-      where(noteable_id: noteable.id, system: true, note: "_mentioned in #{mentioner.gfm_reference}_").any?
+      where(noteable_id: noteable.id, system: true, note: "_#{mentioner.gfm_reference} で言及されました_").any?
     end
   end
 

@@ -3,7 +3,7 @@ $ ->
     # Submit the form
     $('.edit_user').submit()
 
-    new Flash("Appearance settings saved", "notice")
+    new Flash("デザイン設定が保存されました", "notice")
 
   $('.update-username form').on 'ajax:before', ->
     $('.loading-gif').show()

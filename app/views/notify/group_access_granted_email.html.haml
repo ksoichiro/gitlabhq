@@ -1,4 +1,4 @@
 %p
-  = "You have been granted #{@membership.human_access} access to group"
+  = "あなたに以下のグループへの #{@membership.human_access} レベルのアクセス権が付与されました。"
   = link_to group_url(@group) do
     = @group.name

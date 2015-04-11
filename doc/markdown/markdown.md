@@ -1,51 +1,51 @@
 # Markdown
 
-## Table of Contents
+## 目次
 
 **[GitLab Flavored Markdown](#gitlab-flavored-markdown-gfm)**
 
-* [Newlines](#newlines)
-* [Multiple underscores in words](#multiple-underscores-in-words)
-* [URL autolinking](#url-autolinking)
-* [Code and Syntax Highlighting](#code-and-syntax-highlighting)
-* [Emoji](#emoji)
-* [Special GitLab references](#special-gitlab-references)
+* [改行](#newlines)
+* [単語内の複数のアンダースコア](#multiple-underscores-in-words)
+* [URLの自動リンク](#url-autolinking)
+* [コードとシンタックスハイライト](#code-and-syntax-highlighting)
+* [絵文字](#emoji)
+* [GitLabでの参照](#special-gitlab-references)
 
-**[Standard Markdown](#standard-markdown)**
+**[標準のMarkdown](#standard-markdown)**
 
-* [Headers](#headers)
-* [Emphasis](#emphasis)
-* [Lists](#lists)
-* [Links](#links)
-* [Images](#images)
-* [Blockquotes](#blockquotes)
-* [Inline HTML](#inline-html)
-* [Horizontal Rule](#horizontal-rule)
-* [Line Breaks](#line-breaks)
-* [Tables](#tables)
+* [ヘッダ](#headers)
+* [強調](#emphasis)
+* [リスト](#lists)
+* [リンク](#links)
+* [画像](#images)
+* [引用](#blockquotes)
+* [インライン HTML](#inline-html)
+* [水平線](#horizontal-rule)
+* [改行](#line-breaks)
+* [表](#tables)
 
-**[References](#references)**
+**[リファレンス](#references)**
 
 ## GitLab Flavored Markdown (GFM)
 
-For GitLab we developed something we call "GitLab Flavored Markdown" (GFM). It extends the standard Markdown in a few significant ways to add some useful functionality.
+GitLabでは、"GitLab Flavored Markdown" (GFM)と呼ばれるものを開発しました。これは、いくつかの重要な点で便利な機能を追加するために標準の Markdown を拡張するものです。
 
-You can use GFM in
+GFM は以下の場所で使うことができます。
 
-- commit messages
-- comments
-- issues
-- merge requests
-- milestones
-- wiki pages
+- コミットメッセージ
+- コメント
+- 課題
+- マージリクエスト
+- マイルストーン
+- Wikiページ
 
-You can also use other rich text files in GitLab. You might have to install a depency to do so. Please see the [github-markup gem readme](https://github.com/gitlabhq/markup#markups) for more information.
+依存するソフトウェアをインストールして、GitLab上の他のリッチテキストファイルでも使うことができます。詳しい情報は、 [github-markup gem readme](https://github.com/gitlabhq/markup#markups) を参照してください。
 
-## Newlines
+## 改行
 
-GFM honors the markdown specification in how [paragraphs and line breaks are handled](http://daringfireball.net/projects/markdown/syntax#p).
+GFMは [段落と改行の取り扱い](http://daringfireball.net/projects/markdown/syntax#p) での Markdown 仕様にならっています。
 
-A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines.:
+段落は単純に1行以上の空行で分けられた、1行以上のテキストです。
 
     Roses are red
     Violets are blue
@@ -57,9 +57,9 @@ Violets are blue
 
 Sugar is sweet
 
-## Multiple underscores in words
+## 単語内の複数のアンダースコア
 
-It is not reasonable to italicize just _part_ of a word, especially when you're dealing with code and names that often appear with multiple underscores. Therefore, GFM ignores multiple underscores in words.
+単語の _一部_ だけをイタリック体にしてしまうのは便利とは言えません。複数のアンダースコアを含むコードと名前を扱う場合には特にそうです。このため、GFMは単語内の複数のアンダースコアを無視します。
 
     perform_complicated_task
     do_this_and_do_that_and_another_thing
@@ -67,25 +67,25 @@ It is not reasonable to italicize just _part_ of a word, especially when you're 
 perform_complicated_task
 do_this_and_do_that_and_another_thing
 
-## URL autolinking
+## URLの自動リンク
 
-GFM will autolink standard URLs you copy and paste into your text. So if you want to link to a URL (instead of a textural link), you can simply put the URL in verbatim and it will be turned into a link to that URL.
+GFM は、標準的なURLをコピー＆ペーストすると自動的にリンクします。つまり、(テキストのリンクの代わりに)URLをリンクしたければ、単純にURLを記述すればそのURLへのリンクができあがります。
 
     http://www.google.com
 
 http://www.google.com
 
-## Code and Syntax Highlighting
+## コードとシンタックスハイライト
 
-Blocks of code are either fenced by lines with three back-ticks <code>```</code>, or are indented with four spaces. Only the fenced code blocks support syntax highlighting.
+コードのブロックは3つのバッククオート<code>```</code>からなる行で仕切りを入れるか、4つのスペースでインデントすることで表現できます。行で仕切る方法でのみ、シンタックスハイライトがサポートされます。
 
 ```no-highlight
-Inline `code` has `back-ticks around` it.
+インラインの`コード`は`バッククオート`で括られています。
 ```
 
-Inline `code` has `back-ticks around` it.
+インラインの`コード`は`バッククオート`で括られています。
 
-Example:
+例:
 
     ```javascript
     var s = "JavaScript syntax highlighting";
@@ -94,7 +94,7 @@ Example:
 
     ```python
     def function():
-        #indenting works just fine in the fenced code block
+        #仕切られたコードブロックではインデントが有効です
         s = "Python syntax highlighting"
         print s
     ```
@@ -106,12 +106,12 @@ Example:
     ```
 
     ```
-    No language indicated, so no syntax highlighting.
+    言語が示されていない場合は、シンタックスハイライトされません。
     s = "There is no highlighting for this."
     But let's throw in a <b>tag</b>.
     ```
 
-becomes:
+これは次のように表示されます。
 
 ```javascript
 var s = "JavaScript syntax highlighting";
@@ -120,7 +120,7 @@ alert(s);
 
 ```python
 def function():
-    #indenting works just fine in the fenced code block
+    #仕切られたコードブロックではインデントが有効です
     s = "Python syntax highlighting"
     print s
 ```
@@ -132,54 +132,54 @@ puts markdown.to_html
 ```
 
 ```
-No language indicated, so no syntax highlighting.
+言語が示されていない場合は、シンタックスハイライトされません。
 s = "There is no highlighting for this."
 But let's throw in a <b>tag</b>.
 ```
 
-## Emoji
+## 絵文字
 
-	Sometimes you want to be a :ninja: and add some :glowing_star: to your :speech_balloon:. Well we have a gift for you:
+	時には、 :ninja: になり :speech_balloon: に :glowing_star: を追加したいこともあるでしょう。そんなあなたにプレゼントがあります。
 
-	:high_voltage_sign: You can use emoji anywhere GFM is supported. :victory_hand:
+	:high_voltage_sign: あなたはGFMがサポートされた場所ならどこでも、絵文字を使うことができます :victory_hand:
 
-	You can use it to point out a :bug: or warn about :speak_no_evil_monkey: patches. And if someone improves your really :snail: code, send them some :cake:. People will :heart: you for that.
+	:bug: の指摘や :speak_no_evil_monkey: パッチの警告に使うこともできます。そして、もし誰かが本当に :snail: なコードを改善したら、彼らに :cake: を送りましょう。皆あなたを :heart: になるでしょう。
 
-	If you are new to this, don't be :fearful_face:. You can easily join the emoji :family:. All you need to do is to look up on the supported codes.
+	あなたが絵文字の初心者だとしても、 :fearful_face: にならないでください。あなたも簡単に絵文字の :family: に入ることができます。サポートされたコードを使うだけです。
 
-	Consult the [Emoji Cheat Sheet](https://www.dropbox.com/s/b9xaqb977s6d8w1/cheat_sheet.pdf) for a list of all supported emoji codes. :thumbsup:
+	サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
 
-Sometimes you want to be a :ninja: and add some :glowing_star: to your :speech_balloon:. Well we have a gift for you:
+時には、 :ninja: になり :speech_balloon: に :glowing_star: を追加したいこともあるでしょう。そんなあなたにプレゼントがあります。
 
-:high_voltage_sign: You can use emoji anywhere GFM is supported. :victory_hand:
+:high_voltage_sign: あなたはGFMがサポートされた場所ならどこでも、絵文字を使うことができます :victory_hand:
 
-You can use it to point out a :bug: or warn about :speak_no_evil_monkey: patches. And if someone improves your really :snail: code, send them some :cake:. People will :heart: you for that.
+:bug: の指摘や :speak_no_evil_monkey: パッチの警告に使うこともできます。そして、もし誰かが本当に :snail: なコードを改善したら、彼らに :cake: を送りましょう。皆あなたを :heart: になるでしょう。
 
-If you are new to this, don't be :fearful_face:. You can easily join the emoji :family:. All you need to do is to look up on the supported codes.
+あなたが絵文字の初心者だとしても、 :fearful_face: にならないでください。あなたも簡単に絵文字の :family: に入ることができます。サポートされたコードを使うだけです。
 
-Consult the [Emoji Cheat Sheet](https://www.dropbox.com/s/b9xaqb977s6d8w1/cheat_sheet.pdf) for a list of all supported emoji codes. :thumbsup:
+サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
 
-## Special GitLab References
+## GitLabでの特別な参照
 
-GFM recognized special references.
+GFM は特別な参照を認識します。
 
-You can easily reference e.g. an issue, a commit, a team member or even the whole team within a project.
+例えばプロジェクト内のチームメンバー、課題、コミットメッセージを簡単に参照することができます。
 
-GFM will turn that reference into a link so you can navigate between them easily.
+GFM は参照をリンクに変換するため、それらの参照に対して簡単にナビゲーションすることができます。
 
-GFM will recognize the following:
+GFM は以下を認識します。
 
-- @foo : for team members
-- @all : for the whole team
-- #123 : for issues
-- !123 : for merge requests
-- $123 : for snippets
-- 1234567 : for commits
-- \[file\](path/to/file) : for file references
+- @foo : チームメンバーへの参照
+- @all : チーム全体への参照
+- #123 : 課題への参照
+- !123 : マージリクエストへの参照
+- $123 : スニペットへの参照
+- 1234567 : コミットへの参照
+- \[file\](path/to/file) : ファイルへの参照
 
-# Standard Markdown
+# 標準のMarkdown
 
-## Headers
+## ヘッダ
 
 ```no-highlight
 # H1
@@ -189,12 +189,12 @@ GFM will recognize the following:
 ##### H5
 ###### H6
 
-Alternatively, for H1 and H2, an underline-ish style:
+H1とH2では下線を使ったスタイルも使うことができます。
 
-Alt-H1
+H1の別表現
 ======
 
-Alt-H2
+H2の別表現
 ------
 ```
 
@@ -205,294 +205,294 @@ Alt-H2
 ##### H5
 ###### H6
 
-Alternatively, for H1 and H2, an underline-ish style:
+H1とH2では下線を使ったスタイルも使うことができます。
 
-Alt-H1
+H1の別表現
 ======
 
-Alt-H2
+H2の別表現
 ------
 
-### Header IDs and links
+### ヘッダのIDとリンク
 
-All markdown rendered headers automatically get IDs, except for comments.
+すべての Markdown からレンダリングされたヘッダは、コメントを除いて自動的にIDを取得します。
 
-On hover a link to those IDs becomes visible to make it easier to copy the link to the header to give it to someone else.
+ヘッダへのリンクを誰かに知らせやすくするために、リンク上にカーソルをあてるとIDが表示されます。
 
-The IDs are generated from the content of the header according to the following rules:
+コンテンツのヘッダから生成されたIDは以下のルールになっています。
 
-1. remove the heading hashes `#` and process the rest of the line as it would be processed if it were not a header
-2. from the result, remove all HTML tags, but keep their inner content
-3. convert all characters to lowercase
-4. convert all characters except `[a-z0-9_-]` into hyphens `-`
-5. transform multiple adjacent hyphens into a single hyphen
-6. remove trailing and heading hyphens
+1. 先頭のハッシュ `#` を削除し、行の残りの部分をヘッダでなかった場合のように処理します
+2. その結果から、すべてのHTMLタグを削除し、ただしタグの中のコンテンツは残すように処理します
+3. すべての文字を小文字に変換します
+4. `[a-z0-9_-]` 以外のすべての文字をハイフン `-` に変換します
+5. 連続するハイフンを1つのハイフンに変換します
+6. 先頭と末尾のハイフンを削除します
 
-For example:
+例:
 
 ```
 ###### ..Ab_c-d. e [anchor](url) ![alt text](url)..
 ```
 
-which renders as:
+以下のように表示されます。
 
 ###### ..Ab_c-d. e [anchor](url) ![alt text](url)..
 
-will first be converted by step 1) into a string like:
+これはステップ 1) によって次のような文字列に変換されます。
 
 ```
 ..Ab_c-d. e &lt;a href="url">anchor&lt;/a> &lt;img src="url" alt="alt text"/>..
 ```
 
-After removing the tags in step 2) we get:
+ステップ 2) でタグを削除すると次のようになります。
 
 ```
 ..Ab_c-d. e anchor ..
 ```
 
-And applying all the other steps gives the id:
+そして以降のステップを適用するとIDができあがります。
 
 ```
 ab_c-d-e-anchor
 ```
 
-Note in particular how:
+特に以下の点に注意してください。
 
-- for markdown anchors `[text](url)`, only the `text` is used
-- markdown images `![alt](url)` are completely ignored
+- Markdown のアンカー `[text](url)` は `text` だけが使用されます
+- Markdown のイメージ `![alt](url)` は完全に無視されます
 
-## Emphasis
-
-```no-highlight
-Emphasis, aka italics, with *asterisks* or _underscores_.
-
-Strong emphasis, aka bold, with **asterisks** or __underscores__.
-
-Combined emphasis with **asterisks and _underscores_**.
-
-Strikethrough uses two tildes. ~~Scratch this.~~
-```
-
-Emphasis, aka italics, with *asterisks* or _underscores_.
-
-Strong emphasis, aka bold, with **asterisks** or __underscores__.
-
-Combined emphasis with **asterisks and _underscores_**.
-
-Strikethrough uses two tildes. ~~Scratch this.~~
-
-## Lists
+## 強調
 
 ```no-highlight
-1. First ordered list item
-2. Another item
-  * Unordered sub-list.
-1. Actual numbers don't matter, just that it's a number
-  1. Ordered sub-list
-4. And another item.
+強調(イタリック体)は *アスタリスク* や _アンダースコア_ で表現します。
 
-   Some text that should be aligned with the above item.
+さらに強い強調(太字)は **アスタリスク** or __アンダースコア__ で表現します。
 
-* Unordered list can use asterisks
-- Or minuses
-+ Or pluses
+組み合わせた強調は **アスタリスクと _アンダースコア_** のように表現します。
+
+取消線には二つのチルダを使います。 ~~ここを削除~~
 ```
 
-1. First ordered list item
-2. Another item
-  * Unordered sub-list.
-1. Actual numbers don't matter, just that it's a number
-  1. Ordered sub-list
-4. And another item.
+強調(イタリック体)は *asterisks* や _underscores_ で表現します。
 
-   Some text that should be aligned with the above item.
+さらに強い強調(太字)は **アスタリスク** or __アンダースコア__ で表現します。
 
-* Unordered list can use asterisks
-- Or minuses
-+ Or pluses
+組み合わせた強調は **アスタリスクと _アンダースコア_** のように表現します。
 
-## Links
+取消線には二つのチルダを使います。 ~~ここを削除~~
 
-There are two ways to create links, inline-style and reference-style.
+## リスト
 
-    [I'm an inline-style link](https://www.google.com)
+```no-highlight
+1. 先頭のリスト項目
+2. 別の項目
+  * 番号のないサブリスト
+1. 実際の番号は問題ではなく、数字であることが必要です
+  1. 番号付きのサブリスト
+4. さらに別の項目
 
-    [I'm a reference-style link][Arbitrary case-insensitive reference text]
+   テキストは上の項目と位置を合わせる必要があります。
 
-    [I'm a relative reference to a repository file](LICENSE)
+* 番号のないリストはアスタリスクを使います
+- またはマイナス
++ またはプラス
+```
 
-    [You can use numbers for reference-style link definitions][1]
+1. 先頭のリスト項目
+2. 別の項目
+  * 番号のないサブリスト
+1. 実際の番号は問題ではなく、数字であることが必要です
+  1. 番号付きのサブリスト
+4. さらに別の項目
 
-    Or leave it empty and use the [link text itself][]
+   テキストは上の項目と位置を合わせる必要があります。
 
-    Some text to show that the reference links can follow later.
+* 番号のないリストはアスタリスクを使います
+- またはマイナス
++ またはプラス
+
+## リンク
+
+リンクを作るには、インラインスタイルとリファレンススタイルの二つの方法があります。
+
+    [インラインスタイルのリンクです](https://www.google.com)
+
+    [リファレンススタイルのリンクです][Arbitrary case-insensitive reference text]
+
+    [リポジトリのファイルへの相対パスでの参照です](LICENSE)
+
+    [リファレンススタイルのリンク定義に番号を使うこともできます][1]
+
+    あるいは中身を空にすることもできます [link text itself][]
+
+    リファレンスのリンク先は後に続けて書きます。
 
     [arbitrary case-insensitive reference text]: https://www.mozilla.org
     [1]: http://slashdot.org
     [link text itself]: http://www.reddit.com
 
-[I'm an inline-style link](https://www.google.com)
+[インラインスタイルのリンクです](https://www.google.com)
 
-[I'm a reference-style link][Arbitrary case-insensitive reference text]
+[リファレンススタイルのリンクです][Arbitrary case-insensitive reference text]
 
-[I'm a relative reference to a repository file](LICENSE)
+[リポジトリのファイルへの相対パスでの参照です](LICENSE)
 
-[You can use numbers for reference-style link definitions][1]
+[リファレンススタイルのリンク定義に番号を使うこともできます][1]
 
-Or leave it empty and use the [link text itself][]
+あるいは中身を空にすることもできます [link text itself][]
 
-Some text to show that the reference links can follow later.
+リファレンスのリンク先は後に続けて書きます。
 
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
 [1]: http://slashdot.org
 [link text itself]: http://www.reddit.com
 
-**Note**
+**注意**
 
-Relative links do not allow referencing project files in a wiki page or wiki page in a project file. The reason for this is that, in GitLab, wiki is always a separate git repository. For example:
+相対パスのリンクでは、Wikiページ内のプロジェクトファイルやプロジェクトファイル内のWikiページを参照することはできません。理由は、GitLabではWikiが常に別のGitリポジトリに分けられているためです。例えば
 
-`[I'm a reference-style link][style]`
+`[リファレンススタイルのリンクです][style]`
 
-will point the link to `wikis/style` when the link is inside of a wiki markdown file.
+は Wiki の Markdown ファイル内でのリンクならば `wikis/style` へリンクします。
 
-## Images
+## 画像
 
-    Here's our logo (hover to see the title text):
+    私たちのロゴです(マウスオーバーでタイトル文字列を表示します)。
 
-    Inline-style:
+    インラインスタイル:
     ![alt text](assets/logo-white.png)
 
-    Reference-style:
+    リファレンススタイル:
     ![alt text1][logo]
 
     [logo]: assets/logo-white.png
 
-Here's our logo:
+私たちのロゴです。
 
-Inline-style:
+インラインスタイル:
 
 ![alt text](/assets/logo-white.png)
 
-Reference-style:
+リファレンススタイル:
 
 ![alt text][logo]
 
 [logo]: /assets/logo-white.png
 
-## Blockquotes
+## 引用
 
 ```no-highlight
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
+> 引用はメールの返信をエミュレートするのに非常に便利です。
+> この行は引用の一部です。
 
-Quote break.
+引用は終わります。
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
+> これはとても長い行ですが正常にワードラップされて引用することができます。さあ、これが実際にワードラップしてくれることを皆が確かめられるように、十分に長く書き続けましょう。この引用にも **Markdown** を入れることができます。
 ```
 
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
+> 引用はメールの返信をエミュレートするのに非常に便利です。
+> この行は引用の一部です。
 
-Quote break.
+引用は終わります。
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
+> これはとても長い行ですが正常にワードラップされて引用することができます。さあ、これが実際にワードラップしてくれることを皆が確かめられるように、十分に長く書き続けましょう。この引用にも **Markdown** を入れることができます。
 
-## Inline HTML
+## インライン HTML
 
-You can also use raw HTML in your Markdown, and it'll mostly work pretty well.
+生のHTMLを Markdown で使うことができ、大半はうまく機能するでしょう。
 
 ```no-highlight
 <dl>
-  <dt>Definition list</dt>
-  <dd>Is something people use sometimes.</dd>
+  <dt>定義リスト</dt>
+  <dd>は時々使われるものです。</dd>
 
-  <dt>Markdown in HTML</dt>
-  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+  <dt>HTMLでのMarkdown</dt>
+  <dd>これは **うまく** 機能 *しません* 。HTML <em>タグ</em>を使ってください。</dd>
 </dl>
 ```
 
 <dl>
-  <dt>Definition list</dt>
-  <dd>Is something people use sometimes.</dd>
+  <dt>定義リスト</dt>
+  <dd>は時々使われるものです。</dd>
 
-  <dt>Markdown in HTML</dt>
-  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+  <dt>HTMLでのMarkdown</dt>
+  <dd>これは **うまく** 機能 *しません* 。HTML <em>タグ</em>を使ってください。</dd>
 </dl>
 
-## Horizontal Rule
+## 水平線
 
 ```
-Three or more...
+3つ以上...
 
 ---
 
-Hyphens
+ハイフン
 
 ***
 
-Asterisks
+アスタリスク
 
 ___
 
-Underscores
+アンダースコア
 ```
 
-Three or more...
+3つ以上...
 
 ---
 
-Hyphens
+ハイフン
 
 ***
 
-Asterisks
+アスタリスク
 
 ___
 
-Underscores
+アンダースコア
 
-## Line Breaks
+## 改行
 
-My basic recommendation for learning how line breaks work is to experiment and discover -- hit &lt;Enter&gt; once (i.e., insert one newline), then hit it twice (i.e., insert two newlines), see what happens. You'll soon learn to get what you want. "Markdown Toggle" is your friend.
+基本的に、改行がどのような挙動になるか学ぶには、実験して発見することをおすすめします。 &lt;Enter&gt; を1回押し(改行を挿入し)、2回押し(2つの改行を挿入し)、何が起きるを見てください。すぐに知りたいことを知ることができるでしょう。"Markdownのトグル"が役に立ちます。
 
-Here are some things to try out:
-
-```
-Here's a line for us to start with.
-
-This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
-
-This line is also a separate paragraph, but...
-This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
-```
-
-Here's a line for us to start with.
-
-This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
-
-This line is also begins a separate paragraph, but...
-This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
-
-## Tables
-
-Tables aren't part of the core Markdown spec, but they are part of GFM and Markdown Here supports them.
+以下を試してみてください。
 
 ```
-| header 1 | header 2 |
+ここが最初の行です。
+
+この行は2つの改行で上の行と分けられており *別の段落*になります。
+
+この行も段落が分かれていますが...
+この行は1つの改行だけで分けられているため、 *同じ段落* になります。
+```
+
+ここが最初の行です。
+
+この行は2つの改行で上の行と分けられており *別の段落*になります。
+
+この行も段落が分かれていますが...
+この行は1つの改行だけで分けられているため、 *同じ段落* になります。
+
+## 表
+
+テーブルはコアの Markdown の使用には含まれていませんが、GFMやここでのMarkdownではサポートされています。
+
+```
+| ヘッダ 1 | ヘッダ 2 |
 | -------- | -------- |
-| cell 1   | cell 2   |
-| cell 3   | cell 4   |
+| セル 1   | セル 2   |
+| セル 3   | セル 4   |
 ```
 
-Code above produces next output:
+上記のコードでは、次のように表示されます。
 
-| header 1 | header 2 |
+| ヘッダ 1 | ヘッダ 2 |
 | -------- | -------- |
-| cell 1   | cell 2   |
-| cell 3   | cell 4   |
+| セル 1   | セル 2   |
+| セル 3   | セル 4   |
 
-## References
+## リファレンス
 
-- This document leveraged heavily from the [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
-- The [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) at Daring Fireball is an excellent resource for a detailed explanation of standard markdown.
-- [Dillinger.io](http://dillinger.io) is a handy tool for testing standard markdown.
+- このドキュメントは [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) に多いに参考にしています。
+- Daring Fireball の [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) は標準の Markdown について詳細に説明しているすばらしいリソースです。
+- [Dillinger.io](http://dillinger.io) は標準の Markdown をテストできる便利なツールです。

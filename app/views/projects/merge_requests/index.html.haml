@@ -1,9 +1,9 @@
 - if can? current_user, :write_merge_request, @project
   = link_to new_project_merge_request_path(@project), class: "pull-right btn btn-new", title: "New Merge Request" do
     %i.icon-plus
-    New Merge Request
+    新しいマージリクエスト
 %h3.page-title
-  Merge Requests
+  マージリクエスト
 %hr
 .row
   .fixed.sidebar-expand-button.hidden-lg.hidden-md
@@ -16,20 +16,20 @@
       .dropdown.inline
         %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
           %i.icon-user
-          %span.light assignee:
+          %span.light 担当者:
           - if @assignee.present?
             %strong= @assignee.name
           - elsif params[:assignee_id] == "0"
-            Unassigned
+            担当者なし
           - else
-            Any
+            指定なし
           %b.caret
         %ul.dropdown-menu
           %li
             = link_to project_filter_path(assignee_id: nil) do
-              Any
+              指定なし
             = link_to project_filter_path(assignee_id: 0) do
-              Unassigned
+              担当者なし
           - @assignees.sort_by(&:name).each do |user|
             %li
               = link_to project_filter_path(assignee_id: user.id) do
@@ -39,20 +39,20 @@
       .dropdown.inline.prepend-left-10
         %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
           %i.icon-time
-          %span.light milestone:
+          %span.light マイルストーン:
           - if @milestone.present?
             %strong= @milestone.title
           - elsif params[:milestone_id] == "0"
-            None (backlog)
+            なし (backlog)
           - else
-            Any
+            指定なし
           %b.caret
         %ul.dropdown-menu
           %li
             = link_to project_filter_path(milestone_id: nil) do
-              Any
+              指定なし
             = link_to project_filter_path(milestone_id: 0) do
-              None (backlog)
+              なし (backlog)
           - project_active_milestones.each do |milestone|
             %li
               = link_to project_filter_path(milestone_id: milestone.id) do
@@ -67,10 +67,10 @@
         = render @merge_requests
         - if @merge_requests.blank?
           %li
-            .nothing-here-block No merge requests to show
+            .nothing-here-block マージリクエストはありません
     - if @merge_requests.present?
       .pull-right
-        %span.cgray.pull-right #{@merge_requests.total_count} merge requests for this filter
+        %span.cgray.pull-right #{@merge_requests.total_count} 個のマージリクエストに絞り込まれています
 
       = paginate @merge_requests, theme: "gitlab"
 

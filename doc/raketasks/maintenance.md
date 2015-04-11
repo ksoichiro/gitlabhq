@@ -1,8 +1,8 @@
-# Maintenance
+# メンテナンス
 
-## Gather information about GitLab and the system it runs on
+## GitLabやシステムに関する情報の収集
 
-This command gathers information about your GitLab installation and the System it runs on. These may be useful when asking for help or reporting issues.
+このコマンドは、GitLabと、GitLabを実行するシステムの情報を収集します。これらはヘルプを求めたり問題をレポートするのに便利です。
 
 ```
 # omnibus-gitlab
@@ -12,7 +12,7 @@ sudo gitlab-rake gitlab:env:info
 bundle exec rake gitlab:env:info RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 System information
@@ -42,18 +42,18 @@ Hooks:		/home/git/gitlab-shell/hooks/
 Git:		/usr/bin/git
 ```
 
-## Check GitLab configuration
+## GitLab設定の確認
 
-Runs the following rake tasks:
+以下の rake タスクを実行します。
 
 - `gitlab:env:check`
 - `gitlab:gitlab_shell:check`
 - `gitlab:sidekiq:check`
 - `gitlab:app:check`
 
-It will check that each component was setup according to the installation guide and suggest fixes for issues found.
+各コンポーネントがインストールガイドの通りにインストールされたかどうかチェックし、問題があれば修正方法を提示します。
 
-You may also have a look at our [Trouble Shooting Guide](https://github.com/gitlabhq/gitlab-public-wiki/wiki/Trouble-Shooting-Guide).
+[Trouble Shooting Guide](https://github.com/gitlabhq/gitlab-public-wiki/wiki/Trouble-Shooting-Guide) も確認しておいた方が良いでしょう。
 
 ```
 # omnibus-gitlab
@@ -63,9 +63,9 @@ sudo gitlab-rake gitlab:check
 bundle exec rake gitlab:check RAILS_ENV=production
 ```
 
-NOTE: Use SANITIZE=true for gitlab:check if you want to omit project names from the output.
+注意: プロジェクト名を出力しない場合は、 gitlab:check に対して SANITIZE=true を使用してください。
 
-Example output:
+出力例:
 
 ```
 Checking Environment ...
@@ -111,11 +111,11 @@ Redis version >= 2.0.0? ... yes
 Checking GitLab ... Finished
 ```
 
-## (Re-)Create satellite repositories
+## サテライトリポジトリの(再)作成
 
-This will create satellite repositories for all your projects.
+このコマンドはすべてのプロジェクトのサテライトリポジトリを作成します。
 
-If necessary, remove the `tmp/repo_satellites` directory and rerun the command below.
+必要に応じて、 `tmp/repo_satellites` ディレクトリを削除して以下のコマンドを再実行します。
 
 ```
 bundle exec rake gitlab:satellites:create RAILS_ENV=production

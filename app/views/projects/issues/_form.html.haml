@@ -1,12 +1,12 @@
 %div.issue-form-holder
-  %h3.page-title= @issue.new_record? ? "New Issue" : "Edit Issue ##{@issue.iid}"
+  %h3.page-title= @issue.new_record? ? "課題を作成" : "課題 ##{@issue.iid} を編集"
   %hr
   - if @repository.exists? && !@repository.empty? && @repository.contribution_guide && !@issue.persisted?
     - contribution_guide_url = project_blob_path(@project, tree_join(@repository.root_ref, @repository.contribution_guide.name))
     .row
       .col-sm-10.col-sm-offset-2
         .alert.alert-info
-          = "Please review the <strong>#{link_to "guidelines for contribution", contribution_guide_url}</strong> to this repository.".html_safe
+          = "このリポジトリの<strong>#{link_to "コントリビューション・ガイドライン", contribution_guide_url}</strong>を確認してください".html_safe
 
   = form_for [@project, @issue], html: { class: 'form-horizontal issue-form' } do |f|
     -if @issue.errors.any?
@@ -18,15 +18,15 @@
               %br
     .form-group
       = f.label :title, class: 'control-label' do
-        %strong= 'Title *'
+        %strong= 'タイトル *'
       .col-sm-10
         = f.text_field :title, maxlength: 255, class: "form-control js-gfm-input", autofocus: true, required: true
     .form-group
-      = f.label :description, 'Description', class: 'control-label'
+      = f.label :description, '説明', class: 'control-label'
       .col-sm-10
         = f.text_area :description, class: 'form-control js-gfm-input markdown-area', rows: 14
         .col-sm-12.hint
-          .pull-left Issues are parsed with #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}.
+          .pull-left 課題は #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'} 形式でパースされます。
           .pull-right Attach images (JPG, PNG, GIF) by dragging &amp; dropping or #{link_to "selecting them", '#', class: 'markdown-selector' }.
         .clearfix
         .error-alert
@@ -35,33 +35,33 @@
       .issue-assignee
         = f.label :assignee_id, class: 'control-label' do
           %i.icon-user
-          Assign to
+          担当者
         .col-sm-10
-          = project_users_select_tag('issue[assignee_id]', placeholder: 'Select a user', class: 'custom-form-control', selected: @issue.assignee_id)
+          = project_users_select_tag('issue[assignee_id]', placeholder: 'ユーザを選択', class: 'custom-form-control', selected: @issue.assignee_id)
           &nbsp;
-          = link_to 'Assign to me', '#', class: 'btn assign-to-me-link'
+          = link_to '自分に割り当てる', '#', class: 'btn assign-to-me-link'
     .form-group
       .issue-milestone
         = f.label :milestone_id, class: 'control-label' do
           %i.icon-time
-          Milestone
-        .col-sm-10= f.select(:milestone_id, milestone_options(@issue), { include_blank: "Select milestone" }, {class: 'select2'})
+          マイルストーン
+        .col-sm-10= f.select(:milestone_id, milestone_options(@issue), { include_blank: "マイルストーンを選択" }, {class: 'select2'})
 
     .form-group
       = f.label :label_ids, class: 'control-label' do
         %i.icon-tag
-        Labels
+        ラベル
       .col-sm-10
         = f.collection_select :label_ids, @project.labels.all, :id, :name, { selected: @issue.label_ids }, multiple: true, class: 'select2'
 
     .form-actions
       - if @issue.new_record?
-        = f.submit 'Submit new issue', class: "btn btn-create"
+        = f.submit '課題を作成', class: "btn btn-create"
       -else
-        = f.submit 'Save changes', class: "btn-save btn"
+        = f.submit '変更を保存', class: "btn-save btn"
 
       - cancel_path = @issue.new_record? ? project_issues_path(@project) : project_issue_path(@project, @issue)
-      = link_to "Cancel", cancel_path, class: 'btn btn-cancel'
+      = link_to "キャンセル", cancel_path, class: 'btn btn-cancel'
 
 :javascript
   $('.assign-to-me-link').on('click', function(e){

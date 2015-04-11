@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ProfilesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
 
@@ -17,9 +18,9 @@ class ProfilesController < ApplicationController
     user_params.except!(:email) if @user.ldap_user?
 
     if @user.update_attributes(user_params)
-      flash[:notice] = "Profile was successfully updated"
+      flash[:notice] = "プロフィールが更新されました"
     else
-      flash[:alert] = "Failed to update profile"
+      flash[:alert] = "プロフィールの更新に失敗しました"
     end
 
     respond_to do |format|
@@ -30,7 +31,7 @@ class ProfilesController < ApplicationController
 
   def reset_private_token
     if current_user.reset_authentication_token!
-      flash[:notice] = "Token was successfully updated"
+      flash[:notice] = "トークンが更新されました"
     end
 
     redirect_to profile_account_path

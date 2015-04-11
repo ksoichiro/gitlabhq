@@ -14,63 +14,65 @@
     .clearfix
       = form_for [:automerge, @project, @merge_request], remote: true, method: :post do |f|
         %h4
-          You can accept this request automatically.
+          このリクエストは、承認すれば自動的にマージすることができます。
         .accept-merge-holder.clearfix
           .js-toggle-container
             %p
-              You can
-              %strong= link_to "modify merge commit message", "#", class: "modify-merge-commit-link js-toggle-button", title: "Modify merge commit message"
-              before accepting merge request
+              マージコミットのメッセージを修正したい場合は
+              %strong= link_to "マージコミットのメッセージを修正する", "#", class: "modify-merge-commit-link js-toggle-button", title: "マージコミットのメッセージを修正する"
+              を参照してください。
             .js-toggle-content.hide
               .form-group
-                = label_tag :merge_commit_message, "Commit message", class: 'control-label'
+                = label_tag :merge_commit_message, "コミットメッセージ", class: 'control-label'
                 .col-sm-10
                   = render 'shared/commit_message_container', {textarea: text_area_tag(:merge_commit_message,
                       @merge_request.merge_commit_message, class: "form-control js-gfm-input", rows: 14, required: true)}
                   %p.hint
-                    The recommended maximum line length is 52 characters for the first line and 72 characters for all following lines.
+                    先頭の1行は最大52字、それ以降の行は最大72文字であることが推奨されます。
 
           .accept-group
             .pull-left
-              = f.submit "Accept Merge Request", class: "btn btn-create accept_merge_request"
+              = f.submit "マージリクエストを承認", class: "btn btn-create accept_merge_request"
             - if can_remove_branch?(@merge_request.source_project, @merge_request.source_branch) && !@merge_request.for_fork?
               .remove_branch_holder.pull-left
                 = label_tag :should_remove_source_branch, class: "checkbox" do
                   = check_box_tag :should_remove_source_branch
-                  Remove source-branch
+                  マージ元のブランチを削除
 
         %hr
         .light
-          If you still want to merge this request manually - use
+          マージコミットを手動で修正したい場合は
           %strong
-            = link_to "command line", "#modal_merge_info", class: "how_to_merge_link vlink", title: "How To Merge", "data-toggle" => "modal"
+            = link_to "コマンドラインでマージする方法", "#modal_merge_info", class: "how_to_merge_link vlink", title: "マージする方法", "data-toggle" => "modal"
+          を参照してください。
 
 
   .automerge_widget.no_satellite.hide
     %p
       %span
-        %strong This repository does not have satellite. Ask an administrator to fix this issue
+        %strong このリポジトリにはサテライトがありません。管理者に確認してこの問題を解決してください。
 
   .automerge_widget.cannot_be_merged.hide
     %h4
-      This request can't be merged with GitLab.
+      このリクエストはGitLabではマージできません。
     %p
-      You should do it manually with
+      このリクエストは手動で
       %strong
-        = link_to "command line", "#modal_merge_info", class: "how_to_merge_link", title: "How To Merge", "data-toggle" => "modal"
+        = link_to "コマンドライン", "#modal_merge_info", class: "how_to_merge_link", title: "マージ方法", "data-toggle" => "modal"
+      からマージする必要があります。
 
   .automerge_widget.unchecked
     %p
       %strong
         %i.icon-spinner.icon-spin
-        Checking for ability to automatically merge…
+        自動マージが可能か確認しています…
 
   .automerge_widget.already_cannot_be_merged.hide
     %p
-      %strong This merge request can not be merged. Try to reload the page.
+      %strong このマージリクエストはマージできません。ページを再読み込みしてください。
 
   .merge-in-progress.hide
     %p
       %i.icon-spinner.icon-spin
       &nbsp;
-      Merge is in progress. Please wait. Page will be automatically reloaded. &nbsp;
+      マージを実行中です。お待ちください。ページは自動的に更新されます。&nbsp;

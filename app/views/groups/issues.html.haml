@@ -1,12 +1,11 @@
 %h3.page-title
-  Issues
+  課題
 
 %p.light
-  Only issues from
   %strong #{@group.name}
-  group are listed here.
+  グループの課題だけが表示されています。
   - if current_user
-    To see all issues you should visit #{link_to 'dashboard', issues_dashboard_path} page.
+    すべての課題を確認するには #{link_to 'ダッシュボード', issues_dashboard_path} を表示してください。
 %hr
 
 .row

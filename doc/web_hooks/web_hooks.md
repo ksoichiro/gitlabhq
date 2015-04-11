@@ -1,18 +1,18 @@
-# Web hooks
+# Webフック
 
-Project web hooks allow you to trigger an URL if new code is pushed or a new issue is created.
+プロジェクトWebフックを使うと、新しいコードのプッシュや課題の作成をトリガーとして指定のURLへリクエストすることができます。
 
-You can configure web hooks to listen for specific events like pushes, issues or merge requests. GitLab will send a POST request with data to the web hook URL.
+プッシュ、課題、マージリクエストといったイベントから特定のものに対してWebフックを設定することができます。GitLab はWebフックのURLに対して POST リクエストでデータを送信します。
 
-Web hooks can be used to update an external issue tracker, trigger CI builds, update a backup mirror, or even deploy to your production server.
+Webフックは、外部の課題トラッカーの更新、CIビルドの起動、バックアップミラーの更新、本番サーバへのデプロイなどに利用することができます。
 
-If you send a web hook to an SSL endpoint [the certificate will not be verified](https://gitlab.com/gitlab-org/gitlab-ce/blob/ccd617e58ea71c42b6b073e692447d0fe3c00be6/app/models/web_hook.rb#L35) since many people use self-signed certificates.
+WebフックをSSLエンドポイントへ送信した場合、自己署名の証明書が使われている場合が多いため [証明書は検証されません](https://gitlab.com/gitlab-org/gitlab-ce/blob/ccd617e58ea71c42b6b073e692447d0fe3c00be6/app/models/web_hook.rb#L35)。
 
-## Push events
+## プッシュイベント
 
-Triggered when you push to the repository except when pushing tags.
+リポジトリへのタグ以外のプッシュで実行されます。
 
-**Request body:**
+**リクエストボディ:**
 
 ```json
 {
@@ -54,11 +54,11 @@ Triggered when you push to the repository except when pushing tags.
 }
 ```
 
-## Issues events
+## 課題イベント
 
-Triggered when a new issue is created or an existing issue was updated/closed/reopened.
+課題の作成/更新/クローズ/再オープンで実行されます。
 
-**Request body:**
+**リクエストボディ:**
 
 ```json
 {
@@ -83,11 +83,11 @@ Triggered when a new issue is created or an existing issue was updated/closed/re
 }
 ```
 
-## Merge request events
+## マージリクエストイベント
 
-Triggered when a new merge request is created or an existing merge request was updated/merged/closed.
+マージリクエストの作成/更新/マージ/クローズで実行されます。
 
-**Request body:**
+**リクエストボディ:**
 
 ```json
 {

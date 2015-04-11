@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Admin::UsersController < Admin::ApplicationController
   before_filter :user, only: [:show, :edit, :update, :destroy]
 
@@ -22,17 +23,17 @@ class Admin::UsersController < Admin::ApplicationController
 
   def block
     if user.block
-      redirect_to :back, alert: "Successfully blocked"
+      redirect_to :back, alert: "正常にブロックしました"
     else
-      redirect_to :back, alert: "Error occurred. User was not blocked"
+      redirect_to :back, alert: "エラーが発生しました。ユーザはブロックされませんでした"
     end
   end
 
   def unblock
     if user.activate
-      redirect_to :back, alert: "Successfully unblocked"
+      redirect_to :back, alert: "正常にブロック解除しました"
     else
-      redirect_to :back, alert: "Error occurred. User was not unblocked"
+      redirect_to :back, alert: "エラーが発生しました。ユーザはブロック解除されませんでした"
     end
   end
 
@@ -50,7 +51,7 @@ class Admin::UsersController < Admin::ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to [:admin, @user], notice: 'User was successfully created.' }
+        format.html { redirect_to [:admin, @user], notice: 'ユーザが作成されました' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render "new" }
@@ -72,7 +73,7 @@ class Admin::UsersController < Admin::ApplicationController
     respond_to do |format|
       if user.update_attributes(user_params_with_pass)
         user.confirm!
-        format.html { redirect_to [:admin, user], notice: 'User was successfully updated.' }
+        format.html { redirect_to [:admin, user], notice: 'ユーザが更新されました' }
         format.json { head :ok }
       else
         # restore username to keep form action url.

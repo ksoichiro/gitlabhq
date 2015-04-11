@@ -2,19 +2,19 @@
   .center
     %h3.page-title
       %i.icon-spinner.icon-spin
-      Building repository graph.
-    %p Please wait a moment, this page will automatically refresh when ready.
+      リポジトリグラフを構築しています
+    %p 準備ができ次第、自動的に更新されますのでお待ちください
 
 .stat-graph
   .header.clearfix
     .pull-right
       %select
-        %option{:value => "commits"} Commits
-        %option{:value => "additions"} Additions
-        %option{:value => "deletions"} Deletions
+        %option{:value => "commits"} コミット
+        %option{:value => "additions"} 追加
+        %option{:value => "deletions"} 削除
     %h3#date_header.page-title
     %p.light
-      Commits to #{@project.default_branch}, excluding merge commits. Limited by 6,000 commits
+      マージコミットを除いた#{@project.default_branch}へのコミットが 6,000 コミットまで表示されます。
     %input#brush_change{:type => "hidden"}
   .graphs
     #contributors-master

@@ -1,15 +1,15 @@
-%h3.page-title Background Jobs
-%p.light GitLab uses #{link_to "sidekiq", "http://sidekiq.org/"} library for async job processing
+%h3.page-title バックグラウンドジョブ
+%p.light GitLabは #{link_to "sidekiq", "http://sidekiq.org/"} ライブラリを使用して非同期ジョブを処理しています。
 
 %hr
 
 .panel.panel-default
-  .panel-heading Sidekiq running processes
+  .panel-heading 実行中の Sidekiq プロセス
   .panel-body
     - if @sidekiq_processes.empty?
       %h4.cred
         %i.icon-warning-sign
-        There are no running sidekiq processes. Please restart GitLab
+        実行中の Sidekiq プロセスはありません。GitLabを再起動してください。
     - else
       %table.table
         %thead
@@ -33,10 +33,10 @@
       .clearfix
         %p
           %i.icon-exclamation-sign
-          If '[25 of 25 busy]' is shown, restart GitLab with 'sudo service gitlab reload'.
+          もし '[25 of 25 busy]' と表示されていたら、'sudo service gitlab reload' でGitLabを再起動してください。
         %p
           %i.icon-exclamation-sign
-          If more than one sidekiq process is listed, stop GitLab, kill the remaining sidekiq processes (sudo pkill -u #{Settings.gitlab.user} -f sidekiq) and restart GitLab.
+          もし2つ以上の Sidekiq プロセスが表示されている場合、GitLabを停止し、残っている Sidekiq プロセスを kill し(sudo pkill -u #{Settings.gitlab.user} -f sidekiq)、GitLabを再起動してください。
 
 
 

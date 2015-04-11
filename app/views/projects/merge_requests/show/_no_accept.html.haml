@@ -1,14 +1,16 @@
 %h4
-  Can't be merged
+  マージ不可
 %p
-  This merge request can not be accepted because branch
+  このマージリクエストは以下の理由により承認できません。
   - unless @merge_request.source_branch_exists?
     %span.label.label-inverse= @merge_request.source_branch
-    does not exist in
+    ブランチが
     %span.label.label-info= @merge_request.source_project_path
+    に存在しません
   - else
     %span.label.label-inverse= @merge_request.target_branch
-    does not exist in
+    ブランチが
     %span.label.label-info= @merge_request.target_project_path
+    に存在しません
   %br
-  %strong Please close this merge request or change branches with existing one
+  %strong このマージリクエストをクローズするか、存在するブランチを選び直してください。

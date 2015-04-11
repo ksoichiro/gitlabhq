@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: services
@@ -27,7 +28,7 @@ class FlowdockService < Service
   end
 
   def description
-    'Flowdock is a collaboration web app for technical teams.'
+    'Flowdockはテクニカルチーム向けの共同作業用Webアプリケーションです。'
   end
 
   def to_param

@@ -1,14 +1,14 @@
 .panel.panel-default
   .panel-heading
-    Projects (#{projects.count})
+    プロジェクト (#{projects.count})
     - if can? current_user, :create_projects, @group
       .panel-head-actions
         = link_to new_project_path(namespace_id: @group.id), class: "btn btn-new" do
           %i.icon-plus
-          New project
+          新しいプロジェクト
   %ul.well-list
     - if projects.blank?
-      .nothing-here-block This group has no projects yet
+      .nothing-here-block このグループにはまだプロジェクトがありません
     - projects.each do |project|
       %li.project-row
         = link_to project_path(project), class: dom_class(project) do

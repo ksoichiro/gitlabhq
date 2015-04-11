@@ -1,0 +1,24 @@
+ja:
+  date:
+    order:
+    - :year
+    - :month
+    - :day
+  views:
+    pagination:
+      previous: 前へ
+      next: 次へ
+  activerecord:
+    models:
+      project: プロジェクト
+    attributes:
+      project:
+        name: プロジェクト名
+        path: リポジトリパス
+        import_url: インポートURL
+    errors:
+      models:
+        group:
+          attributes:
+            name:
+              blank: グループ名は必須です

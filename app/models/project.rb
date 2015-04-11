@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: projects
@@ -108,7 +109,7 @@ class Project < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :namespace_id
   validates_uniqueness_of :path, scope: :namespace_id
   validates :import_url,
-    format: { with: URI::regexp(%w(git http https)), message: "should be a valid url" },
+    format: { with: URI::regexp(%w(git http https)), message: "は有効なURLでなければなりません" },
     if: :import?
   validates :star_count, numericality: { greater_than_or_equal_to: 0 }
   validate :check_limit, on: :create
@@ -248,10 +249,10 @@ class Project < ActiveRecord::Base
 
   def check_limit
     unless creator.can_create_project? or namespace.kind == 'group'
-      errors[:limit_reached] << ("Your project limit is #{creator.projects_limit} projects! Please contact your administrator to increase it")
+      errors[:limit_reached] << ("あなたが作成できるプロジェクトの上限は #{creator.projects_limit} 個です！管理者に上限を増やすように連絡してください")
     end
   rescue
-    errors[:base] << ("Can't check your ability to create project")
+    errors[:base] << ("プロジェクトの作成権限が確認できませんでした")
   end
 
   def to_param
@@ -418,7 +419,7 @@ class Project < ActiveRecord::Base
   def valid_repo?
     repository.exists?
   rescue
-    errors.add(:path, "Invalid repository path")
+    errors.add(:path, "リポジトリのパスが無効です")
     false
   end
 

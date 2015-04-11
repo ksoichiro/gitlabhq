@@ -4,6 +4,6 @@
   %span
     (#{key.fingerprint})
   %span.cgray
-    added #{time_ago_with_tooltip(key.created_at)}
+    #{time_ago_with_tooltip(key.created_at)} に追加
 
-  = link_to 'Remove', profile_key_path(key), data: { confirm: 'Are you sure?'}, method: :delete, class: "btn btn-small btn-remove delete-key pull-right"
+  = link_to '削除', profile_key_path(key), data: { confirm: '本当に削除しますか？'}, method: :delete, class: "btn btn-small btn-remove delete-key pull-right"

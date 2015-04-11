@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'gitlab/satellite/satellite'
 
 class Projects::MergeRequestsController < Projects::ApplicationController
@@ -87,7 +88,7 @@ class Projects::MergeRequestsController < Projects::ApplicationController
     @merge_request = MergeRequests::CreateService.new(project, current_user, merge_request_params).execute
 
     if @merge_request.valid?
-      redirect_to project_merge_request_path(@merge_request.target_project, @merge_request), notice: 'Merge request was successfully created.'
+      redirect_to project_merge_request_path(@merge_request.target_project, @merge_request), notice: 'マージリクエストが作成されました'
     else
       @source_project = @merge_request.source_project
       @target_project = @merge_request.target_project
@@ -102,7 +103,7 @@ class Projects::MergeRequestsController < Projects::ApplicationController
       respond_to do |format|
         format.js
         format.html do
-          redirect_to [@merge_request.target_project, @merge_request], notice: 'Merge request was successfully updated.'
+          redirect_to [@merge_request.target_project, @merge_request], notice: 'マージリクエストが更新されました'
         end
       end
     else

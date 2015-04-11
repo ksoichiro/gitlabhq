@@ -1,12 +1,12 @@
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  = f.text_field :login, class: "form-control top", placeholder: "Username or Email", autofocus: "autofocus"
-  = f.password_field :password, class: "form-control bottom", placeholder: "Password"
+  = f.text_field :login, class: "form-control top", placeholder: "ユーザ名またはメールアドレス", autofocus: "autofocus"
+  = f.password_field :password, class: "form-control bottom", placeholder: "パスワード"
   - if devise_mapping.rememberable?
     .clearfix.append-bottom-10
       %label.checkbox.remember_me{for: "user_remember_me"}
         = f.check_box :remember_me
-        %span Remember me
+        %span パスワードを記憶
   %div
-    = f.submit "Sign in", class: "btn-save btn"
+    = f.submit "サインイン", class: "btn-save btn"
     .pull-right
-      = link_to "Forgot your password?", new_password_path(resource_name), class: "btn"
+      = link_to "パスワードを忘れた場合", new_password_path(resource_name), class: "btn"

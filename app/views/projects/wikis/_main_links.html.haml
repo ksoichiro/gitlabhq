@@ -1,8 +1,8 @@
 %span.pull-right
   - if (@page && @page.persisted?)
     = link_to history_project_wiki_path(@project, @page), class: "btn btn-grouped" do
-      Page History
+      ページ更新履歴
     - if can?(current_user, :write_wiki, @project)
       = link_to edit_project_wiki_path(@project, @page), class: "btn btn-grouped" do
         %i.icon-edit
-        Edit
+        編集

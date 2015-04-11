@@ -1,20 +1,20 @@
 %h3.page-title
-  Issue ##{@issue.iid}
+  課題 ##{@issue.iid}
 
   %span.pull-right.issue-btn-group
     - if can?(current_user, :write_issue, @project)
-      = link_to new_project_issue_path(@project), class: "btn btn-grouped", title: "New Issue", id: "new_issue_link" do
+      = link_to new_project_issue_path(@project), class: "btn btn-grouped", title: "新しい課題", id: "new_issue_link" do
         %i.icon-plus
-        New Issue
+        新しい課題
     - if can?(current_user, :modify_issue, @issue)
       - if @issue.closed?
-        = link_to 'Reopen', project_issue_path(@project, @issue, issue: {state_event: :reopen }, status_only: true), method: :put,  class: "btn btn-grouped btn-reopen"
+        = link_to 'オープン', project_issue_path(@project, @issue, issue: {state_event: :reopen }, status_only: true), method: :put,  class: "btn btn-grouped btn-reopen"
       - else
-        = link_to 'Close', project_issue_path(@project, @issue, issue: {state_event: :close }, status_only: true), method: :put, class: "btn btn-grouped btn-close", title: "Close Issue"
+        = link_to '解決', project_issue_path(@project, @issue, issue: {state_event: :close }, status_only: true), method: :put, class: "btn btn-grouped btn-close", title: "課題を解決"
 
       = link_to edit_project_issue_path(@project, @issue), class: "btn btn-grouped" do
         %i.icon-edit
-        Edit
+        編集
 
 .clearfix
   .votes-holder
@@ -22,11 +22,11 @@
 
   .back-link
     = link_to project_issues_path(@project) do
-      &larr; To issues list
+      &larr; 課題一覧に戻る
     %span.milestone-nav-link
       - if @issue.milestone
         |
-        %span.light Milestone
+        %span.light マイルストーン
         = link_to project_milestone_path(@project, @issue.milestone) do
           = @issue.milestone.title
 
@@ -34,12 +34,12 @@
   .state.clearfix
     .state-label
       - if @issue.closed?
-        Closed
+        解決
       - else
-        Open
+        オープン
 
     .creator
-      Created by #{link_to_member(@project, @issue.author)} #{time_ago_with_tooltip(@issue.created_at)}
+      #{link_to_member(@project, @issue.author)}が#{time_ago_with_tooltip(@issue.created_at)}に作成
 
   %h4.title
     = gfm escape_once(@issue.title)
@@ -57,12 +57,13 @@
 - content_for :note_actions do
   - if can?(current_user, :modify_issue, @issue)
     - if @issue.closed?
-      = link_to 'Reopen Issue', project_issue_path(@project, @issue, issue: {state_event: :reopen }, status_only: true), method: :put,  class: "btn btn-grouped btn-reopen"
+      = link_to '課題を再オープン', project_issue_path(@project, @issue, issue: {state_event: :reopen }, status_only: true), method: :put,  class: "btn btn-grouped btn-reopen"
     - else
-      = link_to 'Close Issue', project_issue_path(@project, @issue, issue: {state_event: :close }, status_only: true), method: :put, class: "btn btn-grouped btn-close", title: "Close Issue"
+      = link_to '課題を解決', project_issue_path(@project, @issue, issue: {state_event: :close }, status_only: true), method: :put, class: "btn btn-grouped btn-close", title: "課題を解決"
+
 
 .participants
-  %cite.cgray #{@issue.participants.count} participants
+  %cite.cgray #{@issue.participants.count} 人の参加者
   - @issue.participants.each do |participant|
     = link_to_member(@project, participant, name: false, size: 24)
 

@@ -1,9 +1,9 @@
-<p>Welcome <%= @resource.name %>!</p>
+<p>ようこそ <%= @resource.name %> さん！</p>
 
 <% if @resource.unconfirmed_email.present? %>
-  <p>You can confirm your email (<%= @resource.unconfirmed_email %>) through the link below:</p>
+  <p>あなたのメールアドレス(<%= @resource.unconfirmed_email %>)を確認するために以下のリンクをクリックしてください。</p>
 <% else %>
-  <p>You can confirm your account through the link below:</p>
+  <p>あなたのアカウントを確認するために以下のリンクをクリックしてください。</p>
 <% end %>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p><%= link_to 'アカウントを確認', confirmation_url(@resource, confirmation_token: @token) %></p>

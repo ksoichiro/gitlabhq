@@ -1,13 +1,13 @@
-# Backup restore
+# バックアップ・リストア
 
 ![backup banner](backup_hrz.png)
 
-## Create a backup of the GitLab system
+## GitLabシステムのバックアップの作成
 
-A backup creates an archive file that contains the database, all repositories and all attachments.
-This archive will be saved in backup_path (see `config/gitlab.yml`).
+データベースとすべてのリポジトリのバックアップアーカイブを作成します。
+このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
 
-The filename will be `[TIMESTAMP]_gitlab_backup.tar`. This timestamp can be used to restore an specific backup.
+ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
 
 ```
 # omnibus-gitlab
@@ -17,7 +17,7 @@ sudo gitlab-rake gitlab:backup:create
 bundle exec rake gitlab:backup:create RAILS_ENV=production
 ```
 
-Example output:
+出力例:
 
 ```
 Dumping database tables:
@@ -46,14 +46,14 @@ Deleting tmp directories...[DONE]
 Deleting old backups... [SKIPPING]
 ```
 
-## Storing configuration files
+## 設定ファイルの保存
 
-Please be informed that a backup does not store your configuration files.
-If you use Omnibus-GitLab please see the [instructions in the readme to backup your configuration](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#backup-and-restore-omnibus-gitlab-configuration).
-If you have a cookbook installation there should be a copy of your configuration in Chef.
-If you have a manual installation please consider backing up your gitlab.yml file and any SSL keys and certificates.
+バックアップでは設定ファイルは保存されないことに注意してください。
+Omnibus-GitLab を使用している場合は、 [READMEの設定のバックアップ方法](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#backup-and-restore-omnibus-gitlab-configuration) を参照してください。
+Cookbookでインストールしている場合は、Chefに設定のコピーがあるはずです。
+手動でインストールした場合は、gitlab.ymlファイル、SSLキー、証明書のバックアップを検討してください。
 
-## Restore a previously created backup
+## 以前のバックアップへのリストア
 
 ```
 # omnibus-gitlab
@@ -63,13 +63,13 @@ sudo gitlab-rake gitlab:backup:restore
 bundle exec rake gitlab:backup:restore RAILS_ENV=production
 ```
 
-Options:
+オプション:
 
 ```
 BACKUP=timestamp_of_backup (required if more than one backup exists)
 ```
 
-Example output:
+出力例:
 
 ```
 Unpacking backup... [DONE]
@@ -100,7 +100,7 @@ Restoring repositories:
 Deleting tmp directories...[DONE]
 ```
 
-## Configure cron to make daily backups
+## 日次バックアップを行うためのcronの設定
 
 For omnibus-gitlab, see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#scheduling-a-backup .
 
@@ -110,7 +110,7 @@ sudo -u git -H editor config/gitlab.yml # Enable keep_time in the backup section
 sudo -u git crontab -e # Edit the crontab for the git user
 ```
 
-Add the following lines at the bottom:
+以下の行を末尾に追加します。
 
 ```
 # Create a full backup of the GitLab repositories and SQL database every day at 2am

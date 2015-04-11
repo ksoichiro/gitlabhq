@@ -1,9 +1,9 @@
 %h3.page-title
-  Web hooks
+  Webフック
 
 %p.light
-  #{link_to "Web hooks ", help_page_path("web_hooks", "web_hooks"), class: "vlink"} can be
-  used for binding events when something is happening within the project.
+  #{link_to "Webフック", help_page_path("web_hooks", "web_hooks"), class: "vlink"}を使うと
+  プロジェクト内のイベントを別のアクションに紐付けることができます。
 
 %hr.clearfix
 
@@ -17,49 +17,49 @@
     .col-sm-10
       = f.text_field :url, class: "form-control", placeholder: 'http://example.com/trigger-ci.json'
   .form-group
-    = f.label :url, "Trigger", class: 'control-label'
+    = f.label :url, "トリガー", class: 'control-label'
     .col-sm-10
       %div
         = f.check_box :push_events, class: 'pull-left'
         .prepend-left-20
           = f.label :push_events, class: 'list-label' do
-            %strong Push events
+            %strong プッシュイベント
           %p.light
-            This url will be triggered by a push to the repository
+            リポジトリへのプッシュイベントがあったときにこのURLをリクエストします
       %div
         = f.check_box :tag_push_events, class: 'pull-left'
         .prepend-left-20
           = f.label :tag_push_events, class: 'list-label' do
-            %strong Tag push events
+            %strong タグプッシュイベント
           %p.light
-            This url will be triggered when a new tag is pushed to the repository
+            新しいタグがリポジトリにプッシュされたときにこのURLをリクエストします
       %div
         = f.check_box :issues_events, class: 'pull-left'
         .prepend-left-20
           = f.label :issues_events, class: 'list-label' do
-            %strong Issues events
+            %strong 課題イベント
           %p.light
-            This url will be triggered when an issue is created
+            課題が作成されたときにこのURLをリクエストします
       %div
         = f.check_box :merge_requests_events, class: 'pull-left'
         .prepend-left-20
           = f.label :merge_requests_events, class: 'list-label' do
-            %strong Merge Request events
+            %strong マージリクエストイベント
           %p.light
-            This url will be triggered when a merge request is created
+            マージリクエストが作成されたときにこのURLをリクエストします
   .form-actions
-    = f.submit "Add Web Hook", class: "btn btn-create"
+    = f.submit "Webフックを追加", class: "btn btn-create"
 
 -if @hooks.any?
   .panel.panel-default
     .panel-heading
-      Web hooks (#{@hooks.count})
+      Webフック (#{@hooks.count})
     %ul.well-list
       - @hooks.each do |hook|
         %li
           .pull-right
-            = link_to 'Test Hook', test_project_hook_path(@project, hook), class: "btn btn-small btn-grouped"
-            = link_to 'Remove', project_hook_path(@project, hook), data: { confirm: 'Are you sure?'}, method: :delete, class: "btn btn-remove btn-small btn-grouped"
+            = link_to 'フックをテスト', test_project_hook_path(@project, hook), class: "btn btn-small btn-grouped"
+            = link_to '削除', project_hook_path(@project, hook), data: { confirm: '本当に削除しますか？'}, method: :delete, class: "btn btn-remove btn-small btn-grouped"
           .clearfix
             %span.monospace= hook.url
           %p

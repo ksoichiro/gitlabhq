@@ -1,10 +1,10 @@
 %p
-  Hi #{@user.name}!
+  こんにちは #{@user.name} さん！
 %p
-  A new public key was added to your account:
+  新しい公開鍵があなたのアカウントに追加されました。
 %p
-  title:
+  タイトル:
   %code= @key.title
 %p
-  If this key was added in error, you can remove it here:
-  = link_to "SSH Keys", profile_keys_url
+  もしこのキーが誤って追加されたものである場合、以下から削除できます。
+  = link_to "SSHキー", profile_keys_url

@@ -1,10 +1,10 @@
 .panel.panel-default
   .panel-heading
-    Profile
+    プロフィール
   %ul.well-list
     %li
-      %span.light Member since
-      %strong= user.created_at.stamp("Aug 21, 2011")
+      %span.light 登録日: 
+      %strong= user.created_at.stamp("2011/08/21")
     - unless user.skype.blank?
       %li
         %span.light Skype:
@@ -19,9 +19,9 @@
         %strong= link_to user.twitter, "http://www.twitter.com/#{user.twitter}"
     - unless user.website_url.blank?
       %li
-        %span.light Website:
+        %span.light Webサイト:
         %strong= link_to user.short_website_url, user.full_website_url
     - unless user.bio.blank?
       %li
-        %span.light Bio:
+        %span.light 自己紹介:
         %span= user.bio

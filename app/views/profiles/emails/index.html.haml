@@ -1,33 +1,33 @@
 %h3.page-title
-  My email addresses
+  メールアドレス
 %p.light
-  Your
-  %b Primary Email
-  will be used for account notifications, avatar detection and web based operations, such as edits and merges.
+  あなたの
+  %b プライマリメールアドレス
+  はアカウントの通知、アバターの検出、Webベースの操作(編集やマージなど)に使用されます。
   %br
-  All email addresses will be used to identify your commits.
+  すべてのメールアドレスはあなたのコミットの識別に使用されます。
 
 %hr
 
 .panel.panel-default
   .panel-heading
-    Emails (#{@emails.count + 1})
+    メールアドレス (#{@emails.count + 1})
   %ul.well-list#emails-table
     %li
       %strong= @primary
-      %span.label.label-success Primary Email
+      %span.label.label-success プライマリメールアドレス
     - @emails.each do |email|
       %li
         %strong= email.email
         %span.cgray
-          added #{time_ago_with_tooltip(email.created_at)}
-        = link_to 'Remove', profile_email_path(email), data: { confirm: 'Are you sure?'}, method: :delete, class: 'btn btn-small btn-remove pull-right'
+          #{time_ago_with_tooltip(email.created_at)} に追加
+        = link_to '削除', profile_email_path(email), data: { confirm: '本当に削除しますか？'}, method: :delete, class: 'btn btn-small btn-remove pull-right'
 
-%h4 Add email address
+%h4 メールアドレスの追加
 = form_for 'email', url: profile_emails_path, html: { class: 'form-horizontal' } do |f|
   .form-group
-    = f.label :email, class: 'control-label'
+    = f.label :email, 'メールアドレス', class: 'control-label'
     .col-sm-10
       = f.text_field :email, class: 'form-control'
   .form-actions
-    = f.submit 'Add', class: 'btn btn-create'
+    = f.submit '追加', class: 'btn btn-create'

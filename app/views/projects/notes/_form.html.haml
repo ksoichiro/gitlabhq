@@ -8,33 +8,33 @@
   %ul.nav.nav-tabs
     %li.active
       = link_to '#note-write-holder', class: 'js-note-write-button' do
-        Write
+        編集
     %li
       = link_to '#note-preview-holder', class: 'js-note-preview-button', data: { url: preview_project_notes_path(@project) } do
-        Preview
+        プレビュー
   %div
     .note-write-holder
       = f.text_area :note, size: 255, class: 'note_text js-note-text js-gfm-input markdown-area'
 
       .light.clearfix
-        .pull-left Comments are parsed with #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"),{ target: '_blank', tabindex: -1 }}
-        .pull-right Attach images (JPG, PNG, GIF) by dragging &amp; dropping or #{link_to "selecting them", '#', class: 'markdown-selector', tabindex: -1 }.
+        .pull-left コメントは#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"),{ target: '_blank', tabindex: -1 }}形式でパースされます
+        .pull-right ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector', tabindex: -1 }して画像 (JPG, PNG, GIF) を添付
 
     .note-preview-holder.hide
       .js-note-preview
 
   .note-form-actions
     .buttons
-      = f.submit 'Add Comment', class: "btn comment-btn btn-grouped js-comment-button"
+      = f.submit 'コメントする', class: "btn comment-btn btn-grouped js-comment-button"
       = yield(:note_actions)
-      %a.btn.grouped.js-close-discussion-note-form Cancel
+      %a.btn.grouped.js-close-discussion-note-form キャンセル
 
     .note-form-option
       %a.choose-btn.btn.js-choose-note-attachment-button
         %i.icon-paper-clip
-        %span Choose File ...
+        %span ファイルを選択...
       &nbsp;
-      %span.file_name.js-attachment-filename File name...
+      %span.file_name.js-attachment-filename ファイル名...
       = f.file_field :attachment, class: "js-note-attachment-input hidden"
 
 :javascript

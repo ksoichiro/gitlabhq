@@ -1,4 +1,4 @@
-%html{lang: "en"}
+%html{lang: "ja"}
   %head
     %meta{content: "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
       %title
@@ -25,6 +25,6 @@
         \—
         %br
         - if @project
-          You're receiving this notification because you are a member of the #{link_to_unless @target_url, @project.name_with_namespace, project_url(@project)} project team.
+          この通知は、あなたが #{link_to_unless @target_url, @project.name_with_namespace, project_url(@project)} プロジェクトのメンバーであるため送信されています。
         - if @target_url
-          #{link_to "View it on GitLab", @target_url}
+          #{link_to "GitLabで表示", @target_url}

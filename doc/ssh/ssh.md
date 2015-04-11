@@ -1,21 +1,21 @@
-# SSH keys
+# SSHキー
 
-SSH key allows you to establish a secure connection between your computer and GitLab
+SSHキーはあなたのコンピュータとGitLabとの間でセキュアな接続ができるようにします。
 
-Before generating an SSH key, check if your system already has one by running `cat ~/.ssh/id_rsa.pub` If your see a long string starting with `ssh-rsa` or `ssh-dsa`, you can skip the ssh-keygen step.
+SSHキーを生成する前に、 `cat ~/.ssh/id_rsa.pub` を実行して、既にキーがないか確認してください。もし `ssh-rsa` か `ssh-dsa` から始まる長い文字列が出力されたなら、SSHキー生成のステップは省略して構いません。
 
-To generate a new SSH key just open your terminal and use code below. The ssh-keygen command prompts you for a location and filename to store the key pair and for a password. When prompted for the location and filename you can press enter to use the default. 
-It is a best practice to use a password for an SSH key but it is not required and you can skip creating a password by pressing enter. 
-Note that the password you choose here can't be altered or retrieved.
+新しいSSHキーを生成するには、ターミナルを開き、以下のコードを実行してください。ssh-keygen コマンドはキーペアとパスワードを保存する場所とファイル名の入力を求めてきます。入力を求められたら、デフォルト値を適用する場合はそのままEnterキーを押してください。 
+SSHキーに対してパスワードを設定するのがベストプラクティスですが、これは必須ではなく、Enterを押せばパスワードは未設定にすることができます。 
+ここで指定したパスワードは、後から変更したり削除することができないことに注意してください。
 
 ```bash
 ssh-keygen -t rsa -C "$your_email"
 ```
 
-Use the code below to show your public key.
+以下のコードを実行して、公開キーを表示します。
 
 ```bash
 cat ~/.ssh/id_rsa.pub
 ```
 
-Copy-paste the key to the 'My SSH Keys' section under the 'SSH' tab in your user profile. Please copy the complete key starting with `ssh-` and ending with your username and host.
+キーをコピーして、あなたのプロフィール設定画面の 'SSHキー' のセクションでペーストします。`ssh-` から始まり、あなたのユーザ名とホスト名で終わるキー文字列を完全にコピーしてください。

@@ -1,6 +1,6 @@
 .form-group.project-visibility-level-holder
   = f.label :visibility_level, class: 'control-label' do
-    Visibility Level
+    可視性レベル
     = link_to "(?)", help_page_path("public_access", "public_access")
   .col-sm-10
     - if can_change_visibility_level
@@ -17,7 +17,7 @@
       - unless restricted_visibility_levels.empty?
         .col-sm-10
           %span.info
-            Some visibility level settings have been restricted by the administrator.
+            いくつかの可視性レベル設定は管理者のみに制限されています。
     - else
       .col-sm-10
         %span.info

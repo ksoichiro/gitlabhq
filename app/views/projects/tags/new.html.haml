@@ -1,19 +1,19 @@
 %h3.page-title
   %i.icon-code-fork
-  New tag
+  タグを作成
 = form_tag project_tags_path, method: :post, class: "form-horizontal" do
   .form-group
-    = label_tag :tag_name, 'Name for new tag', class: 'control-label'
+    = label_tag :tag_name, 'タグ名', class: 'control-label'
     .col-sm-10
       = text_field_tag :tag_name, nil, placeholder: 'v3.0.1', required: true, tabindex: 1, class: 'form-control'
   .form-group
-    = label_tag :ref, 'Create from', class: 'control-label'
+    = label_tag :ref, 'タグ対象', class: 'control-label'
     .col-sm-10
       = text_field_tag :ref, nil, placeholder: 'master', required: true, tabindex: 2, class: 'form-control'
-      .light Branch name or commit SHA
+      .light ブランチ名またはコミットSHA
   .form-actions
-    = submit_tag 'Create tag', class: 'btn btn-create', tabindex: 3
-    = link_to 'Cancel', project_tags_path(@project), class: 'btn btn-cancel'
+    = submit_tag 'タグを作成', class: 'btn btn-create', tabindex: 3
+    = link_to 'キャンセル', project_tags_path(@project), class: 'btn btn-cancel'
 
 :javascript
   var availableTags = #{@project.repository.ref_names.to_json};

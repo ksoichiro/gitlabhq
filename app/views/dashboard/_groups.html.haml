@@ -1,11 +1,11 @@
 .panel.panel-default
   .panel-heading.clearfix
-    = search_field_tag :filter_group, nil, placeholder: 'Filter by name', class: 'dash-filter form-control'
+    = search_field_tag :filter_group, nil, placeholder: '名前で絞り込み', class: 'dash-filter form-control'
     - if current_user.can_create_group?
       %span.pull-right
         = link_to new_group_path, class: "btn btn-new" do
           %i.icon-plus
-          New group
+          新規作成
   %ul.well-list.dash-list
     - groups.each do |group|
       %li.group-row
@@ -17,4 +17,4 @@
             %i.icon-angle-right
     - if groups.blank?
       %li
-        .nothing-here-block You have no groups yet.
+        .nothing-here-block グループはまだありません。

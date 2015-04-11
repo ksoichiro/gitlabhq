@@ -1,15 +1,15 @@
 = render "projects/issues/head"
 %h3.page-title
-  Milestone ##{@milestone.iid}
+  マイルストーン ##{@milestone.iid}
   .pull-right
     - if can?(current_user, :admin_milestone, @project)
       = link_to edit_project_milestone_path(@project, @milestone), class: "btn btn-grouped" do
         %i.icon-edit
-        Edit
+        編集
       - if @milestone.active?
-        = link_to 'Close Milestone', project_milestone_path(@project, @milestone, milestone: {state_event: :close }), method: :put, class: "btn btn-close btn-grouped"
+        = link_to 'マイルストーンをクローズ', project_milestone_path(@project, @milestone, milestone: {state_event: :close }), method: :put, class: "btn btn-close btn-grouped"
       - else
-        = link_to 'Reopen Milestone', project_milestone_path(@project, @milestone, milestone: {state_event: :activate }), method: :put, class: "btn btn-reopen btn-grouped"
+        = link_to 'マイルストーンを再オープン', project_milestone_path(@project, @milestone, milestone: {state_event: :activate }), method: :put, class: "btn btn-reopen btn-grouped"
 
 - if @milestone.issues.any? && @milestone.can_be_closed?
   .alert.alert-success
@@ -17,18 +17,18 @@
 
 .back-link
   = link_to project_milestones_path(@project) do
-    &larr; To milestones list
+    &larr; マイルストーン一覧
 
 
 .issue-box{ class: issue_box_class(@milestone) }
   .state.clearfix
     .state-label
       - if @milestone.closed?
-        Closed
+        クローズ
       - elsif @milestone.expired?
-        Expired
+        期限超過
       - else
-        Open
+        オープン
     .creator
       = @milestone.expires_at
 
@@ -43,10 +43,10 @@
 
   .context
     %p
-      Progress:
-      #{@milestone.closed_items_count} closed
+      進捗:
+      #{@milestone.closed_items_count} クローズ
       &ndash;
-      #{@milestone.open_items_count} open
+      #{@milestone.open_items_count} オープン
       %span.pull-right= @milestone.expires_at
     .progress.progress-info
       .progress-bar{style: "width: #{@milestone.percent_complete}%;"}
@@ -55,41 +55,41 @@
 %ul.nav.nav-tabs
   %li.active
     = link_to '#tab-issues', 'data-toggle' => 'tab' do
-      Issues
+      課題
       %span.badge= @issues.count
   %li
     = link_to '#tab-merge-requests', 'data-toggle' => 'tab' do
-      Merge Requests
+      マージリクエスト
       %span.badge= @merge_requests.count
   %li
     = link_to '#tab-participants', 'data-toggle' => 'tab' do
-      Participants
+      参加者
       %span.badge= @users.count
 
   .pull-right
-    = link_to new_project_issue_path(@project, issue: { milestone_id: @milestone.id }), class: "btn btn-small btn-grouped", title: "New Issue" do
+    = link_to new_project_issue_path(@project, issue: { milestone_id: @milestone.id }), class: "btn btn-small btn-grouped", title: "新しい課題" do
       %i.icon-plus
-      New Issue
-    = link_to 'Browse Issues', project_issues_path(@milestone.project, milestone_id: @milestone.id), class: "btn btn-small edit-milestone-link btn-grouped"
+      新しい課題
+    = link_to '課題を確認', project_issues_path(@milestone.project, milestone_id: @milestone.id), class: "btn btn-small edit-milestone-link btn-grouped"
 
 .tab-content
   .tab-pane.active#tab-issues
     .row
       .col-md-4
-        = render('issues', title: 'Unstarted Issues (open and unassigned)', issues: @issues.opened.unassigned, id: 'unassigned')
+        = render('issues', title: '未着手の課題 (オープンかつ担当なし)', issues: @issues.opened.unassigned, id: 'unassigned')
       .col-md-4
-        = render('issues', title: 'Ongoing Issues (open and assigned)', issues: @issues.opened.assigned, id: 'ongoing')
+        = render('issues', title: '進行中の課題 (オープンかつ割当済み)', issues: @issues.opened.assigned, id: 'ongoing')
       .col-md-4
-        = render('issues', title: 'Completed Issues (closed)', issues: @issues.closed, id: 'closed')
+        = render('issues', title: '完了した課題 (クローズ)', issues: @issues.closed, id: 'closed')
 
   .tab-pane#tab-merge-requests
     .row
       .col-md-3
-        = render('merge_requests', title: 'Work in progress (open and unassigned)', merge_requests: @merge_requests.opened.unassigned, id: 'unassigned')
+        = render('merge_requests', title: '作業中 (オープンかつ担当なし)', merge_requests: @merge_requests.opened.unassigned, id: 'unassigned')
       .col-md-3
-        = render('merge_requests', title: 'Waiting for merge (open and assigned)', merge_requests: @merge_requests.opened.assigned, id: 'ongoing')
+        = render('merge_requests', title: 'マージ待ち (オープンかつ割当済み)', merge_requests: @merge_requests.opened.assigned, id: 'ongoing')
       .col-md-3
-        = render('merge_requests', title: 'Declined (closed)', merge_requests: @merge_requests.declined, id: 'closed')
+        = render('merge_requests', title: '拒否 (クローズ)', merge_requests: @merge_requests.declined, id: 'closed')
       .col-md-3
         .panel.panel-primary
           .panel-heading Merged

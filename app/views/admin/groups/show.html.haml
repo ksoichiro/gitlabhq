@@ -1,40 +1,40 @@
 %h3.page-title
-  Group: #{@group.name}
+  グループ: #{@group.name}
 
   = link_to edit_admin_group_path(@group), class: "btn pull-right" do
     %i.icon-edit
-    Edit
+    編集
 %hr
 .row
   .col-md-6
     .panel.panel-default
       .panel-heading
-        Group info:
+        グループ情報:
       %ul.well-list
         %li
           = image_tag group_icon(@group.path), class: "avatar s60"
         %li
-          %span.light Name:
+          %span.light グループ名:
           %strong= @group.name
         %li
-          %span.light Path:
+          %span.light パス:
           %strong
             = @group.path
 
         %li
-          %span.light Description:
+          %span.light 説明:
           %strong
             = @group.description
 
         %li
-          %span.light Created on:
+          %span.light 作成日:
           %strong
-            = @group.created_at.stamp("March 1, 1999")
+            = @group.created_at.stamp("1999/03/01")
 
     .panel.panel-default
       .panel-heading
         %h3.panel-title
-          Projects
+          プロジェクト
           %span.badge
             #{@group.projects.count}
       %ul.well-list
@@ -52,11 +52,11 @@
   .col-md-6
     .panel.panel-default
       .panel-heading
-        Add user(s) to the group:
+        グループにユーザを追加:
       .panel-body.form-holder
         %p.light
-          Read more about project permissions
-          %strong= link_to "here", help_page_path("permissions", "permissions"), class: "vlink"
+          プロジェクトのアクセス権についての詳細は、
+          %strong= link_to "こちら", help_page_path("permissions", "permissions"), class: "vlink"
 
         = form_tag project_teams_update_admin_group_path(@group), id: "new_team_member", class: "bulk_import", method: :put  do
           %div
@@ -64,11 +64,11 @@
           %div.prepend-top-10
             = select_tag :group_access, options_for_select(UsersGroup.group_access_roles), class: "project-access-select select2"
           %hr
-          = submit_tag 'Add users into group', class: "btn btn-create"
+          = submit_tag 'グループにユーザを追加', class: "btn btn-create"
     .panel.panel-default
       .panel-heading
         %h3.panel-title
-          Members
+          メンバー
           %span.badge
             #{@group.users_groups.count}
       %ul.well-list.group-users-list
@@ -80,7 +80,7 @@
                 = link_to user.name, admin_user_path(user)
             %span.pull-right.light
               = member.human_access
-              = link_to group_users_group_path(@group, member), data: { confirm: remove_user_from_group_message(@group, user) }, method: :delete, remote: true, class: "btn-tiny btn btn-remove", title: 'Remove user from group' do
+              = link_to group_users_group_path(@group, member), data: { confirm: remove_user_from_group_message(@group, user) }, method: :delete, remote: true, class: "btn-tiny btn btn-remove", title: 'グループからユーザを削除' do
                 %i.icon-minus.icon-white
       .panel-footer
         = paginate @members, param_name: 'members_page', theme: 'gitlab'

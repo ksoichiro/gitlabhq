@@ -1,4 +1,4 @@
 # SSH
 
-- [Deploy keys](deploy_keys.md)
-- [SSH](ssh.md)
+- [デプロイキー](deploy_keys.md)
+- [SSHキー](ssh.md)

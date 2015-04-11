@@ -1,15 +1,15 @@
 %h3.page-title
-  User:
+  ユーザ:
   = @user.name
   - if @user.blocked?
-    %span.cred (Blocked)
+    %span.cred (ブロック中)
   - if @user.admin
-    %span.cred (Admin)
+    %span.cred (管理者)
 
   .pull-right
     = link_to edit_admin_user_path(@user), class: "btn btn-grouped" do
       %i.icon-edit
-      Edit
+      編集
 %hr
 %ul.nav.nav-tabs
   %li.active
@@ -27,56 +27,56 @@
       .col-md-6
         .panel.panel-default
           .panel-heading
-            Account:
+            アカウント:
           %ul.well-list
             %li
-              %span.light Name:
+              %span.light 名前:
               %strong= @user.name
             %li
-              %span.light Username:
+              %span.light ユーザ名:
               %strong
                 = @user.username
             %li
-              %span.light Email:
+              %span.light メールアドレス:
               %strong
                 = mail_to @user.email
             - @user.emails.each do |email|
               %li
-                %span.light Secondary email:
+                %span.light セカンダリメールアドレス:
                 %strong= email.email
                 = link_to remove_email_admin_user_path(@user, email), data: { confirm: "Are you sure you want to remove #{email.email}?" }, method: :delete, class: "btn-tiny btn btn-remove pull-right", title: 'Remove secondary email', id: "remove_email_#{email.id}" do
                   %i.icon-remove
 
             %li
-              %span.light Can create groups:
+              %span.light グループの作成:
               %strong
-                = @user.can_create_group ? "Yes" : "No"
+                = @user.can_create_group ? "可" : "不可"
             %li
-              %span.light Personal projects limit:
+              %span.light 個人のプロジェクト数の上限:
               %strong
                 = @user.projects_limit
             %li
-              %span.light Member since:
+              %span.light 登録日:
               %strong
-                = @user.created_at.stamp("Nov 12, 2031")
+                = @user.created_at.stamp("2031/11/12")
             - if @user.confirmed_at
               %li
-                %span.light Confirmed at:
+                %span.light 登録確認日:
                 %strong
-                  = @user.confirmed_at.stamp("Nov 12, 2031")
+                  = @user.confirmed_at.stamp("2031/11/12")
             - else
               %li
-                %span.light Confirmed:
+                %span.light 登録確認日:
                 %strong.cred
-                  No
+                  未確認
 
             %li
-              %span.light Last sign-in at:
+              %span.light 最終サインイン:
               %strong
                 - if @user.last_sign_in_at
-                  = @user.last_sign_in_at.stamp("Nov 12, 2031")
+                  = @user.last_sign_in_at.stamp("2031/11/12")
                 - else
-                  never
+                  サインインなし
 
             - if @user.ldap_user?
               %li
@@ -86,7 +86,7 @@
 
             - if @user.created_by
               %li
-                %span.light Created by:
+                %span.light 登録者:
                 %strong
                   = link_to @user.created_by.name, [:admin, @user.created_by]
 
@@ -94,44 +94,45 @@
         - unless @user == current_user
           - if @user.blocked?
             .alert.alert-info
-              %h4 This user is blocked
-              %p Blocking user has the following effects:
+              %h4 このユーザはブロックされています
+              %h4 このユーザをブロック
+              %p ユーザをブロックすると以下の影響があります。
               %ul
-                %li User will not be able to login
-                %li User will not be able to access git repositories
-                %li User will be removed from joined projects and groups
-                %li Personal projects will be left
-                %li Owned groups will be left
+                %li ユーザはログインできません。
+                %li ユーザはGitリポジトリにアクセスできません。
+                %li ユーザは参加中のプロジェクトとグループから削除されます。
+                %li ユーザ個人のプロジェクトから離脱します。
+                %li ユーザが所有するグループから離脱します。
               %br
-              = link_to 'Unblock user', unblock_admin_user_path(@user), method: :put, class: "btn btn-new", data: { confirm: 'Are you sure?' }
+              = link_to 'ブロック解除', unblock_admin_user_path(@user), method: :put, class: "btn btn-new", data: { confirm: '本当に解除しますか？' }
           - else
             .alert.alert-warning
-              %h4 Block this user
-              %p Blocking user has the following effects:
+              %h4 このユーザをブロック
+              %p ユーザをブロックすると以下の効果/影響があります。
               %ul
-                %li User will not be able to login
-                %li User will not be able to access git repositories
-                %li User will be removed from joined projects and groups
-                %li Personal projects will be left
-                %li Owned groups will be left
+                %li ユーザはログインできません。
+                %li ユーザはGitリポジトリにアクセスできません。
+                %li ユーザは参加中のプロジェクトとグループから削除されます。
+                %li ユーザ個人のプロジェクトから離脱します。
+                %li ユーザが所有するグループから離脱します。
               %br
-              = link_to 'Block user', block_admin_user_path(@user), data: { confirm: 'USER WILL BE BLOCKED! Are you sure?' }, method: :put, class: "btn btn-remove"
+              = link_to 'このユーザをブロック', block_admin_user_path(@user), data: { confirm: 'このユーザはブロックされます！本当にブロックしますか？' }, method: :put, class: "btn btn-remove"
 
           .alert.alert-danger
             %h4
-              Remove user
-            %p Deleting a user has the following effects:
+              ユーザの削除
+            %p ユーザを削除すると以下の影響があります。
             %ul
-              %li All user content like authored issues, snippets, comments will be removed
+              %li このユーザが作成した課題, スニペット, コメントといったすべてのコンテンツが削除されます。
               - rp = @user.personal_projects.count
               - unless rp.zero?
-                %li #{pluralize rp, 'personal project'} will be removed and cannot be restored
+                %li #{rp}個の個人プロジェクトが削除され、復元できなくなります。
               - if @user.solo_owned_groups.present?
                 %li
-                  Next groups with all content will be removed:
+                  以下のグループと、グループ内のすべてのコンテンツが削除されます。
                   %strong #{@user.solo_owned_groups.map(&:name).join(', ')}
             %br
-            = link_to 'Remove user', [:admin, @user], data: { confirm: "USER #{@user.name} WILL BE REMOVED! Are you sure?" }, method: :delete, class: "btn btn-remove"
+            = link_to 'ユーザを削除', [:admin, @user], data: { confirm: "ユーザ #{@user.name} は削除されます！本当に削除しますか？" }, method: :delete, class: "btn btn-remove"
 
   #profile.tab-pane
     .row
@@ -153,7 +154,7 @@
   #groups.tab-pane
     - if @user.users_groups.present?
       .panel.panel-default
-        .panel-heading Groups:
+        .panel-heading グループ:
         %ul.well-list
           - @user.users_groups.each do |user_group|
             - group = user_group.group
@@ -163,7 +164,7 @@
               .pull-right
                 %span.light= user_group.human_access
                 - unless user_group.owner?
-                  = link_to group_users_group_path(group, user_group), data: { confirm: remove_user_from_group_message(group, @user) }, method: :delete, remote: true, class: "btn-tiny btn btn-remove", title: 'Remove user from group' do
+                  = link_to group_users_group_path(group, user_group), data: { confirm: remove_user_from_group_message(group, @user) }, method: :delete, remote: true, class: "btn-tiny btn btn-remove", title: 'グループからユーザを削除' do
                     %i.icon-remove.icon-white
     - else
       .nothing-here-block This user has no groups.
@@ -185,7 +186,7 @@
 
       .col-md-6
         .panel.panel-default
-          .panel-heading Joined projects (#{@joined_projects.count})
+          .panel-heading 参加中のプロジェクト (#{@joined_projects.count})
           %ul.well-list
             - @joined_projects.sort_by(&:name_with_namespace).each do |project|
               - tm = project.team.find_tm(@user.id)
@@ -197,10 +198,10 @@
                 - if tm
                   .pull-right
                     - if tm.owner?
-                      %span.light Owner
+                      %span.light 所有者
                     - else
                       %span.light= tm.human_access
 
                       - if tm.respond_to? :project
-                        = link_to project_team_member_path(project, @user), data: { confirm: remove_from_project_team_message(project, @user) }, remote: true, method: :delete, class: "btn-tiny btn btn-remove", title: 'Remove user from project' do
+                        = link_to project_team_member_path(project, @user), data: { confirm: remove_from_project_team_message(project, @user) }, remote: true, method: :delete, class: "btn-tiny btn btn-remove", title: 'プロジェクトからユーザを削除' do
                           %i.icon-remove

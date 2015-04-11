@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: services
@@ -25,7 +26,7 @@ class EmailsOnPushService < Service
   end
 
   def description
-    'Email the commits and diff of each push to a list of recipients.'
+    '各プッシュのコミットと差分をメール送信します。'
   end
 
   def to_param

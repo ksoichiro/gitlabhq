@@ -1,27 +1,27 @@
 .login-box.panel.panel-success
   .panel-heading
-    %h3.panel-title Sign up
+    %h3.panel-title サインアップ
   .panel-body
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       .devise-errors
         = devise_error_messages!
       %div
-        = f.text_field :name, class: "form-control top", placeholder: "Name", required: true
+        = f.text_field :name, class: "form-control top", placeholder: "名前", required: true
       %div
-        = f.text_field :username, class: "form-control middle", placeholder: "Username", required: true
+        = f.text_field :username, class: "form-control middle", placeholder: "ユーザ名", required: true
       %div
-        = f.email_field :email, class: "form-control middle", placeholder: "Email", required: true
+        = f.email_field :email, class: "form-control middle", placeholder: "メールアドレス", required: true
       %div
-        = f.password_field :password, class: "form-control middle", placeholder: "Password", required: true
+        = f.password_field :password, class: "form-control middle", placeholder: "パスワード", required: true
       %div
-        = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "Confirm password", required: true
+        = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "パスワード(確認)", required: true
       %div
-        = f.submit "Sign up", class: "btn-create btn"
+        = f.submit "サインアップ", class: "btn-create btn"
   .panel-footer
     %p
       %span.light
-        Have an account?
+        アカウントをお持ちですか？
       %strong
-        = link_to "Sign in", new_session_path(resource_name)
+        = link_to "サインイン", new_session_path(resource_name)
     %p
-      = link_to "Forgot your password?", new_password_path(resource_name)
+      = link_to "パスワードを忘れた場合", new_password_path(resource_name)

@@ -2,7 +2,7 @@
 .panel.panel-default
   .panel-heading
     %strong #{@group.name}
-    group members (#{group_users_count})
+    グループのメンバー (#{group_users_count})
     .pull-right
       = link_to members_group_path(@group), class: 'btn btn-small' do
         %i.icon-edit

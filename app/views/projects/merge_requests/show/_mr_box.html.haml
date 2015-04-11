@@ -2,14 +2,14 @@
   .state.clearfix
     .state-label
       - if @merge_request.merged?
-        Merged
+        マージ済み
       - elsif @merge_request.closed?
-        Closed
+        クローズ
       - else
-        Open
+        オープン
 
     .creator
-      Created by #{link_to_member(@project, @merge_request.author)} #{time_ago_with_tooltip(@merge_request.created_at)}
+      #{link_to_member(@project, @merge_request.author)} が #{time_ago_with_tooltip(@merge_request.created_at)} に作成
 
   %h4.title
     = gfm escape_once(@merge_request.title)

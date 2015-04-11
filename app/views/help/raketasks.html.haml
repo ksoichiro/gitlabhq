@@ -1,0 +1,63 @@
+= render layout: 'help/layout' do
+  %h3.page-title GitLab Rake タスク
+
+  %p.slead
+    GitLab は特殊な機能やメンテナンスを実行するための rake タスクを提供しています。
+
+  %ul.nav.nav-tabs.log-tabs
+    %li.active
+      = link_to "機能", "#features", 'data-toggle' => 'tab'
+    %li
+      = link_to "メンテナンス", "#maintenance", 'data-toggle' => 'tab'
+    %li
+      = link_to "ユーザ管理", "#user_management", 'data-toggle' => 'tab'
+    %li
+      = link_to "バックアップ & リストア", "#backup_restore", 'data-toggle' => 'tab'
+    %li
+      = link_to "クリーンアップ", "#cleanup", 'data-toggle' => 'tab'
+
+  .tab-content
+    .tab-pane.active#features
+      .file-holder
+        .file-title
+          %i.icon-file
+          機能
+        .file-content.wiki
+          = preserve do
+            = markdown File.read(Rails.root.join("doc", "raketasks", "features.md"))
+
+    .tab-pane#maintenance
+      .file-holder
+        .file-title
+          %i.icon-file
+          メンテナンス
+        .file-content.wiki
+          = preserve do
+            = markdown File.read(Rails.root.join("doc", "raketasks", "maintenance.md"))
+
+    .tab-pane#user_management
+      .file-holder
+        .file-title
+          %i.icon-file
+          ユーザ管理
+        .file-content.wiki
+          = preserve do
+            = markdown File.read(Rails.root.join("doc", "raketasks", "user_management.md"))
+
+    .tab-pane#cleanup
+      .file-holder
+        .file-title
+          %i.icon-file
+          クリーンアップ
+        .file-content.wiki
+          = preserve do
+            = markdown File.read(Rails.root.join("doc", "raketasks", "cleanup.md"))
+
+    .tab-pane#backup_restore
+      .file-holder
+        .file-title
+          %i.icon-file
+          バックアップ & リストア
+        .file-content.wiki
+          = preserve do
+            = markdown File.read(Rails.root.join("doc", "raketasks", "backup_restore.md"))

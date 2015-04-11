@@ -4,7 +4,7 @@
     = link_to project_tree_path(@project, branch.name) do
       %strong= truncate(branch.name, length: 60)
       - if branch.name == @repository.root_ref
-        %span.label.label-info default
+        %span.label.label-info デフォルト
       - if @project.protected_branch? branch.name
         %span.label.label-success
           %i.icon-lock
@@ -15,10 +15,10 @@
       - if branch.name != @repository.root_ref
         = link_to project_compare_index_path(@project, from: @repository.root_ref, to: branch.name), class: 'btn btn-grouped btn-small', method: :post, title: "Compare" do
           %i.icon-copy
-          Compare
+          比較
 
       - if can_remove_branch?(@project, branch.name)
-        = link_to project_branch_path(@project, branch.name), class: 'btn btn-grouped btn-small btn-remove remove-row', method: :delete, data: { confirm: 'Removed branch cannot be restored. Are you sure?'}, remote: true do
+        = link_to project_branch_path(@project, branch.name), class: 'btn btn-grouped btn-small btn-remove remove-row', method: :delete, data: { confirm: '削除されたブランチは元に戻すことができません。本当に削除しますか？'}, remote: true do
           %i.icon-trash
 
   - if commit

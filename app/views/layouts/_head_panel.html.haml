@@ -3,7 +3,7 @@
     .container
       %div.app_logo
         %span.separator
-        = link_to root_path, class: "home has_bottom_tooltip", title: "Dashboard" do
+        = link_to root_path, class: "home has_bottom_tooltip", title: "ダッシュボード" do
           %h1 GITLAB
         %span.separator
       %h1.title= title
@@ -17,32 +17,32 @@
           %li.hidden-sm.hidden-xs
             = render "layouts/search"
           %li.visible-sm.visible-xs
-            = link_to search_path, title: "Search", class: 'has_bottom_tooltip', 'data-original-title' => 'Search area' do
+            = link_to search_path, title: "検索", class: 'has_bottom_tooltip', 'data-original-title' => '検索' do
               %i.icon-search
           %li
-            = link_to help_path, title: 'Help', class: 'has_bottom_tooltip',
-               'data-original-title' => 'Help'  do
+            = link_to help_path, title: 'ヘルプ', class: 'has_bottom_tooltip',
+               'data-original-title' => 'ヘルプ'  do
               %i.icon-question-sign
           %li
-            = link_to explore_root_path, title: "Explore", class: 'has_bottom_tooltip', 'data-original-title' => 'Public area' do
+            = link_to explore_root_path, title: "探索", class: 'has_bottom_tooltip', 'data-original-title' => '公開エリア' do
               %i.icon-globe
           %li
-            = link_to user_snippets_path(current_user), title: "My snippets", class: 'has_bottom_tooltip', 'data-original-title' => 'My snippets' do
+            = link_to user_snippets_path(current_user), title: "マイスニペット", class: 'has_bottom_tooltip', 'data-original-title' => 'マイスニペット' do
               %i.icon-paste
           - if current_user.is_admin?
             %li
-              = link_to admin_root_path, title: "Admin area", class: 'has_bottom_tooltip', 'data-original-title' => 'Admin area' do
+              = link_to admin_root_path, title: "管理", class: 'has_bottom_tooltip', 'data-original-title' => '管理' do
                 %i.icon-cogs
           - if current_user.can_create_project?
             %li
-              = link_to new_project_path, title: "New project", class: 'has_bottom_tooltip', 'data-original-title' => 'New project'  do
+              = link_to new_project_path, title: "新規プロジェクト", class: 'has_bottom_tooltip', 'data-original-title' => '新規プロジェクト'  do
                 %i.icon-plus
           %li
-            = link_to profile_path, title: "Profile settings", class: 'has_bottom_tooltip', 'data-original-title' => 'Profile settings"'  do
+            = link_to profile_path, title: "プロフィール設定", class: 'has_bottom_tooltip', 'data-original-title' => 'プロフィール設定"'  do
               %i.icon-user
           %li
-            = link_to destroy_user_session_path, class: "logout", method: :delete, title: "Logout", class: 'has_bottom_tooltip', 'data-original-title' => 'Logout'  do
+            = link_to destroy_user_session_path, class: "logout", method: :delete, title: "ログアウト", class: 'has_bottom_tooltip', 'data-original-title' => 'ログアウト'  do
               %i.icon-signout
           %li.hidden-xs
             = link_to current_user, class: "profile-pic", id: 'profile-pic' do
-              = image_tag avatar_icon(current_user.email, 26), alt: 'User activity'
+              = image_tag avatar_icon(current_user.email, 26), alt: 'ユーザアクティビティ'

@@ -1,20 +1,20 @@
 = render "projects/commits/head"
 
 %h3.page-title
-  Compare View
+  比較ビュー
 
 = render "form"
 
 - if @commits.present?
   %div.panel.panel-default
     .panel-heading
-      Commits (#{@commits.count})
+      コミット (#{@commits.count})
     - if @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE
       %ul.well-list
         - Commit.decorate(@commits.first(MergeRequestDiff::COMMITS_SAFE_SIZE)).each do |commit|
           = render "projects/commits/inline_commit", commit: commit, project: @project
         %li.warning-row.unstyled
-          other #{@commits.size - MergeRequestDiff::COMMITS_SAFE_SIZE} commits hidden to prevent performance issues.
+          他の #{@commits.size - MergeRequestDiff::COMMITS_SAFE_SIZE} コミットはパフォーマンスの悪化を避けるため表示されません。
     - else
       %ul.well-list= render Commit.decorate(@commits), project: @project
 
@@ -24,12 +24,12 @@
   .light-well
     .center
       %h4
-        There isn't anything to compare.
+        比較するものはありません
       %p.slead
         - if params[:to] == params[:from]
           %span.label-branch #{params[:from]}
-          and
+          と
           %span.label-branch #{params[:to]}
-          are the same.
+          が同一です。
         - else
-          You'll need to use different branch names to get a valid comparison.
+          比較するには違うブランチ名を指定してください。

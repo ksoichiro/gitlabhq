@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: services
@@ -27,7 +28,7 @@ class HipchatService < Service
   end
 
   def description
-    'Private group chat and IM'
+    'プライベートなグループチャットとIM'
   end
 
   def to_param

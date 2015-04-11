@@ -1,22 +1,34 @@
 .dropdown.inline.prepend-left-10
   %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
-    %span.light sort:
+    %span.light 並び替え:
     - if @sort.present?
-      = @sort
+      - case @sort.downcase
+      - when 'newest'
+        新しい順
+      - when 'oldest'
+        古い順
+      - when 'recently_updated'
+        最近更新された
+      - when 'last_updated'
+        最終更新日
+      - when 'milestone_due_soon'
+        マイルストーンが近い順
+      - when 'milestone_due_later'
+        マイルストーンが遠い順
     - else
-      Newest
+      新しい順
     %b.caret
   %ul.dropdown-menu
     %li
       = link_to project_filter_path(sort: 'newest') do
-        Newest
+        新しい順
       = link_to project_filter_path(sort: 'oldest') do
-        Oldest
+        古い順
       = link_to project_filter_path(sort: 'recently_updated') do
-        Recently updated
+        最近更新された
       = link_to project_filter_path(sort: 'last_updated') do
-        Last updated
+        最終更新日
       = link_to project_filter_path(sort: 'milestone_due_soon') do
-        Milestone due soon
+        マイルストーンが近い順
       = link_to project_filter_path(sort: 'milestone_due_later') do
-        Milestone due later
+        マイルストーンが遠い順

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class RegistrationsController < Devise::RegistrationsController
   before_filter :signup_enabled?
 
@@ -5,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
     current_user.destroy
 
     respond_to do |format|
-      format.html { redirect_to new_user_session_path, notice: "Account successfully removed." }
+      format.html { redirect_to new_user_session_path, notice: "アカウントが削除されました" }
     end
   end
 

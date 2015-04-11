@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Admin::GroupsController < Admin::ApplicationController
   before_filter :group, only: [:edit, :show, :update, :destroy, :project_update, :project_teams_update]
 
@@ -25,7 +26,7 @@ class Admin::GroupsController < Admin::ApplicationController
 
     if @group.save
       @group.add_owner(current_user)
-      redirect_to [:admin, @group], notice: 'Group was successfully created.'
+      redirect_to [:admin, @group], notice: 'グループが作成されました'
     else
       render "new"
     end
@@ -33,7 +34,7 @@ class Admin::GroupsController < Admin::ApplicationController
 
   def update
     if @group.update_attributes(group_params)
-      redirect_to [:admin, @group], notice: 'Group was successfully updated.'
+      redirect_to [:admin, @group], notice: 'グループが更新されました'
     else
       render "edit"
     end
@@ -42,13 +43,13 @@ class Admin::GroupsController < Admin::ApplicationController
   def project_teams_update
     @group.add_users(params[:user_ids].split(','), params[:group_access])
 
-    redirect_to [:admin, @group], notice: 'Users were successfully added.'
+    redirect_to [:admin, @group], notice: 'ユーザが追加されました'
   end
 
   def destroy
     @group.destroy
 
-    redirect_to admin_groups_path, notice: 'Group was successfully deleted.'
+    redirect_to admin_groups_path, notice: 'グループが削除されました'
   end
 
   private

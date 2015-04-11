@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Emails
   module Projects
     def project_access_granted_email(user_project_id)

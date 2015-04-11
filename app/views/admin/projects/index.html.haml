@@ -3,28 +3,28 @@
     .admin-filter
       = form_tag admin_projects_path, method: :get, class: '' do
         .form-group
-          = label_tag :name, 'Name:'
+          = label_tag :name, 'プロジェクト名:'
           = text_field_tag :name, params[:name], class: "form-control"
 
         .form-group
-          = label_tag :namespace_id, "Namespace"
+          = label_tag :namespace_id, "ネームスペース"
           = namespace_select_tag :namespace_id, selected: params[:namespace_id], class: 'input-large'
 
         .form-group
-          %strong Activity
+          %strong アクティビティ
           .checkbox
-            = label_tag :with_push, 'Not empty'
+            = label_tag :with_push, '空でない'
             = check_box_tag :with_push, 1, params[:with_push]
             &nbsp;
-            %span.light Projects with push events
+            %span.light プッシュイベントがある
           .checkbox
-            = label_tag :abandoned, 'Abandoned'
+            = label_tag :abandoned, '放棄されている'
             = check_box_tag :abandoned, 1, params[:abandoned]
             &nbsp;
-            %span.light No activity over 6 month
+            %span.light 6ヶ月以上アクティビティがない
 
         %fieldset
-          %strong Visibility level:
+          %strong 可視性レベル:
           .visibility-levels
             - Project.visibility_levels.each do |label, level|
               .checkbox
@@ -35,37 +35,37 @@
                     = label
         %hr
         = hidden_field_tag :sort, params[:sort]
-        = submit_tag "Search", class: "btn submit btn-primary"
-        = link_to "Reset", admin_projects_path, class: "btn btn-cancel"
+        = submit_tag "検索", class: "btn submit btn-primary"
+        = link_to "リセット", admin_projects_path, class: "btn btn-cancel"
 
   .col-md-9
     .panel.panel-default
       .panel-heading
-        Projects (#{@projects.total_count})
+        プロジェクト (#{@projects.total_count})
         .panel-head-actions
           .dropdown.inline
             %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
-              %span.light sort:
+              %span.light 並び替え:
               - if @sort.present?
                 = @sort.humanize
               - else
-                Name
+                名前
               %b.caret
             %ul.dropdown-menu
               %li
                 = link_to admin_projects_path(sort: nil) do
-                  Name
+                  名前
                 = link_to admin_projects_path(sort: 'newest') do
-                  Newest
+                  新しい順
                 = link_to admin_projects_path(sort: 'oldest') do
-                  Oldest
+                  古い順
                 = link_to admin_projects_path(sort: 'recently_updated') do
-                  Recently updated
+                  最近更新された
                 = link_to admin_projects_path(sort: 'last_updated') do
-                  Last updated
+                  最終更新日
                 = link_to admin_projects_path(sort: 'largest_repository') do
-                  Largest repository
-          = link_to 'New Project', new_project_path, class: "btn btn-new"
+                  リポジトリの大きさ
+          = link_to '新しいプロジェクト', new_project_path, class: "btn btn-new"
       %ul.well-list
         - @projects.each do |project|
           %li
@@ -76,8 +76,8 @@
             .pull-right
               %span.label.label-gray
                 = repository_size(project)
-              = link_to 'Edit', edit_project_path(project), id: "edit_#{dom_id(project)}", class: "btn btn-small"
-              = link_to 'Destroy', [project], data: { confirm: remove_project_message(project) }, method: :delete, class: "btn btn-small btn-remove"
+              = link_to '編集', edit_project_path(project), id: "edit_#{dom_id(project)}", class: "btn btn-small"
+              = link_to '削除', [project], data: { confirm: remove_project_message(project) }, method: :delete, class: "btn btn-small btn-remove"
         - if @projects.blank?
-          .nothing-here-block 0 projects matches
+          .nothing-here-block マッチするプロジェクトがありません
     = paginate @projects, theme: "gitlab"

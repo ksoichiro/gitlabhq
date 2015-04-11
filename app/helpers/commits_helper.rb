@@ -189,7 +189,7 @@ module CommitsHelper
         return link_to "Browse Dir »", project_tree_path(project, tree_join(commit.id, @path)), class: "pull-right"
       end
     end
-    link_to "Browse Code »", project_tree_path(project, commit), class: "pull-right"
+    link_to "コードを表示 »", project_tree_path(project, commit), class: "pull-right"
   end
 
   protected

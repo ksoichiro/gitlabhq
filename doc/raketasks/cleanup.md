@@ -1,8 +1,8 @@
-# Cleanup
+# クリーンアップ
 
-## Remove garbage from filesystem. Important! Data loss!
+## ファイルシステム上のゴミを削除。重要：データを損失します！
 
-Remove namespaces(dirs) from `/home/git/repositories` if they don't exist in GitLab database.
+`/home/git/repositories` から、GitLabのデータベースに存在しないネームスペース(ディレクトリ)を削除します。
 
 ```
 # omnibus-gitlab
@@ -12,7 +12,7 @@ sudo gitlab-rake gitlab:cleanup:dirs
 bundle exec rake gitlab:cleanup:dirs RAILS_ENV=production
 ```
 
-Remove repositories (global only for now) from `/home/git/repositories` if they don't exist in GitLab database.
+`/home/git/repositories` から、GitLabのデータベースに存在しないリポジトリ(現在のところはグローバルなもののみ)を削除します。
 
 ```
 # omnibus-gitlab

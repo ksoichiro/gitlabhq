@@ -1,14 +1,15 @@
 %p
-  Hi #{@user['name']}!
+  こんにちは #{@user['name']} さん！
 %p
   - if Gitlab.config.gitlab.signup_enabled
-    Your account has been created successfully.
+    あなたのアカウントが正常に作成されました。
   - else
-    The Administrator created an account for you. Now you are a member of the company GitLab application.
+    管理者があなたのアカウントを作成しました。
+    これであなたも社内GitLabアプリケーションのメンバーです。
 %p
-  login..........................................
+  ログイン..................................
   %code= @user['email']
 
 - if @user.created_by_id
   %p
-    = link_to "Click here to set your password", edit_password_url(@user, :reset_password_token => @token)
+    = link_to "クリックしてパスワードを設定", edit_password_url(@user, :reset_password_token => @token)

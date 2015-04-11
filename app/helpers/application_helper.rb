@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'digest/md5'
 require 'uri'
 
@@ -81,24 +82,24 @@ module ApplicationHelper
     if project.repo_exists?
       time_ago_with_tooltip(project.repository.commit.committed_date)
     else
-      "Never"
+      "なし"
     end
   rescue
-    "Never"
+    "なし"
   end
 
   def grouped_options_refs
     repository = @project.repository
 
     options = [
-      ["Branches", repository.branch_names],
-      ["Tags", VersionSorter.rsort(repository.tag_names)]
+      ["ブランチ", repository.branch_names],
+      ["タグ", VersionSorter.rsort(repository.tag_names)]
     ]
 
     # If reference is commit id - we should add it to branch/tag selectbox
     if(@ref && !options.flatten.include?(@ref) &&
        @ref =~ /^[0-9a-zA-Z]{6,52}$/)
-      options << ["Commit", [@ref]]
+      options << ["コミット", [@ref]]
     end
 
     grouped_options_for_select(options, @ref || @project.default_branch)
@@ -177,11 +178,11 @@ module ApplicationHelper
 
   def search_placeholder
     if @project && @project.persisted?
-      "Search in this project"
+      "プロジェクト内を検索"
     elsif @group && @group.persisted?
-      "Search in this group"
+      "グループ内を検索"
     else
-      "Search"
+      "検索"
     end
   end
 
@@ -213,7 +214,7 @@ module ApplicationHelper
   def time_ago_with_tooltip(date, placement = 'top', html_class = 'time_ago')
     capture_haml do
       haml_tag :time, date.to_s,
-        class: html_class, datetime: date.getutc.iso8601, title: date.stamp("Aug 21, 2011 9:23pm"),
+        class: html_class, datetime: date.getutc.iso8601, title: date.stamp("2011/08/09 13:23"),
         data: { toggle: 'tooltip', placement: placement }
 
       haml_tag :script, "$('." + html_class + "').timeago().tooltip()"

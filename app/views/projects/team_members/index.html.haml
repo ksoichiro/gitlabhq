@@ -1,16 +1,17 @@
 %h3.page-title
-  Users with access to this project
+  プロジェクトにアクセス可能なユーザ
 
   - if can? current_user, :admin_team_member, @project
     %span.pull-right
-      = link_to new_project_team_member_path(@project), class: "btn btn-new btn-grouped", title: "New project member" do
-        New project member
-      = link_to import_project_team_members_path(@project), class: "btn btn-grouped", title: "Import members from another project" do
-        Import members
+      = link_to new_project_team_member_path(@project), class: "btn btn-new btn-grouped", title: "メンバーを追加" do
+        メンバーを追加
+      = link_to import_project_team_members_path(@project), class: "btn btn-grouped", title: "別のプロジェクトからメンバーをインポート" do
+        メンバーをインポート
 
 %p.light
-  Read more about project permissions
-  %strong= link_to "here", help_page_path("permissions", "permissions"), class: "vlink"
+  プロジェクトのアクセス権についての詳細は、
+  %strong= link_to "こちら", help_page_path("permissions", "permissions"), class: "vlink"
+  から確認できます。
 = render "team", members: @users_projects
 - if @group
   = render "group_members"

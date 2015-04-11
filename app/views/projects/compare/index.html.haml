@@ -1,16 +1,16 @@
 = render "projects/commits/head"
 
 %h3.page-title
-  Compare View
+  比較ビュー
 %p.slead
-  Compare branches, tags or commit ranges.
+  ブランチ、タグ、コミットの範囲で比較できます。
   %br
-  Fill input field with commit id like
+  コミットのリストとコード差分を確認するには、入力フォームに
   %code.label-branch 4eedf23
-  or branch/tag name like
+  のような形式のコミットIDまたは
   %code.label-branch master
-  and press compare button for the commits list and a code diff.
+  のようなブランチ名やタグ名を入力し、比較ボタンを押してください。
   %br
-  Changes are shown <b>from</b> the version in the first field <b>to</b> the version in the second field.
+  変更は1つ目の <b>from</b> のバージョンから2つ目の <b>to</b> のバージョンまでの範囲で表示されます。
 
 = render "form"

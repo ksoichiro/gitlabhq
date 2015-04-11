@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: services
@@ -25,7 +26,7 @@ class CampfireService < Service
   end
 
   def description
-    'Simple web-based real-time group chat'
+    'シンプルなWebベースのリアルタイムグループチャット'
   end
 
   def to_param

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: services
@@ -62,7 +63,7 @@ class GitlabCiService < CiService
   end
 
   def description
-    'Continuous integration server from GitLab'
+    'GitLabのCIサーバ'
   end
 
   def to_param

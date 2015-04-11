@@ -1,10 +1,10 @@
 %ul.nav.nav-tabs
   %li{class: ("active" if params[:search_code].present?)}
     = link_to search_path(params.merge(search_code: true)) do
-      Repository Code
+      リポジトリのソースコード
   %li{class: ("active" if params[:search_code].blank?)}
     = link_to search_path(params.merge(search_code: nil)) do
-      Issues and Merge requests
+      課題・マージリクエスト
 
 .search_results
   - if params[:search_code].present?

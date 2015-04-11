@@ -1,49 +1,49 @@
-# Permissions
+# アクセス権
 
-Users have different abilities depending on the access level they have in a particular group or project.
+それぞれのグループやプロジェクトでユーザが与えられているアクセス権レベルによって、できることは異なります。
 
-If a user is both in a project group and in the project itself, the highest permission level is used.
+ユーザがグループとプロジェクトの両方に属する場合はもっとも強力なアクセス権レベルが適用されます。
 
-If a user is a GitLab administrator they receive all permissions.
+ユーザがGitLabの管理者である場合は、すべてのアクセス権が与えられます。
 
-## Project
+## プロジェクト
 
 
-| Action                                | Guest   | Reporter   | Developer   | Master   | Owner  |
-|---------------------------------------|---------|------------|-------------|----------|--------|
-| Create new issue                      | ✓       | ✓          | ✓           | ✓        | ✓      |
-| Leave comments                        | ✓       | ✓          | ✓           | ✓        | ✓      |
-| Pull project code                     |         | ✓          | ✓           | ✓        | ✓      |
-| Download project                      |         | ✓          | ✓           | ✓        | ✓      |
-| Create code snippets                  |         | ✓          | ✓           | ✓        | ✓      |
-| Create new merge request              |         |            | ✓           | ✓        | ✓      |
-| Create new branches                   |         |            | ✓           | ✓        | ✓      |
-| Push to non-protected branches        |         |            | ✓           | ✓        | ✓      |
-| Remove non-protected branches         |         |            | ✓           | ✓        | ✓      |
-| Add tags                              |         |            | ✓           | ✓        | ✓      |
-| Write a wiki                          |         |            | ✓           | ✓        | ✓      |
-| Manage issue tracker                  |         |            | ✓           | ✓        | ✓      |
-| Manage labels                         |         |            | ✓           | ✓        | ✓      |
-| Create new milestones                 |         |            |             | ✓        | ✓      |
-| Add new team members                  |         |            |             | ✓        | ✓      |
-| Push to protected branches            |         |            |             | ✓        | ✓      |
-| Enable/Disable branch protection      |         |            |             | ✓        | ✓      |
-| Rewrite/remove git tags               |         |            |             | ✓        | ✓      |
-| Edit project                          |         |            |             | ✓        | ✓      |
-| Add Deploy Keys to project            |         |            |             | ✓        | ✓      |
-| Configure Project Hooks               |         |            |             | ✓        | ✓      |
-| Switch visibility level               |         |            |             |          | ✓      |
-| Transfer project to another namespace |         |            |             |          | ✓      |
-| Remove project                        |         |            |             |          | ✓      |
+| アクション                             | Guest   | Reporter   | Developer   | Master   | Owner  |
+|----------------------------------------|---------|------------|-------------|----------|--------|
+| 新しい課題を作成する                   | ✓       | ✓          | ✓           | ✓        | ✓      |
+| コメントを作成する                     | ✓       | ✓          | ✓           | ✓        | ✓      |
+| プロジェクトのコードをプルする         |         | ✓          | ✓           | ✓        | ✓      |
+| プロジェクトをダウンロードする         |         | ✓          | ✓           | ✓        | ✓      |
+| コードスニペットを作成する             |         | ✓          | ✓           | ✓        | ✓      |
+| マージリクエストを作成する             |         |            | ✓           | ✓        | ✓      |
+| ブランチを作成する                     |         |            | ✓           | ✓        | ✓      |
+| 保護されていないブランチにプッシュする |         |            | ✓           | ✓        | ✓      |
+| 保護されていないブランチを削除する     |         |            | ✓           | ✓        | ✓      |
+| タグを追加する                         |         |            | ✓           | ✓        | ✓      |
+| Wikiを書く                             |         |            | ✓           | ✓        | ✓      |
+| 課題トラッカーを管理する               |         |            | ✓           | ✓        | ✓      |
+| ラベルを管理する                       |         |            | ✓           | ✓        | ✓      |
+| マイルストーンを作成する               |         |            |             | ✓        | ✓      |
+| メンバーを追加する                     |         |            |             | ✓        | ✓      |
+| 保護されたブランチにプッシュする       |         |            |             | ✓        | ✓      |
+| ブランチの保護を有効/無効にする        |         |            |             | ✓        | ✓      |
+| Gitタグを更新/削除する                 |         |            |             | ✓        | ✓      |
+| プロジェクトを編集する                 |         |            |             | ✓        | ✓      |
+| デプロイキーをプロジェクトに追加する   |         |            |             | ✓        | ✓      |
+| プロジェクトフックを設定する           |         |            |             | ✓        | ✓      |
+| 可視性レベルを変更する                 |         |            |             |          | ✓      |
+| プロジェクトを移譲する                 |         |            |             |          | ✓      |
+| プロジェクトを削除する                 |         |            |             |          | ✓      |
 
-## Group
+## グループ
 
-| Action                  | Guest | Reporter | Developer | Master | Owner |
-|-------------------------|-------|----------|-----------|--------|-------|
-| Browse group            | ✓     | ✓        | ✓         | ✓      | ✓     |
-| Edit group              |       |          |           |        | ✓     |
-| Create project in group |       |          |           | ✓      | ✓     |
-| Manage group members    |       |          |           |        | ✓     |
-| Remove group            |       |          |           |        | ✓     |
+| アクション                         | Guest | Reporter | Developer | Master | Owner |
+|------------------------------------|-------|----------|-----------|--------|-------|
+| グループを閲覧する                 | ✓     | ✓        | ✓         | ✓      | ✓     |
+| グループを編集する                 |       |          |           |        | ✓     |
+| グループ内にプロジェクトを作成する |       |          |           | ✓      | ✓     |
+| メンバーを管理する                 |       |          |           |        | ✓     |
+| グループを削除する                 |       |          |           |        | ✓     |
 
-Any user can remove himself from a group, unless he is the last Owner of the group.
+ユーザが唯一のグループ所有者でない限り、すべてのユーザは自分自身をグループから削除することができます。

@@ -2,12 +2,12 @@
 .pull-right
   = render 'main_links'
 %h3.page-title
-  Editing -
   %span.light #{@page.title}
+  を編集中
 %hr
 = render 'form'
 
 .pull-right
   - if @page.persisted? && can?(current_user, :admin_wiki, @project)
-    = link_to project_wiki_path(@project, @page), data: { confirm: "Are you sure you want to delete this page?"}, method: :delete, class: "btn btn-small btn-remove" do
-      Delete this page
+    = link_to project_wiki_path(@project, @page), data: { confirm: "本当にこのページを削除しますか？"}, method: :delete, class: "btn btn-small btn-remove" do
+      このページを削除

@@ -4,18 +4,18 @@
     %div#activity-chart.chart
     %hr
     %p
-      %b Total commits:
+      %b コミット数:
       %span= @repository.commit_count
     %p
-      %b Total files in #{@repository.root_ref}:
+      %b #{@repository.root_ref} のファイル数:
       %span= @stats.files_count
     %p
-      %b Authors:
+      %b 作成者:
       %span= @stats.authors_count
 
 
   .col-md-6
-    %h4 Top 50 Committers:
+    %h4 トップ 50 コミッター:
     %ol.styled
       - @stats.authors[0...50].each do |author|
         %li
@@ -29,5 +29,5 @@
 :javascript
   var labels = [#{@graph.labels.to_json}];
   var commits = [#{@graph.commits.join(', ')}];
-  var title = "Commit activity for last #{@graph.weeks} weeks";
+  var title = "過去 #{@graph.weeks} 週間のコミット";
   Chart.init(labels, commits, title);

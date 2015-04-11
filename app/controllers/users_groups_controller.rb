@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class UsersGroupsController < ApplicationController
   before_filter :group
 
@@ -9,7 +11,7 @@ class UsersGroupsController < ApplicationController
   def create
     @group.add_users(params[:user_ids].split(','), params[:group_access])
 
-    redirect_to members_group_path(@group), notice: 'Users were successfully added.'
+    redirect_to members_group_path(@group), notice: 'ユーザは正常に追加されました。'
   end
 
   def update
@@ -22,7 +24,7 @@ class UsersGroupsController < ApplicationController
     if can?(current_user, :destroy, @users_group)  # May fail if last owner.
       @users_group.destroy
       respond_to do |format|
-        format.html { redirect_to members_group_path(@group), notice: 'User was  successfully removed from group.' }
+        format.html { redirect_to members_group_path(@group), notice: 'ユーザはグループから正常に削除されました。' }
         format.js { render nothing: true }
       end
     else

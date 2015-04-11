@@ -1,13 +1,18 @@
 .event-title
   %span.author_name= link_to_author event
-  %span.event_label.pushed #{event.push_action_name} #{event.ref_type}
+  %span.event_label.pushed が
+  = link_to_project event.project
+  で
+  - if event.ref_type == "tag"
+    タグ
+  - else
+    ブランチ
   - if event.rm_ref?
     %strong= event.ref_name
   - else
     = link_to project_commits_path(event.project, event.ref_name) do
       %strong= event.ref_name
-  at
-  = link_to_project event.project
+  をプッシュしました
 
 - if event.push_with_commits?
   - project = event.project
@@ -22,4 +27,4 @@
           - if event.commits_count > 2
             %span ... and #{event.commits_count - 2} more commits.
           = link_to project_compare_path(event.project, from: event.commit_from, to: event.commit_to) do
-            %strong Compare &rarr; #{event.commit_from[0..7]}...#{event.commit_to[0..7]}
+            %strong 比較 &rarr; #{event.commit_from[0..7]}...#{event.commit_to[0..7]}

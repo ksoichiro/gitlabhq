@@ -1,44 +1,44 @@
-# Public access
+# 公開アクセス
 
-GitLab allows you to open selected projects to be accessed **publicly** or **internally**.
+GitLabは選択されたプロジェクトを **公開** または **内部のみ** のアクセス権で開けるようにすることができます。
 
-Projects with either of these visibility levels will be listed in the [public access directory](/public).
+どちらかの可視性が設定されているプロジェクトは [公開プロジェクト一覧](/public) に一覧表示されています。
 
-Internal projects will only be available to authenticated users.
+内部のみのプロジェクトは、ログインしたユーザだけが利用することができます。
 
-## Public projects
+## 公開プロジェクト
 
-Public projects can be cloned **without any** authentication.
+公開プロジェクトは **一切の認証なしで** クローンすることができます。
 
-It will also be listed on the [public access directory](/public).
+公開プロジェクトは [公開プロジェクト一覧](/public) にも一覧表示されます。
 
-**Any logged in user** will have [Guest](../permissions/permissions) permissions on the repository.
+**ログインしたユーザは誰でも** リポジトリに対して [Guest](../permissions/permissions) のアクセス権を持ちます。
 
-## Internal projects
+## 内部プロジェクト
 
-Internal projects can be cloned by any logged in user.
+内部プロジェクトはログインしたユーザであれば誰でもクローンすることができます。
 
-It will also be listed on the [public access directory](/public) for logged in users.
+内部プロジェクトは、ログインしたユーザの場合 [公開プロジェクト一覧](/public) にも表示されます。
 
-Any logged in user will have [Guest](../permissions/permissions) permissions on the repository.
+ログインしたユーザは誰でもリポジトリに対して [Guest](../permissions/permissions) のアクセス権を持ちます。
 
-## How to change project visibility
+## プロジェクトの可視性レベルの変更方法
 
-1. Go to your project dashboard
-1. Click on the "Edit" tab
-1. Change "Visibility Level"
+1. プロジェクトのダッシュボードに移動します
+1. "編集"をクリックします
+1. "可視性レベル"を変更します
 
-## Visibility of users
+## ユーザの可視性
 
-The public page of users, located at `/u/username` is visible if either:
+ユーザの公開ページは `/u/username` にあり、以下の場合に閲覧することができます。
 
-- You are logged in.
-- You are logged out, and the target user is authorized to (is Guest, Reporter, etc.) at least one public project.
+- ログインしている場合。
+- ログアウトしており、対象のユーザが1つ以上の公開プロジェクトで認可されている(Guest, Reporter など)場合。
 
-Otherwise, you will be redirected to the sign in page.
+その他の場合はサインインのページにリダイレクトされます。
 
-When visiting the public page of an user, you will only see listed projects which you can view yourself.
+ユーザの公開ページを表示したとき、あなたが見ることのできるプロジェクトだけが一覧表示されます。
 
-## Restricting the use of public or internal projects
+## 公開または内部プロジェクトの利用を制限する
 
-In [gitlab.yml](https://gitlab.com/gitlab-org/gitlab-ce/blob/dbd88d453b8e6c78a423fa7e692004b1db6ea069/config/gitlab.yml.example#L64) you can disable public projects or public and internal projects for the entire GitLab installation to prevent people making code public by accident.
+[gitlab.yml](https://gitlab.com/gitlab-org/gitlab-ce/blob/dbd88d453b8e6c78a423fa7e692004b1db6ea069/config/gitlab.yml.example#L64)では、メンバーが誤ってコードを公開してしまわないように、GitLabの全体インストールで公開プロジェクトまたは公開・内部プロジェクトを無効化するように設定することができます。

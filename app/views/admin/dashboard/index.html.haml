@@ -1,38 +1,38 @@
 %h3.page-title
-  Admin area
+  管理エリア
 %p.light
-  You can manage projects, users and other GitLab data from here.
+  プロジェクト、ユーザ、その他 GitLab のデータをここで管理できます。
 %hr
 .admin-dashboard
   .row
     .col-sm-4
       .light-well
-        %h4 Projects
+        %h4 プロジェクト
         .data
           = link_to admin_projects_path do
             %h1= Project.count
           %hr
-          = link_to 'New Project', new_project_path, class: "btn btn-new"
+          = link_to '新しいプロジェクト', new_project_path, class: "btn btn-new"
     .col-sm-4
       .light-well
-        %h4 Users
+        %h4 ユーザ
         .data
           = link_to admin_users_path do
             %h1= User.count
           %hr
-          = link_to 'New User', new_admin_user_path, class: "btn btn-new"
+          = link_to '新しいユーザ', new_admin_user_path, class: "btn btn-new"
     .col-sm-4
       .light-well
-        %h4 Groups
+        %h4 グループ
         .data
           = link_to admin_groups_path do
             %h1= Group.count
           %hr
-          = link_to 'New Group', new_admin_group_path, class: "btn btn-new"
+          = link_to '新しいグループ', new_admin_group_path, class: "btn btn-new"
 
   .row.prepend-top-10
     .col-md-4
-      %h4 Latest projects
+      %h4 最新のプロジェクト
       %hr
       - @projects.each do |project|
         %p
@@ -41,7 +41,7 @@
             #{time_ago_with_tooltip(project.created_at)}
 
     .col-md-4
-      %h4 Latest users
+      %h4 最新のユーザ
       %hr
       - @users.each do |user|
         %p
@@ -51,7 +51,7 @@
             #{time_ago_with_tooltip(user.created_at)}
 
     .col-md-4
-      %h4 Latest groups
+      %h4 最新のグループ
       %hr
       - @groups.each do |group|
         %p
@@ -63,46 +63,46 @@
   %br
   .row
     .col-md-4
-      %h4 Stats
+      %h4 統計
       %hr
       %p
-        Forks
+        フォーク
         %span.light.pull-right
           = ForkedProjectLink.count
       %p
-        Issues
+        課題
         %span.light.pull-right
           = Issue.count
       %p
-        Merge Requests
+        マージリクエスト
         %span.light.pull-right
           = MergeRequest.count
       %p
-        Notes
+        ノート
         %span.light.pull-right
           = Note.count
       %p
-        Snippets
+        スニペット
         %span.light.pull-right
           = Snippet.count
       %p
-        SSH Keys
+        SSHキー
         %span.light.pull-right
           = Key.count
       %p
-        Milestones
+        マイルストーン
         %span.light.pull-right
           = Milestone.count
       %p
-        Monthly active users
+        月間アクティブユーザ
         %span.light.pull-right
           = User.where("current_sign_in_at > ?", 30.days.ago).count
     .col-md-4
       %h4
-        Features
+        機能
       %hr
       %p
-        Sign up
+        サインアップ
         %span.light.pull-right
           = boolean_to_icon gitlab_config.signup_enabled
       %p
@@ -118,7 +118,7 @@
         %span.light.pull-right
           = boolean_to_icon Gitlab.config.omniauth.enabled
     .col-md-4
-      %h4 Components
+      %h4 コンポーネント
       %hr
       %p
         GitLab

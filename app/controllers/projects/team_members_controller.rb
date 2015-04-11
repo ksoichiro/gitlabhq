@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Projects::TeamMembersController < Projects::ApplicationController
   # Authorize
   before_filter :authorize_admin_project!, except: :leave
@@ -30,7 +31,7 @@ class Projects::TeamMembersController < Projects::ApplicationController
     @user_project_relation.update_attributes(member_params)
 
     unless @user_project_relation.valid?
-      flash[:alert] = "User should have at least one role"
+      flash[:alert] = "ユーザは少なくとも1つのロールを持つ必要があります"
     end
     redirect_to project_team_index_path(@project)
   end
@@ -57,7 +58,7 @@ class Projects::TeamMembersController < Projects::ApplicationController
   def apply_import
     giver = Project.find(params[:source_project_id])
     status = @project.team.import(giver)
-    notice = status ? "Successfully imported" : "Import failed"
+    notice = status ? "正常にインポートされました" : "インポートに失敗しました"
 
     redirect_to project_team_index_path(project), notice: notice
   end

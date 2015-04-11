@@ -1,10 +1,11 @@
 .event-title
   %span.author_name= link_to_author event
-  %span.event_label commented on #{event_note_title_html(event)} at
+  %span.event_label が #{event_note_title_html(event)} について
   - if event.project
     = link_to_project event.project
   - else
     = event.project_name
+  でコメントしました
 
 .event-body
   .event-note

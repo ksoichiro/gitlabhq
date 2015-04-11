@@ -7,28 +7,28 @@
             %li= msg
 
     .form-group
-      = f.label :title, class: 'control-label'
+      = f.label :title, 'タイトル', class: 'control-label'
       .col-sm-10= f.text_field :title, placeholder: "Example Snippet", class: 'form-control', required: true
 
     - unless @snippet.respond_to?(:project)
       .form-group
-        = f.label "Access", class: 'control-label'
+        = f.label "公開範囲", class: 'control-label'
         .col-sm-10
           = f.label :private_true, class: 'radio-label' do
             = f.radio_button :private, true
             %span
-              %strong Private
-              (only you can see this snippet)
+              %strong プライベート
+              (このスニペットはあなたにしか見えません)
           %br
           = f.label :private_false, class: 'radio-label' do
             = f.radio_button :private, false
             %span
-              %strong Public
-              (GitLab users can see this snippet)
+              %strong 公開
+              (GitLabユーザはこのスニペットを見ることができます)
 
     .form-group
       .file-editor
-        = f.label :file_name, "File", class: 'control-label'
+        = f.label :file_name, "ファイル", class: 'control-label'
         .col-sm-10
           .file-holder.snippet
             .file-title
@@ -39,14 +39,14 @@
 
     .form-actions
       - if @snippet.new_record?
-        = f.submit 'Create snippet', class: "btn-create btn"
+        = f.submit 'スニペットを作成', class: "btn-create btn"
       - else
-        = f.submit 'Save', class: "btn-save btn"
+        = f.submit '保存', class: "btn-save btn"
 
       - if @snippet.respond_to?(:project)
-        = link_to "Cancel", project_snippets_path(@project), class: "btn btn-cancel"
+        = link_to "キャンセル", project_snippets_path(@project), class: "btn btn-cancel"
       - else
-        = link_to "Cancel", snippets_path(@project), class: "btn btn-cancel"
+        = link_to "キャンセル", snippets_path(@project), class: "btn btn-cancel"
 
 :javascript
   var editor = ace.edit("editor");

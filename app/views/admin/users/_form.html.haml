@@ -7,62 +7,62 @@
             %p= msg
 
     %fieldset
-      %legend Account
+      %legend アカウント
       .form-group
-        = f.label :name, class: 'control-label'
+        = f.label :name, '名前', class: 'control-label'
         .col-sm-10
           = f.text_field :name, required: true, autocomplete: "off", class: 'form-control'
-          %span.help-inline * required
+          %span.help-inline * 必須
       .form-group
-        = f.label :username, class: 'control-label'
+        = f.label :username, 'ユーザ名', class: 'control-label'
         .col-sm-10
           = f.text_field :username, required: true, autocomplete: "off", class: 'form-control'
-          %span.help-inline * required
+          %span.help-inline * 必須
       .form-group
-        = f.label :email, class: 'control-label'
+        = f.label :email, 'メールアドレス', class: 'control-label'
         .col-sm-10
           = f.text_field :email, required: true, autocomplete: "off", class: 'form-control'
-          %span.help-inline * required
+          %span.help-inline * 必須
 
     - if @user.new_record?
       %fieldset
-        %legend Password
+        %legend パスワード
         .form-group
-          = f.label :password, class: 'control-label'
+          = f.label :password, 'パスワード', class: 'control-label'
           .col-sm-10
             %strong
-              Reset link will be generated and sent to the user.
+              パスワードリセットのリンクが生成され、ユーザに送信されます。
               %br
-              User will be forced to set the password on first sign in.
+              ユーザは初回のサインイン時にパスワードを強制的に変更させられます。
     - else
       %fieldset
-        %legend Password
+        %legend パスワード
         .form-group
-          = f.label :password, class: 'control-label'
+          = f.label :password, 'パスワード', class: 'control-label'
           .col-sm-10= f.password_field :password, disabled: f.object.force_random_password, class: 'form-control'
         .form-group
-          = f.label :password_confirmation, class: 'control-label'
+          = f.label :password_confirmation, 'パスワード(確認)', class: 'control-label'
           .col-sm-10= f.password_field :password_confirmation, disabled: f.object.force_random_password, class: 'form-control'
 
     %fieldset
-      %legend Access
+      %legend アクセス
       .form-group
-        = f.label :projects_limit, class: 'control-label'
+        = f.label :projects_limit, 'プロジェクト数上限', class: 'control-label'
         .col-sm-10= f.number_field :projects_limit, class: 'form-control'
 
       .form-group
-        = f.label :can_create_group, class: 'control-label'
+        = f.label :can_create_group, 'グループ作成可能', class: 'control-label'
         .col-sm-10= f.check_box :can_create_group
 
       .form-group
-        = f.label :admin, class: 'control-label'
+        = f.label :admin, '管理者', class: 'control-label'
         - if current_user == @user
           .col-sm-10= f.check_box :admin, disabled: true
-          .col-sm-10 You cannot remove your own admin rights
+          .col-sm-10 あなた自身の管理者権限を削除することはできません。
         - else
           .col-sm-10= f.check_box :admin
     %fieldset
-      %legend Profile
+      %legend プロフィール
       .form-group
         = f.label :avatar, class: 'control-label'
         .col-sm-10
@@ -78,13 +78,13 @@
         = f.label :twitter, class: 'control-label'
         .col-sm-10= f.text_field :twitter, class: 'form-control'
       .form-group
-        = f.label :website_url, 'Website', class: 'control-label'
+        = f.label :website_url, 'Webサイト', class: 'control-label'
         .col-sm-10= f.text_field :website_url, class: 'form-control'
 
     .form-actions
       - if @user.new_record?
-        = f.submit 'Create user', class: "btn btn-create"
-        = link_to 'Cancel', admin_users_path, class: "btn btn-cancel"
+        = f.submit 'ユーザを作成', class: "btn btn-create"
+        = link_to 'キャンセル', admin_users_path, class: "btn btn-cancel"
       - else
-        = f.submit 'Save changes', class: "btn btn-save"
-        = link_to 'Cancel', admin_user_path(@user), class: "btn btn-cancel"
+        = f.submit '変更を保存', class: "btn btn-save"
+        = link_to 'キャンセル', admin_user_path(@user), class: "btn btn-cancel"

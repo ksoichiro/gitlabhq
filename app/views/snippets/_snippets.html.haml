@@ -2,6 +2,6 @@
   = render partial: 'snippet', collection: @snippets
   - if @snippets.empty?
     %li
-      .nothing-here-block Nothing here.
+      .nothing-here-block 何もありません。
 
 = paginate @snippets, theme: 'gitlab'

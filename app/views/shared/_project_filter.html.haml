@@ -5,37 +5,37 @@
         %ul.nav.nav-pills.nav-stacked
           %li{class: ("active" if params[:scope] == 'all')}
             = link_to project_filter_path(scope: 'all') do
-              Everyone's
+              すべて
               %span.pull-right
                 = authorized_entities_count(current_user, entity, @project)
           %li{class: ("active" if params[:scope] == 'assigned-to-me')}
             = link_to project_filter_path(scope: 'assigned-to-me') do
-              Assigned to me
+              自分の課題
               %span.pull-right
                 = assigned_entities_count(current_user, entity, @project)
           %li{class: ("active" if params[:scope] == 'created-by-me')}
             = link_to project_filter_path(scope: 'created-by-me') do
-              Created by me
+              自分が作成
               %span.pull-right
                 = authored_entities_count(current_user, entity, @project)
 
     %fieldset
-      %legend State
+      %legend ステータス
       %ul.nav.nav-pills
         %li{class: ("active" if params[:state] == 'opened')}
           = link_to project_filter_path(state: 'opened') do
-            Open
+            オープン
         %li{class: ("active" if params[:state] == 'closed')}
           = link_to project_filter_path(state: 'closed') do
-            Closed
+            解決
         %li{class: ("active" if params[:state] == 'all')}
           = link_to project_filter_path(state: 'all') do
-            All
+            すべて
 
     - if defined?(labels)
       %fieldset
         %legend
-          Labels
+          ラベル
           %small.pull-right
             = link_to project_labels_path(@project), class: 'light' do
               %i.icon-edit
@@ -50,15 +50,15 @@
 
         - if @project.labels.empty?
           .light-well
-            Create first label at
-            = link_to 'labels page', project_labels_path(@project)
+            = link_to 'ラベルページ', project_labels_path(@project)
+            に最初のラベルを作成
             %br
-            or #{link_to 'generate', generate_project_labels_path(@project, redirect: redirect), method: :post} default set of labels
+            または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project, redirect: redirect), method: :post}
 
     %fieldset
       - if %w(state scope milestone_id assignee_id label_name).select { |k| params[k].present? }.any?
         = link_to project_entities_path, class: 'cgray pull-right' do
           %i.icon-remove
-          %strong Clear filter
+          %strong 絞り込みを解除
 
 

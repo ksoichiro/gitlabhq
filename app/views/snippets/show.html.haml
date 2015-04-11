@@ -4,11 +4,11 @@
   - if @snippet.private?
     %span.label.label-success
       %i.icon-lock
-      private
+      プライベート
 
   .pull-right
     = link_to new_snippet_path, class: "btn btn-new", title: "New Snippet" do
-      Add new snippet
+      新しいスニペットを追加
 %hr
 
 .append-bottom-20
@@ -23,10 +23,10 @@
   .back-link
     - if @snippet.author == current_user
       = link_to user_snippets_path(current_user) do
-        &larr; my snippets
+        &larr; マイスニペット
     - else
       = link_to snippets_path do
-        &larr; discover snippets
+        &larr; スニペットを探す
 
 .file-holder
   .file-title
@@ -36,8 +36,8 @@
     .options
       .btn-group
         - if can?(current_user, :modify_personal_snippet, @snippet)
-          = link_to "edit", edit_snippet_path(@snippet), class: "btn btn-small", title: 'Edit Snippet'
+          = link_to "編集", edit_snippet_path(@snippet), class: "btn btn-small", title: 'Edit Snippet'
         = link_to "raw", raw_snippet_path(@snippet), class: "btn btn-small", target: "_blank"
       - if can?(current_user, :admin_personal_snippet, @snippet)
-        = link_to "remove", snippet_path(@snippet), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-small btn-remove", title: 'Delete Snippet'
+        = link_to "削除", snippet_path(@snippet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-small btn-remove", title: 'スニペットを削除'
   = render 'shared/snippets/blob'

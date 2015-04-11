@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Profiles::PasswordsController < ApplicationController
   layout :determine_layout
 
@@ -12,7 +13,7 @@ class Profiles::PasswordsController < ApplicationController
 
   def create
     unless @user.valid_password?(user_params[:current_password])
-      redirect_to new_profile_password_path, alert: 'You must provide a valid current password'
+      redirect_to new_profile_password_path, alert: '現在のパスワードを正しく入力してください'
       return
     end
 
@@ -26,7 +27,7 @@ class Profiles::PasswordsController < ApplicationController
 
     if result
       @user.update_attributes(password_expires_at: nil)
-      redirect_to root_path, notice: 'Password successfully changed'
+      redirect_to root_path, notice: 'パスワードは正常に変更されました'
     else
       render :new
     end
@@ -41,12 +42,12 @@ class Profiles::PasswordsController < ApplicationController
     end
 
     unless @user.valid_password?(user_params[:current_password])
-      redirect_to edit_profile_password_path, alert: 'You must provide a valid current password'
+      redirect_to edit_profile_password_path, alert: '現在のパスワードを正しく入力してください'
       return
     end
 
     if @user.update_attributes(password_attributes)
-      flash[:notice] = "Password was successfully updated. Please login with it"
+      flash[:notice] = "パスワードは正常に更新されました。新しいパスワードでログインしてください"
       redirect_to new_user_session_path
     else
       render 'edit'
@@ -55,7 +56,7 @@ class Profiles::PasswordsController < ApplicationController
 
   def reset
     current_user.send_reset_password_instructions
-    redirect_to edit_profile_password_path, notice: 'We sent you an email with reset password instructions'
+    redirect_to edit_profile_password_path, notice: 'パスワードのリセット方法についてのご案内をメールでお送りしました'
   end
 
   private
@@ -65,7 +66,7 @@ class Profiles::PasswordsController < ApplicationController
   end
 
   def set_title
-    @title = "New password"
+    @title = "新しいパスワード"
   end
 
   def determine_layout

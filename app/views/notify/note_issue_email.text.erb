@@ -1,9 +1,9 @@
-New comment for Issue <%= @issue.iid %>
+課題 <%= @issue.iid %> への新しいコメント
 
 <%= url_for(project_issue_url(@issue.project, @issue, anchor: "note_#{@note.id}")) %>
 
 
-Author: <%= @note.author_name %>
+担当者: <%= @note.author_name %>
 
 <%= @note.note %>
 

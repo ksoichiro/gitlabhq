@@ -1,6 +1,6 @@
 = render 'nav'
 %h3.page-title
-  All Pages
+  すべてのページ
 %ul.bordered-list
   - @wiki_pages.each do |wiki_page|
     %li
@@ -8,5 +8,5 @@
         = link_to wiki_page.title, project_wiki_path(@project, wiki_page)
         %small (#{wiki_page.format})
         .pull-right
-          %small Last edited #{time_ago_with_tooltip(wiki_page.commit.created_at)}
+          %small 最終更新：#{time_ago_with_tooltip(wiki_page.commit.created_at)}
 = paginate @wiki_pages, theme: 'gitlab'

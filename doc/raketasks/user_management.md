@@ -1,6 +1,6 @@
-# User management
+# ユーザ管理
 
-## Add user as a developer to all projects
+## ユーザを開発者としてすべてのプロジェクトに追加
 
 ```bash
 # omnibus-gitlab
@@ -10,11 +10,11 @@ sudo gitlab-rake gitlab:import:user_to_projects[username@domain.tld]
 bundle exec rake gitlab:import:user_to_projects[username@domain.tld]
 ```
 
-## Add all users to all projects
+## すべてのユーザをすべてのプロジェクトへ追加
 
-Notes:
+注意:
 
-- admin users are added as masters
+- 管理者ユーザは Master として追加されます
 
 ```bash
 # omnibus-gitlab
@@ -24,7 +24,7 @@ sudo gitlab-rake gitlab:import:all_users_to_all_projects
 bundle exec rake gitlab:import:all_users_to_all_projects
 ```
 
-## Add user as a developer to all groups
+## ユーザを開発者としてすべてのグループに追加
 
 ```bash
 # omnibus-gitlab
@@ -34,11 +34,11 @@ sudo gitlab-rake gitlab:import:user_to_groups[username@domain.tld]
 bundle exec rake gitlab:import:user_to_groups[username@domain.tld]
 ```
 
-## Add all users to all groups
+## すべてのユーザをすべてのグループに追加
 
-Notes:
+注意:
 
-- admin users are added as owners so they can add additional users to the group
+- 管理者ユーザは、グループにユーザを追加できるように所有者として追加されます
 
 ```bash
 # omnibus-gitlab

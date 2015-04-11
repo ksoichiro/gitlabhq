@@ -2,10 +2,10 @@
   .row
     .col-sm-6
       %strong.append-right-10
-        Assignee:
+        担当者:
 
       - if can?(current_user, :modify_issue, @issue)
-        = project_users_select_tag('issue[assignee_id]', placeholder: 'Select assignee', class: 'custom-form-control', selected: @issue.assignee_id)
+        = project_users_select_tag('issue[assignee_id]', placeholder: '担当者を選択', class: 'custom-form-control', selected: @issue.assignee_id)
       - elsif issue.assignee
         = link_to_member(@project, @issue.assignee)
       - else
@@ -13,9 +13,9 @@
 
     .col-sm-6.text-right
       %strong.append-right-10
-        Milestone:
+        マイルストーン:
       - if can?(current_user, :modify_issue, @issue)
-        = f.select(:milestone_id, milestone_options(@issue), { include_blank: "Select milestone" }, {class: 'select2 select2-compact'})
+        = f.select(:milestone_id, milestone_options(@issue), { include_blank: "マイルストーンを選択" }, {class: 'select2 select2-compact'})
         = hidden_field_tag :issue_context
         = f.submit class: 'btn'
       - elsif issue.milestone

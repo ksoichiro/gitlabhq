@@ -1,10 +1,10 @@
 %p
-  Hi #{@user.name}!
+  こんにちは #{@user.name} さん！
 %p
-  A new email was added to your account:
+  以下の新しいメールアドレスがあなたのアカウントに追加されました。
 %p
-  email:
+  メールアドレス:
   %code= @email.email
 %p
-  If this email was added in error, you can remove it here:
-  = link_to "Emails", profile_emails_url
+  もしこのメールアドレスが誤って追加したものである場合、以下から削除できます。
+  = link_to "メールアドレス", profile_emails_url

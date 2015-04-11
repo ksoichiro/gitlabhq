@@ -1,15 +1,15 @@
 %p
-  = "Project was moved to another location"
+  = "プロジェクトが別の場所へ移動されました。"
 %p
-  The project is now located under
+  プロジェクトは以下の場所にあります。
   = link_to project_url(@project) do
     = @project.name_with_namespace
 %p
-  To update the remote url in your local repository run (for ssh):
+  リモートURL(SSH)を更新するには、ローカルリポジトリで以下を実行してください。
 %p{ style: "background:#f5f5f5; padding:10px; border:1px solid #ddd" }
   git remote set-url origin #{@project.ssh_url_to_repo}
 %p
-  or for http(s):
+  HTTP(S)のURLの場合は以下を実行してください。
 %p{ style: "background:#f5f5f5; padding:10px; border:1px solid #ddd" }
   git remote set-url origin #{@project.http_url_to_repo}
 %br

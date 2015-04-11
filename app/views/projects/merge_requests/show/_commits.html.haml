@@ -2,22 +2,22 @@
   .panel.panel-default
     .panel-heading
       %i.icon-list
-      Commits (#{@commits.count})
+      コミット (#{@commits.count})
     .commits.mr-commits
       - if @commits.count > 8
         %ul.first-commits.well-list
           - @commits.first(8).each do |commit|
             = render "projects/commits/commit", commit: commit, project: @merge_request.source_project
           %li.bottom
-            8 of #{@commits.count} commits displayed.
+            #{@commits.count} 個中 8 個のコミットが表示されています。
             %strong
-              %a.show-all-commits Click here to show all
+              %a.show-all-commits クリックしてすべて表示
         - if @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE
           %ul.all-commits.hide.well-list
             - @commits.first(MergeRequestDiff::COMMITS_SAFE_SIZE).each do |commit|
               = render "projects/commits/inline_commit", commit: commit, project: @merge_request.source_project
             %li
-              other #{@commits.size - MergeRequestDiff::COMMITS_SAFE_SIZE} commits hidden to prevent performance issues.
+              その他の #{@commits.size - MergeRequestDiff::COMMITS_SAFE_SIZE} 個のコミットはパフォーマンス悪化を防ぐため非表示になっています。
         - else
           %ul.all-commits.hide.well-list
             - @commits.each do |commit|

@@ -5,35 +5,35 @@
         %ul.nav.nav-pills.nav-stacked
           %li{class: ("active" if params[:scope] == 'assigned-to-me')}
             = link_to filter_path(entity, scope: 'assigned-to-me') do
-              Assigned to me
+              自分の課題
               %span.pull-right
                 = assigned_entities_count(current_user, entity, @group)
           %li{class: ("active" if params[:scope] == 'authored')}
             = link_to filter_path(entity, scope: 'authored') do
-              Created by me
+              自分が作成
               %span.pull-right
                 = authored_entities_count(current_user, entity, @group)
           %li{class: ("active" if params[:scope] == 'all')}
             = link_to filter_path(entity, scope: 'all') do
-              Everyone's
+              すべて
               %span.pull-right
                 = authorized_entities_count(current_user, entity, @group)
 
     %fieldset.status-filter
-      %legend State
+      %legend ステータス
       %ul.nav.nav-pills
         %li{class: ("active" if params[:state] == 'opened')}
           = link_to filter_path(entity, state: 'opened') do
-            Open
+            オープン
         %li{class: ("active" if params[:state] == 'closed')}
           = link_to filter_path(entity, state: 'closed') do
-            Closed
+            解決
         %li{class: ("active" if params[:state] == 'all')}
           = link_to filter_path(entity, state: 'all') do
-            All
+            すべて
 
     %fieldset
-      %legend Projects
+      %legend プロジェクト
       %ul.nav.nav-pills.nav-stacked.nav-small
         - @projects.each do |project|
           - unless entities_per_project(project, entity).zero?
@@ -46,5 +46,5 @@
       - if params[:state].present? || params[:project_id].present?
         = link_to filter_path(entity, state: nil, project_id: nil), class: 'pull-right cgray' do
           %i.icon-remove
-          %strong Clear filter
+          %strong 絞り込みを解除
 

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Projects::IssuesController < Projects::ApplicationController
   before_filter :module_enabled
   before_filter :issue, only: [:edit, :update, :show]
@@ -102,7 +103,7 @@ class Projects::IssuesController < Projects::ApplicationController
 
   def bulk_update
     result = Issues::BulkUpdateService.new(project, current_user, params).execute
-    redirect_to :back, notice: "#{result[:count]} issues updated"
+    redirect_to :back, notice: "#{result[:count]}件の課題が更新されました"
   end
 
   protected

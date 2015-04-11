@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Projects::EditTreeController < Projects::BaseTreeController
   before_filter :require_branch_head
   before_filter :blob
@@ -13,7 +14,7 @@ class Projects::EditTreeController < Projects::BaseTreeController
     result = Files::UpdateService.new(@project, current_user, params, @ref, @path).execute
 
     if result[:status] == :success
-      flash[:notice] = "Your changes have been successfully committed"
+      flash[:notice] = "変更は正常にコミットされました"
 
       if from_merge_request
         from_merge_request.reload_code

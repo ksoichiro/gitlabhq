@@ -6,7 +6,7 @@
 
 .back-link
   = link_to project_services_path(@project) do
-    &larr; to services
+    &larr; サービス一覧
 
 %hr
 
@@ -22,7 +22,7 @@
       = @service.help
 
   .form-group
-    = f.label :active, "Active", class: "control-label"
+    = f.label :active, "アクティブ", class: "control-label"
     .col-sm-10
       = f.check_box :active
 
@@ -42,7 +42,7 @@
           = f.check_box name
 
   .form-actions
-    = f.submit 'Save', class: 'btn btn-save'
+    = f.submit '保存', class: 'btn btn-save'
     &nbsp;
     - if @service.valid? && @service.activated? && @service.can_test?
-      = link_to 'Test settings', test_project_service_path(@project, @service.to_param), class: 'btn'
+      = link_to '設定をテスト', test_project_service_path(@project, @service.to_param), class: 'btn'

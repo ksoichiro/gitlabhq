@@ -1,3 +1,4 @@
+# encoding: utf-8
 module SelectsHelper
   def users_select_tag(id, opts = {})
     css_class = "ajax-users-select "
@@ -13,7 +14,7 @@ module SelectsHelper
     css_class << "multiselect " if opts[:multiple]
     css_class << (opts[:class] || '')
     value = opts[:selected] || ''
-    placeholder = opts[:placeholder] || 'Select user'
+    placeholder = opts[:placeholder] || 'ユーザを選択'
     project_id = opts[:project_id] || @project.id
     hidden_field_tag(id, value, class: css_class, 'data-placeholder' => placeholder, 'data-project-id' => project_id)
   end

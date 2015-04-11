@@ -1,9 +1,9 @@
 %h3.page-title
-  System hooks
+  システムフック
 
 %p.light
-  #{link_to "System hooks ", help_page_path("system_hooks", "system_hooks"), class: "vlink"} can be
-  used for binding events when GitLab creates a User or Project.
+  #{link_to "システムフック", help_page_path("system_hooks", "system_hooks"), class: "vlink"} を使うと
+  GitLabがユーザやプロジェクトを作成したイベントを別のアクションに紐付けることができます。
 
 %hr
 
@@ -18,13 +18,13 @@
     .col-sm-10
       = f.text_field :url, class: "form-control"
   .form-actions
-    = f.submit "Add System Hook", class: "btn btn-create"
+    = f.submit "システムフックを追加", class: "btn btn-create"
 %hr
 
 -if @hooks.any?
   .panel.panel-default
     .panel-heading
-      System hooks (#{@hooks.count})
+      システムフック (#{@hooks.count})
     %ul.well-list
       - @hooks.each do |hook|
         %li
@@ -33,5 +33,5 @@
               %strong= hook.url
 
           .pull-right
-            = link_to 'Test Hook', admin_hook_test_path(hook), class: "btn btn-small"
-            = link_to 'Remove', admin_hook_path(hook), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-remove btn-small"
+            = link_to 'フックをテスト', admin_hook_test_path(hook), class: "btn btn-small"
+            = link_to '削除', admin_hook_path(hook), data: { confirm: '本当に削除しますか？' }, method: :delete, class: "btn btn-remove btn-small"

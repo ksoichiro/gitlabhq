@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'project_wiki'
 
 class Projects::WikisController < Projects::ApplicationController
@@ -45,7 +46,7 @@ class Projects::WikisController < Projects::ApplicationController
     return render('empty') unless can?(current_user, :write_wiki, @project)
 
     if @page.update(content, format, message)
-      redirect_to [@project, @page], notice: 'Wiki was successfully updated.'
+      redirect_to [@project, @page], notice: 'Wikiが更新されました'
     else
       render 'edit'
     end
@@ -55,7 +56,7 @@ class Projects::WikisController < Projects::ApplicationController
     @page = WikiPage.new(@project_wiki)
 
     if @page.create(wiki_params)
-      redirect_to project_wiki_path(@project, @page), notice: 'Wiki was successfully updated.'
+      redirect_to project_wiki_path(@project, @page), notice: 'Wikiが更新されました'
     else
       render action: "edit"
     end
@@ -65,7 +66,7 @@ class Projects::WikisController < Projects::ApplicationController
     @page = @project_wiki.find_page(params[:id])
 
     unless @page
-      redirect_to(project_wiki_path(@project, :home), notice: "Page not found")
+      redirect_to(project_wiki_path(@project, :home), notice: "ページが見つかりません")
     end
   end
 
@@ -73,7 +74,7 @@ class Projects::WikisController < Projects::ApplicationController
     @page = @project_wiki.find_page(params[:id])
     @page.delete if @page
 
-    redirect_to project_wiki_path(@project, :home), notice: "Page was successfully deleted"
+    redirect_to project_wiki_path(@project, :home), notice: "ページが削除されました"
   end
 
   def git_access
@@ -87,7 +88,7 @@ class Projects::WikisController < Projects::ApplicationController
     # Call #wiki to make sure the Wiki Repo is initialized
     @project_wiki.wiki
   rescue ProjectWiki::CouldNotCreateWikiError => ex
-    flash[:notice] = "Could not create Wiki Repository at this time. Please try again later."
+    flash[:notice] = "Wikiのリポジトリを作成できませんでした。後ほどもう一度お試しください"
     redirect_to @project
     return false
   end

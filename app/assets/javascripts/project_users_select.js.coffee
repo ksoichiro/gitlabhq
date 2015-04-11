@@ -4,7 +4,7 @@
       project_id = $(select).data('project-id') || $('body').data('project-id')
 
       $(select).select2
-        placeholder: $(select).data('placeholder') || "Search for a user"
+        placeholder: $(select).data('placeholder') || "ユーザを検索"
         multiple: $(select).hasClass('multiselect')
         minimumInputLength: 0
         query: (query) ->
@@ -12,9 +12,9 @@
             data = { results: users }
 
             nullUser = {
-              name: 'Unassigned',
+              name: '担当なし',
               avatar: null,
-              username: 'none',
+              username: 'なし',
               id: ''
             }
 

@@ -1,6 +1,7 @@
+# encoding: utf-8
 module ProjectsHelper
   def remove_from_project_team_message(project, user)
-    "You are going to remove #{user.name} from #{project.name} project team. Are you sure?"
+    "#{user.name} をプロジェクト #{project.name} から削除します。よろしいですか？"
   end
 
   def link_to_project project
@@ -20,7 +21,7 @@ module ProjectsHelper
     default_opts = { avatar: true, name: true, size: 16 }
     opts = default_opts.merge(opts)
 
-    return "(deleted)" unless author
+    return "(削除済み)" unless author
 
     author_html =  ""
 
@@ -53,7 +54,7 @@ module ProjectsHelper
   end
 
   def remove_project_message(project)
-    "You are going to remove #{project.name_with_namespace}.\n Removed project CANNOT be restored!\n Are you ABSOLUTELY sure?"
+    "プロジェクト #{project.name_with_namespace} を削除します。\n削除されたプロジェクトは元に戻せません！\n本当に、本当に削除してよろしいですか？"
   end
 
   def project_nav_tabs
@@ -128,9 +129,9 @@ module ProjectsHelper
 
     toggle_html = content_tag('span', class: 'toggle') do
       toggle_text = if starred
-                      'Unstar'
+                      'スターを解除'
                     else
-                      'Star'
+                      'スターをつける'
                     end
 
       content_tag('i', ' ', class: 'icon-star') + toggle_text
@@ -212,26 +213,26 @@ module ProjectsHelper
               "#{@project.path}\/#{@path} at #{@ref} - " + title
             elsif current_controller?(:issues)
               if current_action?(:show)
-                "Issue ##{@issue.iid} - #{@issue.title} - " + title
+                "課題 ##{@issue.iid} - #{@issue.title} - " + title
               else
-                "Issues - " + title
+                "課題 - " + title
               end
             elsif current_controller?(:blob)
               "#{@project.path}\/#{@blob.path} at #{@ref} - " + title
             elsif current_controller?(:commits)
-              "Commits at #{@ref} - " + title
+              "#{@ref} のコミット - " + title
             elsif current_controller?(:merge_requests)
               if current_action?(:show)
-                "Merge request ##{@merge_request.iid} - " + title
+                "マージリクエスト ##{@merge_request.iid} - " + title
               else
-                "Merge requests - " + title
+                "マージリクエスト - " + title
               end
             elsif current_controller?(:wikis)
               "Wiki - " + title
             elsif current_controller?(:network)
-              "Network graph - " + title
+              "ネットワークグラフ - " + title
             elsif current_controller?(:graphs)
-              "Graphs - " + title
+              "グラフ - " + title
             else
               title
             end
@@ -252,7 +253,7 @@ module ProjectsHelper
     if project.last_activity_at
       time_ago_with_tooltip(project.last_activity_at, 'bottom', 'last_activity_time_ago')
     else
-      "Never"
+      "なし"
     end
   end
 

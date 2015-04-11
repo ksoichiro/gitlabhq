@@ -1,12 +1,11 @@
 %h3.page-title
-  Merge Requests
+  マージリクエスト
 
 %p.light
-  Only merge requests from
   %strong #{@group.name}
-  group are listed here.
+  グループのマージリクエストだけが表示されています。
   - if current_user
-    To see all merge requests you should visit #{link_to 'dashboard', merge_requests_dashboard_path} page.
+    すべてのマージリクエストを確認するには #{link_to 'ダッシュボード', merge_requests_dashboard_path} を表示してください。
 %hr
 .row
   .fixed.sidebar-expand-button.hidden-lg.hidden-md

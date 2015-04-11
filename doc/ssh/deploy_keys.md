@@ -1,4 +1,4 @@
-# Deploy keys
+# デプロイキー
 
 Deploy keys allow read-only access one or multiple projects with a single SSH key.
 

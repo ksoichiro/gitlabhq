@@ -1,3 +1,4 @@
+# encoding: utf-8
 module VisibilityLevelHelper
   def visibility_level_color(level)
     case level
@@ -15,14 +16,11 @@ module VisibilityLevelHelper
       haml_tag :span do
         case level
         when Gitlab::VisibilityLevel::PRIVATE
-          haml_concat "Project access must be granted explicitly for each user."
+          haml_concat "明示的にアクセス権を付与したユーザだけがアクセスできます。"
         when Gitlab::VisibilityLevel::INTERNAL
-          haml_concat "The project can be cloned by"
-          haml_concat "any logged in user."
+          haml_concat "ログインしたユーザは誰でもプロジェクトをクローンできます。"
         when Gitlab::VisibilityLevel::PUBLIC
-          haml_concat "The project can be cloned"
-          haml_concat "without any"
-          haml_concat "authentication."
+          haml_concat "誰でも、認証せずにプロジェクトをクローンできます。"
         end
       end
     end
@@ -40,7 +38,14 @@ module VisibilityLevelHelper
   end
 
   def visibility_level_label(level)
-    Project.visibility_levels.key(level)
+    case level
+    when Gitlab::VisibilityLevel::PRIVATE
+      "プライベート"
+    when Gitlab::VisibilityLevel::INTERNAL
+      "内部"
+    when Gitlab::VisibilityLevel::PUBLIC
+      "公開"
+    end
   end
 
   def restricted_visibility_levels

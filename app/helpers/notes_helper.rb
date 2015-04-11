@@ -1,3 +1,4 @@
+# encoding: utf-8
 module NotesHelper
    # Helps to distinguish e.g. commit notes in mr notes list
   def note_for_main_target?(note)
@@ -21,7 +22,7 @@ module NotesHelper
     if note.updated_at != note.created_at
       ts << capture_haml do
         haml_tag :small do
-          haml_concat " (Edited #{time_ago_with_tooltip(note.updated_at, 'bottom', 'note_edited_ago')})"
+          haml_concat " (#{time_ago_with_tooltip(note.updated_at, 'bottom', 'note_edited_ago')}に編集)"
         end
       end
     end

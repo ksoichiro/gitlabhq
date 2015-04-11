@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ProjectsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:show]
   before_filter :project, except: [:new, :create]
@@ -21,7 +22,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = ::Projects::CreateService.new(current_user, project_params).execute
-    flash[:notice] = 'Project was successfully created.' if @project.saved?
+    flash[:notice] = 'プロジェクトが作成されました' if @project.saved?
 
     respond_to do |format|
       format.js
@@ -33,8 +34,8 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if status
-        flash[:notice] = 'Project was successfully updated.'
-        format.html { redirect_to edit_project_path(@project), notice: 'Project was successfully updated.' }
+        flash[:notice] = 'プロジェクトが更新されました'
+        format.html { redirect_to edit_project_path(@project), notice: 'プロジェクトが更新されました' }
         format.js
       else
         format.html { render "edit", layout: "project_settings" }
@@ -113,9 +114,9 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html do
         if @forked_project.saved? && @forked_project.forked?
-          redirect_to(@forked_project, notice: 'Project was successfully forked.')
+          redirect_to(@forked_project, notice: 'プロジェクトがフォークされました')
         else
-          @title = 'Fork project'
+          @title = 'プロジェクトをフォーク'
           render "fork"
         end
       end
@@ -187,7 +188,7 @@ class ProjectsController < ApplicationController
   end
 
   def set_title
-    @title = 'New Project'
+    @title = '新しいプロジェクト'
   end
 
   def user_layout

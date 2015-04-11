@@ -5,20 +5,20 @@
     .dropdown.inline
       %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
         %i.icon-user
-        %span.light assignee:
+        %span.light 担当者:
         - if @assignee.present?
           %strong= @assignee.name
         - elsif params[:assignee_id] == "0"
-          Unassigned
+          担当なし
         - else
-          Any
+          指定なし
         %b.caret
       %ul.dropdown-menu
         %li
           = link_to project_filter_path(assignee_id: nil) do
-            Any
+            指定なし
           = link_to project_filter_path(assignee_id: 0) do
-            Unassigned
+            担当なし
         - @assignees.sort_by(&:name).each do |user|
           %li
             = link_to project_filter_path(assignee_id: user.id) do
@@ -28,20 +28,20 @@
     .dropdown.inline.prepend-left-10
       %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
         %i.icon-time
-        %span.light milestone:
+        %span.light マイルストーン:
         - if @milestone.present?
           %strong= @milestone.title
         - elsif params[:milestone_id] == "0"
-          None (backlog)
+          なし (backlog)
         - else
-          Any
+          指定なし
         %b.caret
       %ul.dropdown-menu
         %li
           = link_to project_filter_path(milestone_id: nil) do
-            Any
+            指定なし
           = link_to project_filter_path(milestone_id: 0) do
-            None (backlog)
+            なし (backlog)
         - project_active_milestones.each do |milestone|
           %li
             = link_to project_filter_path(milestone_id: milestone.id) do
@@ -54,23 +54,23 @@
   .clearfix
     .issues_bulk_update.hide
       = form_tag bulk_update_project_issues_path(@project), method: :post  do
-        = select_tag('update[status]', options_for_select([['Open', 'open'], ['Closed', 'closed']]), prompt: "Status")
-        = project_users_select_tag('update[assignee_id]', placeholder: 'Assignee')
-        = select_tag('update[milestone_id]', bulk_update_milestone_options, prompt: "Milestone")
+        = select_tag('update[status]', options_for_select([['オープン', 'open'], ['解決', 'closed']]), prompt: "ステータス")
+        = project_users_select_tag('update[assignee_id]', placeholder: '担当者')
+        = select_tag('update[milestone_id]', bulk_update_milestone_options, prompt: "マイルストーン")
         = hidden_field_tag 'update[issues_ids]', []
         = hidden_field_tag :status, params[:status]
-        = button_tag "Update issues", class: "btn update_selected_issues btn-save"
+        = button_tag "課題を更新", class: "btn update_selected_issues btn-save"
 
 .panel.panel-default
   %ul.well-list.issues-list
     = render @issues
     - if @issues.blank?
       %li
-        .nothing-here-block No issues to show
+        .nothing-here-block 課題はありません
 
 - if @issues.present?
   .pull-right
     %span.issue_counter #{@issues.total_count}
-    issues for this filter
+    個の課題に絞り込まれています
 
   = paginate @issues, theme: "gitlab"

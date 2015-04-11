@@ -7,7 +7,7 @@
 
   = f.hidden_field :title, value: @page.title
   .form-group
-    = f.label :format, class: 'control-label'
+    = f.label :format, 'フォーマット', class: 'control-label'
     .col-sm-10
       = f.select :format, options_for_select(ProjectWiki::MARKUPS, {selected: @page.format}), {}, class: "form-control"
 
@@ -15,30 +15,30 @@
     .col-sm-2
     .col-sm-10
       %p.cgray
-        To link to a (new) page you can just type
+        (新しい)ページをリンクするには
         %code [Link Title](page-slug)
-        \.
+        と記述します。
 
   .form-group
-    = f.label :content, class: 'control-label'
+    = f.label :content, '内容', class: 'control-label'
     .col-sm-10
       = f.text_area :content, class: 'form-control js-gfm-input markdown-area', rows: 18
       .col-sm-12.hint
-        .pull-left Wiki content is parsed with #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}
-        .pull-right Attach images (JPG, PNG, GIF) by dragging & dropping or #{link_to "selecting them", '#', class: 'markdown-selector' }.
+        .pull-left Wikiの内容は#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}記法でパースされます。
+        .pull-right ドラッグ & ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector' }して画像 (JPG, PNG, GIF) を添付
       .clearfix
       .error-alert
   .form-group
-    = f.label :commit_message, class: 'control-label'
+    = f.label :commit_message, 'コミットメッセージ', class: 'control-label'
     .col-sm-10= f.text_field :message, class: 'form-control', rows: 18
 
   .form-actions
     - if @page && @page.persisted?
-      = f.submit 'Save changes', class: "btn-save btn"
-      = link_to "Cancel", project_wiki_path(@project, @page), class: "btn btn-cancel"
+      = f.submit '変更を保存', class: "btn-save btn"
+      = link_to "キャンセル", project_wiki_path(@project, @page), class: "btn btn-cancel"
     - else
-      = f.submit 'Create page', class: "btn-create btn"
-      = link_to "Cancel", project_wiki_path(@project, :home), class: "btn btn-cancel"
+      = f.submit 'ページを作成', class: "btn-create btn"
+      = link_to "キャンセル", project_wiki_path(@project, :home), class: "btn btn-cancel"
 
 :javascript
   window.project_image_path_upload = "#{upload_image_project_path @project}";

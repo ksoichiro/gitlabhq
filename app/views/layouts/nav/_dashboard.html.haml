@@ -1,18 +1,18 @@
 %ul
   = nav_link(path: 'dashboard#show', html_options: {class: 'home'}) do
-    = link_to root_path, title: "Home" do
-      Activity
+    = link_to root_path, title: "ホーム" do
+      アクティビティ
   = nav_link(path: 'dashboard#projects') do
     = link_to projects_dashboard_path do
-      Projects
+      プロジェクト
   = nav_link(path: 'dashboard#issues') do
     = link_to issues_dashboard_path do
-      Issues
+      課題
       %span.count= current_user.assigned_issues.opened.count
   = nav_link(path: 'dashboard#merge_requests') do
     = link_to merge_requests_dashboard_path do
-      Merge Requests
+      マージリクエスト
       %span.count= current_user.assigned_merge_requests.opened.count
   = nav_link(controller: :help) do
-    = link_to "Help", help_path
+    = link_to "ヘルプ", help_path
 

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # NotificationService class
 #
 # Used for notifying users with emails about different events
@@ -118,8 +119,8 @@ class NotificationService
     return true unless note.noteable_type.present?
 
     # ignore gitlab service messages
-    return true if note.note =~ /\A_Status changed to closed_/
-    return true if note.note =~ /\A_mentioned in / && note.system == true
+    return true if note.note =~ /\A_ステータスをクローズに変更しました_/
+    return true if note.note =~ /\A_で言及されました/ && note.system == true
 
     opts = { noteable_type: note.noteable_type, project_id: note.project_id }
 

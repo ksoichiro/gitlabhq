@@ -2,9 +2,9 @@
 
 - if can? current_user, :admin_label, @project
   = link_to new_project_label_path(@project), class: "pull-right btn btn-new" do
-    New label
+    新しいラベル
 %h3.page-title
-  Labels
+  ラベル
 %hr
 
 - if @labels.present?
@@ -14,4 +14,4 @@
 
 - else
   .light-well
-    .nothing-here-block Create first label or #{link_to 'generate', generate_project_labels_path(@project), method: :post} default set of labels
+    .nothing-here-block 最初のラベルを追加 または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project), method: :post}

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: services
@@ -27,7 +28,7 @@ class PivotaltrackerService < Service
   end
 
   def description
-    'Project Management Software (Source Commits Endpoint)'
+    'プロジェクト管理ソフトウェア (ソースコミットエンドポイント)'
   end
 
   def to_param

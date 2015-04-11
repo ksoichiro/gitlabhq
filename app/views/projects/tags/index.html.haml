@@ -1,15 +1,15 @@
 = render "projects/commits/head"
 
 %h3.page-title
-  Git Tags
+  Gitタグ
   - if can? current_user, :push_code, @project
     .pull-right
       = link_to new_project_tag_path(@project), class: 'btn btn-create new-tag-btn' do
         %i.icon-add-sign
-        New tag
+        タグを作成
 
 %p.light
-  Tags give the ability to mark specific points in history as being important
+  タグを使うと、コミット履歴上で重要なポイントをマークすることができます。
 %hr
 
 - unless @tags.empty?
@@ -21,9 +21,9 @@
 
 - else
   .nothing-here-block
-    Repository has no tags yet.
+    このリポジトリにはまだタグがありません。
     %br
     %small
-      Use git tag command to add a new one:
+      git tag コマンドを使って新しいタグを作成できます。
       %br
       %span.monospace git tag -a v1.4 -m 'version 1.4'
