@@ -13,11 +13,11 @@
 
     - if projects.blank?
       %li
-        .nothing-here-block There are no projects here.
+        .nothing-here-block プロジェクトがありません。
     - if @projects_count > @projects_limit
       %li.bottom
         %span.light
-          #{@projects_limit} of #{pluralize(@projects_count, 'project')} displayed.
+          #{@projects_count} 個中 #{@projects_limit} 件のプロジェクトが表示されています
         .pull-right
           = link_to projects_dashboard_path do
             すべて表示
