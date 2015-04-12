@@ -3,7 +3,7 @@
 %p.light
   ブロードキャストメッセージはすべてのユーザに表示されます。計画メンテナンス, 最近のアップグレードなどの通知に利用します。
 .broadcast-message-preview
-  %i.icon-bullhorn
+  %i.fa.fa-bullhorn
   %span メッセージがここに表示されます
 
 = form_for [:admin, @broadcast_message], html: { class: 'broadcast-message-form form-horizontal'} do |f|
@@ -53,7 +53,7 @@
               #{broadcast_message.ends_at.to_s(:short)}
           &nbsp;
           = link_to [:admin, broadcast_message], method: :delete, remote: true, class: 'remove-row btn btn-tiny' do
-            %i.icon-remove.cred
+            %i.fa.fa-times.cred
 
         .message= broadcast_message.message
 

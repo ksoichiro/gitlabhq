@@ -152,12 +152,6 @@ module ApplicationHelper
     sanitize(str, tags: %w(a span))
   end
 
-  def image_url(source)
-    # prevent relative_root_path being added twice (it's part of root_url and path_to_image)
-    root_url.sub(/#{root_path}$/, path_to_image(source))
-  end
-
-  alias_method :url_to_image, :image_url
 
   def body_data_page
     path = controller.controller_path.split('/')
@@ -186,13 +180,6 @@ module ApplicationHelper
     else
       "検索"
     end
-  end
-
-  def first_line(str)
-    lines = str.split("\n")
-    line = lines.first
-    line += "..." if lines.size > 1
-    line
   end
 
   def broadcast_message
@@ -243,7 +230,7 @@ module ApplicationHelper
     css_class << " hide" unless visible
 
     content_tag :div, class: css_class do
-      content_tag(:i, nil, class: 'icon-spinner icon-spin') + text
+      content_tag(:i, nil, class: 'fa fa-spinner fa-spin') + text
     end
   end
 
@@ -272,5 +259,17 @@ module ApplicationHelper
     end
 
     super
+  end
+
+  def escaped_autolink(text)
+    auto_link ERB::Util.html_escape(text), link: :urls
+  end
+
+  def promo_host
+    'about.gitlab.com'
+  end
+
+  def promo_url
+    'https://' + promo_host
   end
 end

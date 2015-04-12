@@ -6,7 +6,8 @@
 
     - if current_page?(starred_explore_projects_path)
       %strong.pull-right
-        #{project.star_count}スター
+        %i.fa.fa-star
+        ${project.star_count}スター
 
   .project-info
     - if project.description.present?
@@ -21,5 +22,5 @@
         &middot;
         = link_to "#{project.repository.tag_names.count}タグ", project_tags_path(project)
       - else
-        %i.icon-warning-sign
+        %i.fa.fa-exclamation-triangle
         空のリポジトリ

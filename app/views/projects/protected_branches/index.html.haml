@@ -1,5 +1,5 @@
 %h3.page-title 保護ブランチ
-%p.light 安定ブランチを安全にし、保護ブランチへのマージの前にコードレビューを強制します。
+%p.light 安定ブランチを安全にし、開発者にマージリクエストの利用を強制します。
 %hr
 
 .bs-callout.bs-callout-info
@@ -35,7 +35,7 @@
             - if @project.root_ref?(branch.name)
               %span.label.label-info デフォルト
             %span.label.label-success
-              %i.icon-lock
+              %i.fa.fa-lock
           .pull-right
             - if can? current_user, :admin_project, @project
               = link_to '保護を解除', [@project, branch], data: { confirm: 'ブランチがDeveloper権限のメンバーにも書き込み可能になります。よろしいですか？' }, method: :delete, class: "btn btn-remove btn-small"

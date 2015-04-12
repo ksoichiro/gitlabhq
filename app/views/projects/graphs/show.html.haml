@@ -1,17 +1,13 @@
+= render 'head'
 .loading-graph
   .center
     %h3.page-title
-      %i.icon-spinner.icon-spin
+      %i.fa.fa-spinner.fa-spin
       リポジトリグラフを構築しています
-    %p 準備ができ次第、自動的に更新されますのでお待ちください
+    %p.slead 準備ができ次第、自動的に更新されますのでお待ちください
 
-.stat-graph
+.stat-graph.hide
   .header.clearfix
-    .pull-right
-      %select
-        %option{:value => "commits"} コミット
-        %option{:value => "additions"} 追加
-        %option{:value => "deletions"} 削除
     %h3#date_header.page-title
     %p.light
       マージコミットを除いた#{@project.default_branch}へのコミットが 6,000 コミットまで表示されます。
@@ -21,15 +17,21 @@
     #contributors.clearfix
       %ol.contributors-list.clearfix
 
-:javascript
-  $(".stat-graph").hide();
 
-  $.ajax({
+
+:coffeescript
+  $.ajax
     type: "GET",
     url: location.href,
-    complete: function() {
+    success: (data) ->
+      graph = new ContributorsStatGraph()
+      graph.init(data)
+
+      $("#brush_change").change ->
+        graph.change_date_header()
+        graph.redraw_authors()
+
       $(".stat-graph").fadeIn();
       $(".loading-graph").hide();
-    },
-    dataType: "script"
-  });
+    dataType: "json"
+
