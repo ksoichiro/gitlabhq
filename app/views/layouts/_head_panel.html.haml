@@ -10,7 +10,7 @@
 
       %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
         %span.sr-only Toggle navigation
-        %i.icon-reorder
+        %i.fa.fa-bars
 
       .navbar-collapse.collapse
         %ul.nav.navbar-nav
@@ -18,31 +18,31 @@
             = render "layouts/search"
           %li.visible-sm.visible-xs
             = link_to search_path, title: "検索", class: 'has_bottom_tooltip', 'data-original-title' => '検索' do
-              %i.icon-search
+              %i.fa.fa-search
           %li
             = link_to help_path, title: 'ヘルプ', class: 'has_bottom_tooltip',
                'data-original-title' => 'ヘルプ'  do
-              %i.icon-question-sign
+              %i.fa.fa-question-circle
           %li
             = link_to explore_root_path, title: "探索", class: 'has_bottom_tooltip', 'data-original-title' => '公開エリア' do
-              %i.icon-globe
+              %i.fa.fa-globe
           %li
             = link_to user_snippets_path(current_user), title: "マイスニペット", class: 'has_bottom_tooltip', 'data-original-title' => 'マイスニペット' do
-              %i.icon-paste
+              %i.fa.fa-clipboard
           - if current_user.is_admin?
             %li
               = link_to admin_root_path, title: "管理", class: 'has_bottom_tooltip', 'data-original-title' => '管理' do
-                %i.icon-cogs
+                %i.fa.fa-cogs
           - if current_user.can_create_project?
             %li
               = link_to new_project_path, title: "新規プロジェクト", class: 'has_bottom_tooltip', 'data-original-title' => '新規プロジェクト'  do
-                %i.icon-plus
+                %i.fa.fa-plus
           %li
-            = link_to profile_path, title: "プロフィール設定", class: 'has_bottom_tooltip', 'data-original-title' => 'プロフィール設定"'  do
-              %i.icon-user
+            = link_to profile_path, title: "プロフィール設定", class: 'has_bottom_tooltip', 'data-original-title' => 'プロフィール設定'  do
+              %i.fa.fa-user
           %li
             = link_to destroy_user_session_path, class: "logout", method: :delete, title: "ログアウト", class: 'has_bottom_tooltip', 'data-original-title' => 'ログアウト'  do
-              %i.icon-signout
+              %i.fa.fa-sign-out
           %li.hidden-xs
             = link_to current_user, class: "profile-pic", id: 'profile-pic' do
               = image_tag avatar_icon(current_user.email, 26), alt: 'ユーザアクティビティ'

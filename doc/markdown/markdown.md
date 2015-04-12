@@ -10,6 +10,7 @@
 * [コードとシンタックスハイライト](#code-and-syntax-highlighting)
 * [絵文字](#emoji)
 * [GitLabでの参照](#special-gitlab-references)
+* [タスクリスト](#task-lists)
 
 **[標準のMarkdown](#standard-markdown)**
 
@@ -176,6 +177,24 @@ GFM は以下を認識します。
 - $123 : スニペットへの参照
 - 1234567 : コミットへの参照
 - \[file\](path/to/file) : ファイルへの参照
+
+GFM also recognizes references to commits, issues, and merge requests in other projects:
+
+- namespace/project#123 : for issues
+- namespace/project!123 : for merge requests
+- namespace/project@1234567 : for commits
+
+## Task Lists
+
+You can add task lists to merge request and issue descriptions to keep track of to-do items.  To create a task, add an unordered list to the description in an issue or merge request, formatted like so:
+
+```no-highlight
+* [x] Completed task
+* [ ] Unfinished task
+    * [x] Nested task
+```
+
+Task lists can only be created in descriptions, not in titles or comments.  Task item state can be managed by editing the description's Markdown or by clicking the rendered checkboxes.
 
 # 標準のMarkdown
 

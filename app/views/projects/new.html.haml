@@ -23,7 +23,7 @@
           .col-sm-2
           .col-sm-10
             = link_to "#", class: 'js-toggle-button' do
-              %i.icon-edit
+              %i.fa.fa-pencil-square-o
               %span リポジトリ名をカスタマイズしますか？
         .js-toggle-content.hide
           .form-group
@@ -39,7 +39,7 @@
           .col-sm-2
           .col-sm-10
             = link_to "#", class: 'js-toggle-button' do
-              %i.icon-upload-alt
+              %i.fa.fa-upload
               %span 既存のリポジトリをインポートしますか？
         .js-toggle-content.hide
           .form-group.import-url-data
@@ -51,6 +51,7 @@
                 このURLは公開されていなければなりません。次のようにユーザ名とパスワードをつけることもできます: https://username:password@gitlab.com/company/project.git.
                 %br
                 インポートは4分でタイムアウトします。大きなリポジトリの場合はクローンとプッシュを組み合わせてください。
+                SVNリポジトリの場合は、#{link_to "SVNからの移行についてのドキュメント", "http://doc.gitlab.com/ce/workflow/migrating_from_svn.html"}を確認してください。
       %hr
 
       .form-group
@@ -74,6 +75,7 @@
 .save-project-loader.hide
   .center
     %h2
-      %i.icon-spinner.icon-spin
+      %i.fa.fa-spinner.fa-spin
       プロジェクトとリポジトリを作成しています
+    %p Please wait a moment, this page will automatically refresh when ready.
     %p 準備ができ次第、自動的に更新されますのでお待ちください

@@ -19,6 +19,8 @@
 - [セキュリティ](security/README.md) Learn what you can do to further secure your GitLab instance.
 - [アップデート](update/README.md) Update guides to upgrade your installation.
 - [ウェルカムメッセージ](customization/welcome_message.md) Add a custom welcome message to the sign-in page.
+- [課題のクローズ](customization/issue_closing.md) Customize how to close an issue from commit messages.
+- [Libravatar](customization/libravatar.md) Use Libravatar for user avatars.
 
 ## コントリビュータ向けドキュメント
 

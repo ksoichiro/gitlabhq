@@ -2,7 +2,7 @@
 
 %div.git-empty
   %fieldset
-    %legend Gitのグローバルなセットアップ:
+    %legend Gitのグローバルなセットアップ
     %pre.dark
       :preserve
         git config --global user.name "#{git_user_name}"
@@ -15,8 +15,8 @@
         mkdir #{@project.path}
         cd #{@project.path}
         git init
-        touch README
-        git add README
+        touch README.md
+        git add README.md
         git commit -m "first commit"
         git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
         git push -u origin master

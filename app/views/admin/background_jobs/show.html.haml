@@ -8,7 +8,7 @@
   .panel-body
     - if @sidekiq_processes.empty?
       %h4.cred
-        %i.icon-warning-sign
+        %i.fa.fa-exclamation-triangle
         実行中の Sidekiq プロセスはありません。GitLabを再起動してください。
     - else
       %table.table
@@ -32,10 +32,10 @@
 
       .clearfix
         %p
-          %i.icon-exclamation-sign
+          %i.fa.fa-exclamation-circle
           もし '[25 of 25 busy]' と表示されていたら、'sudo service gitlab reload' でGitLabを再起動してください。
         %p
-          %i.icon-exclamation-sign
+          %i.fa.fa-exclamation-circle
           もし2つ以上の Sidekiq プロセスが表示されている場合、GitLabを停止し、残っている Sidekiq プロセスを kill し(sudo pkill -u #{Settings.gitlab.user} -f sidekiq)、GitLabを再起動してください。
 
 

@@ -6,16 +6,16 @@
       .note-header
         .note-actions
           = link_to "##{dom_id(note)}", name: dom_id(note) do
-            %i.icon-link
+            %i.fa.fa-link
             リンク
           &nbsp;
           - if can?(current_user, :admin_note, note) && note.editable?
-            = link_to "#", title: "コメントを編集", class: "js-note-edit" do
-              %i.icon-edit
+            = link_to "#", title: "Edit comment", class: "js-note-edit" do
+              %i.fa.fa-pencil-square-o
               編集
             &nbsp;
-            = link_to project_note_path(@project, note), title: "コメントを削除", method: :delete, data: { confirm: '本当にコメントを削除しますか？' }, remote: true, class: "danger js-note-delete" do
-              %i.icon-trash.cred
+            = link_to project_note_path(@project, note), title: "Remove comment", method: :delete, data: { confirm: '本当にコメントを削除しますか？' }, remote: true, class: "danger js-note-delete" do
+              %i.fa.fa-trash-o.cred
               削除
         = link_to_member(@project, note.author, avatar: false)
         %span.note-last-update
@@ -23,11 +23,11 @@
 
         - if note.upvote?
           %span.vote.upvote.label.label-success
-            %i.icon-thumbs-up
+            %i.fa.fa-thumbs-up
             \+1
         - if note.downvote?
           %span.vote.downvote.label.label-danger
-            %i.icon-thumbs-down
+            %i.fa.fa-thumbs-down
             \-1
 
 
@@ -45,7 +45,7 @@
 
               .note-form-option
                 %a.choose-btn.btn.js-choose-note-attachment-button
-                  %i.icon-paper-clip
+                  %i.fa.fa-paperclip
                   %span ファイルを選択 ...
                 &nbsp;
                 %span.file_name.js-attachment-filename ファイル名...
@@ -61,9 +61,9 @@
               = image_tag note.attachment.secure_url, class: 'note-image-attach'
           .attachment.pull-right
             = link_to note.attachment.secure_url, target: "_blank" do
-              %i.icon-paper-clip
+              %i.fa.fa-paperclip
               = note.attachment_identifier
               = link_to delete_attachment_project_note_path(@project, note),
                 title: "添付ファイルの削除", method: :delete, remote: true, data: { confirm: '本当に添付ファイルを削除しますか？' }, class: "danger js-note-attachment-delete" do
-                %i.icon-trash.cred
+                %i.fa.fa-trash-o.cred
       .clear

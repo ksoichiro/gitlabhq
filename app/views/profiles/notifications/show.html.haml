@@ -31,21 +31,25 @@
 
 .clearfix
   %hr
-  %p
-    グループやプロジェクトの単位でも通知レベルを指定することができます。
-    %br
-    デフォルトではすべてのプロジェクトとすべてのグループに上記の設定が適用されます。
 .row.all-notifications
   .col-md-6
+    %p
+      グループやプロジェクトの単位でも通知レベルを指定することができます。
+      %br
+      デフォルトではすべてのプロジェクトとすべてのグループに上記の設定が適用されます。
     %h4 グループ:
     %ul.bordered-list
-      - @users_groups.each do |users_group|
+      - @group_members.each do |users_group|
         - notification = Notification.new(users_group)
         = render 'settings', type: 'group', membership: users_group, notification: notification
 
   .col-md-6
+    %p
+      通知レベルをグループ内のプロジェクト単位に設定するには、
+      %br
+      グループだけでなくそのプロジェクトにも参加する必要があります。
     %h4 プロジェクト:
     %ul.bordered-list
-      - @users_projects.each do |users_project|
-        - notification = Notification.new(users_project)
-        = render 'settings', type: 'project', membership: users_project, notification: notification
+      - @project_members.each do |project_member|
+        - notification = Notification.new(project_member)
+        = render 'settings', type: 'project', membership: project_member, notification: notification

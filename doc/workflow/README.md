@@ -3,3 +3,6 @@
 - [マージリクエストの承認](authorization_for_merge_requests.md)
 - [グループ](groups.md)
 - [ラベル](labels.md)
+- [GitLab Flow](gitlab_flow.md)
+- [通知](notifications.md)
+- [SVNからGitLabへの移行](migrating_from_svn.md)

@@ -14,7 +14,7 @@ class Projects::NewTreeController < Projects::BaseTreeController
       flash[:notice] = "変更は正常にコミットされました"
       redirect_to project_blob_path(@project, File.join(@ref, file_path))
     else
-      flash[:alert] = result[:error]
+      flash[:alert] = result[:message]
       render :show
     end
   end

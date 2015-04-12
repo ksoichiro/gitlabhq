@@ -6,20 +6,8 @@
 = render "form"
 
 - if @commits.present?
-  %div.panel.panel-default
-    .panel-heading
-      コミット (#{@commits.count})
-    - if @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE
-      %ul.well-list
-        - Commit.decorate(@commits.first(MergeRequestDiff::COMMITS_SAFE_SIZE)).each do |commit|
-          = render "projects/commits/inline_commit", commit: commit, project: @project
-        %li.warning-row.unstyled
-          他の #{@commits.size - MergeRequestDiff::COMMITS_SAFE_SIZE} コミットはパフォーマンスの悪化を避けるため表示されません。
-    - else
-      %ul.well-list= render Commit.decorate(@commits), project: @project
-
+  = render "projects/commits/commit_list"
   = render "projects/diffs/diffs", diffs: @diffs, project: @project
-
 - else
   .light-well
     .center

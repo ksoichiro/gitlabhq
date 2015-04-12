@@ -4,8 +4,9 @@
   %span
     \/
     スニペット
-  = link_to new_snippet_path, class: "btn btn-small add_new pull-right", title: "新しいスニペット" do
-    新しいスニペットを追加
+  - if current_user
+    = link_to new_snippet_path, class: "btn btn-small add_new pull-right", title: "新しいスニペット" do
+      新しいスニペットを追加
 
 %hr
 

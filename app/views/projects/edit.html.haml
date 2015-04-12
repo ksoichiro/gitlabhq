@@ -86,104 +86,99 @@
 
 
 
-    .danger-settings.js-toggle-container
-      .centered-light-block
-        %h3
-          %i.icon-warning-sign
-          危険な設定
-        %p 以下の設定を変更すると、データが損失する恐れがあります。
-        = link_to '#', class: 'btn js-toggle-button' do
-          表示する
-          %i.icon-chevron-down
-
-      .js-toggle-content.hide
-        - if can? current_user, :archive_project, @project
-          .panel.panel-default.panel.panel-warning
+    .danger-settings
+      - if can? current_user, :archive_project, @project
+        - if @project.archived?
+          .panel.panel-success
             .panel-heading
-              - if @project.archived?
-                プロジェクトのアーカイブを解除
-              - else
-                プロジェクトをアーカイブ
+              プロジェクトのアーカイブを解除
             .panel-body
-              - if @project.archived?
-                %p
-                  プロジェクトのアーカイブを解除すると、リポジトリはアクティブになります。
-                  %br
-                  プロジェクトにはコミットできるようになります。
-                  %br
-                  %strong プロジェクトをアクティブにすると、検索結果やダッシュボードに表示されるようになります。
-                = link_to 'アーカイブを解除', unarchive_project_path(@project),
-                    data: { confirm: "本当にこのプロジェクトのアーカイブを解除しますか？\nアーカイブが解除されるとプロジェクトはアクティブになり、再びコミット可能になります。" },
-                    method: :post, class: "btn btn-remove"
-              - else
-                %p
-                  プロジェクトをアーカイブするとリポジトリは読み取り専用になります。
-                  %br
-                  ダッシュボードからは非表示になり、検索結果にも表示されません。
-                  %br
-                  %strong アーカイブされたプロジェクトにはコミットできません！
-                = link_to 'アーカイブ', archive_project_path(@project),
-                    data: { confirm: "本当にこのプロジェクトをアーカイブしますか？\nアーカイブされたプロジェクトにはコミットすることができません。" },
-                    method: :post, class: "btn btn-warning"
+              %p
+                プロジェクトのアーカイブを解除すると、リポジトリはアクティブになります。
+                %br
+                プロジェクトにはコミットできるようになります。
+                %br
+                %strong プロジェクトをアクティブにすると、検索結果やダッシュボードに表示されるようになります。
+              = link_to 'アーカイブを解除', unarchive_project_path(@project),
+                  data: { confirm: "本当にこのプロジェクトのアーカイブを解除しますか？\nアーカイブが解除されるとプロジェクトはアクティブになり、再びコミット可能になります。" },
+                  method: :post, class: "btn btn-success"
         - else
-          .nothing-here-block プロジェクトの所有者だけがプロジェクトをアーカイブすることができます。
+          .panel.panel-warning
+            .panel-heading
+              プロジェクトをアーカイブ
+            .panel-body
+              %p
+                プロジェクトをアーカイブするとリポジトリは読み取り専用になります。
+                %br
+                ダッシュボードからは非表示になり、検索結果にも表示されません。
+                %br
+                %strong アーカイブされたプロジェクトにはコミットできません！
+              = link_to 'アーカイブ', archive_project_path(@project),
+                  data: { confirm: "本当にこのプロジェクトをアーカイブしますか？\nアーカイブされたプロジェクトにはコミットすることができません。" },
+                  method: :post, class: "btn btn-warning"
+      - else
+        .nothing-here-block プロジェクトの所有者だけがプロジェクトをアーカイブすることができます。
 
-        .panel.panel-default.panel.panel-warning
-          .panel-heading リポジトリの名前変更
+      .panel.panel-default.panel.panel-warning
+        .panel-heading リポジトリの名前変更
+        .errors-holder
+        .panel-body
+          = form_for(@project, html: { class: 'form-horizontal' }) do |f|
+            .form-group
+              = f.label :path, class: 'control-label' do
+                %span パス
+              .col-sm-9
+                .form-group
+                  .input-group
+                    = f.text_field :path, class: 'form-control'
+                    %span.input-group-addon .git
+                %ul
+                  %li リポジトリの名前変更は意図しない副作用を招く可能性があります。ご注意ください。
+                  %li ローカルリポジトリが新しい場所を指すように修正する必要があります。
+            .form-actions
+              = f.submit '名前変更', class: "btn btn-warning"
+
+      - if can?(current_user, :change_namespace, @project)
+        .panel.panel-default.panel.panel-danger
+          .panel-heading プロジェクトを移譲
           .errors-holder
           .panel-body
-            = form_for(@project, html: { class: 'form-horizontal' }) do |f|
+            = form_for(@project, url: transfer_project_path(@project), method: :put, remote: true, html: { class: 'transfer-project form-horizontal' }) do |f|
               .form-group
-                = f.label :path, class: 'control-label' do
-                  %span パス
-                .col-sm-9
+                = f.label :namespace_id, class: 'control-label' do
+                  %span ネームスペース
+                .col-sm-10
                   .form-group
-                    .input-group
-                      = f.text_field :path, class: 'form-control'
-                      %span.input-group-addon .git
+                    = f.select :namespace_id, namespaces_options(@project.namespace_id), { prompt: 'プロジェクトのネームスペースを選択' }, { class: 'select2' }
                   %ul
-                    %li リポジトリの名前変更は意図しない副作用を招く可能性があります。ご注意ください。
+                    %li プロジェクトのネームスペースの変更は意図しない副作用を招く可能性があります。ご注意ください。
+                    %li プロジェクトはあなたが管理するネームスペースにのみ移譲することができます。
                     %li ローカルリポジトリが新しい場所を指すように修正する必要があります。
               .form-actions
-                = f.submit '名前変更', class: "btn btn-warning"
+                = f.submit '移譲する', class: "btn btn-remove js-confirm-danger", data: { "confirm-danger-message" => transfer_project_message(@project) }
+      - else
+        .nothing-here-block プロジェクトの所有者だけがプロジェクトを移譲することができます。
 
-        - if can?(current_user, :change_namespace, @project)
-          .panel.panel-default.panel.panel-danger
-            .panel-heading プロジェクトを移譲
-            .errors-holder
-            .panel-body
-              = form_for(@project, url: transfer_project_path(@project), method: :put, remote: true, html: { class: 'transfer-project form-horizontal' }) do |f|
-                .form-group
-                  = f.label :namespace_id, class: 'control-label' do
-                    %span ネームスペース
-                  .col-sm-10
-                    .form-group
-                      = f.select :namespace_id, namespaces_options(@project.namespace_id), { prompt: 'プロジェクトのネームスペースを選択' }, { class: 'select2' }
-                    %ul
-                      %li プロジェクトのネームスペースの変更は意図しない副作用を招く可能性があります。ご注意ください。
-                      %li プロジェクトはあなたが管理するネームスペースにのみ移譲することができます。
-                      %li ローカルリポジトリが新しい場所を指すように修正する必要があります。
-                .form-actions
-                  = f.submit '移譲する', class: "btn btn-remove"
-        - else
-          .nothing-here-block プロジェクトの所有者だけがプロジェクトを移譲することができます。
-
-        - if can?(current_user, :remove_project, @project)
-          .panel.panel-default.panel.panel-danger
-            .panel-heading プロジェクトを削除
-            .panel-body
+      - if can?(current_user, :remove_project, @project)
+        .panel.panel-default.panel.panel-danger
+          .panel-heading プロジェクトを削除
+          .panel-body
+            = form_tag(project_path(@project), method: :delete, html: { class: 'form-horizontal'}) do
               %p
                 プロジェクトを削除すると、リポジトリや課題、マージリクエストなどの関連するリソースすべてが削除されます。
                 %br
                 %strong 削除されたプロジェクトは元に戻すことができません！
 
-              = link_to 'プロジェクトを削除', @project, data: { confirm: remove_project_message(@project) }, method: :delete, class: "btn btn-remove"
-        - else
-          .nothing-here-block プロジェクトの所有者だけがプロジェクトを削除することができます。
+              = link_to 'プロジェクトを削除', '#', class: "btn btn-remove js-confirm-danger", data: { "confirm-danger-message" => remove_project_message(@project) }
+      - else
+        .nothing-here-block プロジェクトの所有者だけがプロジェクトを削除することができます。
 
 .save-project-loader.hide
   .center
     %h2
-      %i.icon-spinner.icon-spin
+      %i.fa.fa-spinner.fa-spin
       プロジェクトを保存しています
     %p 準備ができ次第、自動的に更新されますのでお待ちください
+
+
+= render 'shared/confirm_modal', phrase: @project.path

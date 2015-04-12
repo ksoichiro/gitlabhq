@@ -11,7 +11,8 @@ class Projects::EditTreeController < Projects::BaseTreeController
   end
 
   def update
-    result = Files::UpdateService.new(@project, current_user, params, @ref, @path).execute
+    result = Files::UpdateService.
+      new(@project, current_user, params, @ref, @path).execute
 
     if result[:status] == :success
       flash[:notice] = "変更は正常にコミットされました"
@@ -22,7 +23,7 @@ class Projects::EditTreeController < Projects::BaseTreeController
 
       redirect_to after_edit_path
     else
-      flash[:alert] = result[:error]
+      flash[:alert] = result[:message]
       render :show
     end
   end

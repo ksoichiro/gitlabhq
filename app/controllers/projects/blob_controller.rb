@@ -21,7 +21,7 @@ class Projects::BlobController < Projects::ApplicationController
       flash[:notice] = "変更は正常にコミットされました"
       redirect_to project_tree_path(@project, @ref)
     else
-      flash[:alert] = result[:error]
+      flash[:alert] = result[:message]
       render :show
     end
   end

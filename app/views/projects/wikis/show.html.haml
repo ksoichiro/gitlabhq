@@ -17,4 +17,4 @@
 %hr
 
 .wiki-last-edit-by
-  #{commit_author_link(@page.commit, avatar: true, size: 16)}が#{time_ago_with_tooltip(@page.commit.created_at)}に更新
+  #{@page.commit.author.name}が#{time_ago_with_tooltip(@page.commit.authored_date)}に更新

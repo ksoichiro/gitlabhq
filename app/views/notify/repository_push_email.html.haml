@@ -1,11 +1,11 @@
-%h3 #{@author.name} が #{@project.name_with_namespace} の #{@branch} ブランチへプッシュしました
+%h3 #{@author.name} が #{link_to @project.name_with_namespace, project_url(@project)} の #{@branch} ブランチへプッシュしました
 
 %h4 コミット:
 
 %ul
   - @commits.each do |commit|
     %li
-      %strong #{commit.short_id}
+      %strong #{link_to commit.short_id, project_commit_url(@project, commit)}
       %span by #{commit.author_name}
       %pre #{commit.safe_message}
 
