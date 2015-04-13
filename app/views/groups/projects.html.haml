@@ -5,12 +5,12 @@
     .panel.panel-default
       .panel-heading
         %strong= @group.name
-        projects:
+        のプロジェクト:
         - if can? current_user, :manage_group, @group
           .panel-head-actions
             = link_to new_project_path(namespace_id: @group.id), class: "btn btn-new" do
               %i.fa.fa-plus
-              New Project
+              新しいプロジェクト
       %ul.well-list
         - @projects.each do |project|
           %li
@@ -20,10 +20,10 @@
               %span.label.label-gray
                 = repository_size(project)
             .pull-right
-              = link_to 'Members', project_team_index_path(project), id: "edit_#{dom_id(project)}", class: "btn btn-small"
-              = link_to 'Edit', edit_project_path(project), id: "edit_#{dom_id(project)}", class: "btn btn-small"
-              = link_to 'Remove', project, data: { confirm: remove_project_message(project)}, method: :delete, class: "btn btn-small btn-remove"
+              = link_to 'メンバー', project_team_index_path(project), id: "edit_#{dom_id(project)}", class: "btn btn-small"
+              = link_to '編集', edit_project_path(project), id: "edit_#{dom_id(project)}", class: "btn btn-small"
+              = link_to '削除', project, data: { confirm: remove_project_message(project)}, method: :delete, class: "btn btn-small btn-remove"
         - if @projects.blank?
-          .nothing-here-block This group has no projects yet
+          .nothing-here-block このグループにはまだプロジェクトがありません
 
     = paginate @projects, theme: "gitlab"

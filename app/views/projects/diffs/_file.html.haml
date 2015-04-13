@@ -28,7 +28,7 @@
 
         - if @merge_request && @merge_request.source_project
           = link_to project_edit_tree_path(@merge_request.source_project, tree_join(@merge_request.source_branch, diff_file.new_path), from_merge_request_id: @merge_request.id), { class: 'btn btn-small' } do
-            Edit
+            編集
           &nbsp;
 
         = view_file_btn(@commit.id, diff_file, project)

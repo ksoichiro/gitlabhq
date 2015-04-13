@@ -14,7 +14,7 @@
               %i.fa.fa-pencil-square-o
               編集
             &nbsp;
-            = link_to project_note_path(@project, note), title: "Remove comment", method: :delete, data: { confirm: '本当にコメントを削除しますか？' }, remote: true, class: "danger js-note-delete" do
+            = link_to project_note_path(@project, note), title: "コメントを削除", method: :delete, data: { confirm: '本当にコメントを削除しますか？' }, remote: true, class: "danger js-note-delete" do
               %i.fa.fa-trash-o.cred
               削除
         = link_to_member(@project, note.author, avatar: false)

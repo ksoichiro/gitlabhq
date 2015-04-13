@@ -7,7 +7,7 @@
       プライベート
 
   .pull-right
-    = link_to new_snippet_path, class: "btn btn-new", title: "New Snippet" do
+    = link_to new_snippet_path, class: "btn btn-new", title: "新しいスニペット" do
       新しいスニペットを追加
 %hr
 
@@ -36,7 +36,7 @@
     .options
       .btn-group
         - if can?(current_user, :modify_personal_snippet, @snippet)
-          = link_to "編集", edit_snippet_path(@snippet), class: "btn btn-small", title: 'Edit Snippet'
+          = link_to "編集", edit_snippet_path(@snippet), class: "btn btn-small", title: 'スニペットを編集'
         = link_to "raw", raw_snippet_path(@snippet), class: "btn btn-small", target: "_blank"
       - if can?(current_user, :admin_personal_snippet, @snippet)
         = link_to "削除", snippet_path(@snippet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-small btn-remove", title: 'スニペットを削除'

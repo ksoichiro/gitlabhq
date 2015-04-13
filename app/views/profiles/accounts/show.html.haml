@@ -26,17 +26,17 @@
             - if current_user.private_token
               = text_field_tag "token", current_user.private_token, class: "form-control"
               %div
-                = f.submit 'リセット', data: { confirm: "Are you sure?" }, class: "btn btn-primary btn-build-token"
+                = f.submit 'リセット', data: { confirm: "リセットしてよろしいですか？" }, class: "btn btn-primary btn-build-token"
             - else
-              %span You don`t have one yet. Click generate to fix it.
+              %span トークンがありません。「生成」をクリックして生成してください。
               = f.submit '生成', class: "btn success btn-build-token"
 
 
   - if show_profile_social_tab?
     %fieldset
-      %legend Social Accounts
+      %legend ソーシャルアカウント
       .oauth_select_holder.append-bottom-10
-        %p Click on icon to activate signin with one of the following services
+        %p 以下の各サービスを使ったサインインを有効化するには、アイコンをクリックしてください。
         - enabled_social_providers.each do |provider|
           %span{class: oauth_active_class(provider) }
             = link_to authbutton(provider, 32), omniauth_authorize_path(User, provider)
@@ -63,16 +63,16 @@
   - if show_profile_remove_tab?
     %fieldset.remove-account
       %legend
-        Remove account
+        アカウントの削除
       %div
-        %p Deleting an account has the following effects:
+        %p アカウントを削除すると以下の影響があります。
         %ul
-          %li All user content like authored issues, snippets, comments will be removed
+          %li 課題、スニペット、コメントといった、このユーザが作成したすべてのコンテンツが削除されます
           - rp = current_user.personal_projects.count
           - unless rp.zero?
-            %li #{pluralize rp, 'personal project'} will be removed and cannot be restored
+            %li #{rp}個の個人プロジェクトが削除され、元に戻すことはできません
           - if current_user.solo_owned_groups.present?
             %li
-              The following groups will be abandoned. You should transfer or remove them:
+              以下のグループが破棄されます。移譲しなければ、削除されます。
               %strong #{current_user.solo_owned_groups.map(&:name).join(', ')}
-        = link_to 'Delete account', user_registration_path, data: { confirm: "REMOVE #{current_user.name}? Are you sure?" }, method: :delete, class: "btn btn-remove"
+        = link_to 'アカウントを削除', user_registration_path, data: { confirm: "#{current_user.name}を削除します。本当によろしいですか？" }, method: :delete, class: "btn btn-remove"
