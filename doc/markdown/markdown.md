@@ -510,6 +510,10 @@ ___
 | セル 1   | セル 2   |
 | セル 3   | セル 4   |
 
+**Note**
+
+The row of dashes between the table header and body must have at least three dashes in each column.
+
 ## リファレンス
 
 - このドキュメントは [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) に多いに参考にしています。

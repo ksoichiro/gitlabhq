@@ -120,11 +120,12 @@ class NotificationService
 
     # ignore gitlab service messages
     return true if note.note =~ /\A_ステータスをクローズに変更しました_/
-    return true if note.note =~ /\A_で言及されました/ && note.system == true
+    return true if note.cross_reference? && note.system == true
 
     opts = { noteable_type: note.noteable_type, project_id: note.project_id }
 
     target = note.noteable
+
     if target.respond_to?(:participants)
       recipients = target.participants
     else

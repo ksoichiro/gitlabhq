@@ -9,6 +9,6 @@
     .col-sm-10= select_tag(:source_project_id, options_from_collection_for_select(current_user.authorized_projects, :id, :name_with_namespace), prompt: "プロジェクトを選択", class: "select2 lg", required: true)
 
   .form-actions
-    = submit_tag 'プロジェクトメンバーをインポート', class: "btn btn-create"
+    = button_tag 'プロジェクトメンバーをインポート', class: "btn btn-create"
     = link_to "キャンセル", project_team_index_path(@project), class: "btn btn-cancel"
 
