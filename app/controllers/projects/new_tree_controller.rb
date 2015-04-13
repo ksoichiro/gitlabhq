@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Projects::NewTreeController < Projects::BaseTreeController
   before_filter :require_branch_head
-  before_filter :authorize_push!
+  before_filter :authorize_push_code!
 
   def show
   end

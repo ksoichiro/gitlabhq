@@ -15,7 +15,7 @@
     .col-sm-10
       = text_field_tag :ref, params[:ref], placeholder: '既存のブランチ名, タグまたはコミットSHA', required: true, tabindex: 2, class: 'form-control'
   .form-actions
-    = submit_tag 'ブランチを作成', class: 'btn btn-create', tabindex: 3
+    = button_tag 'ブランチを作成', class: 'btn btn-create', tabindex: 3
     = link_to 'キャンセル', project_branches_path(@project), class: 'btn btn-cancel'
 
 :javascript

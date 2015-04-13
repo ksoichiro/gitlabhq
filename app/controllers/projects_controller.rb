@@ -5,9 +5,7 @@ class ProjectsController < ApplicationController
   before_filter :repository, except: [:new, :create]
 
   # Authorize
-  before_filter :authorize_read_project!, except: [:index, :new, :create]
   before_filter :authorize_admin_project!, only: [:edit, :update, :destroy, :transfer, :archive, :unarchive, :retry_import]
-  before_filter :require_non_empty_project, only: [:blob, :tree, :graph]
 
   layout 'navless', only: [:new, :create, :fork]
   before_filter :set_title, only: [:new, :create]
@@ -54,8 +52,6 @@ class ProjectsController < ApplicationController
       return
     end
 
-    return authenticate_user! unless @project.public? || current_user
-
     limit = (params[:limit] || 20).to_i
     @events = @project.events.recent
     @events = event_filter.apply_filter(@events)
@@ -77,7 +73,7 @@ class ProjectsController < ApplicationController
   end
 
   def import
-    if project.import_finished?
+    if @project.import_finished?
       redirect_to @project
       return
     end
@@ -99,7 +95,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    return access_denied! unless can?(current_user, :remove_project, project)
+    return access_denied! unless can?(current_user, :remove_project, @project)
 
     ::Projects::DestroyService.new(@project, current_user, {}).execute
 
@@ -149,8 +145,8 @@ class ProjectsController < ApplicationController
   end
 
   def archive
-    return access_denied! unless can?(current_user, :archive_project, project)
-    project.archive!
+    return access_denied! unless can?(current_user, :archive_project, @project)
+    @project.archive!
 
     respond_to do |format|
       format.html { redirect_to @project }
@@ -158,8 +154,8 @@ class ProjectsController < ApplicationController
   end
 
   def unarchive
-    return access_denied! unless can?(current_user, :archive_project, project)
-    project.unarchive!
+    return access_denied! unless can?(current_user, :archive_project, @project)
+    @project.unarchive!
 
     respond_to do |format|
       format.html { redirect_to @project }

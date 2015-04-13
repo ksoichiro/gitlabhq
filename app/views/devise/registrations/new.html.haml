@@ -11,8 +11,8 @@
         = f.text_field :username, class: "form-control middle", placeholder: "ユーザ名", required: true
       %div
         = f.email_field :email, class: "form-control middle", placeholder: "メールアドレス", required: true
-      %div
-        = f.password_field :password, class: "form-control middle", placeholder: "パスワード", required: true
+      .form-group#password-strength
+        = f.password_field :password, class: "form-control middle", id: "user_password_sign_up", placeholder: "パスワード", required: true
       %div
         = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "パスワード(確認)", required: true
       %div
