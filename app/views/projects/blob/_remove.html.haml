@@ -3,20 +3,20 @@
     .modal-content
       .modal-header
         %a.close{href: "#", "data-dismiss" => "modal"} ×
-        %h3.page-title Remove #{@blob.name}
+        %h3.page-title #{@blob.name}を削除
         %p.light
-          From branch
           %strong= @ref
+          ブランチから
 
       .modal-body
         = form_tag project_blob_path(@project, @id), method: :delete, class: 'form-horizontal' do
           = render 'shared/commit_message_container', params: params,
-                   placeholder: 'Removed this file because...'
+                   placeholder: '...のためファイルを削除'
           .form-group
             .col-sm-2
             .col-sm-10
-              = submit_tag 'Remove file', class: 'btn btn-remove btn-remove-file'
-              = link_to "Cancel", '#', class: "btn btn-cancel", "data-dismiss" => "modal"
+              = submit_tag 'ファイルを削除', class: 'btn btn-remove btn-remove-file'
+              = link_to "キャンセル", '#', class: "btn btn-cancel", "data-dismiss" => "modal"
 
 :javascript
   disableButtonIfEmptyField('#commit_message', '.btn-remove-file')

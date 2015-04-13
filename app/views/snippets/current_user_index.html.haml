@@ -25,7 +25,7 @@
             = @user.snippets.are_private.count
       = nav_tab :scope, 'are_internal' do
         = link_to user_snippets_path(@user, scope: 'are_internal') do
-          Internal
+          内部
           %span.pull-right
             = @user.snippets.are_internal.count
       = nav_tab :scope, 'are_public' do
