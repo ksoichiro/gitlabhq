@@ -20,13 +20,13 @@
           = link_to explore_projects_path(sort: nil) do
             名前
           = link_to explore_projects_path(sort: 'newest') do
-            新しい順
+            = sort_title_recently_created
           = link_to explore_projects_path(sort: 'oldest') do
-            古い順
+            = sort_title_oldest_created
           = link_to explore_projects_path(sort: 'recently_updated') do
-            最近更新された
+            = sort_title_recently_updated
           = link_to explore_projects_path(sort: 'last_updated') do
-            最終更新日
+            = sort_title_oldest_updated
 
 %hr
 .public-projects

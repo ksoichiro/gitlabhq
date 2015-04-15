@@ -20,10 +20,14 @@ class UsersController < ApplicationController
 
     # Get user activity feed for projects common for both users
     @events = @user.recent_events.
-      where(project_id: authorized_projects_ids).limit(20)
+      where(project_id: authorized_projects_ids).limit(30)
 
     @title = @user.name
-    @groups = @projects.map(&:group).compact.uniq
+
+    respond_to do |format|
+      format.html
+      format.atom { render layout: false }
+    end
   end
 
   def determine_layout

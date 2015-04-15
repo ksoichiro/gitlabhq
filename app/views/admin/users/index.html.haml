@@ -49,9 +49,10 @@
                 = link_to admin_users_path(sort: 'oldest_sign_in') do
                   サインインした順
                 = link_to admin_users_path(sort: 'recently_created') do
-                  最近作成された
+                  = sort_title_recently_created
                 = link_to admin_users_path(sort: 'late_created') do
-                  作成された順
+                  = sort_title_oldest_created
+
           = link_to '新しいユーザ', new_admin_user_path, class: "btn btn-new"
       %ul.well-list
         - @users.each do |user|

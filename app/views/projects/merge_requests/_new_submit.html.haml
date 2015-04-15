@@ -21,12 +21,13 @@
       .form-group
         .light
           = f.label :description, "Description"
-        = render 'projects/zen', f: f, attr: :description,
-                                 classes: 'description form-control'
-        .clearfix.hint
-          .pull-left 説明は#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}形式でパースされます。
-          .pull-right ドラッグ & ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector' }して画像 (JPG, PNG, GIF) を添付
-        .error-alert
+        = render layout: 'projects/md_preview' do
+          = render 'projects/zen', f: f, attr: :description,
+                                   classes: 'description form-control'
+          .clearfix.hint
+            .pull-left 説明は#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}形式でパースされます。
+            .pull-right ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector' }して画像 (JPG, PNG, GIF) を添付
+          .error-alert
       .form-group
         .issue-assignee
           = f.label :assignee_id do

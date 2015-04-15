@@ -1,9 +1,8 @@
 # encoding: utf-8
 module Emails
   module Profile
-    def new_user_email(user_id, password, token = nil)
+    def new_user_email(user_id, token = nil)
       @user = User.find(user_id)
-      @password = password
       @target_url = user_url(@user)
       @token = token
       mail(to: @user.email, subject: subject("あなたのアカウントが作成されました"))
