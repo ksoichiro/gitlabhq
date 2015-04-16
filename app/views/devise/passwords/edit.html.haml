@@ -6,8 +6,8 @@
       .devise-errors
         = devise_error_messages!
       = f.hidden_field :reset_password_token
-      .form-group#password-strength
-        = f.password_field :password, class: "form-control top", id: "user_password_recover", placeholder: "新しいパスワード", required: true
+      %div
+        = f.password_field :password, class: "form-control top", placeholder: "新しいパスワード", required: true
       %div
         = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "新しいパスワードの確認", required: true
       .clearfix.append-bottom-10

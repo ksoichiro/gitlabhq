@@ -1,12 +1,6 @@
 %div.issue-form-holder
   %h3.page-title= @issue.new_record? ? "課題を作成" : "課題 ##{@issue.iid} を編集"
   %hr
-  - if @repository.exists? && !@repository.empty? && @repository.contribution_guide && !@issue.persisted?
-    - contribution_guide_url = project_blob_path(@project, tree_join(@repository.root_ref, @repository.contribution_guide.name))
-    .row
-      .col-sm-10.col-sm-offset-2
-        .alert.alert-info
-          = "このリポジトリの <strong>#{link_to "コントリビューション・ガイドライン", contribution_guide_url}</strong> を確認してください".html_safe
 
   = form_for [@project, @issue], html: { class: 'form-horizontal issue-form gfm-form' } do |f|
     = render 'projects/issuable_form', f: f, issuable: @issue

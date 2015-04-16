@@ -1,19 +1,53 @@
-%ul
+%ul.nav.nav-sidebar
   = nav_link(controller: :dashboard, html_options: {class: 'home'}) do
     = link_to admin_root_path, title: "統計" do
-      概要
+      %i.fa.fa-dashboard
+      %span
+        概要
   = nav_link(controller: :projects) do
-    = link_to "プロジェクト", admin_projects_path
+    = link_to admin_projects_path do
+      %i.fa.fa-cube
+      %span
+        プロジェクト
   = nav_link(controller: :users) do
-    = link_to "ユーザ", admin_users_path
+    = link_to admin_users_path do
+      %i.fa.fa-user
+      %span
+        ユーザ
   = nav_link(controller: :groups) do
-    = link_to "グループ", admin_groups_path
+    = link_to admin_groups_path do
+      %i.fa.fa-group
+      %span
+        グループ
   = nav_link(controller: :logs) do
-    = link_to "ログ", admin_logs_path
+    = link_to admin_logs_path do
+      %i.fa.fa-file-text
+      %span
+        ログ
   = nav_link(controller: :broadcast_messages) do
-    = link_to "メッセージ", admin_broadcast_messages_path
+    = link_to admin_broadcast_messages_path do
+      %i.fa.fa-bullhorn
+      %span
+        メッセージ
   = nav_link(controller: :hooks) do
-    = link_to "フック", admin_hooks_path
+    = link_to admin_hooks_path do
+      %i.fa.fa-external-link
+      %span
+        フック
   = nav_link(controller: :background_jobs) do
-    = link_to "ジョブ", admin_background_jobs_path
+    = link_to admin_background_jobs_path do
+      %i.fa.fa-cog
+      %span
+        ジョブ
 
+  = nav_link(controller: :application_settings) do
+    = link_to admin_application_settings_path do
+      %i.fa.fa-cogs
+      %span
+        設定
+
+  = nav_link(controller: :applications) do
+    = link_to admin_applications_path do
+      %i.fa.fa-cloud
+      %span
+        アプリケーション

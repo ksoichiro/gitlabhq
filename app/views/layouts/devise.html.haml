@@ -1,36 +1,32 @@
 !!! 5
 %html{ lang: "en"}
   = render "layouts/head"
-  %body.ui_basic.login-page
-    .container
-      .content
-        .login-title
-          %h1= brand_title
-    %hr
-    .container
+  %body.ui_mars.login-page.application
+    = render "layouts/broadcast"
+    = render "layouts/public_head_panel", title: ''
+    .container.navless-container
       .content
         = render "layouts/flash"
-        .row
-          .col-md-7.brand-holder
-            - if brand_item
-              .brand-image
-                = brand_image
-              .brand_text
-                = brand_text
-            - else
-              .brand-image.default-brand-image.hidden-sm.hidden-xs
-                = image_tag 'brand_logo.png'
-              .brand_text.hidden-xs
-                %h2 コード共同編集のためのオープンソースソフトウェア
-
-                %p.lead
-                  Gitリポジトリをきめ細かくアクセス管理でき、あなたのソースコードを安全な状態に保ちます。
-                  マージリクエストを使えば、ソースコードレビューや共同作業を向上することができます。
-                  各プロジェクトには課題トラッカーとWikiを備えることができます。
-
-
-          .col-md-5
+        .row.prepend-top-20
+          .col-sm-5.pull-right
             = yield
+          .col-sm-7.brand-holder.pull-left
+            %h1
+              = brand_title
+            - if brand_item
+              = brand_image
+              = brand_text
+            - else
+              %h3 コード共同編集のためのオープンソースソフトウェア
+
+              %p
+                Gitリポジトリをきめ細かくアクセス管理でき、あなたのソースコードを安全な状態に保ちます。
+                マージリクエストを使えば、ソースコードレビューや共同作業を向上することができます。
+                各プロジェクトには課題トラッカーとWikiを備えることができます。
+
+            - if extra_sign_in_text.present?
+              = markdown(extra_sign_in_text)
+
     %hr
     .container
       .footer-links
