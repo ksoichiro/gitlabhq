@@ -14,4 +14,4 @@
     = paginate @labels, theme: 'gitlab'
   - else
     .light-well
-      .nothing-here-block 最初のラベルを追加 または デフォルトのラベルセットを#{link_to '生成', generate_project_labels_path(@project), method: :post}
+      .nothing-here-block 最初のラベルを追加 または 標準のラベルセットを#{link_to '生成', generate_project_labels_path(@project), method: :post}

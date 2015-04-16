@@ -21,18 +21,19 @@
               .brand-image.default-brand-image.hidden-sm.hidden-xs
                 = image_tag 'brand_logo.png'
               .brand_text.hidden-xs
-                %h2 Open source software to collaborate on code
+                %h2 コード共同編集のためのオープンソースソフトウェア
 
                 %p.lead
-                  Manage git repositories with fine grained access controls that keep your code secure.
-                  Perform code reviews and enhance collaboration with merge requests.
-                  Each project can also have an issue tracker and a wiki.
+                  Gitリポジトリをきめ細かくアクセス管理でき、あなたのソースコードを安全な状態に保ちます。
+                  マージリクエストを使えば、ソースコードレビューや共同作業を向上することができます。
+                  各プロジェクトには課題トラッカーとWikiを備えることができます。
+
 
           .col-md-5
             = yield
     %hr
     .container
       .footer-links
-        = link_to "Explore", explore_root_path
-        = link_to "Documentation", "http://doc.gitlab.com/"
-        = link_to "About GitLab", "https://about.gitlab.com/"
+        = link_to "探索", explore_root_path
+        = link_to "ドキュメント", "http://doc.gitlab.com/"
+        = link_to "GitLabについて", "https://about.gitlab.com/"

@@ -2,20 +2,20 @@
   .dropdown.inline
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-user
-      %span.light assignee:
+      %span.light 担当者:
       - if @assignee.present?
         %strong= @assignee.name
       - elsif params[:assignee_id] == "0"
-        Unassigned
+        担当なし
       - else
-        Any
+        指定なし
       %b.caret
     %ul.dropdown-menu
       %li
         = link_to project_filter_path(assignee_id: nil) do
-          Any
+          指定なし
         = link_to project_filter_path(assignee_id: 0) do
-          Unassigned
+          担当なし
       - @assignees.sort_by(&:name).each do |user|
         %li
           = link_to project_filter_path(assignee_id: user.id) do
@@ -25,20 +25,20 @@
   .dropdown.inline.prepend-left-10
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-user
-      %span.light author:
+      %span.light 作成者:
       - if @author.present?
         %strong= @author.name
       - elsif params[:author_id] == "0"
-        Unassigned
+        担当なし
       - else
-        Any
+        指定なし
       %b.caret
     %ul.dropdown-menu
       %li
         = link_to project_filter_path(author_id: nil) do
-          Any
+          指定なし
         = link_to project_filter_path(author_id: 0) do
-          Unassigned
+          担当なし
       - @authors.sort_by(&:name).each do |user|
         %li
           = link_to project_filter_path(author_id: user.id) do
@@ -48,20 +48,20 @@
   .dropdown.inline.prepend-left-10
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-clock-o
-      %span.light milestone:
+      %span.light マイルストーン:
       - if @milestone.present?
         %strong= @milestone.title
       - elsif params[:milestone_id] == "0"
-        None (backlog)
+        なし (backlog)
       - else
-        Any
+        指定なし
       %b.caret
     %ul.dropdown-menu
       %li
         = link_to project_filter_path(milestone_id: nil) do
-          Any
+          指定なし
         = link_to project_filter_path(milestone_id: 0) do
-          None (backlog)
+          なし (backlog)
       - project_active_milestones.each do |milestone|
         %li
           = link_to project_filter_path(milestone_id: milestone.id) do

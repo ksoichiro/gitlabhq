@@ -1,5 +1,5 @@
 %h3.page-title
-  New merge request
+  新しいマージリクエスト
 %p.slead
   From
   %strong.label-branch #{@merge_request.source_project_namespace}:#{@merge_request.source_branch}
@@ -7,7 +7,7 @@
   %strong.label-branch #{@merge_request.target_project_namespace}:#{@merge_request.target_branch}
 
   %span.pull-right
-    = link_to 'Change branches', new_project_merge_request_path(@project)
+    = link_to 'ブランチを変更', new_project_merge_request_path(@project)
 
 = form_for [@project, @merge_request], html: { class: "merge-request-form gfm-form" } do |f|
   .panel.panel-default
@@ -16,11 +16,11 @@
       .form-group
         .light
           = f.label :title do
-            Title *
+            タイトル *
         = f.text_field :title, class: "form-control input-lg js-gfm-input", maxlength: 255, rows: 5, required: true
       .form-group
         .light
-          = f.label :description, "Description"
+          = f.label :description, "説明"
         = render layout: 'projects/md_preview' do
           = render 'projects/zen', f: f, attr: :description,
                                    classes: 'description form-control'
@@ -32,21 +32,21 @@
         .issue-assignee
           = f.label :assignee_id do
             %i.fa.fa-user
-            Assign to
+            担当者
           %div
             = project_users_select_tag('merge_request[assignee_id]', placeholder: 'Select a user', class: 'custom-form-control', selected: @merge_request.assignee_id, project_id: @merge_request.target_project_id)
             &nbsp;
-            = link_to 'Assign to me', '#', class: 'btn assign-to-me-link'
+            = link_to '自分に割り当て', '#', class: 'btn assign-to-me-link'
       .form-group
         .issue-milestone
           = f.label :milestone_id do
             %i.fa.fa-clock-o
-            Milestone
-          %div= f.select(:milestone_id, milestone_options(@merge_request), { include_blank: "Select milestone" }, {class: 'select2'})
+            マイルストーン
+          %div= f.select(:milestone_id, milestone_options(@merge_request), { include_blank: "マイルストーンを選択" }, {class: 'select2'})
       .form-group
         = f.label :label_ids do
           %i.fa.fa-tag
-          Labels
+          ラベル
         %div
           = f.collection_select :label_ids, @merge_request.target_project.labels.all, :id, :name, { selected: @merge_request.label_ids }, multiple: true, class: 'select2'
 
@@ -60,22 +60,22 @@
       = f.hidden_field :target_project_id
       = f.hidden_field :target_branch
       = f.hidden_field :source_branch
-      = f.submit 'Submit merge request', class: "btn btn-create"
+      = f.submit 'マージリクエストを送信', class: "btn btn-create"
 
 .mr-compare
   = render "projects/commits/commit_list"
 
-  %h4 Changes
+  %h4 変更
   - if @diffs.present?
     = render "projects/diffs/diffs", diffs: @diffs, project: @project
   - elsif @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE
     .bs-callout.bs-callout-danger
-      %h4 This comparison includes more than #{MergeRequestDiff::COMMITS_SAFE_SIZE} commits.
-      %p To preserve performance the line changes are not shown.
+      %h4 この比較には #{MergeRequestDiff::COMMITS_SAFE_SIZE} コミット以上が含まれています
+      %p パフォーマンスを維持するため、行は表示されません。
   - else
     .bs-callout.bs-callout-danger
-      %h4 This comparison includes huge diff.
-      %p To preserve performance the line changes are not shown.
+      %h4 この比較の差分は大きすぎます
+      %p パフォーマンスを維持するため、差分行は表示されません。
 
 
 :javascript

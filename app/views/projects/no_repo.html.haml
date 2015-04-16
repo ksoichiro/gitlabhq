@@ -1,22 +1,22 @@
 %h2
   %i.fa.fa-warning
-  No repository
+  リポジトリがありません
 
 %p.slead
-  The repository for this project does not exist.
+  このプロジェクトにはリポジトリが存在しません。
   %br
-  This means you can not push code until you create an empty repository or import existing one.
+  からのリポジトリを作成するか、既存のリポジトリをインポートするまでソースコードをプッシュすることはできません。
 %hr
 
 .no-repo-actions
   = link_to project_repository_path(@project), method: :post, class: 'btn btn-primary' do
-    Create empty bare repository
+    ベアリポジトリを作成
 
   %strong.prepend-left-10.append-right-10 or
 
   = link_to new_project_import_path(@project), class: 'btn' do
-    Import repository
+    リポジトリをインポート
 
 - if can? current_user, :remove_project, @project
   .prepend-top-20
-    = link_to 'Remove project', @project, data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"
+    = link_to 'プロジェクトを削除', @project, data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"

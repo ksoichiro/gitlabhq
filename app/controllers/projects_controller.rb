@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
     @project = ::Projects::CreateService.new(current_user, project_params).execute
 
     if @project.saved?
-      redirect_to project_path(@project), notice: 'Project was successfully created.'
+      redirect_to project_path(@project), notice: 'プロジェクトが作成されました'
     else
       render 'new'
     end
@@ -85,7 +85,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        flash[:alert] = "Project deleted."
+        flash[:alert] = "プロジェクトを削除しました"
 
         if request.referer.include?("/admin")
           redirect_to admin_projects_path

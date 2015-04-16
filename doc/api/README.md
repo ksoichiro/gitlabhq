@@ -1,25 +1,25 @@
 # GitLab API
 
-## Resources
+## リソース
 
-- [Users](users.md)
-- [Session](session.md)
-- [Projects](projects.md)
-- [Project Snippets](project_snippets.md)
-- [Repositories](repositories.md)
-- [Repository Files](repository_files.md)
-- [Commits](commits.md)
-- [Branches](branches.md)
-- [Merge Requests](merge_requests.md)
-- [Issues](issues.md)
-- [Labels](labels.md)
-- [Milestones](milestones.md)
-- [Notes](notes.md) (comments)
-- [Deploy Keys](deploy_keys.md)
-- [System Hooks](system_hooks.md)
-- [Groups](groups.md)
+- [ユーザ](users.md)
+- [セッション](session.md)
+- [プロジェクト](projects.md)
+- [プロジェクトスニペット](project_snippets.md)
+- [リポジトリ](repositories.md)
+- [リポジトリファイル](repository_files.md)
+- [コミット](commits.md)
+- [ブランチ](branches.md)
+- [マージリクエスト](merge_requests.md)
+- [課題](issues.md)
+- [ラベル](labels.md)
+- [マイルストーン](milestones.md)
+- [ノート](notes.md) (comments)
+- [デプロイキー](deploy_keys.md)
+- [システムフック](system_hooks.md)
+- [グループ](groups.md)
 
-## Clients
+## クライアント
 
 Find API Clients for GitLab [on our website](https://about.gitlab.com/applications/#api-clients).
 

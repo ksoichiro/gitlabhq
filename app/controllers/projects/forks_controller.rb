@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Projects::ForksController < Projects::ApplicationController
   # Authorize
   before_filter :authorize_download_code!
@@ -13,9 +14,9 @@ class Projects::ForksController < Projects::ApplicationController
     @forked_project = ::Projects::ForkService.new(project, current_user, namespace: namespace).execute
 
     if @forked_project.saved? && @forked_project.forked?
-      redirect_to(@forked_project, notice: 'Project was successfully forked.')
+      redirect_to(@forked_project, notice: 'プロジェクトがフォークされました')
     else
-      @title = 'Fork project'
+      @title = 'プロジェクトをフォーク'
       render :error
     end
   end

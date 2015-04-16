@@ -1,8 +1,8 @@
-# Notes
+# ノート
 
 Notes are comments on snippets, issues or merge requests.
 
-## Issues
+## 課題
 
 ### List project issue notes
 
@@ -78,7 +78,7 @@ Parameters:
 - `issue_id` (required) - The ID of an issue
 - `body` (required) - The content of a note
 
-## Snippets
+## スニペット
 
 ### List all snippet notes
 
@@ -140,7 +140,7 @@ Parameters:
 - `snippet_id` (required) - The ID of an snippet
 - `body` (required) - The content of a note
 
-## Merge Requests
+## マージリクエスト
 
 ### List all merge request notes
 

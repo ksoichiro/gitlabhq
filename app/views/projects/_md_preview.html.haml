@@ -1,11 +1,11 @@
 %ul.nav.nav-tabs
   %li.active
     = link_to '#md-write-holder', class: 'js-md-write-button' do
-      Write
+      編集
   %li
     = link_to '#md-preview-holder', class: 'js-md-preview-button',
         data: { url: markdown_preview_project_path(@project) } do
-      Preview
+      プレビュー
 %div
   .md-write-holder
     = yield
