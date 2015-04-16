@@ -28,6 +28,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'
+gem 'omniauth-kerberos'
 
 # Extracting information from a git repository
 # Provide access to Gitlab::Git library
@@ -112,7 +113,7 @@ gem "acts-as-taggable-on"
 # Background jobs
 gem 'slim'
 gem 'sinatra', require: nil
-gem 'sidekiq', '2.17.0'
+gem 'sidekiq', '2.17.8'
 
 # HTTP requests
 gem "httparty"
@@ -134,7 +135,7 @@ gem "redis-rails"
 gem 'tinder', '~> 1.9.2'
 
 # HipChat integration
-gem "hipchat", "~> 0.14.0"
+gem "hipchat", "~> 1.4.0"
 
 # Flowdock integration
 gem "gitlab-flowdock-git-hook", "~> 0.4.2"

@@ -1,0 +1,22 @@
+%h2
+  %i.fa.fa-warning
+  リポジトリがありません
+
+%p.slead
+  このプロジェクトにはリポジトリが存在しません。
+  %br
+  からのリポジトリを作成するか、既存のリポジトリをインポートするまでソースコードをプッシュすることはできません。
+%hr
+
+.no-repo-actions
+  = link_to project_repository_path(@project), method: :post, class: 'btn btn-primary' do
+    ベアリポジトリを作成
+
+  %strong.prepend-left-10.append-right-10 or
+
+  = link_to new_project_import_path(@project), class: 'btn' do
+    リポジトリをインポート
+
+- if can? current_user, :remove_project, @project
+  .prepend-top-20
+    = link_to 'プロジェクトを削除', @project, data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"

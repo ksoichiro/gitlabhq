@@ -19,9 +19,9 @@
   .state.clearfix
     .state-label
       - if @group_milestone.closed?
-        Closed
+        クローズ
       - else
-        Open
+        オープン
 
   %h4.title
     = gfm escape_once(@group_milestone.title)
@@ -40,10 +40,10 @@
 
   .context
     %p
-      Progress:
-      #{@group_milestone.closed_items_count} closed
+      進捗:
+      #{@group_milestone.closed_items_count} 件クローズ済み
       &ndash;
-      #{@group_milestone.open_items_count} open
+      #{@group_milestone.open_items_count} 件オープン
 
     .progress.progress-info
       .progress-bar{style: "width: #{@group_milestone.percent_complete}%;"}
@@ -51,31 +51,31 @@
 %ul.nav.nav-tabs
   %li.active
     = link_to '#tab-issues', 'data-toggle' => 'tab' do
-      Issues
+      課題
       %span.badge= @group_milestone.issue_count
   %li
     = link_to '#tab-merge-requests', 'data-toggle' => 'tab' do
-      Merge Requests
+      マージリクエスト
       %span.badge= @group_milestone.merge_requests_count
   %li
     = link_to '#tab-participants', 'data-toggle' => 'tab' do
-      Participants
+      参加者
       %span.badge= @group_milestone.participants.count
 
 .tab-content
   .tab-pane.active#tab-issues
     .row
       .col-md-6
-        = render 'issues', title: "Open", issues: @group_milestone.opened_issues
+        = render 'issues', title: "オープン", issues: @group_milestone.opened_issues
       .col-md-6
-        = render 'issues', title: "Closed", issues: @group_milestone.closed_issues
+        = render 'issues', title: "クローズ", issues: @group_milestone.closed_issues
 
   .tab-pane#tab-merge-requests
     .row
       .col-md-6
-        = render 'merge_requests', title: "Open", merge_requests: @group_milestone.opened_merge_requests
+        = render 'merge_requests', title: "オープン", merge_requests: @group_milestone.opened_merge_requests
       .col-md-6
-        = render 'merge_requests', title: "Closed", merge_requests: @group_milestone.closed_merge_requests
+        = render 'merge_requests', title: "クローズ", merge_requests: @group_milestone.closed_merge_requests
 
   .tab-pane#tab-participants
     %ul.bordered-list
