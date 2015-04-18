@@ -23,7 +23,7 @@
           #{link_to 'GitLab Flavored Markdown', help_page_path('markdown', 'markdown'), target: '_blank'}.
           としてパースされます
         .pull-right
-          ドラッグ &amp; ドロップまたは#{link_to 'selecting them', '#', class: 'markdown-selector' }して
+          ドラッグ &amp; ドロップまたは#{link_to 'ファイルを選択', '#', class: 'markdown-selector' }して
           画像 (JPG, PNG, GIF) を添付
 
       .clearfix
@@ -48,7 +48,7 @@
     .col-sm-10
       - if milestone_options(issuable).present?
         = f.select(:milestone_id, milestone_options(issuable),
-          { include_blank: 'Select milestone' }, { class: 'select2' })
+          { include_blank: 'マイルストーンを選択' }, { class: 'select2' })
       - else
         %span.light オープン中のマイルストーンがありません。
       &nbsp;
@@ -72,10 +72,10 @@
   - if !issuable.project.empty_repo? && contribution_guide_url(issuable.project) && !issuable.persisted?
     %p
       Please review the
-      %strong #{link_to 'guidelines for contribution', contribution_guide_url(issuable.project)}
+      %strong #{link_to 'コントリビューション・ガイドライン', contribution_guide_url(issuable.project)}
       to this repository.
   - if issuable.new_record?
-    = f.submit "新しい #{issuable.class.model_name.human.downcase} を作成", class: 'btn btn-create'
+    = f.submit "新しい#{issuable.class.model_name.human.downcase}を作成", class: 'btn btn-create'
   - else
     = f.submit '変更を保存', class: 'btn btn-save'
   - if issuable.new_record?

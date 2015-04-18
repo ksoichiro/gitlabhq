@@ -45,9 +45,9 @@ class @DropzoneInput
       preview = form.find(".js-md-preview")
       mdText = form.find(".markdown-area").val()
       if mdText.trim().length is 0
-        preview.text "Nothing to preview."
+        preview.text "プレビューする内容がありません"
       else
-        preview.text "Loading..."
+        preview.text "読み込み中..."
         $.get($(this).data("url"),
           md_text: mdText
         ).success (previewData) ->

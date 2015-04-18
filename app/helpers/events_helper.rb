@@ -1,3 +1,4 @@
+# encoding: utf-8
 module EventsHelper
   def link_to_author(event)
     author = event.author
@@ -44,13 +45,13 @@ module EventsHelper
 
   def event_feed_title(event)
     if event.issue?
-      "#{event.author_name} #{event.action_name} issue ##{event.target_iid}: #{event.issue_title} at #{event.project_name}"
+      "#{event.author_name} #{i18n_action_name(event)} issue ##{event.target_iid}: #{event.issue_title} at #{event.project_name}"
     elsif event.merge_request?
-      "#{event.author_name} #{event.action_name} MR ##{event.target_iid}: #{event.merge_request_title} at #{event.project_name}"
+      "#{event.author_name} #{i18n_action_name(event)} MR ##{event.target_iid}: #{event.merge_request_title} at #{event.project_name}"
     elsif event.push?
       "#{event.author_name} #{event.push_action_name} #{event.ref_type} #{event.ref_name} at #{event.project_name}"
     elsif event.membership_changed?
-      "#{event.author_name} #{event.action_name} #{event.project_name}"
+      "#{event.author_name} #{i18n_action_name(event)} #{event.project_name}"
     elsif event.note? && event.note_commit?
       "#{event.author_name} commented on #{event.note_target_type} #{event.note_short_commit_id} at #{event.project_name}"
     elsif event.note?
@@ -164,6 +165,20 @@ module EventsHelper
 
         xml.summary(type: "xhtml") { |x| x << event_summary unless event_summary.nil? }
       end
+    end
+  end
+
+  def i18n_action_name(event)
+    if event.closed?
+      "クローズしました"
+    elsif event.merged?
+      "承認しました"
+    elsif event.joined?
+      '参加しました'
+    elsif event.left?
+      '離脱しました'
+    else
+      "オープンしました"
     end
   end
 end

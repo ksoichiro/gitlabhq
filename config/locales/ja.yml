@@ -11,6 +11,8 @@ ja:
   activerecord:
     models:
       project: プロジェクト
+      issue: 課題
+      merge_request: マージリクエスト
     attributes:
       project:
         name: プロジェクト名
@@ -22,3 +24,7 @@ ja:
           attributes:
             name:
               blank: グループ名は必須です
+        wiki:
+          attributes:
+            content:
+              blank: 内容は必須です

@@ -3,20 +3,20 @@
   .col-md-4
     .panel.panel-default
       .panel-heading
-        SSH Key
+        SSHキー
       %ul.well-list
         %li
-          %span.light Title:
+          %span.light タイトル:
           %strong= @key.title
         %li
-          %span.light Created on:
-          %strong= @key.created_at.stamp("Aug 21, 2011")
+          %span.light 作成日:
+          %strong= @key.created_at.stamp("2011/08/21")
 
   .col-md-8
     %p
-      %span.light Fingerprint:
+      %span.light フィンガープリント:
       %strong= @key.fingerprint
     %pre.well-pre
       = @key.key
   .pull-right
-    = link_to 'Remove', path_to_key(@key, is_admin), data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-remove delete-key"
+    = link_to '削除', path_to_key(@key, is_admin), data: {confirm: '本当に削除しますか？'}, method: :delete, class: "btn btn-remove delete-key"

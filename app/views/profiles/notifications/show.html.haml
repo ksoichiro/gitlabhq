@@ -19,8 +19,8 @@
       = label_tag nil, class: '' do
         = radio_button_tag :notification_level, Notification::N_MENTION, @notification.mention?, class: 'trigger-submit'
         .level-title
-          Mention
-        %p You will receive notifications only for comments where you was @mentioned
+          メンション
+        %p コメント内で @名前 のようにメンションされたときにのみ通知を受け取ります
 
     .radio
       = label_tag nil, class: '' do

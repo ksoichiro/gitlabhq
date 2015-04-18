@@ -1,11 +1,10 @@
 %h3.page-title
-  Milestones
-  %span.pull-right #{@group_milestones.count} milestones
+  マイルストーン
+  %span.pull-right #{@group_milestones.count} 件
 
 %p.light
-  Only milestones from
   %strong #{@group.name}
-  group are listed here.
+  グループのマイルストーンだけが表示されています
 
 %hr
 
@@ -15,27 +14,27 @@
     %ul.well-list
       - if @group_milestones.blank?
         %li
-          .nothing-here-block No milestones to show
+          .nothing-here-block マイルストーンがありません
       - else
         - @group_milestones.each do |milestone|
           %li{class: "milestone milestone-#{milestone.closed? ? 'closed' : 'open'}", id: dom_id(milestone.milestones.first) }
             .pull-right
               - if can?(current_user, :manage_group, @group)
                 - if milestone.closed?
-                  = link_to 'Reopen Milestone', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :activate }), method: :put, class: "btn btn-small btn-grouped btn-reopen"
+                  = link_to 'マイルストーンを再オープン', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :activate }), method: :put, class: "btn btn-small btn-grouped btn-reopen"
                 - else
-                  = link_to 'Close Milestone', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :close }), method: :put, class: "btn btn-small btn-close"
+                  = link_to 'マイルストーンをクローズ', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :close }), method: :put, class: "btn btn-small btn-close"
             %h4
               = link_to_gfm truncate(milestone.title, length: 100), group_milestone_path(@group, milestone.safe_title, title: milestone.title)
             %div
               %div
                 = link_to group_milestone_path(@group, milestone.safe_title, title: milestone.title) do
-                  = pluralize milestone.issue_count, 'Issue'
+                  #{milestone.issue_count}件の課題
                 &nbsp;
                 = link_to group_milestone_path(@group, milestone.safe_title, title: milestone.title) do
-                  = pluralize milestone.merge_requests_count, 'Merge Request'
+                  #{milestone.merge_requests_count}件のマージリクエスト
                 &nbsp;
-                %span.light #{milestone.percent_complete}% complete
+                %span.light #{milestone.percent_complete}% 完了
               .progress.progress-info
                 .progress-bar{style: "width: #{milestone.percent_complete}%;"}
               %div

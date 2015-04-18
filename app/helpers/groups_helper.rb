@@ -1,10 +1,11 @@
+# encoding: utf-8
 module GroupsHelper
   def remove_user_from_group_message(group, user)
-    "Are you sure you want to remove \"#{user.name}\" from \"#{group.name}\"?"
+    "本当に \"#{user.name}\" を \"#{group.name}\" から削除しますか？"
   end
 
   def leave_group_message(group)
-    "Are you sure you want to leave \"#{group}\" group?"
+    "本当にグループ \"#{group}\" を離脱しますか？"
   end
 
   def should_user_see_group_roles?(user, group)
@@ -19,13 +20,13 @@ module GroupsHelper
     title = @group.name
 
     title = if current_action?(:issues)
-              "Issues - " + title
+              "課題 - " + title
             elsif current_action?(:merge_requests)
-              "Merge requests - " + title
+              "マージリクエスト - " + title
             elsif current_action?(:members)
-              "Members - " + title
+              "メンバー - " + title
             elsif current_action?(:edit)
-              "Settings - " + title
+              "設定 - " + title
             else
               title
             end

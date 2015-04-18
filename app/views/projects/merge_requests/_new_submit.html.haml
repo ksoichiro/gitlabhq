@@ -3,8 +3,9 @@
 %p.slead
   From
   %strong.label-branch #{@merge_request.source_project_namespace}:#{@merge_request.source_branch}
-  %span into
+  %span を
   %strong.label-branch #{@merge_request.target_project_namespace}:#{@merge_request.target_branch}
+  %span にマージ
 
   %span.pull-right
     = link_to 'ブランチを変更', new_project_merge_request_path(@project)
@@ -39,7 +40,7 @@
           %i.fa.fa-user
           担当者
       .col-sm-10
-        = project_users_select_tag('merge_request[assignee_id]', placeholder: 'Select a user', class: 'custom-form-control', selected: @merge_request.assignee_id, project_id: @merge_request.target_project_id)
+        = project_users_select_tag('merge_request[assignee_id]', placeholder: 'ユーザを選択', class: 'custom-form-control', selected: @merge_request.assignee_id, project_id: @merge_request.target_project_id)
         &nbsp;
         = link_to '自分に割り当て', '#', class: 'btn assign-to-me-link'
     .form-group
@@ -49,7 +50,7 @@
           マイルストーン
         .col-sm-10
           - if milestone_options(@merge_request).present?
-            = f.select(:milestone_id, milestone_options(@merge_request), {include_blank: 'Select milestone'}, {class: 'select2'})
+            = f.select(:milestone_id, milestone_options(@merge_request), {include_blank: 'マイルストーンを選択'}, {class: 'select2'})
           - else
             %span.light マイルストーンがありません
           &nbsp;
