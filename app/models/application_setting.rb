@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: application_settings
@@ -18,7 +19,7 @@
 class ApplicationSetting < ActiveRecord::Base
   validates :home_page_url,
     allow_blank: true,
-    format: { with: URI::regexp(%w(http https)), message: "should be a valid url" },
+    format: { with: URI::regexp(%w(http https)), message: "は有効なURLでなければなりません" },
     if: :home_page_url_column_exist
 
   def self.current

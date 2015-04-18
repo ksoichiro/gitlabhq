@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Gitlab::Access module
 #
 # Define allowed roles that can be used
@@ -51,9 +52,9 @@ module Gitlab
 
       def protection_options
         {
-          "Not protected, developers and masters can (force) push and delete the branch" => PROTECTION_NONE,
-          "Partially protected, developers can also push but prevent all force pushes and deletion" => PROTECTION_DEV_CAN_PUSH,
-          "Fully protected, only masters can push and prevent all force pushes and deletion" => PROTECTION_FULL,
+          "保護なし: DeveloperとMasterはプッシュ(強制含む)とブランチの削除が可能" => PROTECTION_NONE,
+          "部分的に保護: Developerもプッシュ可能だが強制プッシュと削除は不可" => PROTECTION_DEV_CAN_PUSH,
+          "完全に保護: Masterのみプッシュ可能で強制プッシュや削除は不可" => PROTECTION_FULL,
         }
       end
 

@@ -17,7 +17,7 @@
   .dropdown.inline.assignee-filter
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-user
-      %span.light 担当者:
+      %span.light 担当:
       - if @assignee.present?
         %strong= @assignee.name
       - elsif params[:assignee_id] == "0"
@@ -40,7 +40,7 @@
   .dropdown.inline.prepend-left-10.author-filter
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-user
-      %span.light 作成者:
+      %span.light 作成:
       - if @author.present?
         %strong= @author.name
       - elsif params[:author_id] == "0"

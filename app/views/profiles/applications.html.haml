@@ -2,15 +2,15 @@
   OAuth2
 
 %fieldset.oauth-applications
-  %legend Your applications
-  %p= link_to 'New Application', new_oauth_application_path, class: 'btn btn-success'
+  %legend あなたのアプリケーション
+  %p= link_to '新しいアプリケーション', new_oauth_application_path, class: 'btn btn-success'
   - if @applications.any?
     %table.table.table-striped
       %thead
         %tr
-          %th Name
-          %th Callback URL
-          %th Clients
+          %th 名前
+          %th コールバックURL
+          %th クライアント
           %th
           %th
       %tbody
@@ -21,19 +21,19 @@
               - application.redirect_uri.split.each do |uri|
                 %div= uri
             %td= application.access_tokens.count
-            %td= link_to 'Edit', edit_oauth_application_path(application), class: 'btn btn-link btn-small'
+            %td= link_to '編集', edit_oauth_application_path(application), class: 'btn btn-link btn-small'
             %td= render 'doorkeeper/applications/delete_form', application: application
 
 %fieldset.oauth-authorized-applications.prepend-top-20
-  %legend Authorized applications
+  %legend 認可済みアプリケーション
 
   - if @authorized_tokens.any?
     %table.table.table-striped
       %thead
         %tr
-          %th Name
-          %th Authorized At
-          %th Scope
+          %th 名前
+          %th 認可日
+          %th スコープ
           %th
       %tbody
         - @authorized_apps.each do |app|
@@ -44,4 +44,4 @@
             %td= token.scopes
             %td= render 'doorkeeper/authorized_applications/delete_form', application: app
   - else
-    %p.light You dont have any authorized applications
+    %p.light 認可済みアプリケーションはありません

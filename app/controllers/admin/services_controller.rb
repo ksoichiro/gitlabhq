@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Admin::ServicesController < Admin::ApplicationController
   before_filter :service, only: [:edit, :update]
 
@@ -8,14 +9,14 @@ class Admin::ServicesController < Admin::ApplicationController
   def edit
     unless service.present?
       redirect_to admin_application_settings_services_path,
-        alert: "Service is unknown or it doesn't exist"
+        alert: "不明なサービスまたは存在しないサービスです"
     end
   end
 
   def update
     if service.update_attributes(application_services_params[:service])
       redirect_to admin_application_settings_services_path,
-        notice: 'Application settings saved successfully'
+        notice: 'アプリケーション設定を保存しました'
     else
       render :edit
     end

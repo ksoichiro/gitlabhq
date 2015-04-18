@@ -20,6 +20,10 @@ ja:
         import_url: インポートURL
     errors:
       models:
+        project:
+          attributes:
+            name:
+              blank: プロジェクトパスは必須です
         group:
           attributes:
             name:
@@ -28,3 +32,7 @@ ja:
           attributes:
             content:
               blank: 内容は必須です
+        system_hook:
+          attributes:
+            url:
+              blank: URLは必須です

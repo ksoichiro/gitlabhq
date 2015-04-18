@@ -6,43 +6,47 @@
           %p= msg
 
   %fieldset
-    %legend Features
+    %legend 機能
     .form-group
-      = f.label :signup_enabled, class: 'control-label'
+      = f.label :signup_enabled, 'サインアップ', class: 'control-label'
       .col-sm-10
         = f.check_box :signup_enabled, class: 'checkbox'
+        有効にする
     .form-group
-      = f.label :signin_enabled, class: 'control-label'
+      = f.label :signin_enabled, 'サインイン', class: 'control-label'
       .col-sm-10
         = f.check_box :signin_enabled, class: 'checkbox'
+        有効にする
     .form-group
-      = f.label :gravatar_enabled, class: 'control-label'
+      = f.label :gravatar_enabled, 'Gravatar', class: 'control-label'
       .col-sm-10
         = f.check_box :gravatar_enabled, class: 'checkbox'
+        有効にする
     .form-group
-      = f.label :twitter_sharing_enabled, "Twitter enabled", class: 'control-label'
+      = f.label :twitter_sharing_enabled, "Twitter", class: 'control-label'
       .col-sm-10
         = f.check_box :twitter_sharing_enabled, class: 'checkbox'
-        %span.help-block Show users button to share their newly created public or internal projects on twitter
+        有効にする
+        %span.help-block 新しく作成した公開/内部プロジェクトをTwitterでシェアするボタンをユーザに表示します
   %fieldset
-    %legend Misc
+    %legend その他
     .form-group
-      = f.label :default_projects_limit, class: 'control-label'
+      = f.label :default_projects_limit, '上限プロジェクト数初期値', class: 'control-label'
       .col-sm-10
         = f.number_field :default_projects_limit, class: 'form-control'
     .form-group
-      = f.label :default_branch_protection, class: 'control-label'
+      = f.label :default_branch_protection, 'デフォルトのブランチ保護', class: 'control-label'
       .col-sm-10
         = f.select :default_branch_protection, options_for_select(Gitlab::Access.protection_options, @application_setting.default_branch_protection), {}, class: 'form-control'
     .form-group
       = f.label :home_page_url, class: 'control-label'
       .col-sm-10
         = f.text_field :home_page_url, class: 'form-control', placeholder: 'http://company.example.com'
-        %span.help-block We will redirect non-logged in users to this page
+        %span.help-block ログインしていないユーザをこのページにリダイレクトします
     .form-group
-      = f.label :sign_in_text, class: 'control-label'
+      = f.label :sign_in_text, 'サインイン文言', class: 'control-label'
       .col-sm-10
         = f.text_area :sign_in_text, class: 'form-control', rows: 4
-        .help-block Markdown enabled
+        .help-block Markdownを利用できます
   .form-actions
-    = f.submit 'Save', class: 'btn btn-primary'
+    = f.submit '保存', class: 'btn btn-primary'

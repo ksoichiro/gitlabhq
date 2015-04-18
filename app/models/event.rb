@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: events
@@ -299,6 +300,23 @@ class Event < ActiveRecord::Base
       target.noteable_type.titleize
     else
       "Wall"
+    end.downcase
+  end
+
+  def i18n_note_target_type
+    if target.noteable_type.present?
+      case target.noteable_type
+      when "Commit"
+        "コミット"
+      when "Issue"
+        "課題"
+      when "MergeRequest"
+        "マージリクエスト"
+      else
+        target.noteable_type.titleize
+      end
+    else
+      "ウォール"
     end.downcase
   end
 

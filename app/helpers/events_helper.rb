@@ -13,7 +13,7 @@ module EventsHelper
   def event_action_name(event)
     target =  if event.target_type
                 if event.note?
-                  event.note_target_type
+                  event.i18n_note_target_type
                 else
                   event.target_type.titleize.downcase
                 end
@@ -127,15 +127,15 @@ module EventsHelper
     if event.note_target
       if event.note_commit?
         link_to project_commit_path(event.project, event.note_commit_id, anchor: dom_id(event.target)), class: "commit_short_id" do
-          "#{event.note_target_type} #{event.note_short_commit_id}"
+          "#{event.i18n_note_target_type} #{event.note_short_commit_id}"
         end
       elsif event.note_project_snippet?
         link_to(project_snippet_path(event.project, event.note_target)) do
-          "#{event.note_target_type} ##{truncate event.note_target_id}"
+          "#{event.i18n_note_target_type} ##{truncate event.note_target_id}"
         end
       else
         link_to event_note_target_path(event) do
-          "#{event.note_target_type} ##{truncate event.note_target_iid}"
+          "#{event.i18n_note_target_type} ##{truncate event.note_target_iid}"
         end
       end
     else

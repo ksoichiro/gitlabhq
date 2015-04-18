@@ -16,7 +16,7 @@
   .pull-right
     .dropdown.inline
       %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
-        %span.light sort:
+        %span.light 並び替え:
         - if @sort.present?
           = sort_options_hash[@sort]
         - else

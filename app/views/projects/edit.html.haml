@@ -81,19 +81,19 @@
                   = project_icon(@project.to_param, alt: '', class: 'avatar project-avatar s160')
                 %p.light
                   - if @project.avatar_in_git
-                    Project avatar in repository: #{ @project.avatar_in_git }
+                    リポジトリのプロジェクトアバター: #{ @project.avatar_in_git }
                 %p.light
                   - if @project.avatar?
-                    You can change your project avatar here
+                    プロジェクトアバターを変更できます
                   - else
-                    You can upload an project avatar here
+                    プロジェクトアバターをアップロードできます
                 %a.choose-btn.btn.btn-small.js-choose-project-avatar-button
                   %i.icon-paper-clip
-                  %span Choose File ...
+                  %span ファイルを選択 ...
                 &nbsp;
-                %span.file_name.js-avatar-filename File name...
+                %span.file_name.js-avatar-filename ファイル名...
                 = f.file_field :avatar, class: "js-project-avatar-input hidden"
-                .light The maximum file size allowed is 200KB.
+                .light ファイルの最大サイズは200KBです
                 - if @project.avatar?
                   %hr
                   = link_to 'アバターを削除', project_avatar_path(@project), data: { confirm: "プロジェクトアバターが削除されます。本当に削除しますか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"

@@ -13,12 +13,12 @@
       = f.text_area :redirect_uri, class: 'form-control'
       = doorkeeper_errors_for application, :redirect_uri
       %span.help-block
-        Use one line per URI
+        1行に1つのURIを記述してください
       - if Doorkeeper.configuration.native_redirect_uri
         %span.help-block
-          Use
+          ローカルでのテストには
           %code= Doorkeeper.configuration.native_redirect_uri
-          for local tests
+          を使用してください
   .form-actions
-    = f.submit 'Submit', class: "btn btn-primary wide"
-    = link_to "Cancel", admin_applications_path, class: "btn btn-default"
+    = f.submit '送信', class: "btn btn-primary wide"
+    = link_to "キャンセル", admin_applications_path, class: "btn btn-default"

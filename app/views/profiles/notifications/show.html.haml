@@ -15,12 +15,12 @@
   = hidden_field_tag :notification_type, 'global'
 
   .form-group
-    = f.label :notification_email, class: "control-label"
+    = f.label :notification_email, '通知メールアドレス', class: "control-label"
     .col-sm-10
       = f.select :notification_email, @user.all_emails, { include_blank: false }, class: "form-control"
 
   .form-group
-    = f.label :notification_level, class: 'control-label'
+    = f.label :notification_level, '通知レベル', class: 'control-label'
     .col-sm-10
       .radio
         = f.label :notification_level, value: Notification::N_DISABLED do
