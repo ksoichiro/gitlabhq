@@ -8,7 +8,7 @@
 # omnibus-gitlab
 sudo gitlab-rake gitlab:cleanup:dirs
 
-# installation from source or cookbook
+# installation from source
 bundle exec rake gitlab:cleanup:dirs RAILS_ENV=production
 ```
 
@@ -18,6 +18,6 @@ bundle exec rake gitlab:cleanup:dirs RAILS_ENV=production
 # omnibus-gitlab
 sudo gitlab-rake gitlab:cleanup:repos
 
-# installation from source or cookbook
+# installation from source
 bundle exec rake gitlab:cleanup:repos RAILS_ENV=production
 ```

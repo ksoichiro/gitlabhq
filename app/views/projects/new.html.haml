@@ -40,13 +40,38 @@
                 インポートは4分でタイムアウトします。大きなリポジトリの場合はクローンとプッシュを組み合わせてください。
                 SVNリポジトリの場合は、#{link_to "SVNからの移行についてのドキュメント", "http://doc.gitlab.com/ce/workflow/migrating_from_svn.html"}を確認してください。
 
-      - if github_import_enabled?
-        .project-import.form-group
-          .col-sm-2
-          .col-sm-10
-            = link_to status_github_import_path do
+      .project-import.form-group
+        .col-sm-2
+        .col-sm-10
+          - if github_import_enabled?
+            = link_to status_import_github_path do
               %i.fa.fa-github
               GitHubからプロジェクトをインポート
+          - else
+            = link_to '#', class: 'how_to_import_link light' do
+              %i.fa.fa-github
+              GitHubからプロジェクトをインポート
+            = render 'github_import_modal'
+
+      .project-import.form-group
+        .col-sm-2
+        .col-sm-10
+          - if gitlab_import_enabled?
+            = link_to status_import_gitlab_path do
+              %i.fa.fa-heart
+              GitLab.comからプロジェクトをインポート
+          - elsif request.host != 'gitlab.com'
+            = link_to '#', class: 'how_to_import_link light' do
+              %i.fa.fa-heart
+              GitLab.comからプロジェクトをインポート
+            = render 'gitlab_import_modal'
+
+      .project-import.form-group
+        .col-sm-2
+        .col-sm-10
+          = link_to new_import_gitorious_path do
+            %i.fa.fa-heart
+            Gitorious.orgからプロジェクトをインポート
 
       %hr.prepend-botton-10
 
@@ -74,3 +99,11 @@
       %i.fa.fa-spinner.fa-spin
       プロジェクトとリポジトリを作成しています
     %p 準備ができ次第、自動的に更新されますのでお待ちください
+
+:coffeescript
+  $ ->
+    $('.how_to_import_link').bind 'click', (e) ->
+      e.preventDefault()
+      import_modal = $(this).parent().find(".modal").show()
+    $('.modal-header .close').bind 'click', ->
+      $(".modal").hide()

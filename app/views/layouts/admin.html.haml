@@ -2,6 +2,5 @@
 %html{ lang: "en"}
   = render "layouts/head", title: "管理エリア"
   %body{class: "#{app_theme} #{theme_type} admin", :'data-page' => body_data_page}
-    = render "layouts/broadcast"
-    = render "layouts/head_panel", title: "管理エリア"
+    = render "layouts/head_panel", title: link_to("管理エリア", admin_root_path)
     = render 'layouts/page', sidebar: 'layouts/nav/admin'

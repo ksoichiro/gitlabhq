@@ -6,8 +6,9 @@ module ApplicationHelper
   COLOR_SCHEMES = {
     1 => 'white',
     2 => 'dark',
-    3 => 'solarized-dark',
-    4 => 'monokai',
+    3 => 'solarized-light',
+    4 => 'solarized-dark',
+    5 => 'monokai',
   }
   COLOR_SCHEMES.default = 'white'
 
@@ -50,6 +51,44 @@ module ApplicationHelper
     args.any? { |v| v.to_s.downcase == action_name }
   end
 
+  def project_icon(project_id, options = {})
+    project =
+      if project_id.is_a?(Project)
+        project = project_id
+      else
+        Project.find_with_namespace(project_id)
+      end
+
+    if project.avatar.present?
+      image_tag project.avatar.url, options
+    elsif project.avatar_in_git
+      image_tag project_avatar_path(project), options
+    else # generated icon
+      project_identicon(project, options)
+    end
+  end
+
+  def project_identicon(project, options = {})
+    allowed_colors = {
+      red: 'FFEBEE',
+      purple: 'F3E5F5',
+      indigo: 'E8EAF6',
+      blue: 'E3F2FD',
+      teal: 'E0F2F1',
+      orange: 'FBE9E7',
+      gray: 'EEEEEE'
+    }
+
+    options[:class] ||= ''
+    options[:class] << ' identicon'
+    bg_key = project.id % 7
+    style = "background-color: ##{ allowed_colors.values[bg_key] }; color: #555"
+
+    content_tag(:div, class: options[:class], style: style) do
+      project.name[0, 1].upcase
+    end
+  end
+
   def group_icon(group_path)
     group = Group.find_by(path: group_path)
     if group && group.avatar.present?
@@ -82,24 +121,24 @@ module ApplicationHelper
     if project.repo_exists?
       time_ago_with_tooltip(project.repository.commit.committed_date)
     else
-      "なし"
+      'なし'
     end
   rescue
-    "なし"
+    'なし'
   end
 
   def grouped_options_refs
     repository = @project.repository
 
     options = [
-      ["ブランチ", repository.branch_names],
-      ["タグ", VersionSorter.rsort(repository.tag_names)]
+      ['ブランチ', repository.branch_names],
+      ['タグ', VersionSorter.rsort(repository.tag_names)]
     ]
 
     # If reference is commit id - we should add it to branch/tag selectbox
     if(@ref && !options.flatten.include?(@ref) &&
        @ref =~ /^[0-9a-zA-Z]{6,52}$/)
-      options << ["コミット", [@ref]]
+      options << ['コミット', [@ref]]
     end
 
     grouped_options_for_select(options, @ref || @project.default_branch)
@@ -161,7 +200,7 @@ module ApplicationHelper
     path = controller.controller_path.split('/')
     namespace = path.first if path.second
 
-    [namespace, controller.controller_name, controller.action_name].compact.join(":")
+    [namespace, controller.controller_name, controller.action_name].compact.join(':')
   end
 
   # shortcut for gitlab config
@@ -176,13 +215,13 @@ module ApplicationHelper
 
   def search_placeholder
     if @project && @project.persisted?
-      "プロジェクト内を検索"
+      'プロジェクト内を検索'
     elsif @snippet || @snippets || @show_snippets
       'スニペットを検索'
     elsif @group && @group.persisted?
-      "グループ内を検索"
+      'グループ内を検索'
     else
-      "検索"
+      '検索'
     end
   end
 
@@ -190,24 +229,10 @@ module ApplicationHelper
     BroadcastMessage.current
   end
 
-  def highlight_js(&block)
-    string = capture(&block)
-
-    content_tag :div, class: "highlighted-data #{user_color_scheme_class}" do
-      content_tag :div, class: 'highlight' do
-        content_tag :pre do
-          content_tag :code do
-            string.html_safe
-          end
-        end
-      end
-    end
-  end
-
   def time_ago_with_tooltip(date, placement = 'top', html_class = 'time_ago')
     capture_haml do
       haml_tag :time, date.to_s,
-        class: html_class, datetime: date.getutc.iso8601, title: date.stamp("2011/08/09 13:23"),
+        class: html_class, datetime: date.getutc.iso8601, title: date.stamp('2011/08/21 09:23pm'),
         data: { toggle: 'tooltip', placement: placement }
 
       haml_tag :script, "$('." + html_class + "').timeago().tooltip()"
@@ -229,15 +254,6 @@ module ApplicationHelper
     Gitlab::MarkdownHelper.gitlab_markdown?(filename)
   end
 
-  def spinner(text = nil, visible = false)
-    css_class = "loading"
-    css_class << " hide" unless visible
-
-    content_tag :div, class: css_class do
-      content_tag(:i, nil, class: 'fa fa-spinner fa-spin') + text
-    end
-  end
-
   def link_to(name = nil, options = nil, html_options = nil, &block)
     begin
       uri = URI(options)
@@ -248,17 +264,17 @@ module ApplicationHelper
       absolute_uri = nil
     end
 
-    # Add "nofollow" only to external links
+    # Add 'nofollow' only to external links
     if host && host != Gitlab.config.gitlab.host && absolute_uri
       if html_options
         if html_options[:rel]
-          html_options[:rel] << " nofollow"
+          html_options[:rel] << ' nofollow'
         else
-          html_options.merge!(rel: "nofollow")
+          html_options.merge!(rel: 'nofollow')
         end
       else
         html_options = Hash.new
-        html_options[:rel] = "nofollow"
+        html_options[:rel] = 'nofollow'
       end
     end
 
@@ -304,6 +320,14 @@ module ApplicationHelper
       admin_user_key_path(@user, key)
     else
       profile_key_path(key)
+    end
+  end
+
+  def nav_sidebar_class
+    if nav_menu_collapsed?
+      "page-sidebar-collapsed"
+    else
+      "page-sidebar-expanded"
     end
   end
 end

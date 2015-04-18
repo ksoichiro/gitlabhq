@@ -1,6 +1,6 @@
 # encoding: utf-8
 module NotesHelper
-   # Helps to distinguish e.g. commit notes in mr notes list
+  # Helps to distinguish e.g. commit notes in mr notes list
   def note_for_main_target?(note)
     (@noteable.class.name == note.noteable_type && !note.for_diff_line?)
   end
@@ -21,8 +21,10 @@ module NotesHelper
     ts = "#{time_ago_with_tooltip(note.created_at, 'bottom', 'note_created_ago')}"
     if note.updated_at != note.created_at
       ts << capture_haml do
-        haml_tag :small do
-          haml_concat " (#{time_ago_with_tooltip(note.updated_at, 'bottom', 'note_edited_ago')}に編集)"
+        haml_tag :span do
+          haml_concat '&middot;'
+          haml_concat icon('edit', title: 'edited')
+          haml_concat time_ago_with_tooltip(note.updated_at, 'bottom', 'note_edited_ago')
         end
       end
     end
@@ -56,7 +58,7 @@ module NotesHelper
     button_tag(class: 'btn add-diff-note js-add-diff-note-button',
                data: data,
                title: 'Add a comment to this line') do
-      content_tag :i, nil, class: 'fa fa-comment-o'
+      icon('comment-o')
     end
   end
 
@@ -73,7 +75,7 @@ module NotesHelper
 
     button_tag class: 'btn reply-btn js-discussion-reply-button',
                data: data, title: 'Add a reply' do
-      link_text = content_tag(:i, nil, class: 'fa fa-comment')
+      link_text = icon('comment')
       link_text << ' Reply'
     end
   end

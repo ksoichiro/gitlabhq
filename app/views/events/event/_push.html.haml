@@ -1,12 +1,6 @@
 .event-title
   %span.author_name= link_to_author event
-  %span.event_label.pushed が
-  = link_to_project event.project
-  で
-  - if event.ref_type == "tag"
-    タグ
-  - else
-    ブランチ
+  %span.event_label.pushed #{event.action_name} #{event.ref_type}
   - if event.rm_ref?
     %strong= event.ref_name
   - else

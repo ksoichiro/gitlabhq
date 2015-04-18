@@ -1,6 +1,6 @@
 # ワークフロー
 
-- [ワークフロー](workflow.md)
+- [フィーチャーブランチワークフロー](workflow.md)
 - [プロジェクトの機能](project_features.md)
 - [マージリクエストの承認](authorization_for_merge_requests.md)
 - [グループ](groups.md)
@@ -8,4 +8,7 @@
 - [GitLab Flow](gitlab_flow.md)
 - [通知](notifications.md)
 - [SVNからGitLabへの移行](migrating_from_svn.md)
+- [GitHubプロジェクトのGitLabへのインポート](import_projects_from_github.md)
+- [GitLab.comプロジェクトのプライベートGitLabインスタンスへのインポート](import_projects_from_gitlab_com.md)
 - [保護ブランチ](protected_branches.md)
+- [Webエディタ](web_editor.md)
