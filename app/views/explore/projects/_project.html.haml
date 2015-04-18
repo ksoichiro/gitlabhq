@@ -7,7 +7,7 @@
     - if current_page?(starred_explore_projects_path)
       %strong.pull-right
         %i.fa.fa-star
-        ${project.star_count}スター
+        #{project.star_count}スター
 
   .project-info
     - if project.description.present?
