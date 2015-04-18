@@ -1,17 +1,18 @@
+# encoding: utf-8
 module SortingHelper
   def sort_title_oldest_updated
-    'Oldest updated'
+    '最近更新されていない'
   end
 
   def sort_title_recently_updated
-    'Recently updated'
+    '最近更新された'
   end
 
   def sort_title_oldest_created
-    'Oldest created'
+    '古い順'
   end
 
   def sort_title_recently_created
-    'Recently created'
+    '新しい順'
   end
 end

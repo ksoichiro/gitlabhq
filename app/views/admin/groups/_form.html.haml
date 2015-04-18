@@ -6,7 +6,7 @@
   = render 'shared/group_form', f: f
 
   .form-group.group-description-holder
-    = f.label :avatar, "グループアバター", class: 'control-label'
+    = f.label :avatar, "Group avatar", class: 'control-label'
     .col-sm-10
       = render 'shared/choose_group_avatar_button', f: f
 
@@ -17,22 +17,11 @@
         .bs-callout.bs-callout-info
           = render 'shared/group_tips'
     .form-actions
-      = f.submit 'グループを作成', class: "btn btn-create"
-      = link_to  'キャンセル', admin_groups_path, class: "btn btn-cancel"
+      = f.submit 'Create group', class: "btn btn-create"
+      = link_to  'Cancel', admin_groups_path, class: "btn btn-cancel"
 
   - else
-    .form-group.group_name_holder
-      = f.label :path, class: 'control-label' do
-        %span グループのパス
-      .col-sm-10
-        = f.text_field :path, placeholder: "example-group", class: "form-control danger"
-        .bs-callout.bs-callout-danger
-          %ul
-            %li グループのパスを変更すると予期しない副作用が生じる可能性があります。
-            %li グループのパスを変更すると関連するすべてのプロジェクトのディレクトリ名が変更されます。
-            %li グループとグループ内のすべてのプロジェクトのWeb URLが変更されます。
-            %li グループ内のリポジトリのGitのパスも変更されます。
     .form-actions
-      = f.submit '変更を保存', class: "btn btn-primary"
-      = link_to  'キャンセル', admin_group_path(@group), class: "btn btn-cancel"
+      = f.submit 'Save changes', class: "btn btn-primary"
+      = link_to  'Cancel', admin_group_path(@group), class: "btn btn-cancel"
 

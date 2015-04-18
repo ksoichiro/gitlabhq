@@ -76,3 +76,4 @@
               以下のグループが破棄されます。移譲しなければ、削除されます。
               %strong #{current_user.solo_owned_groups.map(&:name).join(', ')}
         = link_to 'アカウントを削除', user_registration_path, data: { confirm: "#{current_user.name}を削除します。本当によろしいですか？" }, method: :delete, class: "btn btn-remove"
+

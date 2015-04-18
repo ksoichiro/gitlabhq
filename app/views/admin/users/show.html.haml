@@ -13,13 +13,15 @@
 %hr
 %ul.nav.nav-tabs
   %li.active
-    %a{"data-toggle" => "tab", href: "#account"} Account
+    %a{"data-toggle" => "tab", href: "#account"} アカウント
   %li
-    %a{"data-toggle" => "tab", href: "#profile"} Profile
+    %a{"data-toggle" => "tab", href: "#profile"} プロフィール
   %li
-    %a{"data-toggle" => "tab", href: "#groups"} Groups
+    %a{"data-toggle" => "tab", href: "#groups"} グループ
   %li
-    %a{"data-toggle" => "tab", href: "#projects"} Projects
+    %a{"data-toggle" => "tab", href: "#projects"} プロジェクト
+  %li
+    %a{"data-toggle" => "tab", href: "#ssh-keys"} SSHキー
 
 .tab-content
   #account.tab-pane.active
@@ -87,7 +89,7 @@
                   サインインなし
 
             %li
-              %span.light Sign-in count:
+              %span.light サインイン回数:
               %strong
                 = @user.sign_in_count
 
@@ -157,7 +159,7 @@
             %li
               = image_tag avatar_icon(@user.email, 60), class: "avatar s60"
             %li
-              %span.light Profile page:
+              %span.light プロフィールページ:
               %strong
                 = link_to user_path(@user) do
                   = @user.username
@@ -218,3 +220,5 @@
                       - if tm.respond_to? :project
                         = link_to project_team_member_path(project, @user), data: { confirm: remove_from_project_team_message(project, @user) }, remote: true, method: :delete, class: "btn-tiny btn btn-remove", title: 'プロジェクトからユーザを削除' do
                           %i.fa.fa-times
+  #ssh-keys.tab-pane
+    = render 'profiles/keys/key_table', admin: true

@@ -96,9 +96,9 @@ class Note < ActiveRecord::Base
 
     def create_milestone_change_note(noteable, project, author, milestone)
       body = if milestone.nil?
-               '_Milestone removed_'
+               '_マイルストーンが削除されました_'
              else
-               "_Milestone changed to #{milestone.title}_"
+               "_マイルストーンが#{milestone.title}に変更されました_"
              end
 
       create(
@@ -297,6 +297,7 @@ class Note < ActiveRecord::Base
   # If not - its outdated diff
   def active?
     return true unless self.diff
+    return false unless noteable
 
     noteable.diffs.each do |mr_diff|
       next unless mr_diff.new_path == self.diff.new_path

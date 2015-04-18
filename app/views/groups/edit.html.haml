@@ -1,41 +1,37 @@
-.row
-  .col-md-2
-    = render 'settings_nav'
-  .col-md-10
-    .panel.panel-default
-      .panel-heading
-        %strong= @group.name
-        グループの設定:
-      .panel-body
-        = form_for @group, html: { multipart: true, class: "form-horizontal" }, authenticity_token: true do |f|
-          - if @group.errors.any?
-            .alert.alert-danger
-              %span= @group.errors.full_messages.first
-          = render 'shared/group_form', f: f
+.panel.panel-default
+  .panel-heading
+    %strong= @group.name
+    グループの設定:
+  .panel-body
+    = form_for @group, html: { multipart: true, class: "form-horizontal" }, authenticity_token: true do |f|
+      - if @group.errors.any?
+        .alert.alert-danger
+          %span= @group.errors.full_messages.first
+      = render 'shared/group_form', f: f
 
-          .form-group
-            .col-sm-2
-            .col-sm-10
-              = image_tag group_icon(@group.to_param), alt: '', class: 'avatar s160'
-              %p.light
-                - if @group.avatar?
-                  アバターを変更することができます。
-                - else
-                  アバターをアップロードすることができます。
-              = render 'shared/choose_group_avatar_button', f: f
-              - if @group.avatar?
-                %hr
-                = link_to 'アバターを削除', group_avatar_path(@group.to_param), data: { confirm: "グループアバターを削除します。よろしいですか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"
+      .form-group
+        .col-sm-2
+        .col-sm-10
+          = image_tag group_icon(@group.to_param), alt: '', class: 'avatar s160'
+          %p.light
+            - if @group.avatar?
+              アバターを変更することができます。
+            - else
+              アバターをアップロードすることができます。
+          = render 'shared/choose_group_avatar_button', f: f
+          - if @group.avatar?
+            %hr
+            = link_to 'アバターを削除', group_avatar_path(@group.to_param), data: { confirm: "グループアバターを削除します。よろしいですか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"
 
-          .form-actions
-            = f.submit 'グループを保存', class: "btn btn-save"
+      .form-actions
+        = f.submit 'グループを保存', class: "btn btn-save"
 
-    .panel.panel-danger
-      .panel-heading グループの削除
-      .panel-body
-        %p
-          グループを削除すると、子プロジェクトとリソースも削除されます。
-          %br
-          %strong グループの削除は元に戻せません！
+.panel.panel-danger
+  .panel-heading グループの削除
+  .panel-body
+    %p
+      グループを削除すると、子プロジェクトとリソースも削除されます。
+      %br
+      %strong グループの削除は元に戻せません！
 
-        = link_to 'グループの削除', @group, data: {confirm: 'グループの削除は元に戻せません！本当に削除しますか？'}, method: :delete, class: "btn btn-remove"
+    = link_to 'グループを削除', @group, data: {confirm: 'グループの削除は元に戻せません！本当に削除しますか？'}, method: :delete, class: "btn btn-remove"

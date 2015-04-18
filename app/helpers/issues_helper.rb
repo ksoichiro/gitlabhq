@@ -1,3 +1,4 @@
+# encoding: utf-8
 module IssuesHelper
   def issue_css_classes(issue)
     classes = "issue"
@@ -68,7 +69,7 @@ module IssuesHelper
     if issue.updated_at != issue.created_at
       ts << capture_haml do
         haml_tag :small do
-          haml_concat " (Edited #{time_ago_with_tooltip(issue.updated_at, 'bottom', 'issue_edited_ago')})"
+          haml_concat " (#{time_ago_with_tooltip(issue.updated_at, 'bottom', 'issue_edited_ago')}に編集)"
         end
       end
     end

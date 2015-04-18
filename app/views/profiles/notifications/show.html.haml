@@ -17,6 +17,13 @@
 
     .radio
       = label_tag nil, class: '' do
+        = radio_button_tag :notification_level, Notification::N_MENTION, @notification.mention?, class: 'trigger-submit'
+        .level-title
+          メンション
+        %p コメント内で @名前 のようにメンションされたときにのみ通知を受け取ります
+
+    .radio
+      = label_tag nil, class: '' do
         = radio_button_tag :notification_level, Notification::N_PARTICIPATING, @notification.participating?, class: 'trigger-submit'
         .level-title
           参加

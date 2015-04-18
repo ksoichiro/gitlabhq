@@ -1,0 +1,19 @@
+- is_admin = defined?(admin) ? true : false
+.panel.panel-default
+  - if @keys.any?
+    %table.table
+      %thead.panel-heading
+        %tr
+          %th タイトル
+          %th フィンガープリント
+          %th 登録日
+          %th
+      %tbody
+        - @keys.each do |key|
+          = render 'profiles/keys/key', key: key, is_admin: is_admin
+  - else
+    .nothing-here-block
+      - if is_admin
+        このユーザのSSHキーはありません
+      - else
+        あなたのアカウントにアクセスできるSSHキーはありません

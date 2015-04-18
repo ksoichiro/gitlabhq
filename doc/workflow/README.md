@@ -1,3 +1,5 @@
+# ワークフロー
+
 - [ワークフロー](workflow.md)
 - [プロジェクトの機能](project_features.md)
 - [マージリクエストの承認](authorization_for_merge_requests.md)
@@ -6,3 +8,4 @@
 - [GitLab Flow](gitlab_flow.md)
 - [通知](notifications.md)
 - [SVNからGitLabへの移行](migrating_from_svn.md)
+- [保護ブランチ](protected_branches.md)
