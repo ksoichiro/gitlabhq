@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: merge_requests
@@ -261,7 +262,7 @@ class MergeRequest < ActiveRecord::Base
 
   # Mentionable override.
   def gfm_reference
-    "merge request !#{iid}"
+    "マージリクエスト !#{iid}"
   end
 
   def target_project_path

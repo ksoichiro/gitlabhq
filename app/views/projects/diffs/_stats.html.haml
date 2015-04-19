@@ -4,10 +4,10 @@
     を表示中
     - if current_controller?(:commit)
       - unless @commit.has_zero_stats?
-        with
-        %strong.cgreen #{@commit.stats.additions} additions
-        and
-        %strong.cred #{@commit.stats.deletions} deletions
+        ,&nbsp;
+        %strong.cgreen #{@commit.stats.additions} 行の追加
+        と
+        %strong.cred #{@commit.stats.deletions} 行の削除
     &nbsp;
     = link_to '#', class: 'btn btn-sm js-toggle-button' do
       差分の状態を表示

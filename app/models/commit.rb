@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Commit
   include ActiveModel::Conversion
   include StaticModel
@@ -62,7 +63,7 @@ class Commit
   #
   #   "Commit: Alex Denisov - Project git clone panel"
   def link_title
-    "Commit: #{author_name} - #{title}"
+    "コミット: #{author_name} - #{title}"
   end
 
   # Returns the commits title.
@@ -123,7 +124,7 @@ class Commit
 
   # Mentionable override.
   def gfm_reference
-    "commit #{id}"
+    "コミット #{id}"
   end
 
   def method_missing(m, *args, &block)

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'html/pipeline'
 require 'html/pipeline/gitlab'
 
@@ -250,7 +251,7 @@ module Gitlab
           url = url_for_issue(identifier, project)
           title = title_for_issue(identifier, project)
           options = html_options.merge(
-            title: "Issue: #{title}",
+            title: "課題: #{title}",
             class: "gfm gfm-issue #{html_options[:class]}"
           )
 
@@ -268,7 +269,7 @@ module Gitlab
                                 prefix_text = nil)
       if merge_request = project.merge_requests.find_by(iid: identifier)
         options = html_options.merge(
-          title: "Merge Request: #{merge_request.title}",
+          title: "マージリクエスト: #{merge_request.title}",
           class: "gfm gfm-merge_request #{html_options[:class]}"
         )
         url = namespace_project_merge_request_url(project.namespace, project,
@@ -280,7 +281,7 @@ module Gitlab
     def reference_snippet(identifier, project = @project, _ = nil)
       if snippet = project.snippets.find_by(id: identifier)
         options = html_options.merge(
-          title: "Snippet: #{snippet.title}",
+          title: "スニペット: #{snippet.title}",
           class: "gfm gfm-snippet #{html_options[:class]}"
         )
         link_to(
@@ -317,7 +318,7 @@ module Gitlab
           to = project.repository.commit(to_id)
 
         options = html_options.merge(
-          title: "Commits #{from_id} through #{to_id}",
+          title: "コミット #{from_id} から #{to_id}",
           class: "gfm gfm-commit_range #{html_options[:class]}"
         )
         prefix_text = "#{prefix_text}@" if prefix_text
@@ -336,7 +337,7 @@ module Gitlab
       title = project.external_issue_tracker.title
 
       options = html_options.merge(
-        title: "Issue in #{title}",
+        title: "課題 in #{title}",
         class: "gfm gfm-issue #{html_options[:class]}"
       )
       link_to("#{prefix_text}##{identifier}", url, options)

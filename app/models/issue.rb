@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: issues
@@ -56,7 +57,7 @@ class Issue < ActiveRecord::Base
   # Mentionable overrides.
 
   def gfm_reference
-    "issue ##{iid}"
+    "課題 ##{iid}"
   end
 
   # Reset issue events cache

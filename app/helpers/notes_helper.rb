@@ -78,9 +78,9 @@ module NotesHelper
     }
 
     button_tag class: 'btn reply-btn js-discussion-reply-button',
-               data: data, title: 'Add a reply' do
+               data: data, title: '返信を追加' do
       link_text = icon('comment')
-      link_text << ' Reply'
+      link_text << ' 返信'
     end
   end
 end

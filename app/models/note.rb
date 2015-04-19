@@ -246,14 +246,14 @@ class Note < ActiveRecord::Base
       where("note like :query", query: "%#{query}%")
     end
 
-    def cross_reference_note_prefix
-      '_mentioned in '
+    def cross_reference_note_suffix
+      'から参照しました_'
     end
 
     private
 
     def cross_reference_note_content(gfm_reference)
-      cross_reference_note_prefix + "#{gfm_reference}_"
+      "_#{gfm_reference}" + cross_reference_note_suffix
     end
 
     # Prepend the mentioner's namespaced project path to the GFM reference for
@@ -300,12 +300,12 @@ class Note < ActiveRecord::Base
       else
         if mentioner.is_a?(Commit)
           mentioner.gfm_reference.sub(
-            /(commit )/,
+            /(コミット )/,
             "\\1#{mentioning_project.path_with_namespace}@"
           )
         else
           mentioner.gfm_reference.sub(
-            /(issue |merge request )/,
+            /(課題 |マージリクエスト )/,
             "\\1#{mentioning_project.path_with_namespace}"
           )
         end
@@ -335,7 +335,7 @@ class Note < ActiveRecord::Base
   end
 
   def cross_reference?
-    note.start_with?(self.class.cross_reference_note_prefix)
+    note.end_with?(self.class.cross_reference_note_suffix)
   end
 
   def find_diff
