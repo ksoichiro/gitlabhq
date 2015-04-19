@@ -8,7 +8,7 @@ class Projects::WikisController < Projects::ApplicationController
   before_filter :load_project_wiki
 
   def pages
-    @wiki_pages = Kaminari.paginate_array(@project_wiki.pages).page(params[:page]).per(30)
+    @wiki_pages = Kaminari.paginate_array(@project_wiki.pages).page(params[:page]).per(PER_PAGE)
   end
 
   def show
@@ -46,7 +46,7 @@ class Projects::WikisController < Projects::ApplicationController
     return render('empty') unless can?(current_user, :write_wiki, @project)
 
     if @page.update(content, format, message)
-      redirect_to [@project, @page], notice: 'Wikiが更新されました'
+      redirect_to [@project.namespace.becomes(Namespace), @project, @page], notice: 'Wikiが更新されました'
     else
       render 'edit'
     end
@@ -56,7 +56,10 @@ class Projects::WikisController < Projects::ApplicationController
     @page = WikiPage.new(@project_wiki)
 
     if @page.create(wiki_params)
-      redirect_to project_wiki_path(@project, @page), notice: 'Wikiが更新されました'
+      redirect_to(
+        namespace_project_wiki_path(@project.namespace, @project, @page),
+        notice: 'Wikiが更新されました'
+      )
     else
       render action: "edit"
     end
@@ -66,7 +69,10 @@ class Projects::WikisController < Projects::ApplicationController
     @page = @project_wiki.find_page(params[:id])
 
     unless @page
-      redirect_to(project_wiki_path(@project, :home), notice: "ページが見つかりません")
+      redirect_to(
+        namespace_project_wiki_path(@project.namespace, @project, :home),
+        notice: "ページが見つかりません"
+      )
     end
   end
 
@@ -74,7 +80,10 @@ class Projects::WikisController < Projects::ApplicationController
     @page = @project_wiki.find_page(params[:id])
     @page.delete if @page
 
-    redirect_to project_wiki_path(@project, :home), notice: "ページが削除されました"
+    redirect_to(
+      namespace_project_wiki_path(@project.namespace, @project, :home),
+      notice: "ページが削除されました"
+    )
   end
 
   def git_access
@@ -89,7 +98,7 @@ class Projects::WikisController < Projects::ApplicationController
     @project_wiki.wiki
   rescue ProjectWiki::CouldNotCreateWikiError => ex
     flash[:notice] = "Wikiのリポジトリを作成できませんでした。後ほどもう一度お試しください"
-    redirect_to @project
+    redirect_to project_path(@project)
     return false
   end
 

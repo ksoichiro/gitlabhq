@@ -11,40 +11,44 @@
 
     - if @merge_request.closed?
       %h4
-        Closed
         - if @merge_request.closed_event
-          by #{link_to_member(@project, @merge_request.closed_event.author, avatar: false)}
+          #{link_to_member(@project, @merge_request.closed_event.author, avatar: false)}
+          に
           #{time_ago_with_tooltip(@merge_request.closed_event.created_at)}
-      %p Changes were not merged into target branch
+          に
+        クローズされました
+      %p 変更はマージされていません
 
     - if @merge_request.merged?
       %h4
-        Merged
         - if @merge_request.merge_event
-          by #{link_to_member(@project, @merge_request.merge_event.author, avatar: false)}
+          #{link_to_member(@project, @merge_request.merge_event.author, avatar: false)}
+          に
           #{time_ago_with_tooltip(@merge_request.merge_event.created_at)}
+          に
+        マージされました
       = render "projects/merge_requests/show/remove_source_branch"
 
     - if @merge_request.locked?
       %h4
-        Merge in progress...
+        マージしています...
       %p
-        GitLab tries to merge it right now. During this time merge request is locked and can not be closed.
+        GitLabはマージしています。終了するまでマージリクエストはロックされ、クローズできません
 
     - unless @commits.any?
-      %h4 Nothing to merge
+      %h4 マージするものはありません
       %p
-        Nothing to merge from
         %span.label-branch #{@merge_request.source_branch}
-        to
+        から
         %span.label-branch #{@merge_request.target_branch}
+        にマージするものはありません。
         %br
-        Try to use different branches or push new code.
+        別のブランチを選択するか、新しいコードをプッシュしてください。
 
   - if @closes_issues.present? && @merge_request.open?
     .mr-widget-footer
       %span
         %i.fa.fa-check
-        Accepting this merge request will close #{@closes_issues.size == 1 ? 'issue' : 'issues'}
-        = succeed '.' do
+        このマージリクエストを承認すると、課題がクローズされます
+        = succeed '' do
           != gfm(issues_sentence(@closes_issues))

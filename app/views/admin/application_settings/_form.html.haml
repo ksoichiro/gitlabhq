@@ -8,39 +8,55 @@
   %fieldset
     %legend 機能
     .form-group
-      = f.label :signup_enabled, 'サインアップ', class: 'control-label'
-      .col-sm-10
-        = f.check_box :signup_enabled, class: 'checkbox'
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :signup_enabled, 'サインアップ' do
+            = f.check_box :signup_enabled
+            サインアップを利用
     .form-group
-      = f.label :signin_enabled, 'サインイン', class: 'control-label'
-      .col-sm-10
-        = f.check_box :signin_enabled, class: 'checkbox'
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :signin_enabled, 'サインイン' do
+            = f.check_box :signin_enabled
+            サインインを利用
     .form-group
-      = f.label :gravatar_enabled, 'Gravatar', class: 'control-label'
-      .col-sm-10
-        = f.check_box :gravatar_enabled, class: 'checkbox'
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :gravatar_enabled, 'Gravatar' do
+            = f.check_box :gravatar_enabled
+            Gravatarを利用
     .form-group
-      = f.label :twitter_sharing_enabled, "Twitter", class: 'control-label'
-      .col-sm-10
-        = f.check_box :twitter_sharing_enabled, class: 'checkbox'
-        %span.help-block 新しく作成した公開/内部プロジェクトをTwitterでシェアするボタンをユーザに表示します
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :twitter_sharing_enabled, 'Twitter' do
+            = f.check_box :twitter_sharing_enabled, :'aria-describedby' => 'twitter_help_block'
+            %strong Twitterを利用
+          %span.help-block#twitter_help_block 新しく作成した公開/内部プロジェクトをTwitterでシェアするボタンをユーザに表示します
   %fieldset
     %legend その他
     .form-group
-      = f.label :default_projects_limit, '上限プロジェクト数初期値', class: 'control-label'
+      = f.label :default_projects_limit, '上限プロジェクト数初期値', class: 'control-label col-sm-2'
       .col-sm-10
         = f.number_field :default_projects_limit, class: 'form-control'
     .form-group
-      = f.label :default_branch_protection, 'デフォルトのブランチ保護', class: 'control-label'
+      = f.label :default_branch_protection, 'デフォルトのブランチ保護', class: 'control-label col-sm-2'
       .col-sm-10
         = f.select :default_branch_protection, options_for_select(Gitlab::Access.protection_options, @application_setting.default_branch_protection), {}, class: 'form-control'
     .form-group
-      = f.label :home_page_url, 'ホームページURL', class: 'control-label'
+      = f.label :restricted_visibility_levels, '可視性レベルの制限', class: 'control-label col-sm-2'
       .col-sm-10
-        = f.text_field :home_page_url, class: 'form-control', placeholder: 'http://company.example.com'
-        %span.help-block ログインしていないユーザをこのページにリダイレクトします
+        - data_attrs = { toggle: 'buttons' }
+        .btn-group{ data: data_attrs }
+          - restricted_level_checkboxes('restricted-visibility-help').each do |level|
+            = level
+        %span.help-block#restricted-visibility-help 選択されたレベルは、管理者以外のユーザがプロジェクトやスニペットで利用することができません
     .form-group
-      = f.label :sign_in_text, 'サインイン文言', class: 'control-label'
+      = f.label :home_page_url, 'ホームページURL', class: 'control-label col-sm-2'
+      .col-sm-10
+        = f.text_field :home_page_url, class: 'form-control', placeholder: 'http://company.example.com', :'aria-describedby' => 'home_help_block'
+        %span.help-block#home_help_block ログインしていないユーザをこのページにリダイレクトします
+    .form-group
+      = f.label :sign_in_text, 'サインイン文言', class: 'control-label col-sm-2'
       .col-sm-10
         = f.text_area :sign_in_text, class: 'form-control', rows: 4
         .help-block Markdownを利用できます

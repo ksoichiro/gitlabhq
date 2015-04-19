@@ -6,7 +6,7 @@
         プロジェクト設定
       %hr
       .panel-body
-        = form_for @project, remote: true, html: { multipart: true, class: "edit_project form-horizontal" }, authenticity_token: true do |f|
+        = form_for [@project.namespace.becomes(Namespace), @project], remote: true, html: { multipart: true, class: "edit_project form-horizontal" }, authenticity_token: true do |f|
 
           %fieldset
             .form-group.project_name_holder
@@ -78,7 +78,7 @@
               .col-sm-2
               .col-sm-10
                 - if @project.avatar?
-                  = project_icon(@project.to_param, alt: '', class: 'avatar project-avatar s160')
+                  = project_icon("#{@project.namespace.to_param}/#{@project.to_param}", alt: '', class: 'avatar project-avatar s160')
                 %p.light
                   - if @project.avatar_in_git
                     リポジトリのプロジェクトアバター: #{ @project.avatar_in_git }
@@ -87,7 +87,7 @@
                     プロジェクトアバターを変更できます
                   - else
                     プロジェクトアバターをアップロードできます
-                %a.choose-btn.btn.btn-small.js-choose-project-avatar-button
+                %a.choose-btn.btn.btn-sm.js-choose-project-avatar-button
                   %i.icon-paper-clip
                   %span ファイルを選択 ...
                 &nbsp;
@@ -96,7 +96,7 @@
                 .light ファイルの最大サイズは200KBです
                 - if @project.avatar?
                   %hr
-                  = link_to 'アバターを削除', project_avatar_path(@project), data: { confirm: "プロジェクトアバターが削除されます。本当に削除しますか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"
+                  = link_to 'アバターを削除', namespace_project_avatar_path(@project.namespace, @project), data: { confirm: "プロジェクトアバターが削除されます。本当に削除しますか？"}, method: :delete, class: "btn btn-remove btn-sm remove-avatar"
 
           .form-actions
             = f.submit '変更を保存', class: "btn btn-save"
@@ -116,7 +116,7 @@
                 プロジェクトにはコミットできるようになります。
                 %br
                 %strong プロジェクトをアクティブにすると、検索結果やダッシュボードに表示されるようになります。
-              = link_to 'アーカイブを解除', unarchive_project_path(@project),
+              = link_to 'アーカイブを解除', unarchive_namespace_project_path(@project.namespace, @project),
                   data: { confirm: "本当にこのプロジェクトのアーカイブを解除しますか？\nアーカイブが解除されるとプロジェクトはアクティブになり、再びコミット可能になります。" },
                   method: :post, class: "btn btn-success"
         - else
@@ -130,7 +130,7 @@
                 ダッシュボードからは非表示になり、検索結果にも表示されません。
                 %br
                 %strong アーカイブされたプロジェクトにはコミットできません！
-              = link_to 'アーカイブ', archive_project_path(@project),
+              = link_to 'アーカイブ', archive_namespace_project_path(@project.namespace, @project),
                   data: { confirm: "本当にこのプロジェクトをアーカイブしますか？\nアーカイブされたプロジェクトにはコミットすることができません。" },
                   method: :post, class: "btn btn-warning"
       - else
@@ -140,7 +140,7 @@
         .panel-heading リポジトリの名前変更
         .errors-holder
         .panel-body
-          = form_for(@project, html: { class: 'form-horizontal' }) do |f|
+          = form_for([@project.namespace.becomes(Namespace), @project], html: { class: 'form-horizontal' }) do |f|
             .form-group.project_name_holder
               = f.label :name, class: 'control-label' do
                 プロジェクト名
@@ -168,13 +168,13 @@
           .panel-heading プロジェクトを移譲
           .errors-holder
           .panel-body
-            = form_for(@project, url: transfer_project_path(@project), method: :put, remote: true, html: { class: 'transfer-project form-horizontal' }) do |f|
+            = form_for([@project.namespace.becomes(Namespace), @project], url: transfer_namespace_project_path(@project.namespace, @project), method: :put, remote: true, html: { class: 'transfer-project form-horizontal' }) do |f|
               .form-group
-                = f.label :namespace_id, class: 'control-label' do
+                = label_tag :new_namespace_id, nil, class: 'control-label' do
                   %span ネームスペース
                 .col-sm-10
                   .form-group
-                    = f.select :namespace_id, namespaces_options(@project.namespace_id), { prompt: 'プロジェクトのネームスペースを選択' }, { class: 'select2' }
+                    = select_tag :new_namespace_id, namespaces_options(@project.namespace_id), { prompt: 'プロジェクトのネームスペースを選択', class: 'select2' }
                   %ul
                     %li プロジェクトのネームスペースの変更は意図しない副作用を招く可能性があります。ご注意ください。
                     %li プロジェクトはあなたが管理するネームスペースにのみ移譲することができます。
@@ -188,7 +188,7 @@
         .panel.panel-default.panel.panel-danger
           .panel-heading プロジェクトを削除
           .panel-body
-            = form_tag(project_path(@project), method: :delete, html: { class: 'form-horizontal'}) do
+            = form_tag(namespace_project_path(@project.namespace, @project), method: :delete, html: { class: 'form-horizontal'}) do
               %p
                 プロジェクトを削除すると、リポジトリや課題、マージリクエストなどの関連するリソースすべてが削除されます。
                 %br

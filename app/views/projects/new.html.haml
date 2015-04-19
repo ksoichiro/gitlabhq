@@ -34,44 +34,51 @@
               %span 既存のリポジトリをインポート
             .col-sm-10
               = f.text_field :import_url, class: 'form-control', placeholder: 'https://github.com/randx/six.git'
-              .bs-callout.bs-callout-info
-                このURLは公開されていなければなりません。次のようにユーザ名とパスワードをつけることもできます: https://username:password@gitlab.com/company/project.git.
+              .alert.alert-info.prepend-top-10
+                このURLは公開されていなければなりません。次のようにユーザ名とパスワードをつけることもできます: https://username:password@gitlab.com/company/project.git
                 %br
                 インポートは4分でタイムアウトします。大きなリポジトリの場合はクローンとプッシュを組み合わせてください。
                 SVNリポジトリの場合は、#{link_to "SVNからの移行についてのドキュメント", "http://doc.gitlab.com/ce/workflow/migrating_from_svn.html"}を確認してください。
 
+
       .project-import.form-group
-        .col-sm-2
+        %label.control-label プロジェクトをインポート
         .col-sm-10
           - if github_import_enabled?
-            = link_to status_import_github_path do
+            = link_to status_import_github_path, class: 'btn' do
               %i.fa.fa-github
-              GitHubからプロジェクトをインポート
+              GitHub
           - else
-            = link_to '#', class: 'how_to_import_link light' do
+            = link_to '#', class: 'how_to_import_link light btn' do
               %i.fa.fa-github
-              GitHubからプロジェクトをインポート
+              GitHub
             = render 'github_import_modal'
 
-      .project-import.form-group
-        .col-sm-2
-        .col-sm-10
-          - if gitlab_import_enabled?
-            = link_to status_import_gitlab_path do
-              %i.fa.fa-heart
-              GitLab.comからプロジェクトをインポート
-          - elsif request.host != 'gitlab.com'
-            = link_to '#', class: 'how_to_import_link light' do
-              %i.fa.fa-heart
-              GitLab.comからプロジェクトをインポート
-            = render 'gitlab_import_modal'
 
-      .project-import.form-group
-        .col-sm-2
-        .col-sm-10
-          = link_to new_import_gitorious_path do
-            %i.fa.fa-heart
-            Gitorious.orgからプロジェクトをインポート
+          - if bitbucket_import_enabled?
+            = link_to status_import_bitbucket_path, class: 'btn' do
+              %i.fa.fa-bitbucket
+              Bitbucket
+          - else
+            = link_to '#', class: 'how_to_import_link light btn' do
+              %i.fa.fa-bitbucket
+              Bitbucket
+            = render 'bitbucket_import_modal'
+
+          - unless request.host == 'gitlab.com'
+            - if gitlab_import_enabled?
+              = link_to status_import_gitlab_path, class: 'btn' do
+                %i.fa.fa-heart
+                GitLab.com
+            - else
+              = link_to '#', class: 'how_to_import_link light btn' do
+                %i.fa.fa-heart
+                GitLab.com
+              = render 'gitlab_import_modal'
+
+          = link_to new_import_gitorious_path, class: 'btn' do
+            %i.icon-gitorious.icon-gitorious-small
+            Gitorious.org
 
       %hr.prepend-botton-10
 
@@ -90,7 +97,7 @@
           .pull-right
             .light
               複数のプロジェクトを管理するグループが必要ですか？
-              = link_to new_group_path, class: "btn btn-tiny" do
+              = link_to new_group_path, class: "btn btn-xs" do
                 グループを作成
 
 .save-project-loader.hide

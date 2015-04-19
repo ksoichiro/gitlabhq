@@ -1,6 +1,6 @@
 = "マージリクエスト ##{@merge_request.iid} は #{@updated_by.name} にクローズされました"
 
-マージリクエストのURL: #{project_merge_request_url(@merge_request.target_project, @merge_request)}
+マージリクエストのURL: #{namespace_project_merge_request_url(@merge_request.target_project.namespace, @merge_request.target_project, @merge_request)}
 
 = merge_path_description(@merge_request, 'to')
 

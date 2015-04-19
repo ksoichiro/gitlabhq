@@ -1,5 +1,5 @@
 %p
   = "あなたに以下のプロジェクトへの #{@project_member.human_access} レベルのアクセス権が付与されました。"
 %p
-  = link_to project_url(@project) do
+  = link_to namespace_project_url(@project.namespace, @project) do
     = @project.name_with_namespace

@@ -25,7 +25,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def block
     if user.block
-      redirect_to :back, alert: "正常にブロックしました"
+      redirect_to :back, notice: "正常にブロックしました"
     else
       redirect_to :back, alert: "エラーが発生しました。ユーザはブロックされませんでした"
     end
@@ -33,7 +33,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def unblock
     if user.activate
-      redirect_to :back, alert: "正常にブロック解除しました"
+      redirect_to :back, notice: "正常にブロック解除しました"
     else
       redirect_to :back, alert: "エラーが発生しました。ユーザはブロック解除されませんでした"
     end

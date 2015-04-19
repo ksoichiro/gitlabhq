@@ -40,8 +40,8 @@
     %li
       .clearfix
         .pull-right.prepend-top-10
-          = link_to '編集', edit_admin_group_path(group), id: "edit_#{dom_id(group)}", class: "btn btn-small"
-          = link_to '削除', [:admin, group], data: {confirm: "#{group.name}が削除されます。本当に削除しますか？"}, method: :delete, class: "btn btn-small btn-remove"
+          = link_to '編集', edit_admin_group_path(group), id: "edit_#{dom_id(group)}", class: "btn btn-sm"
+          = link_to '削除', [:admin, group], data: {confirm: "#{group.name}が削除されます。本当に削除しますか？"}, method: :delete, class: "btn btn-sm btn-remove"
 
         %h4
           = link_to [:admin, group] do

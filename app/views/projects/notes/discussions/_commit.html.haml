@@ -4,14 +4,15 @@
     .discussion-actions
       = link_to "#", class: "js-toggle-button" do
         %i.fa.fa-chevron-up
-        Show/hide discussion
+        ディスカッションを表示/非表示
     %div
       = link_to_member(@project, note.author, avatar: false)
-      started a discussion on commit
-      = link_to(note.noteable.short_id, project_commit_path(note.project, note.noteable), class: 'monospace')
+      がコミット
+      = link_to(note.noteable.short_id, namespace_project_commit_path(note.project.namespace, note.project, note.noteable), class: 'monospace')
+      でディスカッションを開始しました
     .last-update.hide.js-toggle-content
       - last_note = discussion_notes.last
-      last updated by
+      最終更新:
       = link_to_member(@project, last_note.author, avatar: false)
       %span.discussion-last-update
         #{time_ago_with_tooltip(last_note.updated_at, 'bottom', 'discussion_updated_ago')}

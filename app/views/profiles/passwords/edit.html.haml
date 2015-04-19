@@ -1,4 +1,4 @@
-%h3.page-title パスワード
+%h3.page-title パスワード設定
 %p.light
   - if @user.password_automatically_set?
     パスワードを設定してください。
@@ -35,4 +35,4 @@
         .col-sm-10
           = f.password_field :password_confirmation, required: true, class: 'form-control'
       .form-actions
-        = f.submit 'パスワードを保存', class: "btn btn-save"
+        = f.submit 'パスワードを保存', class: "btn btn-create"

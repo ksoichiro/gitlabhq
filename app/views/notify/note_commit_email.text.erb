@@ -1,6 +1,6 @@
 コミット <%= @commit.short_id %> への新しいコメント
 
-<%= url_for(project_commit_url(@note.project, id: @commit.id, anchor: "note_#{@note.id}")) %>
+<%= url_for(namespace_project_commit_url(@note.project.namespace, @note.project, id: @commit.id, anchor: "note_#{@note.id}")) %>
 
 
 担当者: <%= @note.author_name %>

@@ -2,7 +2,7 @@
   #{@search_results.total_count} 件が見つかりました
   - unless @show_snippets
     - if @project
-      (#{link_to @project.name_with_namespace, @project} プロジェクト内)
+      (#{link_to @project.name_with_namespace, [@project.namespace.becomes(Namespace), @project]} プロジェクト内)
     - elsif @group
       (#{link_to @group.name, @group} グループ内)
 

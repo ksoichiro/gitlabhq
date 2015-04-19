@@ -21,17 +21,20 @@ module Files
       end
 
       edit_file_action = Gitlab::Satellite::EditFileAction.new(current_user, project, ref, path)
-      created_successfully = edit_file_action.commit!(
+      edit_file_action.commit!(
         params[:content],
         params[:commit_message],
-        params[:encoding]
+        params[:encoding],
+        params[:new_branch]
       )
 
-      if created_successfully
-        success
-      else
-        error("ファイルが変更されたため、変更をコミットできませんでした。別のプロセスにファイルが変更されたか、コミットするものがありません")
-      end
+      success
+    rescue Gitlab::Satellite::CheckoutFailed => ex
+      error("'#{ref}'をチェックアウトできなかったため、変更をコミットできませんでした", 400)
+    rescue Gitlab::Satellite::CommitFailed => ex
+      error("変更をコミットできませんでした。コミットするものがない可能性があります", 409)
+    rescue Gitlab::Satellite::PushFailed => ex
+      error("変更をコミットできませんでした。別のプロセスにファイルが変更された可能性があります", 409)
     end
   end
 end

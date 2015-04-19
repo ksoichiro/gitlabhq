@@ -1,7 +1,7 @@
 %h3.page-title
   スニペット
   - if can? current_user, :write_project_snippet, @project
-    = link_to new_project_snippet_path(@project), class: "btn btn-new pull-right", title: "新しいスニペット" do
+    = link_to new_namespace_project_snippet_path(@project.namespace, @project), class: "btn btn-new pull-right", title: "新しいスニペット" do
       新しいスニペットを追加
 
 %p.light

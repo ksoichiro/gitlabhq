@@ -2,7 +2,7 @@
 %p.light 安定ブランチを安全にし、開発者にマージリクエストの利用を強制します。
 %hr
 
-.bs-callout.bs-callout-info
+.alert.alert-info
   %p 保護ブランチは以下の目的のために設計されています。
   %ul
     %li #{link_to "Master", help_page_path("permissions", "permissions"), class: "vlink"}権限のメンバー以外によるプッシュを防ぐ
@@ -11,7 +11,7 @@
   %p プロジェクトの権限についての詳細は #{link_to "こちら", help_page_path("permissions", "permissions"), class: "underlined-link"} からご確認ください。
 
 - if can? current_user, :admin_project, @project
-  = form_for [@project, @protected_branch], html: { class: 'form-horizontal' } do |f|
+  = form_for [@project.namespace.becomes(Namespace), @project, @protected_branch], html: { class: 'form-horizontal' } do |f|
     -if @protected_branch.errors.any?
       .alert.alert-danger
         %ul

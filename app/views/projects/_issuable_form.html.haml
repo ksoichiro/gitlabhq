@@ -20,11 +20,10 @@
                                classes: 'description form-control'
       .col-sm-12.hint
         .pull-left
-          #{link_to 'GitLab Flavored Markdown', help_page_path('markdown', 'markdown'), target: '_blank'}.
+          #{link_to 'GitLab Flavored Markdown', help_page_path('markdown', 'markdown'), target: '_blank'}
           としてパースされます
         .pull-right
-          ドラッグ &amp; ドロップまたは#{link_to 'ファイルを選択', '#', class: 'markdown-selector' }して
-          画像 (JPG, PNG, GIF) を添付
+          ドラッグ &amp; ドロップまたは#{link_to 'ファイルを選択', '#', class: 'markdown-selector' }してファイルを添付
 
       .clearfix
       .error-alert
@@ -50,10 +49,11 @@
         = f.select(:milestone_id, milestone_options(issuable),
           { include_blank: 'マイルストーンを選択' }, { class: 'select2' })
       - else
+        .prepend-top-10
         %span.light オープン中のマイルストーンがありません。
       &nbsp;
       - if can? current_user, :admin_milestone, issuable.project
-        = link_to '新しいマイルストーンを作成', new_project_milestone_path(issuable.project), target: :blank
+        = link_to '新しいマイルストーンを作成', new_namespace_project_milestone_path(issuable.project.namespace, issuable.project), target: :blank
 .form-group
   = f.label :label_ids, class: 'control-label' do
     %i.fa.fa-tag
@@ -63,10 +63,11 @@
       = f.collection_select :label_ids, issuable.project.labels.all, :id, :name,
         { selected: issuable.label_ids }, multiple: true, class: 'select2'
     - else
+      .prepend-top-10
       %span.light ラベルがありません。
     &nbsp;
     - if can? current_user, :admin_label, issuable.project
-      = link_to '新しいラベルを作成', new_project_label_path(issuable.project), target: :blank
+      = link_to '新しいラベルを作成', new_namespace_project_label_path(issuable.project.namespace, issuable.project), target: :blank
 
 .form-actions
   - if !issuable.project.empty_repo? && contribution_guide_url(issuable.project) && !issuable.persisted?
@@ -82,4 +83,4 @@
     - cancel_project = issuable.source_project
   - else
     - cancel_project = issuable.project
-  = link_to 'キャンセル', [cancel_project, issuable], class: 'btn btn-cancel'
+  = link_to 'キャンセル', [cancel_project.namespace.becomes(Namespace), cancel_project, issuable], class: 'btn btn-cancel'

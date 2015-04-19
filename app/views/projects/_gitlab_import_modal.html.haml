@@ -3,7 +3,11 @@
     .modal-content
       .modal-header
         %a.close{href: "#", "data-dismiss" => "modal"} ×
-        %h3 GitLab OAuth インポート
+        %h3 GitLab.com からのプロジェクトのインポート
       .modal-body
-        まずGitLabとの統合をセットアップしてください。
-        = link_to 'GitLabと統合する方法', 'https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/integration/gitlab.md'
+        GitLab.com からのプロジェクトのインポートを有効にするには、
+        - if current_user.admin?
+          あなたが
+        - else
+          管理者が
+        == #{link_to 'OAuthによる統合をセットアップ', 'https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/integration/gitlab.md'}する必要があります。

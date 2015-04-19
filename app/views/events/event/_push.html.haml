@@ -6,7 +6,7 @@
   - if event.rm_ref?
     %strong= event.ref_name
   - else
-    = link_to project_commits_path(event.project, event.ref_name) do
+    = link_to namespace_project_commits_path(event.project.namespace, event.project, event.ref_name) do
       %strong= event.ref_name
   を
   %span.event_label.pushed> #{event.i18n_action_name}
@@ -23,5 +23,5 @@
         %li.commits-stat
           - if event.commits_count > 2
             %span ... and #{event.commits_count - 2} more commits.
-          = link_to project_compare_path(event.project, from: event.commit_from, to: event.commit_to) do
+          = link_to namespace_project_compare_path(event.project.namespace, event.project, from: event.commit_from, to: event.commit_to) do
             %strong 比較 &rarr; #{truncate_sha(event.commit_from)}...#{truncate_sha(event.commit_to)}

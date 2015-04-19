@@ -5,14 +5,18 @@ module NotesHelper
     (@noteable.class.name == note.noteable_type && !note.for_diff_line?)
   end
 
-  def note_target_fields
-    hidden_field_tag(:target_type, @target_type) +
-    hidden_field_tag(:target_id, @target_id)
+  def note_target_fields(note)
+    hidden_field_tag(:target_type, note.noteable.class.name.underscore) +
+    hidden_field_tag(:target_id, note.noteable.id)
   end
 
   def link_to_commit_diff_line_note(note)
     if note.for_commit_diff_line?
-      link_to "#{note.diff_file_name}:L#{note.diff_new_line}", project_commit_path(@project, note.noteable, anchor: note.line_code)
+      link_to(
+        "#{note.diff_file_name}:L#{note.diff_new_line}",
+        namespace_project_commit_path(@project.namespace, @project,
+                                      note.noteable, anchor: note.line_code)
+      )
     end
   end
 
@@ -74,9 +78,9 @@ module NotesHelper
     }
 
     button_tag class: 'btn reply-btn js-discussion-reply-button',
-               data: data, title: 'Add a reply' do
+               data: data, title: '返信を追加' do
       link_text = icon('comment')
-      link_text << ' Reply'
+      link_text << ' 返信'
     end
   end
 end

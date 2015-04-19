@@ -39,9 +39,6 @@ class @Notes
     # reset main target form after submit
     $(document).on "ajax:complete", ".js-main-target-form", @resetMainTargetForm
 
-    # attachment button
-    $(document).on "click", ".js-choose-note-attachment-button", @chooseNoteAttachment
-
     # update the file name when an attachment is selected
     $(document).on "change", ".js-note-attachment-input", @updateFormAttachment
 
@@ -73,7 +70,6 @@ class @Notes
     $(document).off "click", ".js-note-delete"
     $(document).off "click", ".js-note-attachment-delete"
     $(document).off "ajax:complete", ".js-main-target-form"
-    $(document).off "click", ".js-choose-note-attachment-button"
     $(document).off "click", ".js-discussion-reply-button"
     $(document).off "click", ".js-add-diff-note-button"
     $(document).off "visibilitychange"
@@ -172,15 +168,6 @@ class @Notes
     form.find(".js-note-text").val("").trigger "input"
 
     form.find(".js-note-text").data("autosave").reset()
-
-  ###
-  Called when clicking the "Choose File" button.
-
-  Opens the file selection dialog.
-  ###
-  chooseNoteAttachment: ->
-    form = $(this).closest("form")
-    form.find(".js-note-attachment-input").click()
 
   ###
   Shows the main form and does some setup on it.
@@ -438,7 +425,7 @@ class @Notes
     @removeDiscussionNoteForm(form)
 
   updateVotes: ->
-    (new NotesVotes).updateVotes()
+    true
 
   ###
   Called after an attachment file has been selected.
@@ -472,7 +459,7 @@ class @Notes
   updateCloseButton: (e) =>
     textarea = $(e.target)
     form = textarea.parents('form')
-    form.find('.js-note-target-close').text('Close')
+    form.find('.js-note-target-close').text('クローズ')
 
   updateTargetButtons: (e) =>
     textarea = $(e.target)
