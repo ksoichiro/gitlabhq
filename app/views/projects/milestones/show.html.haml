@@ -60,11 +60,12 @@
       参加者
       %span.badge= @users.count
 
-  .pull-right
-    = link_to new_namespace_project_issue_path(@project.namespace, @project, issue: { milestone_id: @milestone.id }), class: "btn  btn-grouped", title: "新しい課題" do
-      %i.fa.fa-plus
-      新しい課題
-    = link_to '課題を確認', namespace_project_issues_path(@milestone.project.namespace, @milestone.project, milestone_id: @milestone.id), class: "btn  edit-milestone-link btn-grouped"
+  - if @project.issues_enabled
+    .pull-right
+      = link_to new_namespace_project_issue_path(@project.namespace, @project, issue: { milestone_id: @milestone.id }), class: "btn  btn-grouped", title: "新しい課題" do
+        %i.fa.fa-plus
+        新しい課題
+      = link_to '課題を確認', namespace_project_issues_path(@milestone.project.namespace, @milestone.project, milestone_id: @milestone.id), class: "btn  edit-milestone-link btn-grouped"
 
 .tab-content
   .tab-pane.active#tab-issues
