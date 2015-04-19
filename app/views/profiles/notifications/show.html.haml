@@ -4,7 +4,6 @@
   これらはグローバルな通知設定です。
 %hr
 
-
 = form_for @user, url: profile_notifications_path, method: :put, html: { class: 'update-notifications form-horizontal global-notifications-form' } do |f|
   -if @user.errors.any?
     %div.alert.alert-danger
@@ -51,7 +50,7 @@
           %p 参加中のプロジェクトからのすべての通知を受け取ります
 
   .form-actions
-    = f.submit '変更を保存', class: "btn btn-save"
+    = f.submit '変更を保存', class: "btn btn-create"
 
 .clearfix
   %hr
@@ -63,13 +62,13 @@
       デフォルトではすべてのプロジェクトとすべてのグループに上記の設定が適用されます。
     %h4 グループ:
     %ul.bordered-list
-      - @group_members.each do |users_group|
-        - notification = Notification.new(users_group)
-        = render 'settings', type: 'group', membership: users_group, notification: notification
+      - @group_members.each do |group_member|
+        - notification = Notification.new(group_member)
+        = render 'settings', type: 'group', membership: group_member, notification: notification
 
   .col-md-6
     %p
-      通知レベルをグループ内のプロジェクト単位に設定するには、
+      所属するグループ内のプロジェクト単位に通知レベルを設定するには、
       %br
       グループだけでなくそのプロジェクトにも参加する必要があります。
     %h4 プロジェクト:

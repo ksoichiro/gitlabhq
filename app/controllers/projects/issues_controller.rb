@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Projects::IssuesController < Projects::ApplicationController
   before_filter :module_enabled
-  before_filter :issue, only: [:edit, :update, :show]
+  before_filter :issue, only: [:edit, :update, :show, :toggle_subscription]
 
   # Allow read any issue
   before_filter :authorize_read_issue!
@@ -21,7 +21,7 @@ class Projects::IssuesController < Projects::ApplicationController
     terms = params['issue_search']
     @issues = get_issues_collection
     @issues = @issues.full_search(terms) if terms.present?
-    @issues = @issues.page(params[:page]).per(20)
+    @issues = @issues.page(params[:page]).per(PER_PAGE)
 
     respond_to do |format|
       format.html
@@ -61,7 +61,7 @@ class Projects::IssuesController < Projects::ApplicationController
     respond_to do |format|
       format.html do
         if @issue.valid?
-          redirect_to project_issue_path(@project, @issue)
+          redirect_to issue_path(@issue)
         else
           render :new
         end
@@ -79,7 +79,7 @@ class Projects::IssuesController < Projects::ApplicationController
       format.js
       format.html do
         if @issue.valid?
-          redirect_to [@project, @issue]
+          redirect_to issue_path(@issue)
         else
           render :edit
         end
@@ -94,8 +94,14 @@ class Projects::IssuesController < Projects::ApplicationController
   end
 
   def bulk_update
-    result = Issues::BulkUpdateService.new(project, current_user, params).execute
+    result = Issues::BulkUpdateService.new(project, current_user, bulk_update_params).execute
     redirect_to :back, notice: "#{result[:count]}件の課題が更新されました"
+  end
+
+  def toggle_subscription
+    @issue.toggle_subscription(current_user)
+    
+    render nothing: true
   end
 
   protected
@@ -129,7 +135,7 @@ class Projects::IssuesController < Projects::ApplicationController
     issue = @project.issues.find_by(id: params[:id])
 
     if issue
-      redirect_to project_issue_path(@project, issue)
+      redirect_to issue_path(issue)
       return
     else
       raise ActiveRecord::RecordNotFound.new
@@ -140,6 +146,15 @@ class Projects::IssuesController < Projects::ApplicationController
     params.require(:issue).permit(
       :title, :assignee_id, :position, :description,
       :milestone_id, :state_event, :task_num, label_ids: []
+    )
+  end
+
+  def bulk_update_params
+    params.require(:update).permit(
+      :issues_ids,
+      :assignee_id,
+      :milestone_id,
+      :state_event
     )
   end
 end

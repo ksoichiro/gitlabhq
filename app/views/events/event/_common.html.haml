@@ -10,7 +10,7 @@
 
   - if event.target
     (
-    %strong>= link_to "##{event.target_iid}", [event.project, event.target]
+    %strong>= link_to "##{event.target_iid}", [event.project.namespace.becomes(Namespace), event.project, event.target]
     )
 
 - if event.target.respond_to?(:title)

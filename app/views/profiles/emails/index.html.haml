@@ -1,5 +1,5 @@
 %h3.page-title
-  メールアドレス
+  メールアドレス設定
 %p.light
   あなたの
   %b プライマリメールアドレス
@@ -25,7 +25,7 @@
         %strong= email.email
         %span.cgray
           #{time_ago_with_tooltip(email.created_at)} に追加
-        = link_to '削除', profile_email_path(email), data: { confirm: '本当に削除しますか？'}, method: :delete, class: 'btn btn-small btn-remove pull-right'
+        = link_to '削除', profile_email_path(email), data: { confirm: '本当に削除しますか？'}, method: :delete, class: 'btn btn-sm btn-remove pull-right'
 
 %h4 メールアドレスの追加
 = form_for 'email', url: profile_emails_path, html: { class: 'form-horizontal' } do |f|
@@ -34,4 +34,4 @@
     .col-sm-10
       = f.text_field :email, class: 'form-control'
   .form-actions
-    = f.submit '追加', class: 'btn btn-create'
+    = f.submit 'メールアドレスを追加', class: 'btn btn-create'

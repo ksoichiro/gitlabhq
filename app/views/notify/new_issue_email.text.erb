@@ -1,5 +1,5 @@
 新しい課題が作成されました。
 
-課題 <%= @issue.iid %>: <%= url_for(project_issue_url(@issue.project, @issue)) %>
+課題 <%= @issue.iid %>: <%= url_for(namespace_project_issue_url(@issue.project.namespace, @issue.project, @issue)) %>
 作成者:  <%= @issue.author_name %>
 担当者:  <%= @issue.assignee_name %>

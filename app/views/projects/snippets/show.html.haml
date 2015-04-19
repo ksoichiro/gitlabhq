@@ -2,7 +2,7 @@
   = @snippet.title
 
   .pull-right
-    = link_to new_project_snippet_path(@project), class: "btn btn-new", title: "新しいスニペット" do
+    = link_to new_namespace_project_snippet_path(@project.namespace, @project), class: "btn btn-new", title: "新しいスニペット" do
       新しいスニペットを追加
 
 %hr
@@ -17,21 +17,21 @@
         = @snippet.author_name
 
   .back-link
-    = link_to project_snippets_path(@project) do
+    = link_to namespace_project_snippets_path(@project.namespace, @project) do
       &larr; プロジェクトスニペット
 
 .file-holder
   .file-title
     %i.fa.fa-file
-    %span.file_name
+    %strong
       = @snippet.file_name
-    .options
+    .file-actions
       .btn-group
         - if can?(current_user, :modify_project_snippet, @snippet)
-          = link_to "編集", edit_project_snippet_path(@project, @snippet), class: "btn btn-small", title: 'スニペットを編集'
-        = link_to "raw", raw_project_snippet_path(@project, @snippet), class: "btn btn-small", target: "_blank"
+          = link_to "編集", edit_namespace_project_snippet_path(@project.namespace, @project, @snippet), class: "btn btn-sm", title: 'スニペットを編集'
+        = link_to "raw", raw_namespace_project_snippet_path(@project.namespace, @project, @snippet), class: "btn btn-sm", target: "_blank"
       - if can?(current_user, :admin_project_snippet, @snippet)
-        = link_to "削除", project_snippet_path(@project, @snippet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-small btn-remove", title: 'スニペットを削除'
+        = link_to "削除", namespace_project_snippet_path(@project.namespace, @project, @snippet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-remove", title: 'スニペットを削除'
   = render 'shared/snippets/blob'
 
 %div#notes= render "projects/notes/notes_with_form"

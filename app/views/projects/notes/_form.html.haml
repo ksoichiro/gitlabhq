@@ -1,5 +1,5 @@
-= form_for [@project, @note], remote: true, html: { :'data-type' => 'json', multipart: true, id: nil, class: "new_note js-new-note-form common-note-form gfm-form" }, authenticity_token: true do |f|
-  = note_target_fields
+= form_for [@project.namespace.becomes(Namespace), @project, @note], remote: true, html: { :'data-type' => 'json', multipart: true, id: nil, class: "new_note js-new-note-form common-note-form gfm-form" }, authenticity_token: true do |f|
+  = note_target_fields(@note)
   = f.hidden_field :commit_id
   = f.hidden_field :line_code
   = f.hidden_field :noteable_id
@@ -11,7 +11,7 @@
 
     .comment-hints.clearfix
       .pull-left コメントは#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"),{ target: '_blank', tabindex: -1 }}形式でパースされます
-      .pull-right ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector', tabindex: -1 }して画像 (JPG, PNG, GIF) を添付
+      .pull-right ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector', tabindex: -1 }してファイルを添付
 
 
   .note-form-actions
@@ -20,13 +20,5 @@
       = yield(:note_actions)
       %a.btn.grouped.js-close-discussion-note-form キャンセル
 
-    .note-form-option.hidden-xs
-      %a.choose-btn.btn.js-choose-note-attachment-button
-        %i.fa.fa-paperclip
-        %span ファイルを選択...
-      &nbsp;
-      %span.file_name.js-attachment-filename
-      = f.file_field :attachment, class: "js-note-attachment-input hidden"
-
 :javascript
-  window.project_image_path_upload = "#{upload_image_project_path @project}";
+  window.project_uploads_path = "#{namespace_project_uploads_path @project.namespace, @project}";

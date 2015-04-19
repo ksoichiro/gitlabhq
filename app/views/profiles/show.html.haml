@@ -57,7 +57,7 @@
       .form-group
         = f.label :bio, '自己紹介', class: "control-label"
         .col-sm-10
-          = f.text_area :bio, rows: 6, class: "form-control", maxlength: 250
+          = f.text_area :bio, rows: 4, class: "form-control", maxlength: 250
           %span.help-block 250字以内で自己紹介してください。
 
     .col-md-5
@@ -78,7 +78,7 @@
                   %br
                   または #{link_to "gravatar.com", "http://gravatar.com"} で変更
             %hr
-            %a.choose-btn.btn.btn-small.js-choose-user-avatar-button
+            %a.choose-btn.btn.btn-sm.js-choose-user-avatar-button
               %i.fa.fa-paperclip
               %span ファイルを選択 ...
             &nbsp;
@@ -87,13 +87,17 @@
             .light ファイルの最大サイズは200KBです
             - if @user.avatar?
               %hr
-              = link_to 'アバターを削除', profile_avatar_path, data: { confirm: "アバターを削除します。よろしいですか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"
+              = link_to 'アバターを削除', profile_avatar_path, data: { confirm: "アバターを削除します。よろしいですか？"}, method: :delete, class: "btn btn-remove btn-sm remove-avatar"
 
       - if @user.public_profile?
-        .bs-callout.bs-callout-info
+        .alert.alert-info
           %h4 公開プロフィール
           %p 公開プロジェクトに所属しているため、あなたのプロフィールは誰でも閲覧可能です。
 
 
-  .form-actions
-    = f.submit '変更を保存', class: "btn btn-save"
+  .row
+    .col-md-7
+      .form-group
+        .col-sm-2 &nbsp;
+        .col-sm-10
+          = f.submit '変更を保存', class: "btn btn-success"

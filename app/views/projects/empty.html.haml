@@ -8,7 +8,7 @@
   %h3
     このプロジェクトのリポジトリは空です
   %h4
-    = link_to project_new_blob_path(@project, 'master'), class: 'btn btn-new btn-lg' do
+    = link_to namespace_project_new_blob_path(@project.namespace, @project, 'master'), class: 'btn btn-new btn-lg' do
       ファイルを追加
     &nbsp;するかコマンドラインからプッシュしてください
 
@@ -45,4 +45,4 @@
 
 - if can? current_user, :remove_project, @project
   .prepend-top-20
-    = link_to 'プロジェクトを削除', @project, data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"
+    = link_to 'プロジェクトを削除', [@project.namespace.becomes(Namespace), @project], data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"

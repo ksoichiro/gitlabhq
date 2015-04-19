@@ -3,15 +3,20 @@
 #
 # Table name: services
 #
-#  id         :integer          not null, primary key
-#  type       :string(255)
-#  title      :string(255)
-#  project_id :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  active     :boolean          default(FALSE), not null
-#  properties :text
-#  template   :boolean          default(FALSE)
+#  id                    :integer          not null, primary key
+#  type                  :string(255)
+#  title                 :string(255)
+#  project_id            :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  active                :boolean          default(FALSE), not null
+#  properties            :text
+#  template              :boolean          default(FALSE)
+#  push_events           :boolean          default(TRUE)
+#  issues_events         :boolean          default(TRUE)
+#  merge_requests_events :boolean          default(TRUE)
+#  tag_push_events       :boolean          default(TRUE)
+#  note_events           :boolean          default(TRUE), not null
 #
 
 class PivotaltrackerService < Service
@@ -38,9 +43,15 @@ class PivotaltrackerService < Service
     ]
   end
 
-  def execute(push)
+  def supported_events
+    %w(push)
+  end
+
+  def execute(data)
+    return unless supported_events.include?(data[:object_kind])
+
     url = 'https://www.pivotaltracker.com/services/v5/source_commits'
-    push[:commits].each do |commit|
+    data[:commits].each do |commit|
       message = {
         'source_commit' => {
           'commit_id' => commit[:id],

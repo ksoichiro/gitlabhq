@@ -21,9 +21,9 @@
             .pull-right
               - if can?(current_user, :manage_group, @group)
                 - if milestone.closed?
-                  = link_to 'マイルストーンを再オープン', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :activate }), method: :put, class: "btn btn-small btn-grouped btn-reopen"
+                  = link_to 'マイルストーンを再オープン', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :activate }), method: :put, class: "btn btn-sm btn-grouped btn-reopen"
                 - else
-                  = link_to 'マイルストーンをクローズ', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :close }), method: :put, class: "btn btn-small btn-close"
+                  = link_to 'マイルストーンをクローズ', group_milestone_path(@group, milestone.safe_title, title: milestone.title, milestone: {state_event: :close }), method: :put, class: "btn btn-sm btn-close"
             %h4
               = link_to_gfm truncate(milestone.title, length: 100), group_milestone_path(@group, milestone.safe_title, title: milestone.title)
             %div
@@ -35,11 +35,11 @@
                   #{milestone.merge_requests_count}件のマージリクエスト
                 &nbsp;
                 %span.light #{milestone.percent_complete}% 完了
-              .progress.progress-info
-                .progress-bar{style: "width: #{milestone.percent_complete}%;"}
+              = milestone_progress_bar(milestone)
               %div
                 %br
-                - milestone.projects.each do |project|
-                  %span.label.label-default
-                    = project.name
+                - milestone.milestones.each do |milestone|
+                  = link_to namespace_project_milestone_path(milestone.project.namespace, milestone.project, milestone) do
+                    %span.label.label-default
+                      = milestone.project.name
   = paginate @group_milestones, theme: "gitlab"

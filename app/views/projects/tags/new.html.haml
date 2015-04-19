@@ -5,7 +5,7 @@
 %h3.page-title
   %i.fa.fa-code-fork
   タグを作成
-= form_tag project_tags_path, method: :post, id: "new-tag-form", class: "form-horizontal" do
+= form_tag namespace_project_tags_path, method: :post, id: "new-tag-form", class: "form-horizontal" do
   .form-group
     = label_tag :tag_name, 'タグ名', class: 'control-label'
     .col-sm-10
@@ -22,7 +22,7 @@
       .light (オプション) メッセージを入力すると注釈付きタグが作成されます。
   .form-actions
     = button_tag 'タグを作成', class: 'btn btn-create', tabindex: 3
-    = link_to 'キャンセル', project_tags_path(@project), class: 'btn btn-cancel'
+    = link_to 'キャンセル', namespace_project_tags_path(@project.namespace, @project), class: 'btn btn-cancel'
 
 :javascript
   disableButtonIfAnyEmptyField($("#new-tag-form"), ".form-control", ".btn-create");

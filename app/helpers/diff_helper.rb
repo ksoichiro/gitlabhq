@@ -123,7 +123,7 @@ module DiffHelper
     params_copy = params.dup
     params_copy[:view] = 'inline'
 
-    link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] != 'parallel' ? 'btn active' : 'btn') do
+    link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] != 'parallel' ? 'btn btn-sm active' : 'btn btn-sm') do
       'インライン'
     end
   end
@@ -132,7 +132,7 @@ module DiffHelper
     params_copy = params.dup
     params_copy[:view] = 'parallel'
 
-    link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] == 'parallel' ? 'btn active' : 'btn') do
+    link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] == 'parallel' ? 'btn active btn-sm' : 'btn btn-sm') do
       'Side-by-side'
     end
   end

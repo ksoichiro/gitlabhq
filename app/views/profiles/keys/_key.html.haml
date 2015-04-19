@@ -9,4 +9,4 @@
     %span.cgray
       #{time_ago_with_tooltip(key.created_at)} に追加
   %td
-    = link_to '削除', path_to_key(key, is_admin), data: { confirm: '本当に削除しますか？'}, method: :delete, class: "btn btn-small btn-remove delete-key pull-right"
+    = link_to '削除', path_to_key(key, is_admin), data: { confirm: '本当に削除しますか？'}, method: :delete, class: "btn btn-sm btn-remove delete-key pull-right"

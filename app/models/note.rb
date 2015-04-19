@@ -60,8 +60,7 @@ class Note < ActiveRecord::Base
 
   class << self
     def create_status_change_note(noteable, project, author, status, source)
-      #{i18n_status_change_action}
-      body = "_#{source.gfm_reference + 'が' if source}#{i18n_status_change_action}_"
+      body = "_#{source.gfm_reference + 'が' if source}#{i18n_status_change_action(status)}_"
 
       create(
         noteable: noteable,
@@ -151,17 +150,44 @@ class Note < ActiveRecord::Base
       )
     end
 
-    def create_new_commits_note(noteable, project, author, commits)
-      body = "#{commits.size}件のコミットを追加しました:\n\n"
+    def create_new_commits_note(merge_request, project, author, new_commits, existing_commits = [], oldrev = nil)
+      total_count = new_commits.length + existing_commits.length
+      body = "#{total_count }件のコミットを追加しました:\n\n"
 
-      commits.each do |commit|
+      if existing_commits.length > 0
+        commit_ids =
+          if existing_commits.length == 1
+            existing_commits.first.short_id
+          else
+            if oldrev
+              "#{Commit.truncate_sha(oldrev)}...#{existing_commits.last.short_id}"
+            else
+              "#{existing_commits.first.short_id}..#{existing_commits.last.short_id}"
+            end
+          end
+
+        commits_text = ActionController::Base.helpers.pluralize(existing_commits.length, 'commit')
+
+        branch = 
+          if merge_request.for_fork?
+            "#{merge_request.target_project_namespace}:#{merge_request.target_branch}"
+          else
+            merge_request.target_branch
+          end
+
+        message = "* #{commit_ids} - _#{commits_text} from branch `#{branch}`_"
+        body << message
+        body << "\n"
+      end
+
+      new_commits.each do |commit|
         message = "* #{commit.short_id} - #{commit.title}"
         body << message
         body << "\n"
       end
 
       create(
-        noteable: noteable,
+        noteable: merge_request,
         project: project,
         author: author,
         note: body,
@@ -285,6 +311,19 @@ class Note < ActiveRecord::Base
         end
       end
     end
+
+    def i18n_status_change_action(status)
+      case status
+      when "opened"
+        "オープンしました"
+      when "reopened"
+        "再オープンしました"
+      when "closed"
+        "クローズしました"
+      else
+        status
+      end
+    end
   end
 
   def commit_author
@@ -305,6 +344,10 @@ class Note < ActiveRecord::Base
     @diff ||= noteable.diffs.find do |d|
       Digest::SHA1.hexdigest(d.new_path) == diff_file_index if d.new_path
     end
+  end
+
+  def hook_attrs
+    attributes
   end
 
   def set_diff
@@ -408,19 +451,19 @@ class Note < ActiveRecord::Base
     prev_lines = []
 
     diff_lines.each do |line|
-      if generate_line_code(line) != self.line_code
-        if line.type == "match"
-          prev_lines.clear
-          prev_match_line = line
-        else
-          prev_lines.push(line)
-          prev_lines.shift if prev_lines.length >= max_number_of_lines
-        end
+      if line.type == "match"
+        prev_lines.clear
+        prev_match_line = line
       else
         prev_lines << line
-        return prev_lines
+        
+        break if generate_line_code(line) == self.line_code
+
+        prev_lines.shift if prev_lines.length >= max_number_of_lines
       end
     end
+
+    prev_lines
   end
 
   def diff_lines
@@ -463,6 +506,10 @@ class Note < ActiveRecord::Base
 
   def for_merge_request_diff_line?
     for_merge_request? && for_diff_line?
+  end
+
+  def for_project_snippet?
+    noteable_type == "Snippet"
   end
 
   # override to return commits, which are not active record
@@ -553,18 +600,5 @@ class Note < ActiveRecord::Base
 
   def editable?
     !read_attribute(:system)
-  end
-
-  def i18n_status_change_action(status)
-    case status
-    when "opened"
-      "オープンしました"
-    when "reopened"
-      "再オープンしました"
-    when "closed"
-      "クローズしました"
-    else
-      status
-    end
   end
 end

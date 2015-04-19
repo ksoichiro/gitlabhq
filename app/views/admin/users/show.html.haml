@@ -46,7 +46,7 @@
               %li
                 %span.light セカンダリメールアドレス:
                 %strong= email.email
-                = link_to remove_email_admin_user_path(@user, email), data: { confirm: "Are you sure you want to remove #{email.email}?" }, method: :delete, class: "btn-tiny btn btn-remove pull-right", title: 'Remove secondary email', id: "remove_email_#{email.id}" do
+                = link_to remove_email_admin_user_path(@user, email), data: { confirm: "Are you sure you want to remove #{email.email}?" }, method: :delete, class: "btn-xs btn btn-remove pull-right", title: 'Remove secondary email', id: "remove_email_#{email.id}" do
                   %i.fa.fa-times
 
             %li
@@ -108,46 +108,49 @@
       .col-md-6
         - unless @user == current_user
           - if @user.blocked?
-            .alert.alert-info
-              %h4 このユーザはブロックされています
-              %h4 このユーザをブロック
-              %p ユーザをブロックすると以下の影響があります。
-              %ul
-                %li ユーザはログインできません。
-                %li ユーザはGitリポジトリにアクセスできません。
-                %li ユーザは参加中のプロジェクトとグループから削除されます。
-                %li ユーザ個人のプロジェクトから離脱します。
-                %li ユーザが所有するグループから離脱します。
-              %br
-              = link_to 'ブロック解除', unblock_admin_user_path(@user), method: :put, class: "btn btn-new", data: { confirm: '本当に解除しますか？' }
+            .panel.panel-info
+              .panel-heading
+                このユーザはブロックされています
+              .panel-body
+                %p ユーザをブロックすると以下の影響があります。
+                %ul
+                  %li ユーザはログインできません。
+                  %li ユーザはGitリポジトリにアクセスできません。
+                  %li パーソナルプロジェクトが残されます。
+                  %li ユーザが所有するグループが残されます。
+                %br
+                = link_to 'ブロック解除', unblock_admin_user_path(@user), method: :put, class: "btn btn-info", data: { confirm: '本当に解除しますか？' }
           - else
-            .alert.alert-warning
-              %h4 このユーザをブロック
-              %p ユーザをブロックすると以下の効果/影響があります。
-              %ul
-                %li ユーザはログインできません。
-                %li ユーザはGitリポジトリにアクセスできません。
-                %li ユーザは参加中のプロジェクトとグループから削除されます。
-                %li ユーザ個人のプロジェクトから離脱します。
-                %li ユーザが所有するグループから離脱します。
-              %br
-              = link_to 'このユーザをブロック', block_admin_user_path(@user), data: { confirm: 'このユーザはブロックされます！本当にブロックしますか？' }, method: :put, class: "btn btn-remove"
+            .panel.panel-warning
+              .panel-heading
+                このユーザをブロック
+              .panel-body
+                %p ユーザをブロックすると以下の影響があります。
+                %ul
+                  %li ユーザはログインできません。
+                  %li ユーザはGitリポジトリにアクセスできません。
+                  %li ユーザは参加中のプロジェクトとグループから削除されます。
+                  %li パーソナルプロジェクトが残されます。
+                  %li ユーザが所有するグループが残されます。
+                %br
+                = link_to 'このユーザをブロック', block_admin_user_path(@user), data: { confirm: 'このユーザはブロックされます！本当にブロックしますか？' }, method: :put, class: "btn btn-warning"
 
-          .alert.alert-danger
-            %h4
+          .panel.panel-danger
+            .panel-heading
               ユーザの削除
-            %p ユーザを削除すると以下の影響があります。
-            %ul
-              %li このユーザが作成した課題, スニペット, コメントといったすべてのコンテンツが削除されます。
-              - rp = @user.personal_projects.count
-              - unless rp.zero?
-                %li #{rp}個の個人プロジェクトが削除され、復元できなくなります。
-              - if @user.solo_owned_groups.present?
-                %li
-                  以下のグループと、グループ内のすべてのコンテンツが削除されます。
-                  %strong #{@user.solo_owned_groups.map(&:name).join(', ')}
-            %br
-            = link_to 'ユーザを削除', [:admin, @user], data: { confirm: "ユーザ #{@user.name} は削除されます！本当に削除しますか？" }, method: :delete, class: "btn btn-remove"
+            .panel-body
+              %p ユーザを削除すると以下の影響があります。
+              %ul
+                %li このユーザが作成した課題, スニペット, コメントといったすべてのコンテンツが削除されます。
+                - rp = @user.personal_projects.count
+                - unless rp.zero?
+                  %li #{rp}個のパーソナルプロジェクトが削除され、復元できなくなります。
+                - if @user.solo_owned_groups.present?
+                  %li
+                    以下のグループと、グループ内のすべてのコンテンツが削除されます。
+                    %strong #{@user.solo_owned_groups.map(&:name).join(', ')}
+              %br
+              = link_to 'ユーザを削除', [:admin, @user], data: { confirm: "ユーザ #{@user.name} は削除されます！本当に削除しますか？" }, method: :delete, class: "btn btn-remove"
 
   #profile.tab-pane
     .row
@@ -171,15 +174,15 @@
       .panel.panel-default
         .panel-heading グループ:
         %ul.well-list
-          - @user.group_members.each do |user_group|
-            - group = user_group.group
+          - @user.group_members.each do |group_member|
+            - group = group_member.group
             %li.group_member
-              %span{class: ("list-item-name" unless user_group.owner?)}
+              %span{class: ("list-item-name" unless group_member.owner?)}
                 %strong= link_to group.name, admin_group_path(group)
               .pull-right
-                %span.light= user_group.human_access
-                - unless user_group.owner?
-                  = link_to group_group_member_path(group, user_group), data: { confirm: remove_user_from_group_message(group, @user) }, method: :delete, remote: true, class: "btn-tiny btn btn-remove", title: 'グループからユーザを削除' do
+                %span.light= group_member.human_access
+                - unless group_member.owner?
+                  = link_to group_group_member_path(group, group_member), data: { confirm: remove_user_from_group_message(group, @user) }, method: :delete, remote: true, class: "btn-xs btn btn-remove", title: 'グループからユーザを削除' do
                     %i.fa.fa-times.fa-inverse
     - else
       .nothing-here-block このユーザにはグループがありません
@@ -204,21 +207,21 @@
           .panel-heading 参加中のプロジェクト (#{@joined_projects.count})
           %ul.well-list
             - @joined_projects.sort_by(&:name_with_namespace).each do |project|
-              - tm = project.team.find_tm(@user.id)
+              - member = project.team.find_member(@user.id)
               %li.project_member
                 .list-item-name
-                  = link_to admin_project_path(project), class: dom_class(project) do
+                  = link_to admin_namespace_project_path(project.namespace, project), class: dom_class(project) do
                     = project.name_with_namespace
 
-                - if tm
+                - if member
                   .pull-right
-                    - if tm.owner?
+                    - if member.owner?
                       %span.light 所有者
                     - else
-                      %span.light= tm.human_access
+                      %span.light= member.human_access
 
-                      - if tm.respond_to? :project
-                        = link_to project_team_member_path(project, @user), data: { confirm: remove_from_project_team_message(project, @user) }, remote: true, method: :delete, class: "btn-tiny btn btn-remove", title: 'プロジェクトからユーザを削除' do
+                      - if member.respond_to? :project
+                        = link_to namespace_project_project_member_path(project.namespace, project, @user), data: { confirm: remove_from_project_team_message(project, @user) }, remote: true, method: :delete, class: "btn-xs btn btn-remove", title: 'プロジェクトからユーザを削除' do
                           %i.fa.fa-times
   #ssh-keys.tab-pane
     = render 'profiles/keys/key_table', admin: true

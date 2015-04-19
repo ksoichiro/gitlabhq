@@ -41,4 +41,4 @@ GitLabは選択されたプロジェクトを **公開** または **内部の�
 
 ## 公開または内部プロジェクトの利用を制限する
 
-[gitlab.yml](https://gitlab.com/gitlab-org/gitlab-ce/blob/dbd88d453b8e6c78a423fa7e692004b1db6ea069/config/gitlab.yml.example#L64)では、メンバーが誤ってコードを公開してしまわないように、GitLabの全体インストールで公開プロジェクトまたは公開・内部プロジェクトを無効化するように設定することができます。
+[gitlab.yml](https://gitlab.com/gitlab-org/gitlab-ce/blob/dbd88d453b8e6c78a423fa7e692004b1db6ea069/config/gitlab.yml.example#L64)では、メンバーが誤ってコードを公開してしまわないように、GitLabの全体インストールで公開プロジェクトまたは公開・内部プロジェクトを無効化するように設定することができます。制限された可視性設定は管理者ユーザには適用されません。

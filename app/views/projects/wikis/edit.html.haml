@@ -9,5 +9,5 @@
 
 .pull-right
   - if @page.persisted? && can?(current_user, :admin_wiki, @project)
-    = link_to project_wiki_path(@project, @page), data: { confirm: "本当にこのページを削除しますか？"}, method: :delete, class: "btn btn-small btn-remove" do
+    = link_to namespace_project_wiki_path(@project.namespace, @project, @page), data: { confirm: "本当にこのページを削除しますか？"}, method: :delete, class: "btn btn-sm btn-remove" do
       このページを削除

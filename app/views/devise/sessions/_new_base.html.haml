@@ -2,11 +2,11 @@
   = f.text_field :login, class: "form-control top", placeholder: "ユーザ名またはメールアドレス", autofocus: "autofocus"
   = f.password_field :password, class: "form-control bottom", placeholder: "パスワード"
   - if devise_mapping.rememberable?
-    .remember-me
-      %label.checkbox.remember_me{for: "user_remember_me"}
+    .remember-me.checkbox
+      %label{for: "user_remember_me"}
         = f.check_box :remember_me
         %span パスワードを記憶
-        .pull-right
-          = link_to "パスワードを忘れた場合", new_password_path(resource_name)
+      .pull-right
+        = link_to "パスワードを忘れた場合", new_password_path(resource_name)
   %div
     = f.submit "サインイン", class: "btn btn-save"

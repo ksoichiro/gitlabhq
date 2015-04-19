@@ -10,7 +10,7 @@
 .account-page
   %fieldset.update-token
     %legend
-      プライベートトークン
+      プライベートトークンのリセット
     %div
       = form_for @user, url: reset_private_token_profile_path, method: :put do |f|
         .data
@@ -26,7 +26,7 @@
             - if current_user.private_token
               = text_field_tag "token", current_user.private_token, class: "form-control"
               %div
-                = f.submit 'リセット', data: { confirm: "リセットしてよろしいですか？" }, class: "btn btn-primary btn-build-token"
+                = f.submit 'プライベートトークンをリセット', data: { confirm: "リセットしてよろしいですか？" }, class: "btn btn-primary btn-build-token"
             - else
               %span トークンがありません。「生成」をクリックして生成してください。
               = f.submit '生成', class: "btn success btn-build-token"
@@ -44,7 +44,7 @@
   - if show_profile_username_tab?
     %fieldset.update-username
       %legend
-        ユーザ名
+        ユーザ名の変更
       = form_for @user, url: update_username_profile_path,  method: :put, remote: true do |f|
         %p
           注意：ユーザ名を変更すると、あなたの所有するすべてのプロジェクトのパスが変更されます。
@@ -58,7 +58,7 @@
         %p.light
           = user_url(@user)
         %div
-          = f.submit 'ユーザ名を保存', class: "btn btn-save"
+          = f.submit 'ユーザ名を保存', class: "btn btn-warning"
 
   - if show_profile_remove_tab?
     %fieldset.remove-account

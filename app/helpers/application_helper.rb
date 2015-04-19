@@ -59,10 +59,8 @@ module ApplicationHelper
         Project.find_with_namespace(project_id)
       end
 
-    if project.avatar.present?
-      image_tag project.avatar.url, options
-    elsif project.avatar_in_git
-      image_tag project_avatar_path(project), options
+    if project.avatar_url
+      image_tag project.avatar_url, options
     else # generated icon
       project_identicon(project, options)
     end
@@ -89,15 +87,6 @@ module ApplicationHelper
     end
   end
 
-  def group_icon(group_path)
-    group = Group.find_by(path: group_path)
-    if group && group.avatar.present?
-      group.avatar.url
-    else
-      image_path('no_group_avatar.png')
-    end
-  end
-
   def avatar_icon(user_email = '', size = nil)
     user = User.find_by(email: user_email)
 
@@ -121,24 +110,24 @@ module ApplicationHelper
     if project.repo_exists?
       time_ago_with_tooltip(project.repository.commit.committed_date)
     else
-      'なし'
+      'Never'
     end
   rescue
-    'なし'
+    'Never'
   end
 
   def grouped_options_refs
     repository = @project.repository
 
     options = [
-      ['ブランチ', repository.branch_names],
-      ['タグ', VersionSorter.rsort(repository.tag_names)]
+      ['Branches', repository.branch_names],
+      ['Tags', VersionSorter.rsort(repository.tag_names)]
     ]
 
     # If reference is commit id - we should add it to branch/tag selectbox
     if(@ref && !options.flatten.include?(@ref) &&
        @ref =~ /^[0-9a-zA-Z]{6,52}$/)
-      options << ['コミット', [@ref]]
+      options << ['Commit', [@ref]]
     end
 
     grouped_options_for_select(options, @ref || @project.default_branch)
@@ -215,11 +204,11 @@ module ApplicationHelper
 
   def search_placeholder
     if @project && @project.persisted?
-      'プロジェクト内を検索'
+      'このプロジェクトを検索'
     elsif @snippet || @snippets || @show_snippets
       'スニペットを検索'
     elsif @group && @group.persisted?
-      'グループ内を検索'
+      'このグループを検索'
     else
       '検索'
     end
@@ -232,7 +221,7 @@ module ApplicationHelper
   def time_ago_with_tooltip(date, placement = 'top', html_class = 'time_ago')
     capture_haml do
       haml_tag :time, date.to_s,
-        class: html_class, datetime: date.getutc.iso8601, title: date.stamp('2011/08/21 09:23pm'),
+        class: html_class, datetime: date.getutc.iso8601, title: date.stamp('Aug 21, 2011 9:23pm'),
         data: { toggle: 'tooltip', placement: placement }
 
       haml_tag :script, "$('." + html_class + "').timeago().tooltip()"

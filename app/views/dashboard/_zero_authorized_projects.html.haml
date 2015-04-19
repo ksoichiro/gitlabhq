@@ -1,3 +1,4 @@
+- publicish_project_count = Project.publicish(current_user).count
 %h3.page-title GitLabへようこそ！
 %p.light GitLabはSelf HostedなGit管理アプリケーションです。
 %hr
@@ -36,7 +37,7 @@
           %i.fa.fa-plus
           新しいグループ
 
--if @publicish_project_count > 0
+-if publicish_project_count > 0
   %hr
   %div
     .dashboard-intro-icon
@@ -44,7 +45,7 @@
     .dashboard-intro-text
       %p.slead
         サーバ上に
-        %strong= @publicish_project_count
+        %strong= publicish_project_count
         件の公開プロジェクトがあります。
         %br
         公開プロジェクトは全員に読み取り専用でのアクセスを許可する簡単な方法です。

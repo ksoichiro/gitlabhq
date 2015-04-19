@@ -17,7 +17,7 @@
               %i.fa.fa-pencil-square-o
               編集
             &nbsp;
-            = link_to project_note_path(@project, note), title: "コメントを削除", method: :delete, data: { confirm: '本当にコメントを削除しますか？' }, remote: true, class: "danger js-note-delete" do
+            = link_to namespace_project_note_path(@project.namespace, @project, note), title: "コメントを削除", method: :delete, data: { confirm: '本当にコメントを削除しますか？' }, remote: true, class: "danger js-note-delete" do
               %i.fa.fa-trash-o.cred
               削除
         - if note.system
@@ -57,13 +57,13 @@
       - if note.attachment.url
         .note-attachment
           - if note.attachment.image?
-            = link_to note.attachment.secure_url, target: '_blank' do
-              = image_tag note.attachment.secure_url, class: 'note-image-attach'
+            = link_to note.attachment.url, target: '_blank' do
+              = image_tag note.attachment.url, class: 'note-image-attach'
           .attachment
-            = link_to note.attachment.secure_url, target: "_blank" do
+            = link_to note.attachment.url, target: "_blank" do
               %i.fa.fa-paperclip
               = note.attachment_identifier
-              = link_to delete_attachment_project_note_path(@project, note),
+              = link_to delete_attachment_namespace_project_note_path(@project.namespace, @project, note),
                 title: "添付ファイルの削除", method: :delete, remote: true, data: { confirm: '本当に添付ファイルを削除しますか？' }, class: "danger js-note-attachment-delete" do
                 %i.fa.fa-trash-o.cred
       .clear

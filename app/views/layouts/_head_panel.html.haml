@@ -3,7 +3,7 @@
     .container
       %div.app_logo
         = link_to root_path, class: "home has_bottom_tooltip", title: "ダッシュボード" do
-          %h1 GITLAB
+          = brand_header_logo
       %h1.title= title
 
       %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
@@ -42,7 +42,7 @@
             = link_to destroy_user_session_path, class: "logout", method: :delete, title: "ログアウト", class: 'has_bottom_tooltip', 'data-original-title' => 'ログアウト'  do
               %i.fa.fa-sign-out
           %li.hidden-xs
-            = link_to current_user, class: "profile-pic", id: 'profile-pic' do
+            = link_to current_user, class: "profile-pic has_bottom_tooltip", id: 'profile-pic', 'data-original-title' => 'あなたのプロフィール' do
               = image_tag avatar_icon(current_user.email, 60), alt: 'ユーザアクティビティ'
 
 = render 'shared/outdated_browser'

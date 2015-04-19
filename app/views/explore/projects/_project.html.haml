@@ -2,7 +2,7 @@
   %h4.project-title
     .project-access-icon
       = visibility_level_icon(project.visibility_level)
-    = link_to project.name_with_namespace, project
+    = link_to project.name_with_namespace, [project.namespace.becomes(Namespace), project]
     %span.pull-right
       %i.fa.fa-star
       = project.star_count
@@ -14,11 +14,11 @@
 
     .repo-info
       - unless project.empty_repo?
-        = link_to "#{project.repository.round_commit_count}コミット", project_commits_path(project, project.default_branch)
+        = link_to "#{project.repository.round_commit_count} コミット", namespace_project_commits_path(project.namespace, project, project.default_branch)
         &middot;
-        = link_to "#{project.repository.branch_names.count}ブランチ", project_branches_path(project)
+        = link_to "#{project.repository.branch_names.count} ブランチ", namespace_project_branches_path(project.namespace, project)
         &middot;
-        = link_to "#{project.repository.tag_names.count}タグ", project_tags_path(project)
+        = link_to "#{project.repository.tag_names.count} タグ", namespace_project_tags_path(project.namespace, project)
       - else
         %i.fa.fa-exclamation-triangle
         空のリポジトリ

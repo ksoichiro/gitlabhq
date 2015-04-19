@@ -1,15 +1,15 @@
 %ul.nav.nav-tabs
   = nav_link(controller: [:commit, :commits]) do
-    = link_to 'コミット', project_commits_path(@project, @repository.root_ref)
+    = link_to 'コミット', namespace_project_commits_path(@project.namespace, @project, @repository.root_ref)
   = nav_link(controller: :compare) do
-    = link_to '比較', project_compare_index_path(@project, from: @repository.root_ref, to: @ref || @repository.root_ref)
+    = link_to '比較', namespace_project_compare_index_path(@project.namespace, @project, from: @repository.root_ref, to: @ref || @repository.root_ref)
 
   = nav_link(html_options: {class: branches_tab_class}) do
-    = link_to project_branches_path(@project) do
+    = link_to namespace_project_branches_path(@project.namespace, @project) do
       ブランチ
       %span.badge.js-totalbranch-count= @repository.branches.size
 
   = nav_link(controller: :tags) do
-    = link_to project_tags_path(@project) do
+    = link_to namespace_project_tags_path(@project.namespace, @project) do
       タグ
       %span.badge.js-totaltags-count= @repository.tags.length

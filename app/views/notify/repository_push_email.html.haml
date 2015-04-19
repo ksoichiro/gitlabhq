@@ -1,30 +1,66 @@
-%h3 #{@author.name} が #{link_to @project.name_with_namespace, project_url(@project)} の #{@branch} ブランチへプッシュしました
+%h3 #{@author.name} が #{link_to @project.name_with_namespace, namespace_project_url(@project.namespace, @project)} の #{@branch} ブランチへプッシュしました
 
-%h4 コミット:
+- if @reverse_compare
+  %p
+    %strong 警告:
+    このプッシュは新しいコミットを含みませんが、以下のコミットと変更を削除するために強制プッシュされました。
+
+%h4
+  = @reverse_compare ? "削除されたコミット:" : "コミット:"
 
 %ul
   - @commits.each do |commit|
     %li
-      %strong #{link_to commit.short_id, project_commit_url(@project, commit)}
+      %strong #{link_to commit.short_id, namespace_project_commit_url(@project.namespace, @project, commit)}
       %div
         %span by #{commit.author_name}
         %i at #{commit.committed_date.strftime("%Y-%m-%dT%H:%M:%SZ")}
-      %pre #{commit.safe_message}
+      %pre.commit-message 
+        = commit.safe_message
 
-%h4 Changes:
-- @diffs.each do |diff|
-  %li
-    %strong
-      - if diff.old_path == diff.new_path
-        = diff.new_path
-      - elsif diff.new_path && diff.old_path
-        #{diff.old_path} &rarr; #{diff.new_path}
-      - else
-        = diff.new_path || diff.old_path
-    %hr
-    %pre
-      = color_email_diff(diff.diff)
-    %br
+%h4 #{@diffs.count}件の変更されたファイル:
+
+%ul
+  - @diffs.each_with_index do |diff, i|
+    %li.file-stats
+      %a{href: "#{@target_url if @disable_diffs}#diff-#{i}" }
+        - if diff.deleted_file
+          %span.deleted-file
+            &minus;
+            = diff.old_path
+        - elsif diff.renamed_file
+          = diff.old_path
+          &rarr;
+          = diff.new_path
+        - elsif diff.new_file
+          %span.new-file
+            &plus;
+            = diff.new_path
+        - else
+          = diff.new_path
+
+- unless @disable_diffs
+  %h4 変更:
+  - @diffs.each_with_index do |diff, i|
+    %li{id: "diff-#{i}"}
+      %a{href: @target_url + "#diff-#{i}"}
+        - if diff.deleted_file
+          %strong
+            = diff.old_path
+          deleted
+        - elsif diff.renamed_file
+          %strong
+            = diff.old_path
+          &rarr;
+          %strong
+            = diff.new_path
+        - else
+          %strong
+            = diff.new_path
+      %hr
+      %pre
+        = color_email_diff(diff.diff)
+      %br
 
 - if @compare.timeout
   %h5 差分が大きいため、パフォーマンス悪化を防ぐため差分は表示されていません。

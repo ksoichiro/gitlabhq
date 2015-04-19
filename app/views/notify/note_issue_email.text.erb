@@ -1,6 +1,6 @@
 課題 <%= @issue.iid %> への新しいコメント
 
-<%= url_for(project_issue_url(@issue.project, @issue, anchor: "note_#{@note.id}")) %>
+<%= url_for(namespace_project_issue_url(@issue.project.namespace, @issue.project, @issue, anchor: "note_#{@note.id}")) %>
 
 
 担当者: <%= @note.author_name %>
