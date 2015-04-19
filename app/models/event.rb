@@ -355,7 +355,7 @@ class Event < ActiveRecord::Base
         "コミット"
       when "Issue"
         "課題"
-      when "MergeRequest"
+      when "Mergerequest"
         "マージリクエスト"
       else
         target.noteable_type.titleize
