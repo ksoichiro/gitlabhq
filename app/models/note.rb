@@ -60,8 +60,7 @@ class Note < ActiveRecord::Base
 
   class << self
     def create_status_change_note(noteable, project, author, status, source)
-      #{i18n_status_change_action}
-      body = "_#{source.gfm_reference + 'が' if source}#{i18n_status_change_action}_"
+      body = "_#{source.gfm_reference + 'が' if source}#{i18n_status_change_action(status)}_"
 
       create(
         noteable: noteable,
@@ -283,6 +282,19 @@ class Note < ActiveRecord::Base
             "\\1#{mentioning_project.path_with_namespace}"
           )
         end
+      end
+    end
+
+    def i18n_status_change_action(status)
+      case status
+      when "opened"
+        "オープンしました"
+      when "reopened"
+        "再オープンしました"
+      when "closed"
+        "クローズしました"
+      else
+        status
       end
     end
   end
@@ -553,18 +565,5 @@ class Note < ActiveRecord::Base
 
   def editable?
     !read_attribute(:system)
-  end
-
-  def i18n_status_change_action(status)
-    case status
-    when "opened"
-      "オープンしました"
-    when "reopened"
-      "再オープンしました"
-    when "closed"
-      "クローズしました"
-    else
-      status
-    end
   end
 end
