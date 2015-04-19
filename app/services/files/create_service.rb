@@ -4,18 +4,10 @@ require_relative "base_service"
 module Files
   class CreateService < BaseService
     def execute
-      allowed = if project.protected_branch?(ref)
-                  can?(current_user, :push_code_to_protected_branches, project)
-                else
-                  can?(current_user, :push_code, project)
-                end
+      allowed = Gitlab::GitAccess.can_push_to_branch?(current_user, project, ref)
 
       unless allowed
         return error("このブランチにファイルを作成する権限がありません")
-      end
-
-      unless repository.branch_names.include?(ref)
-        return error("ブランチ上にしかファイルは作成できません")
       end
 
       file_name = File.basename(path)
@@ -28,11 +20,20 @@ module Files
         )
       end
 
-      blob = repository.blob_at_branch(ref, file_path)
+      if project.empty_repo?
+        # everything is ok because repo does not have a commits yet
+      else
+        unless repository.branch_names.include?(ref)
+          return error("You can only create files if you are on top of a branch")
+        end
 
-      if blob
-        return error("この名前のファイルが存在しないため、変更をコミットできません")
+        blob = repository.blob_at_branch(ref, file_path)
+
+        if blob
+          return error("この名前のファイルが存在しないため、変更をコミットできません")
+        end
       end
+
 
       new_file_action = Gitlab::Satellite::NewFileAction.new(current_user, project, ref, file_path)
       created_successfully = new_file_action.commit!(

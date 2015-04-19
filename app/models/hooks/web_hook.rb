@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: web_hooks
@@ -16,6 +17,7 @@
 #
 
 class WebHook < ActiveRecord::Base
+  include Sortable
   include HTTParty
 
   default_value_for :push_events, true
@@ -27,7 +29,7 @@ class WebHook < ActiveRecord::Base
   default_timeout Gitlab.config.gitlab.webhook_timeout
 
   validates :url, presence: true,
-                  format: { with: URI::regexp(%w(http https)), message: "should be a valid url" }
+                  format: { with: URI::regexp(%w(http https)), message: "は有効なURLでなければなりません" }
 
   def execute(data)
     parsed_url = URI.parse(url)
@@ -44,11 +46,11 @@ class WebHook < ActiveRecord::Base
       }
       WebHook.post(post_url,
                    body: data.to_json,
-                   headers: {"Content-Type" => "application/json"},
+                   headers: { "Content-Type" => "application/json" },
                    verify: false,
                    basic_auth: auth)
     end
-  rescue SocketError, Errno::ECONNREFUSED, Net::OpenTimeout => e
+  rescue SocketError, Errno::ECONNRESET, Errno::ECONNREFUSED, Net::OpenTimeout => e
     logger.error("WebHook Error => #{e}")
     false
   end

@@ -24,16 +24,19 @@ WebフックをSSLエンドポイントへ送信した場合、自己署名の�
   "project_id": 15,
   "repository": {
     "name": "Diaspora",
-    "url": "git@example.com:diaspora.git",
+    "url": "git@example.com:mike/diasporadiaspora.git",
     "description": "",
-    "homepage": "http://example.com/diaspora"
+    "homepage": "http://example.com/mike/diaspora", 
+    "git_http_url":"http://example.com/mike/diaspora.git",
+    "git_ssh_url":"git@example.com:mike/diaspora.git",
+    "visibility_level":0
   },
   "commits": [
     {
       "id": "b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
       "message": "Update Catalan translation to e38cb41.",
       "timestamp": "2011-12-12T14:27:31+02:00",
-      "url": "http://example.com/diaspora/commits/b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
+      "url": "http://example.com/mike/diaspora/commit/b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
       "author": {
         "name": "Jordi Mallach",
         "email": "jordi@softcatala.org"
@@ -43,7 +46,7 @@ WebフックをSSLエンドポイントへ送信した場合、自己署名の�
       "id": "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
       "message": "fixed readme",
       "timestamp": "2012-01-03T23:36:29+02:00",
-      "url": "http://example.com/diaspora/commits/da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
+      "url": "http://example.com/mike/diaspora/commit/da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
       "author": {
         "name": "GitLab dev user",
         "email": "gitlabdev@dv6700.(none)"
@@ -72,8 +75,13 @@ WebフックをSSLエンドポイントへ送信した場合、自己署名の�
     "name": "jsmith",
     "url": "ssh://git@example.com/jsmith/example.git",
     "description": "",
-    "homepage": "http://example.com/jsmith/example"
-  }
+    "homepage": "http://example.com/jsmith/example",
+    "git_http_url":"http://example.com/jsmith/example.git",
+    "git_ssh_url":"git@example.com:jsmith/example.git",
+    "visibility_level":0
+  },
+  "commits": [],
+  "total_commits_count": 0
 }
 ```
 
@@ -166,7 +174,9 @@ WebフックをSSLエンドポイントへ送信した場合、自己署名の�
         "name": "GitLab dev user",
         "email": "gitlabdev@dv6700.(none)"
       }
-    }
+    },
+    "url": "http://example.com/diaspora/merge_requests/1",
+    "action": "open"
   }
 }
 ```

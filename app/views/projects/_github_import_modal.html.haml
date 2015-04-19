@@ -1,0 +1,9 @@
+%div#github_import_modal.modal.hide
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %a.close{href: "#", "data-dismiss" => "modal"} ×
+        %h3 GitHub OAuth インポート
+      .modal-body
+        まずGitHubとの統合をセットアップしてください。
+        = link_to 'GitHubと統合する方法', 'https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/integration/github.md'

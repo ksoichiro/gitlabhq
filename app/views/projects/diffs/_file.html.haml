@@ -9,6 +9,9 @@
       .diff-btn-group
         - if @commit.parent_ids.present?
           = view_file_btn(@commit.parent_id, diff_file, project)
+    - elsif diff_file.diff.submodule?
+      - submodule_item = project.repository.blob_at(@commit.id, diff_file.file_path)
+      = submodule_link(submodule_item, @commit.id)
     - else
       - if diff_file.renamed_file
         %span= "#{diff_file.old_path} renamed to #{diff_file.new_path}"
@@ -22,11 +25,11 @@
           - unless params[:view] == 'parallel'
             %label
               = check_box_tag nil, 1, false, class: 'js-toggle-diff-line-wrap'
-              Wrap text
+              テキストを折り返す
           &nbsp;
           = link_to '#', class: 'js-toggle-diff-comments btn btn-small' do
             %i.fa.fa-chevron-down
-            Diff comments
+            コメントを表示/非表示
           &nbsp;
 
         - if @merge_request && @merge_request.source_project

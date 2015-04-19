@@ -36,22 +36,26 @@
             %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
               %span.light 並び替え:
               - if @sort.present?
-                = @sort.humanize
+                = sort_options_hash[@sort]
               - else
-                名前
+                = sort_title_name
               %b.caret
             %ul.dropdown-menu
               %li
-                = link_to admin_users_path(sort: nil) do
-                  名前
-                = link_to admin_users_path(sort: 'recent_sign_in') do
-                  最近サインインした
-                = link_to admin_users_path(sort: 'oldest_sign_in') do
-                  サインインした順
-                = link_to admin_users_path(sort: 'recently_created') do
+                = link_to admin_users_path(sort: sort_value_name) do
+                  = sort_title_name
+                = link_to admin_users_path(sort: sort_value_recently_signin) do
+                  = sort_title_recently_signin
+                = link_to admin_users_path(sort: sort_value_oldest_signin) do
+                  = sort_title_oldest_signin
+                = link_to admin_users_path(sort: sort_value_recently_created) do
                   = sort_title_recently_created
-                = link_to admin_users_path(sort: 'late_created') do
+                = link_to admin_users_path(sort: sort_value_oldest_created) do
                   = sort_title_oldest_created
+                = link_to admin_users_path(sort: sort_value_recently_updated) do
+                  = sort_title_recently_updated
+                = link_to admin_users_path(sort: sort_value_oldest_updated) do
+                  = sort_title_oldest_updated
 
           = link_to '新しいユーザ', new_admin_user_path, class: "btn btn-new"
       %ul.well-list

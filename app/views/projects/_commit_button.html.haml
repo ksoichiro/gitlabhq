@@ -1,9 +1,9 @@
 .form-actions
   .commit-button-annotation
+    .message
+      %strong= ref
+      ブランチに
     = button_tag '変更をコミット',
                  class: 'btn commit-btn js-commit-button btn-create'
-    .message
-      to branch
-      %strong= ref
   = link_to 'キャンセル', cancel_path,
             class: 'btn btn-cancel', data: {confirm: leave_edit_message}

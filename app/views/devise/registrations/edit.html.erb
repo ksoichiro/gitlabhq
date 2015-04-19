@@ -21,8 +21,8 @@
 <div><%= f.submit "更新", class: "input_button" %></div>
 <% end %>
 
-<h3>Cancel my account</h3>
+<h3>キャンセル</h3>
 
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>.</p>
+<p>Unhappy? <%= link_to "キャンセル", registration_path(resource_name), data: { confirm: "本当にキャンセルしますか？" }, method: :delete %>します。</p>
 
 <%= link_to "戻る", :back %>

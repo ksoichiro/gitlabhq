@@ -1,5 +1,19 @@
+- if current_user && can?(current_user, :download_code, @project)
+  = render 'shared/no_ssh'
+  = render 'shared/no_password'
+
 = render "home_panel"
 
+.center.well
+  %h3
+    このプロジェクトのリポジトリは空です
+  %h4
+    = link_to project_new_blob_path(@project, 'master'), class: 'btn btn-new btn-lg' do
+      ファイルを追加
+    &nbsp;するかコマンドラインからプッシュしてください
+
+%h4
+  %strong コマンドラインでの手順
 %div.git-empty
   %fieldset
     %legend Gitのグローバルなセットアップ

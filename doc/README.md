@@ -9,11 +9,11 @@
 - [公開アクセス](public_access/public_access.md) Learn how you can allow public and internal access to projects.
 - [SSH](ssh/README.md) Setup your ssh keys and deploy keys for secure access to your projects.
 - [Webフック](web_hooks/web_hooks.md) Let GitLab notify you when new code has been pushed to your project.
-- [ワークフロー](workflow/README.md) Learn how to get the maximum out of GitLab.
+- [ワークフロー](workflow/README.md) Using GitLab functionality and importing projects from GitHub and SVN.
 
 ## 管理者向けドキュメント
 
-- [インストール](install/README.md) Requirements, directory structures and manual installation.
+- [インストール](install/README.md) Requirements, directory structures and installation from source.
 - [統合](integration/README.md) How to integrate with systems such as JIRA, Redmine, LDAP and Twitter.
 - [Rakeタスク](raketasks/README.md) Backups, maintenance, automatic web hook setup and the importing of projects.
 - [カスタムgitフック](hooks/custom_hooks.md) Custom git hooks (on the filesystem) for when web hooks aren't enough.
@@ -24,6 +24,7 @@
 - [課題のクローズ](customization/issue_closing.md) Customize how to close an issue from commit messages.
 - [Libravatar](customization/libravatar.md) Use Libravatar for user avatars.
 - [運用](operations/README.md) Keeping GitLab up and running
+- [ログシステム](logs/logs.md) Log system
 
 ## コントリビュータ向けドキュメント
 

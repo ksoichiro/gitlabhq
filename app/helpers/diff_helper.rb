@@ -1,3 +1,4 @@
+# encoding: utf-8
 module DiffHelper
   def allowed_diff_size
     if diff_hard_limit_enabled?
@@ -123,7 +124,7 @@ module DiffHelper
     params_copy[:view] = 'inline'
 
     link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] != 'parallel' ? 'btn active' : 'btn') do
-      'Inline'
+      'インライン'
     end
   end
 
@@ -134,5 +135,20 @@ module DiffHelper
     link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] == 'parallel' ? 'btn active' : 'btn') do
       'Side-by-side'
     end
+  end
+
+  def submodule_link(blob, ref)
+    tree, commit = submodule_links(blob, ref)
+    commit_id = if commit.nil?
+                  blob.id[0..10]
+                else
+                  link_to "#{blob.id[0..10]}", commit
+                end
+
+    [
+      content_tag(:span, link_to(truncate(blob.name, length: 40), tree)),
+      '@',
+      content_tag(:span, commit_id, class: 'monospace'),
+    ].join(' ').html_safe
   end
 end

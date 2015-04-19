@@ -11,13 +11,17 @@ module EventsHelper
   end
 
   def event_action_name(event)
-    target = if event.target_type
-               event.target_type.titleize.downcase
-             else
-               'project'
-             end
+    target =  if event.target_type
+                if event.note?
+                  event.i18n_note_target_type
+                else
+                  event.i18n_target_type.titleize.downcase
+                end
+              else
+                'プロジェクト'
+              end
 
-    [event.action_name, target].join(" ")
+    [target, i18n_action_name(event)].join("")
   end
 
   def event_filter_link(key, tooltip)
@@ -28,37 +32,45 @@ module EventsHelper
 
     content_tag :li, class: "filter_icon #{active}" do
       link_to request.path, class: 'has_tooltip event_filter_link', id: "#{key}_event_filter", 'data-original-title' => tooltip do
-        content_tag(:i, nil, class: icon_for_event[key]) +
-          content_tag(:span, ' ' + tooltip)
+        icon(icon_for_event[key]) + content_tag(:span, ' ' + tooltip)
       end
     end
   end
 
   def icon_for_event
     {
-      EventFilter.push     => 'fa fa-upload',
-      EventFilter.merged   => 'fa fa-check-square-o',
-      EventFilter.comments => 'fa fa-comments',
-      EventFilter.team     => 'fa fa-user',
+      EventFilter.push     => 'upload',
+      EventFilter.merged   => 'check-square-o',
+      EventFilter.comments => 'comments',
+      EventFilter.team     => 'user',
     }
   end
 
   def event_feed_title(event)
-    if event.issue?
-      "#{event.author_name} #{i18n_action_name(event)} issue ##{event.target_iid}: #{event.issue_title} at #{event.project_name}"
-    elsif event.merge_request?
-      "#{event.author_name} #{i18n_action_name(event)} MR ##{event.target_iid}: #{event.merge_request_title} at #{event.project_name}"
-    elsif event.push?
-      "#{event.author_name} #{event.push_action_name} #{event.ref_type} #{event.ref_name} at #{event.project_name}"
-    elsif event.membership_changed?
-      "#{event.author_name} #{i18n_action_name(event)} #{event.project_name}"
-    elsif event.note? && event.note_commit?
-      "#{event.author_name} commented on #{event.note_target_type} #{event.note_short_commit_id} at #{event.project_name}"
-    elsif event.note?
-      "#{event.author_name} commented on #{event.note_target_type} ##{truncate event.note_target_iid} at #{event.project_name}"
-    else
-      ""
+    words = []
+    words << event.author_name
+    words << "が"
+    words << event.project_name
+
+    if event.push?
+      words << "で"
+      words << event.i18n_ref_type
+      words << event.ref_name
+    elsif event.commented?
+      words << "で"
+      if event.note_commit?
+        words << event.note_short_commit_id
+      else
+        words << "##{truncate event.note_target_iid}"
+      end
+    elsif event.target
+      words << "で"
+      words << "##{event.target_iid}:" 
+      words << event.target.title if event.target.respond_to?(:title)
     end
+    words << i18n_action_name(event)
+
+    words.join(" ")
   end
 
   def event_feed_url(event)
@@ -98,8 +110,6 @@ module EventsHelper
       render "events/event_push", event: event
     elsif event.merge_request?
       render "events/event_merge_request", merge_request: event.merge_request
-    elsif event.push?
-      render "events/event_push", event: event
     elsif event.note?
       render "events/event_note", note: event.note
     end
@@ -117,15 +127,15 @@ module EventsHelper
     if event.note_target
       if event.note_commit?
         link_to project_commit_path(event.project, event.note_commit_id, anchor: dom_id(event.target)), class: "commit_short_id" do
-          "#{event.note_target_type} #{event.note_short_commit_id}"
+          "#{event.i18n_note_target_type} #{event.note_short_commit_id}"
         end
       elsif event.note_project_snippet?
         link_to(project_snippet_path(event.project, event.note_target)) do
-          "#{event.note_target_type} ##{truncate event.note_target_id}"
+          "#{event.i18n_note_target_type} ##{truncate event.note_target_id}"
         end
       else
         link_to event_note_target_path(event) do
-          "#{event.note_target_type} ##{truncate event.note_target_iid}"
+          "#{event.i18n_note_target_type} ##{truncate event.note_target_iid}"
         end
       end
     else
@@ -169,16 +179,28 @@ module EventsHelper
   end
 
   def i18n_action_name(event)
-    if event.closed?
-      "クローズしました"
+    if event.push?
+      if event.new_ref?
+        "を新規にプッシュしました"
+      elsif event.rm_ref?
+        "を削除しました"
+      else
+        "をプッシュしました"
+      end
+    elsif event.closed?
+      "をクローズしました"
     elsif event.merged?
-      "承認しました"
+      "を承認しました"
     elsif event.joined?
-      '参加しました'
+      'に参加しました'
     elsif event.left?
-      '離脱しました'
+      'を離脱しました'
+    elsif event.commented?
+      "にコメントしました"
+    elsif event.created_project?
+      "を作成しました"
     else
-      "オープンしました"
+      "をオープンしました"
     end
   end
 end

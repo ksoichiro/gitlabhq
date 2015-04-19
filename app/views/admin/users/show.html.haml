@@ -182,7 +182,7 @@
                   = link_to group_group_member_path(group, user_group), data: { confirm: remove_user_from_group_message(group, @user) }, method: :delete, remote: true, class: "btn-tiny btn btn-remove", title: 'グループからユーザを削除' do
                     %i.fa.fa-times.fa-inverse
     - else
-      .nothing-here-block This user has no groups.
+      .nothing-here-block このユーザにはグループがありません
 
   #projects.tab-pane
     - if @user.groups.any?

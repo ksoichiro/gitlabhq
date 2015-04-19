@@ -13,7 +13,7 @@
 # use this command if you've installed GitLab with the Omnibus package
 sudo gitlab-rake gitlab:backup:create
 
-# if you've installed GitLab from source or using the cookbook
+# if you've installed GitLab from source
 sudo -u git -H bundle exec rake gitlab:backup:create RAILS_ENV=production
 ```
 
@@ -137,7 +137,7 @@ with the name of your bucket:
 バックアップでは設定ファイルは保存されないことに注意してください。
 Omnibusパッケージを使用している場合は、 [READMEの設定のバックアップ方法](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#backup-and-restore-omnibus-gitlab-configuration) を参照してください。
 Cookbookでインストールしている場合は、Chefに設定のコピーがあるはずです。
-手動でインストールした場合は、gitlab.ymlファイル、SSLキー、証明書、[SSHホストキー](https://superuser.com/questions/532040/copy-ssh-keys-from-one-server-to-another-server/532079#532079)のバックアップを検討してください。
+ソースコードからインストールした場合は、gitlab.ymlファイル、SSLキー、証明書、[SSHホストキー](https://superuser.com/questions/532040/copy-ssh-keys-from-one-server-to-another-server/532079#532079)のバックアップを検討してください。
 
 ## 以前のバックアップへのリストア
 
@@ -147,7 +147,7 @@ Cookbookでインストールしている場合は、Chefに設定のコピー�
 # Omnibus package installation
 sudo gitlab-rake gitlab:backup:restore
 
-# installation from source or cookbook
+# installation from source
 bundle exec rake gitlab:backup:restore RAILS_ENV=production
 ```
 
@@ -192,7 +192,7 @@ Deleting tmp directories...[DONE]
 
 For Omnibus package installations, see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#scheduling-a-backup .
 
-For installation from source or cookbook:
+For installation from source:
 ```
 cd /home/git/gitlab
 sudo -u git -H editor config/gitlab.yml # Enable keep_time in the backup section to automatically delete old backups
@@ -214,19 +214,19 @@ This is recommended to reduce cron spam.
 If your GitLab server contains a lot of Git repository data you may find the GitLab backup script to be too slow.
 In this case you can consider using filesystem snapshots as part of your backup strategy.
 
-Example: Amazone EBS
+Example: Amazon EBS
 
 > A GitLab server using omnibus-gitlab hosted on Amazon AWS.
 > An EBS drive containing an ext4 filesystem is mounted at `/var/opt/gitlab`.
 > In this case you could make an application backup by taking an EBS snapshot.
 > The backup includes all repositories, uploads and Postgres data.
 
-Example: LVM snapshots + Rsync
+Example: LVM snapshots + rsync
 
 > A GitLab server using omnibus-gitlab, with an LVM logical volume mounted at `/var/opt/gitlab`.
-> Replicating the `/var/opt/gitlab` directory usign Rsync would not be reliable because too many files would change while Rsync is running.
+> Replicating the `/var/opt/gitlab` directory using rsync would not be reliable because too many files would change while rsync is running.
 > Instead of rsync-ing `/var/opt/gitlab`, we create a temporary LVM snapshot, which we mount as a read-only filesystem at `/mnt/gitlab_backup`.
-> Now we can have a longer running Rsync job which will create a consistent replica on the remote server.
+> Now we can have a longer running rsync job which will create a consistent replica on the remote server.
 > The replica includes all repositories, uploads and Postgres data.
 
 If you are running GitLab on a virtualized server you can possibly also create VM snapshots of the entire GitLab server.

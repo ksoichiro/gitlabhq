@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Gitlab
   class IssuesLabels
     class << self
@@ -8,14 +9,14 @@ module Gitlab
         green = '#5cb85c'
 
         labels = [
-          { title: "bug", color: red },
-          { title: "critical", color: red },
-          { title: "confirmed", color: red },
-          { title: "documentation", color: yellow },
-          { title: "support", color: yellow },
-          { title: "discussion", color: blue },
-          { title: "suggestion", color: blue },
-          { title: "enhancement", color: green }
+          { title: "不具合", color: red },
+          { title: "重要", color: red },
+          { title: "確認済み", color: red },
+          { title: "ドキュメンテーション", color: yellow },
+          { title: "サポート", color: yellow },
+          { title: "ディスカッション", color: blue },
+          { title: "提案", color: blue },
+          { title: "改善", color: green }
         ]
 
         labels.each do |label|

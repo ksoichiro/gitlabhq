@@ -2,23 +2,21 @@
   %div.prepend-top-20
     %p
       担当者:
-
+      - if issue.assignee
+        = link_to_member(@project, @issue.assignee)
+      - else
+        担当なし
     - if can?(current_user, :modify_issue, @issue)
       = project_users_select_tag('issue[assignee_id]', placeholder: '担当者を選択', class: 'custom-form-control js-select2 js-assignee', selected: @issue.assignee_id)
-    - elsif issue.assignee
-      = link_to_member(@project, @issue.assignee)
-    - else
-      担当なし
 
   %div.prepend-top-20
     %p
       マイルストーン:
+      - if issue.milestone
+        #{link_to @issue.milestone.title, project_milestone_path(@project, @issue.milestone)}
+      - else
+        なし
     - if can?(current_user, :modify_issue, @issue)
       = f.select(:milestone_id, milestone_options(@issue), { include_blank: "マイルストーンを選択" }, {class: 'select2 select2-compact js-select2 js-milestone'})
       = hidden_field_tag :issue_context
       = f.submit class: 'btn'
-    - elsif issue.milestone
-      = link_to project_milestone_path(@project, @issue.milestone) do
-        = @issue.milestone.title
-    - else
-      担当なし

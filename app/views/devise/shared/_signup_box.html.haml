@@ -1,6 +1,10 @@
 .login-box
-  .login-heading
-    %h3 サインアップ
+  - if signin_enabled?
+    .login-heading
+      %h3 はじめての方は登録
+  - else
+    .login-heading
+      %h3 アカウントの作成
   .login-body
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       .devise-errors
@@ -11,7 +15,12 @@
         = f.text_field :username, class: "form-control middle", placeholder: "ユーザ名", required: true
       %div
         = f.email_field :email, class: "form-control middle", placeholder: "メールアドレス", required: true
-      .form-group#password-strength
+      .form-group.append-bottom-20#password-strength
         = f.password_field :password, class: "form-control bottom", id: "user_password_sign_up", placeholder: "パスワード", required: true
       %div
         = f.submit "サインアップ", class: "btn-create btn"
+
+.clearfix.prepend-top-20
+  %p
+    %span.light 確認方法のメールを受信していませんか？
+    = link_to "もう一度送信", new_confirmation_path(resource_name)

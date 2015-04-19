@@ -17,7 +17,7 @@
   .dropdown.inline.assignee-filter
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-user
-      %span.light 担当者:
+      %span.light 担当:
       - if @assignee.present?
         %strong= @assignee.name
       - elsif params[:assignee_id] == "0"
@@ -40,7 +40,7 @@
   .dropdown.inline.prepend-left-10.author-filter
     %a.dropdown-toggle.btn{href: '#', "data-toggle" => "dropdown"}
       %i.fa.fa-user
-      %span.light 作成者:
+      %span.light 作成:
       - if @author.present?
         %strong= @author.name
       - elsif params[:author_id] == "0"
@@ -98,7 +98,7 @@
           = link_to page_filter_path(label_name: nil) do
             指定なし
         - if @project.labels.any?
-          - @project.labels.order_by_name.each do |label|
+          - @project.labels.each do |label|
             %li
               = link_to page_filter_path(label_name: label.name) do
                 = render_colored_label(label)

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Admin::ApplicationSettingsController < Admin::ApplicationController
   before_filter :set_application_setting
 
@@ -7,7 +8,7 @@ class Admin::ApplicationSettingsController < Admin::ApplicationController
   def update
     if @application_setting.update_attributes(application_setting_params)
       redirect_to admin_application_settings_path,
-        notice: 'Application settings saved successfully'
+        notice: 'アプリケーション設定を保存しました'
     else
       render :show
     end
@@ -22,9 +23,11 @@ class Admin::ApplicationSettingsController < Admin::ApplicationController
   def application_setting_params
     params.require(:application_setting).permit(
       :default_projects_limit,
+      :default_branch_protection,
       :signup_enabled,
       :signin_enabled,
       :gravatar_enabled,
+      :twitter_sharing_enabled,
       :sign_in_text,
       :home_page_url
     )

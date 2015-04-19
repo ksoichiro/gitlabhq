@@ -3,7 +3,7 @@
   %h5.note-search-caption.str-truncated
     %i.fa.fa-comment
     = link_to_member(project, note.author, avatar: false)
-    commented on
+    が
 
     - if note.for_commit?
       = link_to project do
@@ -19,6 +19,7 @@
       &middot;
       = link_to [project, note.noteable, anchor: dom_id(note)]  do
         = note.noteable.title
+    でコメントしました
 
   .note-search-result
     .term

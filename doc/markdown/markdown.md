@@ -40,7 +40,7 @@ GFM は以下の場所で使うことができます。
 - マイルストーン
 - Wikiページ
 
-依存するソフトウェアをインストールして、GitLab上の他のリッチテキストファイルでも使うことができます。詳しい情報は、 [github-markup gem readme](https://github.com/gitlabhq/markup#markups) を参照してください。
+依存するソフトウェアをインストールして、GitLab上の他のリッチテキストファイルでも使うことができます。その場合、依存関係をインストールする必要があるかもしれません。詳しい情報は、 [github-markup gem readme](https://github.com/gitlabhq/markup#markups) を参照してください。
 
 ## 改行
 
@@ -148,7 +148,7 @@ But let's throw in a <b>tag</b>.
 
 	あなたが絵文字の初心者だとしても、 :fearful_face: にならないでください。あなたも簡単に絵文字の :family: に入ることができます。サポートされたコードを使うだけです。
 
-	サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
+	サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](https://s3.amazonaws.com/emoji-cheatsheet/cheat_sheet.pdf) を確認してください。 :thumbsup:
 
 時には、 :ninja: になり :speech_balloon: に :glowing_star: を追加したいこともあるでしょう。そんなあなたにプレゼントがあります。
 
@@ -158,7 +158,7 @@ But let's throw in a <b>tag</b>.
 
 あなたが絵文字の初心者だとしても、 :fearful_face: にならないでください。あなたも簡単に絵文字の :family: に入ることができます。サポートされたコードを使うだけです。
 
-サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) を確認してください。 :thumbsup:
+サポートされている絵文字コードの一覧は、 [Emoji Cheat Sheet](https://s3.amazonaws.com/emoji-cheatsheet/cheat_sheet.pdf) を確認してください。 :thumbsup:
 
 ## GitLabでの特別な参照
 
@@ -170,7 +170,7 @@ GFM は参照をリンクに変換するため、それらの参照に対して�
 
 GFM は以下を認識します。
 
-- @foo : チームメンバーへの参照
+- @foo : 特定のチームメンバーやグループへの参照
 - @all : チーム全体への参照
 - #123 : 課題への参照
 - !123 : マージリクエストへの参照
@@ -250,17 +250,17 @@ H2の別表現
 例:
 
 ```
-###### ..Ab_c-d. e [anchor](url) ![alt text](url)..
+###### ..Ab_c-d. e [anchor](URL) ![alt text](URL)..
 ```
 
 以下のように表示されます。
 
-###### ..Ab_c-d. e [anchor](url) ![alt text](url)..
+###### ..Ab_c-d. e [anchor](URL) ![alt text](URL)..
 
 これはステップ 1) によって次のような文字列に変換されます。
 
 ```
-..Ab_c-d. e &lt;a href="url">anchor&lt;/a> &lt;img src="url" alt="alt text"/>..
+..Ab_c-d. e &lt;a href="URL">anchor&lt;/a> &lt;img src="URL" alt="alt text"/>..
 ```
 
 ステップ 2) でタグを削除すると次のようになります。
@@ -277,8 +277,8 @@ ab_c-d-e-anchor
 
 特に以下の点に注意してください。
 
-- Markdown のアンカー `[text](url)` は `text` だけが使用されます
-- Markdown のイメージ `![alt](url)` は完全に無視されます
+- Markdown のアンカー `[text](URL)` は `text` だけが使用されます
+- Markdown のイメージ `![alt](URL)` は完全に無視されます
 
 ## 強調
 
@@ -419,6 +419,8 @@ ab_c-d-e-anchor
 ## インライン HTML
 
 生のHTMLを Markdown で使うことができ、大半はうまく機能するでしょう。
+
+Note that inline HTML is disabled in the default Gitlab configuration, although it is [possible](https://github.com/gitlabhq/gitlabhq/pull/8007/commits) for the system administrator to enable it.
 
 ```no-highlight
 <dl>

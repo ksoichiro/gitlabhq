@@ -16,8 +16,14 @@
 
   %p 2. ユーザのアクセスレベルを設定してください
   .form-group
-    = f.label :access_level, "アクセスレベル", class: 'control-label'
-    .col-sm-10= select_tag :access_level, options_for_select(Gitlab::Access.options, @user_project_relation.access_level), class: "project-access-select select2"
+    = f.label :access_level, "プロジェクトアクセスレベル", class: 'control-label'
+    .col-sm-10
+      = select_tag :access_level, options_for_select(Gitlab::Access.options, @user_project_relation.access_level), class: "project-access-select select2"
+      .help-block
+        アクセス権についての詳細は、
+        %strong= link_to "こちら", help_page_path("permissions", "permissions"), class: "vlink"
+        から確認できます。
+
 
   .form-actions
     = f.submit 'ユーザを追加', class: "btn btn-create"

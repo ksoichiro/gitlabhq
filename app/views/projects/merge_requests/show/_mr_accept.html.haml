@@ -1,12 +1,12 @@
 - unless @allowed_to_merge
   - if @project.archived?
     %p
-      %strong Archived projects cannot be committed to!
+      %strong アーカイブされたプロジェクトにはコミットすることができません！
   - else
     .automerge_widget.cannot_be_merged.hide
-      %strong This can't be merged automatically, even if it could be merged you don't have the permission to do so.
+      %strong あなたにはこれをマージする権限がありませんが、権限があってもこれは自動的にマージすることができません。
     .automerge_widget.can_be_merged.hide
-      %strong This can be merged automatically but you don't have the permission to do so.
+      %strong これは自動的にマージすることができますが、あなたにはその権限がありません。
 
 
 - if @show_merge_controls
@@ -46,11 +46,18 @@
   .automerge_widget.cannot_be_merged.hide
     %h4
       このリクエストはGitLabではマージできません。
-    %p
       このリクエストは手動で
       %strong
-        = link_to "コマンドライン", "#modal_merge_info", class: "how_to_merge_link", title: "マージ方法", "data-toggle" => "modal"
+        = link_to "#modal_merge_info", class: "underlined-link how_to_merge_link", title: "マージ方法", "data-toggle" => "modal" do
+          コマンドライン
       からマージする必要があります。
+
+    %p
+      %button.btn.disabled
+        %i.fa.fa-warning
+        マージリクエストを承認
+      &nbsp;
+      これは通常、gitが自動的にブランチの競合を解決できない場合に発生します。
 
   .automerge_widget.unchecked
     %p

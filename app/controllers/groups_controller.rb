@@ -11,10 +11,10 @@ class GroupsController < ApplicationController
 
   # Load group projects
   before_filter :load_projects, except: [:new, :create, :projects, :edit, :update]
+  before_filter :event_filter, only: :show
+  before_filter :set_title, only: [:new, :create]
 
   layout :determine_layout
-
-  before_filter :set_title, only: [:new, :create]
 
   def new
     @group = Group.new
@@ -33,15 +33,21 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @events = Event.in_projects(project_ids)
-    @events = event_filter.apply_filter(@events)
-    @events = @events.limit(20).offset(params[:offset] || 0)
     @last_push = current_user.recent_push if current_user
+    @projects = @projects.includes(:namespace)
 
     respond_to do |format|
       format.html
-      format.json { pager_json("events/_events", @events.count) }
-      format.atom { render layout: false }
+
+      format.json do
+        load_events
+        pager_json("events/_events", @events.count)
+      end
+
+      format.atom do
+        load_events
+        render layout: false
+      end
     end
   end
 
@@ -149,5 +155,11 @@ class GroupsController < ApplicationController
 
   def group_params
     params.require(:group).permit(:name, :description, :path, :avatar)
+  end
+
+  def load_events
+    @events = Event.in_projects(project_ids)
+    @events = event_filter.apply_filter(@events).with_associations
+    @events = @events.limit(20).offset(params[:offset] || 0)
   end
 end

@@ -1,7 +1,6 @@
 %h3.page-title
   新しいマージリクエスト
 %p.slead
-  From
   %strong.label-branch #{@merge_request.source_project_namespace}:#{@merge_request.source_branch}
   %span を
   %strong.label-branch #{@merge_request.target_project_namespace}:#{@merge_request.target_branch}
@@ -20,7 +19,7 @@
     .form-group.issuable-description
       = f.label :description, '説明', class: 'control-label'
       .col-sm-10
-        = render layout: 'projects/md_preview' do
+        = render layout: 'projects/md_preview', locals: { preview_class: "wiki" } do
           = render 'projects/zen', f: f, attr: :description, classes: 'description form-control'
 
           .col-sm-12-hint

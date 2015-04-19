@@ -1,27 +1,3 @@
-.login-box
-  .login-heading
-    %h3 サインアップ
-  .login-body
-    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-      .devise-errors
-        = devise_error_messages!
-      %div
-        = f.text_field :name, class: "form-control top", placeholder: "名前", required: true
-      %div
-        = f.text_field :username, class: "form-control middle", placeholder: "ユーザ名", required: true
-      %div
-        = f.email_field :email, class: "form-control middle", placeholder: "メールアドレス", required: true
-      %div
-        = f.password_field :password, class: "form-control middle", placeholder: "パスワード", required: true
-      %div
-        = f.password_field :password_confirmation, class: "form-control bottom", placeholder: "パスワード(確認)", required: true
-      %div
-        = f.submit "サインアップ", class: "btn-create btn"
-  .login-footer
-    %p
-      %span.light
-        アカウントをお持ちですか？
-      %strong
-        = link_to "サインイン", new_session_path(resource_name)
-    %p
-      = link_to "パスワードを忘れた場合", new_password_path(resource_name)
+= render 'devise/shared/signup_box'
+
+= render 'devise/shared/sign_in_link'

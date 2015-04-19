@@ -5,49 +5,56 @@
       %span
         概要
   = nav_link(controller: :projects) do
-    = link_to admin_projects_path do
+    = link_to admin_projects_path, title: 'プロジェクト' do
       %i.fa.fa-cube
       %span
         プロジェクト
   = nav_link(controller: :users) do
-    = link_to admin_users_path do
+    = link_to admin_users_path, title: 'ユーザ' do
       %i.fa.fa-user
       %span
         ユーザ
   = nav_link(controller: :groups) do
-    = link_to admin_groups_path do
+    = link_to admin_groups_path, title: 'グループ' do
       %i.fa.fa-group
       %span
         グループ
   = nav_link(controller: :logs) do
-    = link_to admin_logs_path do
+    = link_to admin_logs_path, title: 'ログ' do
       %i.fa.fa-file-text
       %span
         ログ
   = nav_link(controller: :broadcast_messages) do
-    = link_to admin_broadcast_messages_path do
+    = link_to admin_broadcast_messages_path, title: 'メッセージ' do
       %i.fa.fa-bullhorn
       %span
         メッセージ
   = nav_link(controller: :hooks) do
-    = link_to admin_hooks_path do
+    = link_to admin_hooks_path, title: 'フック' do
       %i.fa.fa-external-link
       %span
         フック
   = nav_link(controller: :background_jobs) do
-    = link_to admin_background_jobs_path do
+    = link_to admin_background_jobs_path, title: 'ジョブ' do
       %i.fa.fa-cog
       %span
         ジョブ
 
-  = nav_link(controller: :application_settings) do
-    = link_to admin_application_settings_path do
+  = nav_link(controller: :applications) do
+    = link_to admin_applications_path, title: 'アプリケーション' do
+      %i.fa.fa-cloud
+      %span
+        アプリケーション
+
+  = nav_link(controller: :services) do
+    = link_to admin_application_settings_services_path, title: 'サービステンプレート' do
+      %i.fa.fa-copy
+      %span
+        サービステンプレート
+
+  = nav_link(controller: :application_settings, html_options: { class: 'separate-item'}) do
+    = link_to admin_application_settings_path, title: '設定' do
       %i.fa.fa-cogs
       %span
         設定
 
-  = nav_link(controller: :applications) do
-    = link_to admin_applications_path do
-      %i.fa.fa-cloud
-      %span
-        アプリケーション

@@ -1,6 +1,6 @@
 %div.panel.panel-default
   .panel-heading
-    Commits (#{@commits.count})
+    コミット (#{@commits.count})
   - if @commits.size > MergeRequestDiff::COMMITS_SAFE_SIZE
     %ul.well-list
       - Commit.decorate(@commits.first(MergeRequestDiff::COMMITS_SAFE_SIZE)).each do |commit|

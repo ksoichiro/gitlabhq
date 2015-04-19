@@ -3,11 +3,11 @@
   .project-edit-content
     %div
       %h3.page-title
-        プロジェクト設定:
-      %p.light "プロジェクトの移譲"のようないくつかの機能は危険エリア内で非表示になっています。
+        プロジェクト設定
       %hr
       .panel-body
-        = form_for @project, remote: true, html: { class: "edit_project form-horizontal" } do |f|
+        = form_for @project, remote: true, html: { multipart: true, class: "edit_project form-horizontal" }, authenticity_token: true do |f|
+
           %fieldset
             .form-group.project_name_holder
               = f.label :name, class: 'control-label' do
@@ -50,15 +50,6 @@
                   = f.check_box :issues_enabled
                   %span.descr このプロジェクト用の軽量な課題トラッキングシステム
 
-            - if Project.issues_tracker.values.count > 1
-              .form-group
-                = f.label :issues_tracker, "課題管理", class: 'control-label'
-                .col-sm-10= f.select(:issues_tracker, project_issues_trackers(@project.issues_tracker), {}, { disabled: !@project.issues_enabled })
-
-              .form-group
-                = f.label :issues_tracker_id, "課題トラッカー内のプロジェクト名またはID", class: 'control-label'
-                .col-sm-10= f.text_field :issues_tracker_id, disabled: !@project.can_have_issues_tracker_id?, class: 'form-control'
-
             .form-group
               = f.label :merge_requests_enabled, "マージリクエスト", class: 'control-label'
               .col-sm-10
@@ -80,6 +71,32 @@
                   = f.check_box :snippets_enabled
                   %span.descr Gitリポジトリ外でコードをペーストして共有
 
+          %fieldset.features
+            %legend
+              プロジェクトアバター:
+            .form-group
+              .col-sm-2
+              .col-sm-10
+                - if @project.avatar?
+                  = project_icon(@project.to_param, alt: '', class: 'avatar project-avatar s160')
+                %p.light
+                  - if @project.avatar_in_git
+                    リポジトリのプロジェクトアバター: #{ @project.avatar_in_git }
+                %p.light
+                  - if @project.avatar?
+                    プロジェクトアバターを変更できます
+                  - else
+                    プロジェクトアバターをアップロードできます
+                %a.choose-btn.btn.btn-small.js-choose-project-avatar-button
+                  %i.icon-paper-clip
+                  %span ファイルを選択 ...
+                &nbsp;
+                %span.file_name.js-avatar-filename ファイル名...
+                = f.file_field :avatar, class: "js-project-avatar-input hidden"
+                .light ファイルの最大サイズは200KBです
+                - if @project.avatar?
+                  %hr
+                  = link_to 'アバターを削除', project_avatar_path(@project), data: { confirm: "プロジェクトアバターが削除されます。本当に削除しますか？"}, method: :delete, class: "btn btn-remove btn-small remove-avatar"
 
           .form-actions
             = f.submit '変更を保存', class: "btn btn-save"

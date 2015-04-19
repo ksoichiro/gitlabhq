@@ -1,40 +1,57 @@
 %h3.page-title
   通知設定
 %p.light
-  GitLabはプロフィールで指定されたメールアドレスを通知に利用します。
+  これらはグローバルな通知設定です。
 %hr
-= form_tag profile_notifications_path, method: :put, remote: true, class: 'update-notifications form-horizontal global-notifications-form' do
+
+
+= form_for @user, url: profile_notifications_path, method: :put, html: { class: 'update-notifications form-horizontal global-notifications-form' } do |f|
+  -if @user.errors.any?
+    %div.alert.alert-danger
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
   = hidden_field_tag :notification_type, 'global'
 
-  = label_tag :notification_level, '通知レベル', class: 'control-label'
-  .col-sm-10
-    .radio
-      = label_tag nil, class: '' do
-        = radio_button_tag :notification_level, Notification::N_DISABLED, @notification.disabled?, class: 'trigger-submit'
-        .level-title
-          無効
-        %p メールでの通知は何も受け取りません
+  .form-group
+    = f.label :notification_email, '通知メールアドレス', class: "control-label"
+    .col-sm-10
+      = f.select :notification_email, @user.all_emails, { include_blank: false }, class: "form-control"
 
-    .radio
-      = label_tag nil, class: '' do
-        = radio_button_tag :notification_level, Notification::N_MENTION, @notification.mention?, class: 'trigger-submit'
-        .level-title
-          メンション
-        %p コメント内で @名前 のようにメンションされたときにのみ通知を受け取ります
+  .form-group
+    = f.label :notification_level, '通知レベル', class: 'control-label'
+    .col-sm-10
+      .radio
+        = f.label :notification_level, value: Notification::N_DISABLED do
+          = f.radio_button :notification_level, Notification::N_DISABLED
+          .level-title
+            無効
+          %p メールでは通知は何も受け取りません
 
-    .radio
-      = label_tag nil, class: '' do
-        = radio_button_tag :notification_level, Notification::N_PARTICIPATING, @notification.participating?, class: 'trigger-submit'
-        .level-title
-          参加
-        %p あなたに関係のあるリソースに関する通知だけを受け取ります (例: あなたのコミットや担当中の課題)
+      .radio
+        = f.label :notification_level, value: Notification::N_MENTION do
+          = f.radio_button :notification_level, Notification::N_MENTION
+          .level-title
+            メンション
+          %p コメント内で @名前 のようにメンションされたときにのみ通知を受け取ります
 
-    .radio
-      = label_tag nil, class: '' do
-        = radio_button_tag :notification_level, Notification::N_WATCH, @notification.watch?, class: 'trigger-submit'
-        .level-title
-          ウォッチ
-        %p 参加中のプロジェクトからのすべての通知を受け取ります
+      .radio
+        = f.label :notification_level, value: Notification::N_PARTICIPATING do
+          = f.radio_button :notification_level, Notification::N_PARTICIPATING
+          .level-title
+            参加
+          %p あなたに関係のあるリソースに関する通知だけを受け取ります (例: あなたのコミットや担当中の課題)
+
+      .radio
+        = f.label :notification_level, value: Notification::N_WATCH do
+          = f.radio_button :notification_level, Notification::N_WATCH
+          .level-title
+            ウォッチ
+          %p 参加中のプロジェクトからのすべての通知を受け取ります
+
+  .form-actions
+    = f.submit '変更を保存', class: "btn btn-save"
 
 .clearfix
   %hr
