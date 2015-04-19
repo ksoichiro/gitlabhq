@@ -25,7 +25,7 @@ class Projects::BlobController < Projects::ApplicationController
     result = Files::CreateService.new(@project, current_user, params, @ref, file_path).execute
 
     if result[:status] == :success
-      flash[:notice] = "Your changes have been successfully committed"
+      flash[:notice] = "変更は正常にコミットされました"
       redirect_to project_blob_path(@project, File.join(@ref, file_path))
     else
       flash[:alert] = result[:message]
@@ -45,7 +45,7 @@ class Projects::BlobController < Projects::ApplicationController
       new(@project, current_user, params, @ref, @path).execute
 
     if result[:status] == :success
-      flash[:notice] = "Your changes have been successfully committed"
+      flash[:notice] = "変更は正常にコミットされました"
 
       if from_merge_request
         from_merge_request.reload_code

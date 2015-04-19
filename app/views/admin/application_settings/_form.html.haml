@@ -11,22 +11,18 @@
       = f.label :signup_enabled, 'サインアップ', class: 'control-label'
       .col-sm-10
         = f.check_box :signup_enabled, class: 'checkbox'
-        有効にする
     .form-group
       = f.label :signin_enabled, 'サインイン', class: 'control-label'
       .col-sm-10
         = f.check_box :signin_enabled, class: 'checkbox'
-        有効にする
     .form-group
       = f.label :gravatar_enabled, 'Gravatar', class: 'control-label'
       .col-sm-10
         = f.check_box :gravatar_enabled, class: 'checkbox'
-        有効にする
     .form-group
       = f.label :twitter_sharing_enabled, "Twitter", class: 'control-label'
       .col-sm-10
         = f.check_box :twitter_sharing_enabled, class: 'checkbox'
-        有効にする
         %span.help-block 新しく作成した公開/内部プロジェクトをTwitterでシェアするボタンをユーザに表示します
   %fieldset
     %legend その他
@@ -39,7 +35,7 @@
       .col-sm-10
         = f.select :default_branch_protection, options_for_select(Gitlab::Access.protection_options, @application_setting.default_branch_protection), {}, class: 'form-control'
     .form-group
-      = f.label :home_page_url, class: 'control-label'
+      = f.label :home_page_url, 'ホームページURL', class: 'control-label'
       .col-sm-10
         = f.text_field :home_page_url, class: 'form-control', placeholder: 'http://company.example.com'
         %span.help-block ログインしていないユーザをこのページにリダイレクトします

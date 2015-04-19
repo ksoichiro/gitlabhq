@@ -1,12 +1,15 @@
 .event-title
   %span.author_name= link_to_author event
-  %span.event_label.pushed #{event.action_name} #{event.ref_type}
+  が
+  = link_to_project event.project
+  で#{event.i18n_ref_type}
   - if event.rm_ref?
     %strong= event.ref_name
   - else
     = link_to project_commits_path(event.project, event.ref_name) do
       %strong= event.ref_name
-  をプッシュしました
+  を
+  %span.event_label.pushed> #{event.i18n_action_name}
 
 - if event.push_with_commits?
   - project = event.project

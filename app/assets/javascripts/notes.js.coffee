@@ -479,8 +479,8 @@ class @Notes
     form = textarea.parents('form')
 
     if textarea.val().trim().length > 0
-      form.find('.js-note-target-reopen').text('Comment & reopen')
-      form.find('.js-note-target-close').text('Comment & close')
+      form.find('.js-note-target-reopen').text('コメント & 再オープン')
+      form.find('.js-note-target-close').text('コメント & クローズ')
     else
-      form.find('.js-note-target-reopen').text('Reopen')
-      form.find('.js-note-target-close').text('Close')
+      form.find('.js-note-target-reopen').text('再オープン')
+      form.find('.js-note-target-close').text('クローズ')

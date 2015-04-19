@@ -303,9 +303,54 @@ class Event < ActiveRecord::Base
     end.downcase
   end
 
+  def i18n_ref_type
+    tag? ? "タグ" : "ブランチ"
+  end
+
+  def i18n_action_name
+    if push?
+      if new_ref?
+        "新規にプッシュしました"
+      elsif rm_ref?
+        "削除しました"
+      else
+        "プッシュしました"
+      end
+    elsif closed?
+      "クローズしました"
+    elsif merged?
+      "承認しました"
+    elsif joined?
+      '参加しました'
+    elsif left?
+      '離脱しました'
+    elsif commented?
+      "コメントしました"
+    elsif created_project?
+      "作成しました"
+    else
+      "オープンしました"
+    end
+  end
+
+  def i18n_target_type
+    case target_type
+      when "Milestone"
+        "マイルストーン"
+      when "Note"
+        "コメント"
+      when "Issue"
+        "課題"
+      when "MergeRequest"
+        "マージリクエスト"
+      else
+        target_type
+    end
+  end
+
   def i18n_note_target_type
     if target.noteable_type.present?
-      case target.noteable_type
+      case target.noteable_type.capitalize
       when "Commit"
         "コミット"
       when "Issue"

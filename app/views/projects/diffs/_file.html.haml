@@ -25,11 +25,11 @@
           - unless params[:view] == 'parallel'
             %label
               = check_box_tag nil, 1, false, class: 'js-toggle-diff-line-wrap'
-              Wrap text
+              テキストを折り返す
           &nbsp;
           = link_to '#', class: 'js-toggle-diff-comments btn btn-small' do
             %i.fa.fa-chevron-down
-            Show/Hide comments
+            コメントを表示/非表示
           &nbsp;
 
         - if @merge_request && @merge_request.source_project

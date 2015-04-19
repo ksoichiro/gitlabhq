@@ -1,6 +1,6 @@
 - if cookies[:hide_no_ssh_message].blank? && !current_user.hide_no_ssh_key && current_user.require_ssh_key?
   .no-ssh-key-message.alert.alert-warning.hidden-xs
-    プロファイルに#{link_to 'SSHキーを追加', new_profile_key_path}するまでプロジェクトのコードをプッシュ、プルすることはできません
+    プロフィールに#{link_to 'SSHキーを追加', new_profile_key_path}するまでプロジェクトのコードをプッシュ、プルすることはできません
 
     .pull-right
       = link_to "次から表示しない", profile_path(user: {hide_no_ssh_key: true}), method: :put

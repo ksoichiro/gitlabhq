@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Gitlab::VisibilityLevel module
 #
 # Define allowed public modes that can be used for
@@ -16,9 +17,9 @@ module Gitlab
 
       def options
         {
-          'Private'  => PRIVATE,
-          'Internal' => INTERNAL,
-          'Public'   => PUBLIC
+          'プライベート'  => PRIVATE,
+          '内部' => INTERNAL,
+          '公開'   => PUBLIC
         }
       end
 

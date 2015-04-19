@@ -1,15 +1,14 @@
 .event-title
   %span.author_name= link_to_author event
-  %span.event_label
-    = event.action_name
-    = event_note_title_html(event)
-    at
-    
+  が
   - if event.project
     = link_to_project event.project
   - else
     = event.project_name
-  でコメントしました
+  で
+  %span.event_label
+    = event_note_title_html(event)
+    に#{event.i18n_action_name}
 
 .event-body
   .event-note

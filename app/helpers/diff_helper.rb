@@ -1,3 +1,4 @@
+# encoding: utf-8
 module DiffHelper
   def allowed_diff_size
     if diff_hard_limit_enabled?
@@ -123,7 +124,7 @@ module DiffHelper
     params_copy[:view] = 'inline'
 
     link_to url_for(params_copy), id: "commit-diff-viewtype", class: (params[:view] != 'parallel' ? 'btn active' : 'btn') do
-      'Inline'
+      'インライン'
     end
   end
 

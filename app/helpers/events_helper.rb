@@ -15,13 +15,13 @@ module EventsHelper
                 if event.note?
                   event.i18n_note_target_type
                 else
-                  event.target_type.titleize.downcase
+                  event.i18n_target_type.titleize.downcase
                 end
               else
                 'プロジェクト'
               end
 
-    [target, i18n_action_name(event)].join("を")
+    [target, i18n_action_name(event)].join("")
   end
 
   def event_filter_link(key, tooltip)
@@ -49,26 +49,26 @@ module EventsHelper
   def event_feed_title(event)
     words = []
     words << event.author_name
-    words << i18n_action_name(event)
+    words << "が"
+    words << event.project_name
 
     if event.push?
-      words << event.ref_type
+      words << "で"
+      words << event.i18n_ref_type
       words << event.ref_name
-      words << "at"
     elsif event.commented?
+      words << "で"
       if event.note_commit?
         words << event.note_short_commit_id
       else
         words << "##{truncate event.note_target_iid}"
       end
-      words << "at"
     elsif event.target
+      words << "で"
       words << "##{event.target_iid}:" 
       words << event.target.title if event.target.respond_to?(:title)
-      words << "at"
     end
-
-    words << event.project_name
+    words << i18n_action_name(event)
 
     words.join(" ")
   end
@@ -179,16 +179,28 @@ module EventsHelper
   end
 
   def i18n_action_name(event)
-    if event.closed?
-      "クローズしました"
+    if event.push?
+      if event.new_ref?
+        "を新規にプッシュしました"
+      elsif event.rm_ref?
+        "を削除しました"
+      else
+        "をプッシュしました"
+      end
+    elsif event.closed?
+      "をクローズしました"
     elsif event.merged?
-      "承認しました"
+      "を承認しました"
     elsif event.joined?
-      '参加しました'
+      'に参加しました'
     elsif event.left?
-      '離脱しました'
+      'を離脱しました'
+    elsif event.commented?
+      "にコメントしました"
+    elsif event.created_project?
+      "を作成しました"
     else
-      "オープンしました"
+      "をオープンしました"
     end
   end
 end

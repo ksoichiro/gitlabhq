@@ -60,7 +60,8 @@ class Note < ActiveRecord::Base
 
   class << self
     def create_status_change_note(noteable, project, author, status, source)
-      body = "_#{source.gfm_reference + 'が' if source}ステータスを#{status}に変更しました_"
+      #{i18n_status_change_action}
+      body = "_#{source.gfm_reference + 'が' if source}#{i18n_status_change_action}_"
 
       create(
         noteable: noteable,
@@ -126,21 +127,19 @@ class Note < ActiveRecord::Base
       labels_count = added_labels.count + removed_labels.count
       added_labels = added_labels.map{ |label| "~#{label.id}" }.join(' ')
       removed_labels = removed_labels.map{ |label| "~#{label.id}" }.join(' ')
-      message = ''
+      message = 'ラベル'
 
       if added_labels.present?
-        message << "added #{added_labels}"
-      end
-
-      if added_labels.present? && removed_labels.present?
-        message << ' and '
+        message << " #{added_labels} を追加し"
+        if !removed_labels.present?
+          message << 'ました'
+        end
       end
 
       if removed_labels.present?
-        message << "removed #{removed_labels}"
+        message << " #{removed_labels} を削除しました"
       end
 
-      message << ' ' << 'label'.pluralize(labels_count)
       body = "_#{message.capitalize}_"
 
       create(
@@ -153,8 +152,7 @@ class Note < ActiveRecord::Base
     end
 
     def create_new_commits_note(noteable, project, author, commits)
-      commits_text = ActionController::Base.helpers.pluralize(commits.size, 'new commit')
-      body = "Added #{commits_text}:\n\n"
+      body = "#{commits.size}件のコミットを追加しました:\n\n"
 
       commits.each do |commit|
         message = "* #{commit.short_id} - #{commit.title}"
@@ -555,5 +553,18 @@ class Note < ActiveRecord::Base
 
   def editable?
     !read_attribute(:system)
+  end
+
+  def i18n_status_change_action(status)
+    case status
+    when "opened"
+      "オープンしました"
+    when "reopened"
+      "再オープンしました"
+    when "closed"
+      "クローズしました"
+    else
+      status
+    end
   end
 end

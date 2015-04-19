@@ -1,12 +1,12 @@
 - unless @allowed_to_merge
   - if @project.archived?
     %p
-      %strong Archived projects cannot be committed to!
+      %strong アーカイブされたプロジェクトにはコミットすることができません！
   - else
     .automerge_widget.cannot_be_merged.hide
-      %strong This can't be merged automatically, even if it could be merged you don't have the permission to do so.
+      %strong あなたにはこれをマージする権限がありませんが、権限があってもこれは自動的にマージすることができません。
     .automerge_widget.can_be_merged.hide
-      %strong This can be merged automatically but you don't have the permission to do so.
+      %strong これは自動的にマージすることができますが、あなたにはその権限がありません。
 
 
 - if @show_merge_controls

@@ -1,3 +1,4 @@
+# encoding: utf-8
 module BlobHelper
   def highlight(blob_name, blob_content, nowrap = false)
     formatter = Rugments::Formatters::HTML.new(
@@ -29,7 +30,7 @@ module BlobHelper
       end
 
     if blob && blob.text?
-      text = 'Edit'
+      text = '編集'
       after = options[:after] || ''
       from_mr = options[:from_merge_request_id]
       link_opts = {}
@@ -47,14 +48,14 @@ module BlobHelper
   end
 
   def leave_edit_message
-    "Leave edit mode?\nAll unsaved changes will be lost."
+    "編集モードを終了しますか？\n保存していない変更は失われます。"
   end
 
   def editing_preview_title(filename)
     if Gitlab::MarkdownHelper.previewable?(filename)
-      'Preview'
+      'プレビュー'
     else
-      'Preview changes'
+      '変更をプレビュー'
     end
   end
 end

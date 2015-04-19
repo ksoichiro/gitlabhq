@@ -19,7 +19,7 @@
     = label_tag :message, 'メッセージ', class: 'control-label'
     .col-sm-10
       = text_field_tag :message, nil, placeholder: 'メッセージを入力', required: false, tabindex: 3, class: 'form-control'
-      .light (Optional) Entering a message will create an annotated tag.
+      .light (オプション) メッセージを入力すると注釈付きタグが作成されます。
   .form-actions
     = button_tag 'タグを作成', class: 'btn btn-create', tabindex: 3
     = link_to 'キャンセル', project_tags_path(@project), class: 'btn btn-cancel'

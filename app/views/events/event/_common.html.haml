@@ -1,20 +1,18 @@
 .event-title
   %span.author_name= link_to_author event
   が
-  %span.event_label{class: event.action_name}
-    = event_action_name(event)
-
-  - if event.target
-    (
-    %strong= link_to "##{event.target_iid}", [event.project, event.target]
-    )
-    @
-
   - if event.project
     = link_to_project event.project
   - else
     = event.project_name
-    
+  %span.event_label{class: event.action_name}
+    で#{event_action_name(event)}
+
+  - if event.target
+    (
+    %strong>= link_to "##{event.target_iid}", [event.project, event.target]
+    )
+
 - if event.target.respond_to?(:title)
   .event-body
     .event-note
