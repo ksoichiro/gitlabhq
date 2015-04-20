@@ -20,7 +20,7 @@
   -# Atom feed
   - if current_user
     - if controller_name == 'projects' && action_name == 'index'
-      = auto_discovery_link_tag :atom, projects_url(:atom, private_token: current_user.private_token), title: "Dashboard feed"
+      = auto_discovery_link_tag :atom, projects_url(:atom, private_token: current_user.private_token), title: "ダッシュボードフィード"
     - if @project && !@project.new_record?
       - if current_controller?(:tree, :commits)
         = auto_discovery_link_tag(:atom, namespace_project_commits_url(@project.namespace, @project, @ref, format: :atom, private_token: current_user.private_token), title: "Recent commits to #{@project.name}:#{@ref}")
