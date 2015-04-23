@@ -2,15 +2,15 @@
 
 ## ユーザ向けドキュメント
 
-- [API](api/README.md) Automate GitLab via a simple and powerful API.
-- [Markdown](markdown/markdown.md) GitLab's advanced formatting system.
-- [アクセス権](permissions/permissions.md) Learn what each role in a project (guest/reporter/developer/master/owner) can do.
-- [プロジェクトサービス](project_services/project_services.md) Integrate a project with external services, such as CI and chat.
-- [公開アクセス](public_access/public_access.md) Learn how you can allow public and internal access to projects.
-- [SSH](ssh/README.md) Setup your ssh keys and deploy keys for secure access to your projects.
-- [Webフック](web_hooks/web_hooks.md) Let GitLab notify you when new code has been pushed to your project.
-- [ワークフロー](workflow/README.md) Using GitLab functionality and importing projects from GitHub and SVN.
-- [OAuth2認証サービスプロバイダとしてのGitLab](integration/oauth_provider.md). It allows you to login to other applications from GitLab.
+- [API](api/README.md) シンプルで強力なAPIでGitLabを自動化します。
+- [Markdown](markdown/markdown.md) GitLabの高度なフォーマットシステムです。
+- [アクセス権](permissions/permissions.md) プロジェクトの各ロール (guest/reporter/developer/master/owner) が何をできるのか学びます。
+- [プロジェクトサービス](project_services/project_services.md) CIやチャットなどの外部サービスと、プロジェクトを統合します。
+- [公開アクセス](public_access/public_access.md) プロジェクトのアクセス範囲を公開・内部にする方法を学びます。
+- [SSH](ssh/README.md) セキュアなアクセスのためにSSHキーやデプロイキーをプロジェクトに設定します。
+- [Webフック](web_hooks/web_hooks.md) プロジェクトに新しいコードがプッシュされたときにGitLabがあなたに通知するようにします。
+- [ワークフロー](workflow/README.md) GitLabの機能を使いGitHubやSVNからプロジェクトをインポートします。
+- [OAuth2認証サービスプロバイダとしてのGitLab](integration/oauth_provider.md). GitLabから他のアプリケーションにログインできるようにします。
 
 ## 管理者向けドキュメント
 
