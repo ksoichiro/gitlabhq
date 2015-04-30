@@ -43,7 +43,7 @@
           ディスカッション
           %span.badge= @merge_request.mr_and_commit_notes.count
       %li.commits-tab{data: {action: 'commits'}}
-        = link_to merge_request_path(@merge_request), title: 'Commits' do
+        = link_to merge_request_path(@merge_request), title: 'コミット' do
           %i.fa.fa-history
           コミット
           %span.badge= @commits.size

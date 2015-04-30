@@ -1,11 +1,11 @@
 %ul.sidebar-subnav
   = nav_link(path: 'groups#edit') do
-    = link_to edit_group_path(@group), title: 'Group' do
+    = link_to edit_group_path(@group), title: 'グループ' do
       %i.fa.fa-pencil-square-o
       %span
         グループ
   = nav_link(path: 'groups#projects') do
-    = link_to projects_group_path(@group), title: 'Projects' do
+    = link_to projects_group_path(@group), title: 'プロジェクト' do
       %i.fa.fa-folder
       %span
         プロジェクト

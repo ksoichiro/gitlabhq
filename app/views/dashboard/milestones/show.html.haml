@@ -1,24 +1,24 @@
 %h4.page-title
   .issue-box{ class: "issue-box-#{@dashboard_milestone.closed? ? 'closed' : 'open'}" }
     - if @dashboard_milestone.closed?
-      Closed
+      クローズ
     - else
-      Open
-  Milestone #{@dashboard_milestone.title}
+      オープン
+  マイルストーン #{@dashboard_milestone.title}
 
 %hr
 - if (@dashboard_milestone.total_items_count == @dashboard_milestone.closed_items_count) && @dashboard_milestone.active?
   .alert.alert-success
-    %span All issues for this milestone are closed. You may close the milestone now.
+    %span このマイルストーンの課題はすべてクローズされました。マイルストーンはクローズできます。
 
 .description
 %table.table
   %thead
     %tr
-      %th Project
-      %th Open issues
-      %th State
-      %th Due date
+      %th プロジェクト
+      %th オープン中の課題
+      %th ステータス
+      %th 期限
   - @dashboard_milestone.milestones.each do |milestone|
     %tr
       %td
@@ -27,48 +27,48 @@
         = milestone.issues.opened.count
       %td
         - if milestone.closed?
-          Closed
+          クローズ
         - else
-          Open
+          オープン
       %td
         = milestone.expires_at
 
 .context
   %p.lead
-    Progress:
-    #{@dashboard_milestone.closed_items_count} closed
+    進捗:
+    #{@dashboard_milestone.closed_items_count} クローズ
     &ndash;
-    #{@dashboard_milestone.open_items_count} open
+    #{@dashboard_milestone.open_items_count} オープン
   = milestone_progress_bar(@dashboard_milestone)
 
 %ul.nav.nav-tabs
   %li.active
     = link_to '#tab-issues', 'data-toggle' => 'tab' do
-      Issues
+      課題
       %span.badge= @dashboard_milestone.issue_count
   %li
     = link_to '#tab-merge-requests', 'data-toggle' => 'tab' do
-      Merge Requests
+      マージリクエスト
       %span.badge= @dashboard_milestone.merge_requests_count
   %li
     = link_to '#tab-participants', 'data-toggle' => 'tab' do
-      Participants
+      参加者
       %span.badge= @dashboard_milestone.participants.count
 
 .tab-content
   .tab-pane.active#tab-issues
     .row
       .col-md-6
-        = render 'issues', title: "Open", issues: @dashboard_milestone.opened_issues
+        = render 'issues', title: "オープン", issues: @dashboard_milestone.opened_issues
       .col-md-6
-        = render 'issues', title: "Closed", issues: @dashboard_milestone.closed_issues
+        = render 'issues', title: "クローズ", issues: @dashboard_milestone.closed_issues
 
   .tab-pane#tab-merge-requests
     .row
       .col-md-6
-        = render 'merge_requests', title: "Open", merge_requests: @dashboard_milestone.opened_merge_requests
+        = render 'merge_requests', title: "オープン", merge_requests: @dashboard_milestone.opened_merge_requests
       .col-md-6
-        = render 'merge_requests', title: "Closed", merge_requests: @dashboard_milestone.closed_merge_requests
+        = render 'merge_requests', title: "クローズ", merge_requests: @dashboard_milestone.closed_merge_requests
 
   .tab-pane#tab-participants
     %ul.bordered-list
