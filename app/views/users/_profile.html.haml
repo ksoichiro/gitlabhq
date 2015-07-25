@@ -3,8 +3,12 @@
     プロフィール
   %ul.well-list
     %li
-      %span.light 登録日: 
+      %span.light 登録日
       %strong= user.created_at.stamp("2011/08/21")
+    - unless user.public_email.blank?
+      %li
+        %span.light E-mail:
+        %strong= link_to user.public_email, "mailto:#{user.public_email}"
     - unless user.skype.blank?
       %li
         %span.light Skype:
@@ -21,7 +25,7 @@
       %li
         %span.light Webサイト:
         %strong= link_to user.short_website_url, user.full_website_url
-    - unless user.bio.blank?
+    - unless user.location.blank?
       %li
-        %span.light 自己紹介:
-        %span= user.bio
+        %span.light 場所:
+        %strong= user.location

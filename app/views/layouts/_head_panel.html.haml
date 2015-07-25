@@ -39,7 +39,7 @@
             = link_to profile_path, title: "プロフィール設定", class: 'has_bottom_tooltip', 'data-original-title' => 'プロフィール設定'  do
               %i.fa.fa-user
           %li
-            = link_to destroy_user_session_path, class: "logout", method: :delete, title: "ログアウト", class: 'has_bottom_tooltip', 'data-original-title' => 'ログアウト'  do
+            = link_to destroy_user_session_path, class: "logout", method: :delete, title: "サインアウト", class: 'has_bottom_tooltip', 'data-original-title' => 'サインアウト'  do
               %i.fa.fa-sign-out
           %li.hidden-xs
             = link_to current_user, class: "profile-pic has_bottom_tooltip", id: 'profile-pic', 'data-original-title' => 'あなたのプロフィール' do

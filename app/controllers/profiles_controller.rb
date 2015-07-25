@@ -26,7 +26,8 @@ class ProfilesController < ApplicationController
     if @user.update_attributes(user_params)
       flash[:notice] = "プロフィールが更新されました"
     else
-      flash[:alert] = "プロフィールの更新に失敗しました"
+      messages = @user.errors.full_messages.uniq.join('. ')
+      flash[:alert] = "プロフィールの更新に失敗しました。#{messages}"
     end
 
     respond_to do |format|
@@ -67,9 +68,10 @@ class ProfilesController < ApplicationController
 
   def user_params
     params.require(:user).permit(
-      :email, :password, :password_confirmation, :bio, :name, :username,
-      :skype, :linkedin, :twitter, :website_url, :color_scheme_id, :theme_id,
-      :avatar, :hide_no_ssh_key, :hide_no_password
+      :email, :password, :password_confirmation, :bio, :name,
+      :username, :skype, :linkedin, :twitter, :website_url,
+      :color_scheme_id, :theme_id, :avatar, :hide_no_ssh_key,
+      :hide_no_password, :location, :public_email
     )
   end
 end

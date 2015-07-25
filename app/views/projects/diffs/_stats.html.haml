@@ -1,6 +1,7 @@
 .js-toggle-container
   .commit-stat-summary
-    %strong.cdark #{diffs.count}件の変更されたファイル
+    = link_to '#', class: 'js-toggle-button' do
+      %strong #{diffs.count}件の変更されたファイル
     を表示中
     - if current_controller?(:commit)
       - unless @commit.has_zero_stats?
@@ -8,10 +9,6 @@
         %strong.cgreen #{@commit.stats.additions} 行の追加
         と
         %strong.cred #{@commit.stats.deletions} 行の削除
-    &nbsp;
-    = link_to '#', class: 'btn btn-sm js-toggle-button' do
-      差分の状態を表示
-      %i.fa.fa-chevron-down
   .file-stats.js-toggle-content.hide
     %ul.bordered-list
       - diffs.each_with_index do |diff, i|

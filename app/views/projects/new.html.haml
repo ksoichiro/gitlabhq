@@ -21,64 +21,69 @@
             = f.select :namespace_id, namespaces_options(params[:namespace_id] || :current_user), {}, {class: 'select2', tabindex: 2}
 
       %hr
-      .js-toggle-container
+
+      .project-import.js-toggle-container
         .form-group
-          .col-sm-2
+          %label.control-label インポート
           .col-sm-10
-            = link_to "#", class: 'js-toggle-button' do
-              %i.fa.fa-upload
-              %span URLで既存リポジトリをインポート
+            - if github_import_enabled?
+              = link_to status_import_github_path, class: 'btn' do
+                %i.fa.fa-github
+                GitHub
+            - else
+              = link_to '#', class: 'how_to_import_link light btn' do
+                %i.fa.fa-github
+                GitHub
+              = render 'github_import_modal'
+
+
+            - if bitbucket_import_enabled?
+              = link_to status_import_bitbucket_path, class: 'btn' do
+                %i.fa.fa-bitbucket
+                Bitbucket
+            - else
+              = link_to '#', class: 'how_to_import_link light btn' do
+                %i.fa.fa-bitbucket
+                Bitbucket
+              = render 'bitbucket_import_modal'
+
+            - unless request.host == 'gitlab.com'
+              - if gitlab_import_enabled?
+                = link_to status_import_gitlab_path, class: 'btn' do
+                  %i.fa.fa-heart
+                  GitLab.com
+              - else
+                = link_to '#', class: 'how_to_import_link light btn' do
+                  %i.fa.fa-heart
+                  GitLab.com
+                = render 'gitlab_import_modal'
+
+            = link_to new_import_gitorious_path, class: 'btn' do
+              %i.icon-gitorious.icon-gitorious-small
+              Gitorious.org
+
+            = link_to new_import_google_code_path, class: 'btn' do
+              %i.fa.fa-google
+              Google Code
+
+            = link_to "#", class: 'btn js-toggle-button' do
+              %i.fa.fa-git
+              %span Any repo by URL
+
         .js-toggle-content.hide
           .form-group.import-url-data
             = f.label :import_url, class: 'control-label' do
-              %span 既存のリポジトリをインポート
+              %span Git repository URL
             .col-sm-10
-              = f.text_field :import_url, class: 'form-control', placeholder: 'https://github.com/randx/six.git'
-              .alert.alert-info.prepend-top-10
-                このURLは公開されていなければなりません。次のようにユーザ名とパスワードをつけることもできます: https://username:password@gitlab.com/company/project.git
-                %br
-                インポートは4分でタイムアウトします。大きなリポジトリの場合はクローンとプッシュを組み合わせてください。
-                SVNリポジトリの場合は、#{link_to "SVNからの移行についてのドキュメント", "http://doc.gitlab.com/ce/workflow/migrating_from_svn.html"}を確認してください。
-
-
-      .project-import.form-group
-        %label.control-label プロジェクトをインポート
-        .col-sm-10
-          - if github_import_enabled?
-            = link_to status_import_github_path, class: 'btn' do
-              %i.fa.fa-github
-              GitHub
-          - else
-            = link_to '#', class: 'how_to_import_link light btn' do
-              %i.fa.fa-github
-              GitHub
-            = render 'github_import_modal'
-
-
-          - if bitbucket_import_enabled?
-            = link_to status_import_bitbucket_path, class: 'btn' do
-              %i.fa.fa-bitbucket
-              Bitbucket
-          - else
-            = link_to '#', class: 'how_to_import_link light btn' do
-              %i.fa.fa-bitbucket
-              Bitbucket
-            = render 'bitbucket_import_modal'
-
-          - unless request.host == 'gitlab.com'
-            - if gitlab_import_enabled?
-              = link_to status_import_gitlab_path, class: 'btn' do
-                %i.fa.fa-heart
-                GitLab.com
-            - else
-              = link_to '#', class: 'how_to_import_link light btn' do
-                %i.fa.fa-heart
-                GitLab.com
-              = render 'gitlab_import_modal'
-
-          = link_to new_import_gitorious_path, class: 'btn' do
-            %i.icon-gitorious.icon-gitorious-small
-            Gitorious.org
+              = f.text_field :import_url, class: 'form-control', placeholder: 'https://username:password@gitlab.company.com/group/project.git'
+              .well.prepend-top-20
+                %ul
+                  %li
+                    The repository must be accessible over HTTP(S). If it is not publicly accessible, you can add authentication information to the URL: <code>https://username:password@gitlab.company.com/group/project.git</code>.
+                  %li
+                    The import will time out after 4 minutes. For big repositories, use a clone/push combination.
+                  %li
+                    To migrate an SVN repository, check out #{link_to "this document", "http://doc.gitlab.com/ce/workflow/migrating_from_svn.html"}.
 
       %hr.prepend-botton-10
 
@@ -108,9 +113,8 @@
     %p 準備ができ次第、自動的に更新されますのでお待ちください
 
 :coffeescript
-  $ ->
-    $('.how_to_import_link').bind 'click', (e) ->
-      e.preventDefault()
-      import_modal = $(this).next(".modal").show()
-    $('.modal-header .close').bind 'click', ->
-      $(".modal").hide()
+  $('.how_to_import_link').bind 'click', (e) ->
+    e.preventDefault()
+    import_modal = $(this).next(".modal").show()
+  $('.modal-header .close').bind 'click', ->
+    $(".modal").hide()

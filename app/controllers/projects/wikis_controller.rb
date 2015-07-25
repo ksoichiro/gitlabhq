@@ -6,6 +6,7 @@ class Projects::WikisController < Projects::ApplicationController
   before_filter :authorize_write_wiki!, only: [:edit, :create, :history]
   before_filter :authorize_admin_wiki!, only: :destroy
   before_filter :load_project_wiki
+  include WikiHelper
 
   def pages
     @wiki_pages = Kaminari.paginate_array(@project_wiki.pages).page(params[:page]).per(PER_PAGE)
@@ -46,7 +47,10 @@ class Projects::WikisController < Projects::ApplicationController
     return render('empty') unless can?(current_user, :write_wiki, @project)
 
     if @page.update(content, format, message)
-      redirect_to [@project.namespace.becomes(Namespace), @project, @page], notice: 'Wikiが更新されました'
+      redirect_to(
+        namespace_project_wiki_path(@project.namespace, @project, @page),
+        notice: 'Wikiが更新されました'
+      )
     else
       render 'edit'
     end

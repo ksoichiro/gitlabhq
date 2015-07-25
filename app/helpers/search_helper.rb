@@ -27,7 +27,7 @@ module SearchHelper
       { label: "プロフィール設定",    url: profile_path },
       { label: "SSHキー",             url: profile_keys_path },
       { label: "ダッシュボード",      url: root_path },
-      { label: "管理エリア",          url: admin_root_path },
+      { label: "管理セクション",      url: admin_root_path },
     ]
   end
 

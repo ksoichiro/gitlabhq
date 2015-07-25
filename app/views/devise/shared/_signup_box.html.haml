@@ -23,4 +23,5 @@
 .clearfix.prepend-top-20
   %p
     %span.light 確認方法のメールを受信していませんか？
-    = link_to "もう一度送信", new_confirmation_path(resource_name)
+    = succeed '.' do
+      = link_to "もう一度送信", new_confirmation_path(resource_name)
