@@ -5,29 +5,33 @@
     %ul.dropdown-menu
       - if @project.issues_enabled && can?(current_user, :write_issue, @project)
         %li
-          = link_to url_for_new_issue, title: "課題を作成" do
+          = link_to url_for_new_issue(@project, only_path: true), title: "課題を作成" do
+            %i.fa.fa-fw.fa-exclamation-circle
             課題を作成
       - if @project.merge_requests_enabled && can?(current_user, :write_merge_request, @project)
         %li
           = link_to new_namespace_project_merge_request_path(@project.namespace, @project), title: "マージリクエストを作成" do
+            %i.fa.fa-fw.fa-tasks
             マージリクエストを作成
       - if @project.snippets_enabled && can?(current_user, :write_snippet, @project)
         %li
           = link_to new_namespace_project_snippet_path(@project.namespace, @project), title: "スニペットを作成" do
+            %i.fa.fa-fw.fa-file-text-o
             スニペットを作成
       - if can?(current_user, :admin_project_member, @project)
         %li
           = link_to namespace_project_project_members_path(@project.namespace, @project), title: "メンバーを追加" do
+            %i.fa.fa-fw.fa-users
             メンバーを追加
       - if can? current_user, :push_code, @project
         %li.divider
         %li
           = link_to new_namespace_project_branch_path(@project.namespace, @project) do
-            %i.fa.fa-code-fork
-            Gitブランチ
+            %i.fa.fa-fw.fa-code-fork
+            ブランチを作成
         %li
           = link_to new_namespace_project_tag_path(@project.namespace, @project) do
-            %i.fa.fa-tag
-            Gitタグ
+            %i.fa.fa-fw.fa-tag
+            タグを作成New tag
 
 

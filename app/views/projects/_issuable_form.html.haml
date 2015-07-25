@@ -34,8 +34,8 @@
       %i.fa.fa-user
       担当者
     .col-sm-10
-      = project_users_select_tag("#{issuable.class.model_name.param_key}[assignee_id]",
-          placeholder: 'ユーザを選択', class: 'custom-form-control',
+      = users_select_tag("#{issuable.class.model_name.param_key}[assignee_id]",
+          placeholder: 'ユーザを選択', class: 'custom-form-control', null_user: true,
           selected: issuable.assignee_id)
       &nbsp;
       = link_to '自分に割り当てる', '#', class: 'btn assign-to-me-link'
@@ -70,11 +70,11 @@
       = link_to '新しいラベルを作成', new_namespace_project_label_path(issuable.project.namespace, issuable.project), target: :blank
 
 .form-actions
-  - if !issuable.project.empty_repo? && contribution_guide_url(issuable.project) && !issuable.persisted?
+  - if !issuable.project.empty_repo? && (guide_url = contribution_guide_url(issuable.project)) && !issuable.persisted?
     %p
-      Please review the
-      %strong #{link_to 'コントリビューション・ガイドライン', contribution_guide_url(issuable.project)}
-      to this repository.
+      このリポジトリの
+      %strong #{link_to 'コントリビューション・ガイドライン', guide_url}
+      を確認してください
   - if issuable.new_record?
     = f.submit "新しい#{issuable.class.model_name.human.downcase}を作成", class: 'btn btn-create'
   - else

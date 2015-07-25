@@ -2,7 +2,7 @@
 %p.light 安定ブランチを安全にし、開発者にマージリクエストの利用を強制します。
 %hr
 
-.alert.alert-info
+.well.append-bottom-20
   %p 保護ブランチは以下の目的のために設計されています。
   %ul
     %li #{link_to "Master", help_page_path("permissions", "permissions"), class: "vlink"}権限のメンバー以外によるプッシュを防ぐ
@@ -23,12 +23,12 @@
       .col-sm-10
         = f.select(:name, @project.open_branches.map { |br| [br.name, br.name] } , {include_blank: "ブランチを選択"}, {class: "select2"})
     .form-group
-      = f.label :developers_can_push, class: 'control-label' do
-        開発者はプッシュ可能
-      .col-sm-10
+      .col-sm-offset-2.col-sm-10
         .checkbox
-          = f.check_box :developers_can_push
-          %span.descr 開発者にこのブランチへのプッシュを許可
+          = f.label :developers_can_push do
+            = f.check_box :developers_can_push
+            %strong 開発者はプッシュ可能
+          .help-block 開発者にこのブランチへのプッシュを許可
     .form-actions
       = f.submit '保護', class: "btn-create btn"
 = render 'branches_list'

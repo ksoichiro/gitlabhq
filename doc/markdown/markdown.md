@@ -6,7 +6,7 @@
 
 * [改行](#newlines)
 * [単語内の複数のアンダースコア](#multiple-underscores-in-words)
-* [URLの自動リンク](#url-autolinking)
+* [URLの自動リンク](#url-auto-linking)
 * [コードとシンタックスハイライト](#code-and-syntax-highlighting)
 * [絵文字](#emoji)
 * [GitLabでの参照](#special-gitlab-references)
@@ -47,13 +47,14 @@ GFM は以下の場所で使うことができます。
 GFMは [段落と改行の取り扱い](http://daringfireball.net/projects/markdown/syntax#p) での Markdown 仕様にならっています。
 
 段落は単純に1行以上の空行で分けられた、1行以上のテキストです。
+ラインブレーク、ソフトリターンを使うには行末に2つ以上のスペースを入れます。
 
-    Roses are red
+    Roses are red [followed by two or more spaces]  
     Violets are blue
 
     Sugar is sweet
 
-Roses are red
+Roses are red  
 Violets are blue
 
 Sugar is sweet
@@ -420,7 +421,7 @@ ab_c-d-e-anchor
 
 生のHTMLを Markdown で使うことができ、大半はうまく機能するでしょう。
 
-Note that inline HTML is disabled in the default Gitlab configuration, although it is [possible](https://github.com/gitlabhq/gitlabhq/pull/8007/commits) for the system administrator to enable it.
+See the documentation for HTML::Pipeline's [SanitizationFilter](http://www.rubydoc.info/gems/html-pipeline/HTML/Pipeline/SanitizationFilter#WHITELIST-constant) class for the list of allowed HTML tags and attributes.  In addition to the default `SanitizationFilter` whitelist, GitLab allows the `class`, `id`, and `style` attributes.
 
 ```no-highlight
 <dl>

@@ -31,14 +31,11 @@
 
           = render "visibility_level", f: f, visibility_level: @project.visibility_level, can_change_visibility_level: can?(current_user, :change_visibility_level, @project)
 
-          %fieldset.features
-            %legend
-              タグ:
-            .form-group
-              = f.label :tag_list, "タグ", class: 'control-label'
-              .col-sm-10
-                = f.text_field :tag_list, maxlength: 2000, class: "form-control"
-                %p.hint ラベルはカンマで区切ります
+          .form-group
+            = f.label :tag_list, "タグ", class: 'control-label'
+            .col-sm-10
+              = f.text_field :tag_list, maxlength: 2000, class: "form-control"
+              %p.help-block タグはカンマで区切ります
 
           %fieldset.features
             %legend

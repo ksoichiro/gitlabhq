@@ -3,9 +3,8 @@
   .pull-right
     = link_to "SSHキーを追加", new_profile_key_path, class: "btn btn-new"
 %p.light
-  マイSSHキー: #{@keys.count}
-  %br
   SSHキーを追加する前に
+  Before you can add an SSH key you need to
   = link_to "SSHキーを生成してください", help_page_path("ssh", "README")
 %hr
 

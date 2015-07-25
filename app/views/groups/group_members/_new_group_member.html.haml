@@ -1,7 +1,10 @@
 = form_for @group_member, url: group_group_members_path(@group), html: { class: 'form-horizontal users-group-form' } do |f|
   .form-group
     = f.label :user_ids, "ユーザ", class: 'control-label'
-    .col-sm-10= users_select_tag(:user_ids, multiple: true, class: 'input-large')
+    .col-sm-10
+      = users_select_tag(:user_ids, multiple: true, class: 'input-large', scope: :all, email_user: true)
+      .help-block
+        既存のユーザを検索するかメールアドレスを指定して招待します
 
   .form-group
     = f.label :access_level, "グループアクセス権", class: 'control-label'

@@ -4,7 +4,7 @@ require_relative "base_service"
 module Files
   class DeleteService < BaseService
     def execute
-      allowed = ::Gitlab::GitAccess.can_push_to_branch?(current_user, project, ref)
+      allowed = ::Gitlab::GitAccess.new(current_user, project).can_push_to_branch?(ref)
 
       unless allowed
         return error("このブランチへのプッシュは許可されていません")

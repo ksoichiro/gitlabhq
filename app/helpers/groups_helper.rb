@@ -1,7 +1,11 @@
 # encoding: utf-8
 module GroupsHelper
-  def remove_user_from_group_message(group, user)
-    "本当に \"#{user.name}\" を \"#{group.name}\" から削除しますか？"
+  def remove_user_from_group_message(group, member)
+    if member.user
+      "本当に \"#{member.user.name}\" を \"#{group.name}\" から削除しますか？"
+    else
+      "本当に \"#{member.invite_email}\" への \"#{group.name}\" への招待を取り消しますか？"
+    end
   end
 
   def leave_group_message(group)

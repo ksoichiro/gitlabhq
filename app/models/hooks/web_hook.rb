@@ -29,7 +29,7 @@ class WebHook < ActiveRecord::Base
   default_timeout Gitlab.config.gitlab.webhook_timeout
 
   validates :url, presence: true,
-                  format: { with: URI::regexp(%w(http https)), message: "は有効なURLでなければなりません" }
+                  format: { with: /\A#{URI.regexp(%w(http https))}\z/, message: "は有効なURLでなければなりません" }
 
   def execute(data)
     parsed_url = URI.parse(url)

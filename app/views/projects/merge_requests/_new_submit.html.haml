@@ -38,7 +38,7 @@
           %i.fa.fa-user
           担当者
       .col-sm-10
-        = project_users_select_tag('merge_request[assignee_id]', placeholder: 'ユーザを選択', class: 'custom-form-control', selected: @merge_request.assignee_id, project_id: @merge_request.target_project_id)
+        = users_select_tag('merge_request[assignee_id]', placeholder: 'ユーザを選択', class: 'custom-form-control', selected: @merge_request.assignee_id, project_id: @merge_request.target_project_id)
         &nbsp;
         = link_to '自分に割り当て', '#', class: 'btn assign-to-me-link'
     .form-group
@@ -68,10 +68,10 @@
           = link_to 'ラベルを作成', new_namespace_project_label_path(@merge_request.target_project.namespace, @merge_request.target_project), target: :blank
 
     .form-actions
-      - if contribution_guide_url(@target_project)
+      - if guide_url = contribution_guide_url(@target_project)
         %p
           このリポジトリの
-          %strong #{link_to 'コントリビューション・ガイドライン', contribution_guide_url(@target_project)}
+          %strong #{link_to 'コントリビューション・ガイドライン', guide_url}
           を確認してください
       = f.hidden_field :source_project_id
       = f.hidden_field :source_branch
@@ -81,12 +81,12 @@
 
 .mr-compare.merge-request
   %ul.nav.nav-tabs.merge-request-tabs
-    %li.commits-tab{data: {action: 'commits'}}
+    %li.commits-tab{data: {action: 'commits', toggle: 'tab'}}
       = link_to url_for(params) do
         %i.fa.fa-history
         コミット
         %span.badge= @commits.size
-    %li.diffs-tab{data: {action: 'diffs'}}
+    %li.diffs-tab{data: {action: 'diffs', toggle: 'tab'}}
       = link_to url_for(params) do
         %i.fa.fa-list-alt
         変更

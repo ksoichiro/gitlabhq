@@ -20,9 +20,13 @@
     %li
       %strong= @primary
       %span.label.label-success プライマリメールアドレス
+      - if @primary === @public_email
+        %span.label.label-info 公開メールアドレス
     - @emails.each do |email|
       %li
         %strong= email.email
+        - if email.email === @public_email
+          %span.label.label-info Public Email
         %span.cgray
           #{time_ago_with_tooltip(email.created_at)} に追加
         = link_to '削除', profile_email_path(email), data: { confirm: '本当に削除しますか？'}, method: :delete, class: 'btn btn-sm btn-remove pull-right'
