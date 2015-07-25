@@ -142,7 +142,6 @@ class Note < ActiveRecord::Base
         message << " #{removed_labels} を削除しました"
       end
 
-      message << ' ' << 'label'.pluralize(labels_count)
       body = "#{message.capitalize}"
 
       create(

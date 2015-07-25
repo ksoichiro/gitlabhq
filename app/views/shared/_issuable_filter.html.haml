@@ -31,11 +31,11 @@
             placeholder: '作成', class: 'trigger-submit', any_user: true, first_user: true)
 
         .filter-item.inline.milestone-filter
-          = select_tag('milestone_id', projects_milestones_options, class: "select2 trigger-submit", prompt: 'Milestone')
+          = select_tag('milestone_id', projects_milestones_options, class: "select2 trigger-submit", prompt: 'マイルストーン')
 
         - if @project
           .filter-item.inline.labels-filter
-            = select_tag('label_name', project_labels_options(@project), class: "select2 trigger-submit", prompt: 'Label')
+            = select_tag('label_name', project_labels_options(@project), class: "select2 trigger-submit", prompt: 'ラベル')
 
         .pull-right
           = render 'shared/sort_dropdown'
@@ -43,9 +43,9 @@
     - if controller.controller_name == 'issues'
       .issues_bulk_update.hide
         = form_tag bulk_update_namespace_project_issues_path(@project.namespace, @project), method: :post  do
-          = select_tag('update[state_event]', options_for_select([['Open', 'reopen'], ['Closed', 'close']]), prompt: "Status", class: 'form-control')
-          = users_select_tag('update[assignee_id]', placeholder: 'Assignee', null_user: true)
-          = select_tag('update[milestone_id]', bulk_update_milestone_options, prompt: "Milestone")
+          = select_tag('update[state_event]', options_for_select([['オープン', 'reopen'], ['クローズ', 'close']]), prompt: "ステータス", class: 'form-control')
+          = users_select_tag('update[assignee_id]', placeholder: '担当者', null_user: true)
+          = select_tag('update[milestone_id]', bulk_update_milestone_options, prompt: "マイルストーン")
           = hidden_field_tag 'update[issues_ids]', []
           = hidden_field_tag :state_event, params[:state_event]
           = button_tag "Update issues", class: "btn update_selected_issues btn-save"
