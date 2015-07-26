@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Admin::ApplicationSettingsController < Admin::ApplicationController
-  before_filter :set_application_setting
+  before_action :set_application_setting
 
   def show
   end
@@ -40,7 +40,11 @@ class Admin::ApplicationSettingsController < Admin::ApplicationController
       :sign_in_text,
       :home_page_url,
       :max_attachment_size,
-      restricted_visibility_levels: []
+      :default_project_visibility,
+      :default_snippet_visibility,
+      :restricted_signup_domains_raw,
+      :version_check_enabled,
+      restricted_visibility_levels: [],
     )
   end
 end

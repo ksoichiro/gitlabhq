@@ -1,3 +1,10 @@
+- page_title "トレンドプロジェクト"
+.explore-title
+  %h3
+    GitLabを探索
+  %p.lead
+    プロジェクトとグループを見つけましょう。あなたのプロジェクトをシェアしましょう
+%hr
 .explore-trending-block
   %p.lead
     %i.fa.fa-comments-o
@@ -7,5 +14,5 @@
     %ul.bordered-list
       = render @trending_projects
 
-  .center
+  .center.append-bottom-20
     = link_to 'すべてのプロジェクトを表示', explore_projects_path, class: 'btn btn-primary'

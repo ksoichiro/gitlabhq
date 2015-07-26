@@ -20,24 +20,6 @@ module GroupsHelper
     end
   end
 
-  def group_head_title
-    title = @group.name
-
-    title = if current_action?(:issues)
-              "課題 - " + title
-            elsif current_action?(:merge_requests)
-              "マージリクエスト - " + title
-            elsif current_action?(:members)
-              "メンバー - " + title
-            elsif current_action?(:edit)
-              "設定 - " + title
-            else
-              title
-            end
-
-    title
-  end
-
   def group_settings_page?
     if current_controller?('groups')
       current_action?('edit') || current_action?('projects')

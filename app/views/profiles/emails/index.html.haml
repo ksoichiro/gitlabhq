@@ -1,14 +1,19 @@
+- page_title "Emails"
 %h3.page-title
   メールアドレス設定
 %p.light
   あなたの
   %b プライマリメールアドレス
   はアバターの検出やWebベースの操作(編集やマージなど)に使用されます。
-  %br
+%p.light
   あなたの
   %b 通知メールアドレス
   はアカウントの通知に使用されます。
-  %br
+%p.light
+  あなたの
+  %b 公開メールアドレス
+  はあなたの公開プロフィールに表示されます。
+%p.light
   すべてのメールアドレスはあなたのコミットの識別に使用されます。
 
 %hr
@@ -20,13 +25,17 @@
     %li
       %strong= @primary
       %span.label.label-success プライマリメールアドレス
-      - if @primary === @public_email
+      - if @primary === current_user.public_email
         %span.label.label-info 公開メールアドレス
+      - if @primary === current_user.notification_email
+        %span.label.label-info 通知メールアドレス
     - @emails.each do |email|
       %li
         %strong= email.email
-        - if email.email === @public_email
+        - if email.email === current_user.public_email
           %span.label.label-info Public Email
+        - if email.email === current_user.notification_email
+          %span.label.label-info Notification Email
         %span.cgray
           #{time_ago_with_tooltip(email.created_at)} に追加
         = link_to '削除', profile_email_path(email), data: { confirm: '本当に削除しますか？'}, method: :delete, class: 'btn btn-sm btn-remove pull-right'

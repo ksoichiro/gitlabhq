@@ -1,12 +1,11 @@
 # encoding: utf-8
-class Profiles::PasswordsController < ApplicationController
+class Profiles::PasswordsController < Profiles::ApplicationController
+  skip_before_action :check_password_expiration, only: [:new, :create]
+
+  before_action :set_user
+  before_action :authorize_change_password!
+
   layout :determine_layout
-
-  skip_before_filter :check_password_expiration, only: [:new, :create]
-
-  before_filter :set_user
-  before_filter :set_title
-  before_filter :authorize_change_password!
 
   def new
   end
@@ -67,13 +66,9 @@ class Profiles::PasswordsController < ApplicationController
     @user = current_user
   end
 
-  def set_title
-    @title = "新しいパスワード"
-  end
-
   def determine_layout
     if [:new, :create].include?(action_name.to_sym)
-      'navless'
+      'application'
     else
       'profile'
     end

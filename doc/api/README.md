@@ -6,6 +6,7 @@
 - [セッション](session.md)
 - [プロジェクト](projects.md)
 - [プロジェクトスニペット](project_snippets.md)
+- [サービス](services.md)
 - [リポジトリ](repositories.md)
 - [リポジトリファイル](repository_files.md)
 - [コミット](commits.md)

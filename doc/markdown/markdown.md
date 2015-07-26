@@ -171,31 +171,50 @@ GFM は参照をリンクに変換するため、それらの参照に対して�
 
 GFM は以下を認識します。
 
-- @foo : 特定のチームメンバーやグループへの参照
-- @all : チーム全体への参照
-- #123 : 課題への参照
-- !123 : マージリクエストへの参照
-- $123 : スニペットへの参照
-- 1234567 : コミットへの参照
-- \[file\](path/to/file) : ファイルへの参照
+| 入力                   | 参照                       |
+|:-----------------------|:---------------------------|
+| `@user_name`           | 特定のユーザ               |
+| `@group_name`          | 特定のグループ             |
+| `@all`                 | チーム全体                 |
+| `#123`                 | 課題                       |
+| `!123`                 | マージリクエスト           |
+| `$123`                 | スニペット                 |
+| `~123`                 | ラベル by ID               |
+| `~bug`                 | 1単語ラベル by 名前        |
+| `~"feature request"`   | 複数単語ラベル by 名前     |
+| `9ba12248`             | 特定のコミット             |
+| `9ba12248...b19a04f5`  | コミット範囲比較           |
+| `[README](doc/README)` | リポジトリ内のファイル     |
 
-GFM also recognizes references to commits, issues, and merge requests in other projects:
+GFM はクロスプロジェクトも認識します。
 
-- namespace/project#123 : for issues
-- namespace/project!123 : for merge requests
-- namespace/project@1234567 : for commits
+| 入力                                    | 参照                    |
+|:----------------------------------------|:------------------------|
+| `namespace/project#123`                 | 課題                    |
+| `namespace/project!123`                 | マージリクエスト        |
+| `namespace/project$123`                 | スニペット              |
+| `namespace/project@9ba12248`            | 特定のコミット          |
+| `namespace/project@9ba12248...b19a04f5` | コミット範囲比較        |
 
 ## Task Lists
 
-You can add task lists to merge request and issue descriptions to keep track of to-do items.  To create a task, add an unordered list to the description in an issue or merge request, formatted like so:
+You can add task lists to issues, merge requests and comments. To create a task list, add a specially-formatted Markdown list, like so:
 
 ```no-highlight
-* [x] Completed task
-* [ ] Unfinished task
-    * [x] Nested task
+- [x] Completed task
+- [ ] Incomplete task
+    - [ ] Sub-task 1
+    - [x] Sub-task 2
+    - [ ] Sub-task 3
 ```
 
-Task lists can only be created in descriptions, not in titles or comments.  Task item state can be managed by editing the description's Markdown or by clicking the rendered checkboxes.
+- [x] Completed task
+- [ ] Incomplete task
+    - [ ] Sub-task 1
+    - [x] Sub-task 2
+    - [ ] Sub-task 3
+
+Task lists can only be created in descriptions, not in titles. Task item state can be managed by editing the description's Markdown or by toggling the rendered check boxes.
 
 # 標準のMarkdown
 
@@ -241,45 +260,31 @@ H2の別表現
 
 コンテンツのヘッダから生成されたIDは以下のルールになっています。
 
-1. 先頭のハッシュ `#` を削除し、行の残りの部分をヘッダでなかった場合のように処理します
-2. その結果から、すべてのHTMLタグを削除し、ただしタグの中のコンテンツは残すように処理します
-3. すべての文字を小文字に変換します
-4. `[a-z0-9_-]` 以外のすべての文字をハイフン `-` に変換します
-5. 連続するハイフンを1つのハイフンに変換します
-6. 先頭と末尾のハイフンを削除します
+1. すべての文字が小文字に変換されます
+1. 単語構成文字以外のすべての文字(句読点、HTMLなど)は削除されます
+1. すべての空白はハイフンに変換されます
+1. 連続する2個以上のハイフンは1つのハイフンに変換されます
+1. 同じIDを持つヘッダがすでに生成されていた場合、一意となる連番が付加されます
 
 例:
 
 ```
-###### ..Ab_c-d. e [anchor](URL) ![alt text](URL)..
+# This header has spaces in it
+## This header has a :thumbsup: in it
+# This header has Unicode in it: 한글
+## This header has spaces in it
+### This header has spaces in it
 ```
 
-以下のように表示されます。
+これらは以下のようなIDのリンクに変換されます。
 
-###### ..Ab_c-d. e [anchor](URL) ![alt text](URL)..
+1. `this-header-has-spaces-in-it`
+1. `this-header-has-a-in-it`
+1. `this-header-has-unicode-in-it-한글`
+1. `this-header-has-spaces-in-it-1`
+1. `this-header-has-spaces-in-it-2`
 
-これはステップ 1) によって次のような文字列に変換されます。
-
-```
-..Ab_c-d. e &lt;a href="URL">anchor&lt;/a> &lt;img src="URL" alt="alt text"/>..
-```
-
-ステップ 2) でタグを削除すると次のようになります。
-
-```
-..Ab_c-d. e anchor ..
-```
-
-そして以降のステップを適用するとIDができあがります。
-
-```
-ab_c-d-e-anchor
-```
-
-特に以下の点に注意してください。
-
-- Markdown のアンカー `[text](URL)` は `text` だけが使用されます
-- Markdown のイメージ `![alt](URL)` は完全に無視されます
+絵文字はヘッダのIDが生成される前に処理されるため、絵文字は画像に変換され、IDからは削除されます。
 
 ## 強調
 
@@ -311,8 +316,6 @@ ab_c-d-e-anchor
   1. 番号付きのサブリスト
 4. さらに別の項目
 
-   テキストは上の項目と位置を合わせる必要があります。
-
 * 番号のないリストはアスタリスクを使います
 - またはマイナス
 + またはプラス
@@ -324,8 +327,6 @@ ab_c-d-e-anchor
 1. 実際の番号は問題ではなく、数字であることが必要です
   1. 番号付きのサブリスト
 4. さらに別の項目
-
-   テキストは上の項目と位置を合わせる必要があります。
 
 * 番号のないリストはアスタリスクを使います
 - またはマイナス
@@ -421,7 +422,7 @@ ab_c-d-e-anchor
 
 生のHTMLを Markdown で使うことができ、大半はうまく機能するでしょう。
 
-See the documentation for HTML::Pipeline's [SanitizationFilter](http://www.rubydoc.info/gems/html-pipeline/HTML/Pipeline/SanitizationFilter#WHITELIST-constant) class for the list of allowed HTML tags and attributes.  In addition to the default `SanitizationFilter` whitelist, GitLab allows the `class`, `id`, and `style` attributes.
+See the documentation for HTML::Pipeline's [SanitizationFilter](http://www.rubydoc.info/gems/html-pipeline/HTML/Pipeline/SanitizationFilter#WHITELIST-constant) class for the list of allowed HTML tags and attributes.  In addition to the default `SanitizationFilter` whitelist, GitLab allows `span` elements.
 
 ```no-highlight
 <dl>
@@ -519,9 +520,23 @@ ___
 | セル 1   | セル 2   |
 | セル 3   | セル 4   |
 
-**Note**
+**注意**
 
-The row of dashes between the table header and body must have at least three dashes in each column.
+表のヘッダとボディの間のダッシュの行は、それぞれの列に対して3つ以上のダッシュを含んでいる必要があります。
+
+ヘッダ行にコロンを含めることで、列内のテキストの位置を揃えることができます。
+
+```
+| 左揃え       | 中央揃え | 右揃え        | 左揃え       | 中央揃え | 右揃え        |
+| :----------- | :------: | ------------: | :----------- | :------: | ------------: |
+| Cell 1       | Cell 2   | Cell 3        | Cell 4       | Cell 5   | Cell 6        |
+| Cell 7       | Cell 8   | Cell 9        | Cell 10      | Cell 11  | Cell 12       |
+```
+
+| 左揃え       | 中央揃え | 右揃え        | 左揃え       | 中央揃え | 右揃え        |
+| :----------- | :------: | ------------: | :----------- | :------: | ------------: |
+| Cell 1       | Cell 2   | Cell 3        | Cell 4       | Cell 5   | Cell 6        |
+| Cell 7       | Cell 8   | Cell 9        | Cell 10      | Cell 11  | Cell 12       |
 
 ## リファレンス
 

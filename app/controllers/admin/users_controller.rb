@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Admin::UsersController < Admin::ApplicationController
-  before_filter :user, only: [:show, :edit, :update, :destroy]
+  before_action :user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.order_name_asc.filter(params[:filter])
@@ -103,8 +103,7 @@ class Admin::UsersController < Admin::ApplicationController
     email = user.emails.find(params[:email_id])
     email.destroy
 
-    user.set_notification_email
-    user.save if user.notification_email_changed?
+    user.update_secondary_emails!
 
     respond_to do |format|
       format.html { redirect_to :back, notice: "Successfully removed email." }

@@ -1,3 +1,4 @@
+- page_title "Account"
 - if current_user.ldap_user?
   .alert.alert-info
     いくつかのオプションはLDAPアカウントでは利用できません。
@@ -26,6 +27,33 @@
               %span トークンがありません。「生成」をクリックして生成してください。
               = f.submit '生成', class: "btn success btn-build-token"
 
+  - unless current_user.ldap_user?
+    %fieldset
+      - if current_user.otp_required_for_login
+        %legend.text-success
+          = icon('check')
+          二段階認証が有効
+        %div
+          .pull-right
+            = link_to '二段階認証を無効にする', profile_two_factor_auth_path, method: :delete, class: 'btn btn-close btn-sm',
+                data: { confirm: '本当に無効にしますか？' }
+          %p
+            If you lose your recovery codes you can
+            %strong
+              = succeed ',' do
+                = link_to 'generate new ones', codes_profile_two_factor_auth_path, method: :post, data: { confirm: 'Are you sure?' }
+            invalidating all previous codes.
+
+      - else
+        %legend 二段階認証
+        %div
+          %p
+            Increase your account's security by enabling two-factor authentication (2FA).
+          %p
+            Each time you log in you’ll be required to provide your username and
+            password as usual, plus a randomly-generated code from your phone.
+          %div
+            = link_to '二段階認証を有効にする', new_profile_two_factor_auth_path, class: 'btn btn-success'
 
   - if show_profile_social_tab?
     %fieldset
@@ -36,10 +64,10 @@
         - enabled_social_providers.each do |provider|
           .btn-group
             = link_to oauth_image_tag(provider), omniauth_authorize_path(User, provider),
-              class: "btn btn-lg #{'active' if oauth_active?(provider)}"
+              method: :post, class: "btn btn-lg #{'active' if oauth_active?(provider)}"
             - if oauth_active?(provider)
               = link_to unlink_profile_account_path(provider: provider), method: :delete, class: 'btn btn-lg' do
-                %i.fa.fa-close
+                = icon('close')
 
   - if show_profile_username_tab?
     %fieldset.update-username
@@ -53,7 +81,7 @@
           &nbsp;
         .loading-gif.hide
           %p
-            %i.fa.fa-spinner.fa-spin
+            = icon('spinner spin')
             ユーザ名を保存しています
         %p.light
           = user_url(@user)

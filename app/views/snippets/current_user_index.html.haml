@@ -1,39 +1,35 @@
+- page_title "マイスニペット"
 %h3.page-title
   マイスニペット
   .pull-right
     = link_to new_snippet_path, class: "btn btn-new btn-grouped", title: "新しいスニペット" do
       新しいスニペットを追加
-    = link_to snippets_path, class: "btn btn-grouped"  do
-      スニペットを探す
 
 %p.light
   コードをGitリポジトリの外で共有しましょう。
-%hr
 
-.row
-  .col-md-3
-    %ul.nav.nav-pills.nav-stacked
-      = nav_tab :scope, nil do
-        = link_to user_snippets_path(@user) do
-          すべて
-          %span.pull-right
-            = @user.snippets.count
-      = nav_tab :scope, 'are_private' do
-        = link_to user_snippets_path(@user, scope: 'are_private') do
-          プライベート
-          %span.pull-right
-            = @user.snippets.are_private.count
-      = nav_tab :scope, 'are_internal' do
-        = link_to user_snippets_path(@user, scope: 'are_internal') do
-          内部
-          %span.pull-right
-            = @user.snippets.are_internal.count
-      = nav_tab :scope, 'are_public' do
-        = link_to user_snippets_path(@user, scope: 'are_public') do
-          公開
-          %span.pull-right
-            = @user.snippets.are_public.count
+%ul.nav.nav-tabs
+  = nav_tab :scope, nil do
+    = link_to user_snippets_path(@user) do
+      すべて
+      %span.badge
+        = @user.snippets.count
+  = nav_tab :scope, 'are_private' do
+    = link_to user_snippets_path(@user, scope: 'are_private') do
+      プライベート
+      %span.badge
+        = @user.snippets.are_private.count
+  = nav_tab :scope, 'are_internal' do
+    = link_to user_snippets_path(@user, scope: 'are_internal') do
+      内部
+      %span.badge
+        = @user.snippets.are_internal.count
+  = nav_tab :scope, 'are_public' do
+    = link_to user_snippets_path(@user, scope: 'are_public') do
+      公開
+      %span.badge
+        = @user.snippets.are_public.count
 
-  .col-md-9.my-snippets
-    = render 'snippets'
+.my-snippets
+  = render 'snippets'
 

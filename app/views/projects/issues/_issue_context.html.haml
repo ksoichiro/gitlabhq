@@ -1,4 +1,4 @@
-= form_for [@project.namespace.becomes(Namespace), @project, @issue], remote: true, html: {class: 'edit-issue inline-update'} do |f|
+= form_for [@project.namespace.becomes(Namespace), @project, @issue], remote: true, html: {class: 'edit-issue inline-update js-issue-update'} do |f|
   %div.prepend-top-20
     .issuable-context-title
       %label
@@ -32,7 +32,7 @@
       .issuable-context-title
         %label
           更新の通知:
-      %button.btn.btn-block.subscribe-button
+      %button.btn.btn-block.subscribe-button{:type => 'button'}
         %i.fa.fa-eye
         %span= @issue.subscribed?(current_user) ? "更新通知の受信を解除" : "更新通知を受信"
       - subscribtion_status = @issue.subscribed?(current_user) ? "subscribed" : "unsubscribed"

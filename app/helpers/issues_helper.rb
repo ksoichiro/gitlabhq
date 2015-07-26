@@ -11,7 +11,7 @@ module IssuesHelper
   # to allow filtering issues by an unassigned User or Milestone
   def unassigned_filter
     # Milestone uses :title, Issue uses :name
-    OpenStruct.new(id: 0, title: 'None (backlog)', name: 'Unassigned')
+    OpenStruct.new(id: 0, title: 'なし (backlog)', name: '担当なし')
   end
 
   def url_for_project_issues(project = @project, options = {})
@@ -44,17 +44,6 @@ module IssuesHelper
     end
   end
 
-  def title_for_issue(issue_iid, project = @project)
-    return '' if project.nil?
-
-    if project.default_issues_tracker?
-      issue = project.issues.where(iid: issue_iid).first
-      return issue.title if issue
-    end
-
-    ''
-  end
-
   def issue_timestamp(issue)
     # Shows the created at time and the updated at time if different
     ts = "#{time_ago_with_tooltip(issue.created_at, 'bottom', 'note_created_ago')} に作成"
@@ -72,7 +61,7 @@ module IssuesHelper
   end
 
   def bulk_update_milestone_options
-    options_for_select([['None (backlog)', -1]]) +
+    options_for_select([['なし (backlog)', -1]]) +
         options_from_collection_for_select(project_active_milestones, 'id',
                                            'title', params[:milestone_id])
   end
@@ -110,4 +99,7 @@ module IssuesHelper
       xml.summary issue.title
     end
   end
+
+  # Required for Gitlab::Markdown::IssueReferenceFilter
+  module_function :url_for_issue
 end

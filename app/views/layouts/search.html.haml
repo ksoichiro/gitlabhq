@@ -1,10 +1,4 @@
-!!! 5
-%html{ lang: "en"}
-  = render "layouts/head", title: "検索"
-  %body{class: "#{app_theme}  application", :'data-page' => body_data_page}
-    = render "layouts/broadcast"
-    = render "layouts/head_panel", title: link_to("検索", search_path)
-    .container.navless-container
-      .content
-        = render "layouts/flash"
-        = yield
+- page_title    "検索"
+- header_title  "検索", search_path
+
+= render template: "layouts/application"

@@ -193,46 +193,6 @@ module ProjectsHelper
     'unknown'
   end
 
-  def project_head_title
-    title = @project.name_with_namespace
-
-    title = if current_controller?(:tree)
-              "#{@project.path}\/#{@path} at #{@ref} - " + title
-            elsif current_controller?(:issues)
-              if current_action?(:show)
-                "課題 ##{@issue.iid} - #{@issue.title} - " + title
-              else
-                "課題 - " + title
-              end
-            elsif current_controller?(:blob)
-              if current_action?(:new) || current_action?(:create)
-                "New file at #{@ref}"
-              elsif current_action?(:show)
-                "#{@blob.path} at #{@ref}"
-              elsif @blob
-                "Edit file #{@blob.path} at #{@ref}"
-              end
-            elsif current_controller?(:commits)
-              "#{@ref} のコミット - " + title
-            elsif current_controller?(:merge_requests)
-              if current_action?(:show)
-                "マージリクエスト ##{@merge_request.iid} - " + title
-              else
-                "マージリクエスト - " + title
-              end
-            elsif current_controller?(:wikis)
-              "Wiki - " + title
-            elsif current_controller?(:network)
-              "ネットワークグラフ - " + title
-            elsif current_controller?(:graphs)
-              "グラフ - " + title
-            else
-              title
-            end
-
-    title
-  end
-
   def default_url_to_repo(project = nil)
     project = project || @project
     current_user ? project.url_to_repo : project.http_url_to_repo

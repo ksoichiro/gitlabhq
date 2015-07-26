@@ -1,15 +1,14 @@
 .note-edit-form
   = form_for note, url: namespace_project_note_path(@project.namespace, @project, note), method: :put, remote: true, authenticity_token: true do |f|
     = note_target_fields(note)
-    = render layout: 'projects/md_preview', locals: { preview_class: "note-text" } do
-      = render 'projects/zen', f: f, attr: :note,
-        classes: 'note_text js-note-text'
+    = render layout: 'projects/md_preview', locals: { preview_class: 'note-text' } do
+      = render 'projects/zen', f: f, attr: :note, classes: 'note_text js-note-text js-task-list-field'
 
       .comment-hints.clearfix
-        .pull-left コメントは #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"),{ target: '_blank', tabindex: -1 }} 記法でパースされます
-        .pull-right ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector', tabindex: -1 }してファイルを添付
+        .pull-left コメントは #{link_to 'GitLab Flavored Markdown', help_page_path('markdown', 'markdown'),{ target: '_blank', tabindex: -1 }} 記法でパースされます
+        .pull-right ドラッグ &amp; ドロップまたは#{link_to 'ファイルを選択', '#', class: 'markdown-selector', tabindex: -1 }してファイルを添付
 
     .note-form-actions
       .buttons
-        = f.submit 'コメントを保存', class: "btn btn-primary btn-save btn-grouped js-comment-button"
-        = link_to  'キャンセル', "#", class: "btn btn-cancel note-edit-cancel"
+        = f.submit 'コメントを保存', class: 'btn btn-primary btn-save btn-grouped js-comment-button'
+        = link_to  'キャンセル', '#', class: 'btn btn-cancel note-edit-cancel'

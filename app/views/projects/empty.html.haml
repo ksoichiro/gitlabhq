@@ -12,6 +12,8 @@
       ファイルを追加
     &nbsp;するかコマンドラインからプッシュしてください
 
+.well
+  = render "shared/clone_panel"
 %h4
   %strong コマンドラインでの手順
 %div.git-empty
@@ -26,20 +28,19 @@
     %legend リポジトリを新しく作成する場合
     %pre.dark
       :preserve
-        mkdir #{@project.path}
+        git clone #{ content_tag(:span, default_url_to_repo, class: 'clone')}
         cd #{@project.path}
-        git init
         touch README.md
         git add README.md
-        git commit -m "first commit"
-        git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
+        git commit -m "add README"
         git push -u origin master
 
   %fieldset
-    %legend 既存のGitリポジトリがある場合
+    %legend 既存のフォルダまたはGitリポジトリがある場合
     %pre.dark
       :preserve
-        cd existing_git_repo
+        cd existing_folder
+        git init
         git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
         git push -u origin master
 

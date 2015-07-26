@@ -14,8 +14,9 @@
     .last-update.hide.js-toggle-content
       - last_note = discussion_notes.last
       = link_to_member(@project, last_note.author, avatar: false)
-      最終更新:
+
       %span.discussion-last-update
         #{time_ago_with_tooltip(last_note.updated_at, 'bottom', 'discussion_updated_ago')}
+        
   .discussion-body.js-toggle-content
     = render "projects/notes/discussions/diff", discussion_notes: discussion_notes, note: note

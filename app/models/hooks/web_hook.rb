@@ -31,12 +31,15 @@ class WebHook < ActiveRecord::Base
   validates :url, presence: true,
                   format: { with: /\A#{URI.regexp(%w(http https))}\z/, message: "は有効なURLでなければなりません" }
 
-  def execute(data)
+  def execute(data, hook_name)
     parsed_url = URI.parse(url)
     if parsed_url.userinfo.blank?
       WebHook.post(url,
                    body: data.to_json,
-                   headers: { "Content-Type" => "application/json" },
+                   headers: {
+                     "Content-Type" => "application/json",
+                     "X-Gitlab-Event" => hook_name.singularize.titleize
+                   },
                    verify: false)
     else
       post_url = url.gsub("#{parsed_url.userinfo}@", "")
@@ -46,7 +49,10 @@ class WebHook < ActiveRecord::Base
       }
       WebHook.post(post_url,
                    body: data.to_json,
-                   headers: { "Content-Type" => "application/json" },
+                   headers: {
+                     "Content-Type" => "application/json",
+                     "X-Gitlab-Event" => hook_name.singularize.titleize
+                   },
                    verify: false,
                    basic_auth: auth)
     end
@@ -55,7 +61,7 @@ class WebHook < ActiveRecord::Base
     false
   end
 
-  def async_execute(data)
-    Sidekiq::Client.enqueue(ProjectWebHookWorker, id, data)
+  def async_execute(data, hook_name)
+    Sidekiq::Client.enqueue(ProjectWebHookWorker, id, data, hook_name)
   end
 end

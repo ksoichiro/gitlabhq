@@ -215,7 +215,7 @@ module ApplicationHelper
   def time_ago_with_tooltip(date, placement = 'top', html_class = 'time_ago')
     capture_haml do
       haml_tag :time, date.to_s,
-        class: html_class, datetime: date.getutc.iso8601, title: date.stamp('Aug 21, 2011 9:23pm'),
+        class: html_class, datetime: date.getutc.iso8601, title: date.in_time_zone.stamp('Aug 21, 2011 9:23pm'),
         data: { toggle: 'tooltip', placement: placement }
 
       haml_tag :script, "$('." + html_class + "').timeago().tooltip()"
@@ -320,11 +320,27 @@ module ApplicationHelper
     end
   end
 
-  def nav_sidebar_class
-    if nav_menu_collapsed?
-      "page-sidebar-collapsed"
-    else
-      "page-sidebar-expanded"
+  def state_filters_text_for(entity, project)
+    entity_title = "オープン" if entity == :opened
+    entity_title = "クローズ" if entity == :closed
+    entity_title = "すべて" if entity == :all
+
+    count =
+      if project.nil?
+        nil
+      elsif current_controller?(:issues)
+        project.issues.send(entity).count
+      elsif current_controller?(:merge_requests)
+        project.merge_requests.send(entity).count
+      end
+
+    html = content_tag :span, entity_title
+
+    if count.present?
+      html += " "
+      html += content_tag :span, number_with_delimiter(count), class: 'badge'
     end
+
+    html.html_safe
   end
 end
