@@ -1,10 +1,10 @@
 %p
-  Assignee changed
+  担当者が
   - if @previous_assignee
-    from
     %strong #{@previous_assignee.name}
-  to
+    から
   - if issuable.assignee_id
     %strong #{issuable.assignee_name}
   - else
     %strong Unassigned
+  に変更されました

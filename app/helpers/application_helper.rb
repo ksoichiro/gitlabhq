@@ -321,7 +321,9 @@ module ApplicationHelper
   end
 
   def state_filters_text_for(entity, project)
-    entity_title = entity.to_s.humanize
+    entity_title = "オープン" if entity == :opened
+    entity_title = "クローズ" if entity == :closed
+    entity_title = "すべて" if entity == :opened
 
     count =
       if project.nil?

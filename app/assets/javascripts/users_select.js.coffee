@@ -30,7 +30,7 @@ class @UsersSelect
 
               if showNullUser
                 nullUser = {
-                  name: 'Unassigned',
+                  name: '担当なし',
                   avatar: null,
                   username: 'none',
                   id: 0
@@ -39,7 +39,7 @@ class @UsersSelect
 
               if showAnyUser
                 anyUser = {
-                  name: 'Any',
+                  name: '指定なし',
                   avatar: null,
                   username: 'none',
                   id: null

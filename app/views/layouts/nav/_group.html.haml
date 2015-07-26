@@ -41,12 +41,12 @@
   - if group_settings_page?
     %ul.sidebar-subnav
       = nav_link(path: 'groups#edit') do
-        = link_to edit_group_path(@group), title: 'Group', data: {placement: 'right'} do
+        = link_to edit_group_path(@group), title: 'グループ', data: {placement: 'right'} do
           = icon('pencil-square-o')
           %span
             グループ
       = nav_link(path: 'groups#projects') do
-        = link_to projects_group_path(@group), title: 'Projects', data: {placement: 'right'} do
+        = link_to projects_group_path(@group), title: 'プロジェクト', data: {placement: 'right'} do
           = icon('folder')
           %span
             プロジェクト

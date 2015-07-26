@@ -1,3 +1,4 @@
+# encoding: utf-8
 # SystemNoteService
 #
 # Used for creating system notes (e.g., when a user references a merge request
@@ -17,9 +18,9 @@ class SystemNoteService
   # Returns the created Note object
   def self.add_commits(noteable, project, author, new_commits, existing_commits = [], oldrev = nil)
     total_count  = new_commits.length + existing_commits.length
-    commits_text = "#{total_count} commit".pluralize(total_count)
+    commits_text = "#{total_count} コミット"
 
-    body = "Added #{commits_text}:\n\n"
+    body = "#{commits_text}を追加しました:\n\n"
     body << existing_commit_summary(noteable, existing_commits, oldrev)
     body << new_commit_summary(new_commits).join("\n")
 
@@ -41,7 +42,7 @@ class SystemNoteService
   #
   # Returns the created Note object
   def self.change_assignee(noteable, project, author, assignee)
-    body = assignee.nil? ? 'Assignee removed' : "Reassigned to @#{assignee.username}"
+    body = assignee.nil? ? '担当者が削除されました' : "担当者が @#{assignee.username} になりました"
 
     create_note(noteable: noteable, project: project, author: author, note: body)
   end
@@ -73,16 +74,14 @@ class SystemNoteService
     body = ''
 
     if added_labels.present?
-      body << "added #{added_labels}"
-      body << ' and ' if removed_labels.present?
+      body << "ラベル #{added_labels} を追加"
+      body << 'し' if removed_labels.present?
+      body << 'しました' if !removed_labels.present?
     end
 
     if removed_labels.present?
-      body << "removed #{removed_labels}"
+      body << "ラベル #{removed_labels} を削除しました"
     end
-
-    body << ' ' << 'label'.pluralize(labels_count)
-    body = "#{body.capitalize}"
 
     create_note(noteable: noteable, project: project, author: author, note: body)
   end
@@ -102,8 +101,8 @@ class SystemNoteService
   #
   # Returns the created Note object
   def self.change_milestone(noteable, project, author, milestone)
-    body = 'Milestone '
-    body += milestone.nil? ? 'removed' : "changed to #{milestone.title}"
+    body = 'マイルストーンが'
+    body += milestone.nil? ? '削除されました' : "#{milestone.title}に変更されました"
 
     create_note(noteable: noteable, project: project, author: author, note: body)
   end
@@ -124,8 +123,9 @@ class SystemNoteService
   #
   # Returns the created Note object
   def self.change_status(noteable, project, author, status, source)
-    body = "Status changed to #{status}"
-    body += " by #{source.gfm_reference}" if source
+    body = "ステータスが"
+    body += "#{source.gfm_reference}により" if source
+    body += "#{status}に変更されました"
 
     create_note(noteable: noteable, project: project, author: author, note: body)
   end
@@ -293,11 +293,11 @@ class SystemNoteService
                    end
                  end
 
-    commits_text = "#{count} commit".pluralize(count)
+    commits_text = "#{count} コミット"
 
     branch = noteable.target_branch
     branch = "#{noteable.target_project_namespace}:#{branch}" if noteable.for_fork?
 
-    "* #{commit_ids} - #{commits_text} from branch `#{branch}`\n"
+    "* #{commit_ids} - `#{branch}`ブランチから #{commits_text}\n"
   end
 end

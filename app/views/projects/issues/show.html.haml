@@ -9,7 +9,7 @@
           オープン
       課題 ##{@issue.iid}
       %small.creator
-        &middot; #{link_to_member(@project, @issue.author)}が#{issue_timestamp(@issue)}に作成
+        &middot; #{link_to_member(@project, @issue.author)}が#{issue_timestamp(@issue)}
 
       .pull-right
         - if can?(current_user, :write_issue, @project)
