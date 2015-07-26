@@ -53,8 +53,8 @@ module Gitlab
       def protection_options
         {
           "保護なし: DeveloperとMasterはプッシュ(強制含む)とブランチの削除が可能" => PROTECTION_NONE,
-          "部分的に保護: Developerもプッシュ可能だが強制プッシュと削除は不可" => PROTECTION_DEV_CAN_PUSH,
-          "完全に保護: Masterのみプッシュ可能で強制プッシュや削除は不可" => PROTECTION_FULL,
+          "部分的に保護: Developerもプッシュ可能だが強制プッシュと削除は不可、Masterはいずれも可能" => PROTECTION_DEV_CAN_PUSH,
+          "完全に保護: Developerはプッシュ、強制プッシュ、削除は不可、Masterはいずれも可能" => PROTECTION_FULL,
         }
       end
 

@@ -6,6 +6,12 @@ GitLabインスタンスは、`project_create`, `project_destroy`, `user_add_to_
 
 ## フックリクエストの例
 
+**リクエストヘッダ**:
+
+```
+X-Gitlab-Event: System Hook
+```
+
 **プロジェクトの作成:**
 
 ```json

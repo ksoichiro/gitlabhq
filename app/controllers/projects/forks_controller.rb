@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Projects::ForksController < Projects::ApplicationController
   # Authorize
-  before_filter :require_non_empty_project
-  before_filter :authorize_download_code!
+  before_action :require_non_empty_project
+  before_action :authorize_download_code!
 
   def new
     @namespaces = current_user.manageable_namespaces
@@ -19,7 +19,6 @@ class Projects::ForksController < Projects::ApplicationController
         notice: 'プロジェクトがフォークされました'
       )
     else
-      @title = 'プロジェクトをフォーク'
       render :error
     end
   end

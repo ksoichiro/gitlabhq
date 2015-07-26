@@ -1,38 +1,38 @@
 %ul.nav.nav-sidebar
   = nav_link(path: 'dashboard#show', html_options: {class: 'home'}) do
-    = link_to root_path, title: 'ホーム', class: 'shortcuts-activity' do
-      %i.fa.fa-dashboard
+    = link_to root_path, title: 'ホーム', class: 'shortcuts-activity', data: {placement: 'right'} do
+      = icon('dashboard fw')
       %span
         プロジェクト
   = nav_link(path: 'projects#starred') do
-    = link_to starred_dashboard_projects_path, title: 'スターをつけたプロジェクト' do
-      %i.fa.fa-star
+    = link_to starred_dashboard_projects_path, title: 'スターをつけたプロジェクト', data: {placement: 'right'} do
+      = icon('star fw')
       %span
         スター
   = nav_link(controller: :groups) do
-    = link_to dashboard_groups_path, title: 'グループ' do
-      %i.fa.fa-group
+    = link_to dashboard_groups_path, title: 'グループ', data: {placement: 'right'} do
+      = icon('group fw')
       %span
         グループ
   = nav_link(controller: :milestones) do
-    = link_to dashboard_milestones_path, title: 'マイルストーン' do
-      %i.fa.fa-clock-o
+    = link_to dashboard_milestones_path, title: 'マイルストーン', data: {placement: 'right'} do
+      = icon('clock-o fw')
       %span
         マイルストーン
   = nav_link(path: 'dashboard#issues') do
-    = link_to assigned_issues_dashboard_path, title: '課題', class: 'shortcuts-issues' do
-      %i.fa.fa-exclamation-circle
+    = link_to assigned_issues_dashboard_path, title: '課題', class: 'shortcuts-issues', data: {placement: 'right'} do
+      = icon('exclamation-circle fw')
       %span
         課題
         %span.count= current_user.assigned_issues.opened.count
   = nav_link(path: 'dashboard#merge_requests') do
-    = link_to assigned_mrs_dashboard_path, title: 'マージリクエスト', class: 'shortcuts-merge_requests' do
-      %i.fa.fa-tasks
+    = link_to assigned_mrs_dashboard_path, title: 'マージリクエスト', class: 'shortcuts-merge_requests', data: {placement: 'right'} do
+      = icon('tasks fw')
       %span
         マージリクエスト
         %span.count= current_user.assigned_merge_requests.opened.count
   = nav_link(controller: :help) do
-    = link_to help_path, title: 'ヘルプ' do
-      %i.fa.fa-question-circle
+    = link_to help_path, title: 'ヘルプ', data: {placement: 'right'} do
+      = icon('question-circle fw')
       %span
         ヘルプ

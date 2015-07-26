@@ -1,50 +1,50 @@
 %ul.nav.nav-sidebar
   = nav_link(path: 'profiles#show', html_options: {class: 'home'}) do
-    = link_to profile_path, title: "プロフィール" do
-      %i.fa.fa-user
+    = link_to profile_path, title: 'プロフィール', data: {placement: 'right'} do
+      = icon('user fw')
       %span
         プロフィール
-  = nav_link(controller: :accounts) do
-    = link_to profile_account_path, title: 'Account' do
-      %i.fa.fa-gear
+  = nav_link(controller: [:accounts, :two_factor_auths]) do
+    = link_to profile_account_path, title: 'アカウント', data: {placement: 'right'} do
+      = icon('gear fw')
       %span
         アカウント
   = nav_link(path: ['profiles#applications', 'applications#edit', 'applications#show', 'applications#new']) do
-    = link_to applications_profile_path, title: 'アプリケーション' do
-      %i.fa.fa-cloud
+    = link_to applications_profile_path, title: 'アプリケーション', data: {placement: 'right'} do
+      = icon('cloud fw')
       %span
         アプリケーション
   = nav_link(controller: :emails) do
-    = link_to profile_emails_path, title: 'メール' do
-      %i.fa.fa-envelope-o
+    = link_to profile_emails_path, title: 'メール', data: {placement: 'right'} do
+      = icon('envelope-o fw')
       %span
         メール
         %span.count= current_user.emails.count + 1
   - unless current_user.ldap_user?
     = nav_link(controller: :passwords) do
-      = link_to edit_profile_password_path, title: 'パスワード' do
-        %i.fa.fa-lock
+      = link_to edit_profile_password_path, title: 'パスワード', data: {placement: 'right'} do
+        = icon('lock fw')
         %span
           パスワード
   = nav_link(controller: :notifications) do
-    = link_to profile_notifications_path, title: '通知' do
-      %i.fa.fa-inbox
+    = link_to profile_notifications_path, title: '通知', data: {placement: 'right'} do
+      = icon('inbox fw')
       %span
         通知
 
   = nav_link(controller: :keys) do
-    = link_to profile_keys_path, title: 'SSHキー' do
-      %i.fa.fa-key
+    = link_to profile_keys_path, title: 'SSHキー', data: {placement: 'right'} do
+      = icon('key fw')
       %span
         SSHキー
         %span.count= current_user.keys.count
   = nav_link(path: 'profiles#design') do
-    = link_to design_profile_path, title: 'デザイン' do
-      %i.fa.fa-image
+    = link_to design_profile_path, title: 'デザイン', data: {placement: 'right'} do
+      = icon('image fw')
       %span
         デザイン
   = nav_link(path: 'profiles#history') do
-    = link_to history_profile_path, title: '履歴' do
-      %i.fa.fa-history
+    = link_to history_profile_path, title: '履歴', data: {placement: 'right'} do
+      = icon('history fw')
       %span
         履歴

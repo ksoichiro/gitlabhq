@@ -7,77 +7,15 @@
   %span にマージ
 
   %span.pull-right
-    = link_to 'ブランチを変更', new_namespace_project_merge_request_path(@project.namespace, @project)
-
-= form_for [@project.namespace.becomes(Namespace), @project, @merge_request], html: { class: "merge-request-form form-horizontal gfm-form" } do |f|
+    = link_to 'ブランチを変更', mr_change_branches_path(@merge_request)
+%hr
+= form_for [@project.namespace.becomes(Namespace), @project, @merge_request], html: { class: 'merge-request-form form-horizontal gfm-form' } do |f|
   .merge-request-form-info
-    .form-group
-      = f.label :title, class: 'control-label' do
-        %strong タイトル *
-      .col-sm-10
-        = f.text_field :title, maxlength: 255, autofocus: true, class: 'form-control pad js-gfm-input', required: true
-    .form-group.issuable-description
-      = f.label :description, '説明', class: 'control-label'
-      .col-sm-10
-        = render layout: 'projects/md_preview', locals: { preview_class: "wiki" } do
-          = render 'projects/zen', f: f, attr: :description, classes: 'description form-control'
-
-          .col-sm-12-hint
-            .pull-left
-              #{link_to 'Gitlab Flavored Markdown', help_page_path('markdown', 'markdown'), target: '_blank'}.
-              形式でパースされます
-            .pull-right
-              ドラッグ &amp; ドロップまたは#{link_to 'ファイルを選択', '#', class: 'markdown-selector'}してファイルを添付
-
-          .clearfix
-          .error-alert
-    %hr
-    .form-group
-      .issue-assignee
-        = f.label :assignee_id, class: 'control-label' do
-          %i.fa.fa-user
-          担当者
-      .col-sm-10
-        = users_select_tag('merge_request[assignee_id]', placeholder: 'ユーザを選択', class: 'custom-form-control', selected: @merge_request.assignee_id, project_id: @merge_request.target_project_id)
-        &nbsp;
-        = link_to '自分に割り当て', '#', class: 'btn assign-to-me-link'
-    .form-group
-      .issue-milestone
-        = f.label :milestone_id, class: 'control-label' do
-          %i.fa.fa-clock-o
-          マイルストーン
-        .col-sm-10
-          - if milestone_options(@merge_request).present?
-            = f.select(:milestone_id, milestone_options(@merge_request), {include_blank: 'マイルストーンを選択'}, {class: 'select2'})
-          - else
-            %span.light マイルストーンがありません
-          &nbsp;
-          - if can? current_user, :admin_milestone, @merge_request.target_project
-            = link_to 'マイルストーンを作成', new_namespace_project_milestone_path(@merge_request.target_project.namespace, @merge_request.target_project), target: :blank
-    .form-group
-      = f.label :label_ids, class: 'control-label' do
-        %i.fa.fa-tag
-        ラベル
-      .col-sm-10
-        - if @merge_request.target_project.labels.any?
-          = f.collection_select :label_ids, @merge_request.target_project.labels.all, :id, :name, {selected: @merge_request.label_ids}, multiple: true, class: 'select2'
-        - else
-          %span.light ラベルがありません
-        &nbsp;
-        - if can? current_user, :admin_label, @merge_request.target_project
-          = link_to 'ラベルを作成', new_namespace_project_label_path(@merge_request.target_project.namespace, @merge_request.target_project), target: :blank
-
-    .form-actions
-      - if guide_url = contribution_guide_url(@target_project)
-        %p
-          このリポジトリの
-          %strong #{link_to 'コントリビューション・ガイドライン', guide_url}
-          を確認してください
-      = f.hidden_field :source_project_id
-      = f.hidden_field :source_branch
-      = f.hidden_field :target_project_id
-      = f.hidden_field :target_branch
-      = f.submit 'マージリクエストを送信', class: 'btn btn-create'
+    = render 'projects/issuable_form', f: f, issuable: @merge_request
+    = f.hidden_field :source_project_id
+    = f.hidden_field :source_branch
+    = f.hidden_field :target_project_id
+    = f.hidden_field :target_branch
 
 .mr-compare.merge-request
   %ul.nav.nav-tabs.merge-request-tabs

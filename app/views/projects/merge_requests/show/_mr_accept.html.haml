@@ -5,6 +5,8 @@
   - else
     .automerge_widget.cannot_be_merged.hide
       %strong あなたにはこれをマージする権限がありませんが、権限があってもこれは自動的にマージすることができません。
+    .automerge_widget.work_in_progress.hide
+      %strong あなたにはこれをマージする権限がありませんが、権限があってもこのリクエストはWork In Progressのため承認できません。
     .automerge_widget.can_be_merged.hide
       %strong これは自動的にマージすることができますが、あなたにはその権限がありません。
 
@@ -53,11 +55,23 @@
       からマージする必要があります。
 
     %p
-      %button.btn.disabled
+      %button.btn.disabled{:type => 'button'}
         %i.fa.fa-warning
         マージリクエストを承認
       &nbsp;
       これは通常、gitが自動的にブランチの競合を解決できない場合に発生します。
+
+  .automerge_widget.work_in_progress.hide
+    %h4
+      このリクエストは<strong>Work In Progress</strong>のため承認することができません。
+
+    %p
+      %button.btn.disabled{:type => 'button'}
+        %i.fa.fa-warning
+        マージリクエストを承認
+      &nbsp;
+
+      マージリクエストが準備できたら、"WIP"のプレフィクスをタイトルから削除すると承認されることができるようになります。
 
   .automerge_widget.unchecked
     %p
