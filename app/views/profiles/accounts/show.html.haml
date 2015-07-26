@@ -32,11 +32,11 @@
       - if current_user.otp_required_for_login
         %legend.text-success
           = icon('check')
-          Two-factor Authentication enabled
+          二段階認証が有効
         %div
           .pull-right
-            = link_to 'Disable Two-factor Authentication', profile_two_factor_auth_path, method: :delete, class: 'btn btn-close btn-sm',
-                data: { confirm: 'Are you sure?' }
+            = link_to '二段階認証を無効にする', profile_two_factor_auth_path, method: :delete, class: 'btn btn-close btn-sm',
+                data: { confirm: '本当に無効にしますか？' }
           %p
             If you lose your recovery codes you can
             %strong
@@ -45,7 +45,7 @@
             invalidating all previous codes.
 
       - else
-        %legend Two-factor Authentication
+        %legend 二段階認証
         %div
           %p
             Increase your account's security by enabling two-factor authentication (2FA).
@@ -53,7 +53,7 @@
             Each time you log in you’ll be required to provide your username and
             password as usual, plus a randomly-generated code from your phone.
           %div
-            = link_to 'Enable Two-factor Authentication', new_profile_two_factor_auth_path, class: 'btn btn-success'
+            = link_to '二段階認証を有効にする', new_profile_two_factor_auth_path, class: 'btn btn-success'
 
   - if show_profile_social_tab?
     %fieldset

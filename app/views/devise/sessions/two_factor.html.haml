@@ -1,7 +1,7 @@
 %div
   .login-box
     .login-heading
-      %h3 Two-factor Authentication
+      %h3 二段階認証
     .login-body
       = form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f|
         = f.text_field :otp_attempt, class: 'form-control', placeholder: 'Two-factor authentication code', required: true, autofocus: true
