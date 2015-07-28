@@ -61,12 +61,13 @@
       参加者
       %span.badge= @users.count
 
-  - if @project.issues_enabled
-    .pull-right
+  .pull-right
+    - if can?(current_user, :write_issue, @project)
       = link_to new_namespace_project_issue_path(@project.namespace, @project, issue: { milestone_id: @milestone.id }), class: "btn  btn-grouped", title: "新しい課題" do
         %i.fa.fa-plus
         新しい課題
-      = link_to '課題を確認', namespace_project_issues_path(@milestone.project.namespace, @milestone.project, milestone_id: @milestone.id), class: "btn  edit-milestone-link btn-grouped"
+    - if can?(current_user, :read_issue, @project)
+      = link_to '課題を確認', namespace_project_issues_path(@milestone.project.namespace, @milestone.project, milestone_title: @milestone.title), class: "btn  edit-milestone-link btn-grouped"
 
 .tab-content
   .tab-pane.active#tab-issues
@@ -85,10 +86,10 @@
       .col-md-3
         = render('merge_requests', title: 'マージ待ち (オープンかつ割当済み)', merge_requests: @merge_requests.opened.assigned, id: 'ongoing')
       .col-md-3
-        = render('merge_requests', title: '拒否 (クローズ)', merge_requests: @merge_requests.declined, id: 'closed')
+        = render('merge_requests', title: '却下 (クローズ)', merge_requests: @merge_requests.rejected, id: 'closed')
       .col-md-3
         .panel.panel-primary
-          .panel-heading Merged
+          .panel-heading Accepted
           %ul.well-list
             - @merge_requests.merged.each do |merge_request|
               = render 'merge_request', merge_request: merge_request

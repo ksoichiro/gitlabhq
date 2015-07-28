@@ -79,11 +79,12 @@
                 %i.fa.fa-envelope
                 = mail_to user.email, user.email, class: 'light'
               &nbsp;
-              = link_to '編集', edit_admin_user_path(user), id: "edit_#{dom_id(user)}", class: "btn btn-sm"
+              = link_to '編集', edit_admin_user_path(user), id: "edit_#{dom_id(user)}", class: "btn btn-xs"
               - unless user == current_user
                 - if user.blocked?
-                  = link_to 'ブロック解除', unblock_admin_user_path(user), method: :put, class: "btn btn-sm success"
+                  = link_to 'ブロック解除', unblock_admin_user_path(user), method: :put, class: "btn btn-xs btn-success"
                 - else
-                  = link_to 'ブロック', block_admin_user_path(user), data: {confirm: 'ユーザはブロックされます！よろしいですか？'}, method: :put, class: "btn btn-sm btn-remove"
-                = link_to '削除', [:admin, user], data: { confirm: "ユーザ #{user.name} は削除されます！このユーザに関連するすべての課題も削除されます！削除する代わりにブロックした方が良いかもしれません。本当に削除しますか？" }, method: :delete, class: "btn btn-sm btn-remove"
+                  = link_to 'ブロック', block_admin_user_path(user), data: {confirm: 'ユーザはブロックされます！よろしいですか？'}, method: :put, class: "btn btn-xs btn-warning"
+                - if user.can_be_removed?
+                  = link_to 'Destroy', [:admin, user], data: { confirm: "ユーザ #{user.name} は削除されます！このユーザに関連するすべての課題も削除されます！削除する代わりにブロックした方が良いかもしれません。本当に削除しますか？" }, method: :delete, class: "btn btn-xs btn-remove"
     = paginate @users, theme: "gitlab"

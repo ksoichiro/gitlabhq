@@ -38,11 +38,12 @@
       %span
         SSHキー
         %span.count= current_user.keys.count
-  = nav_link(path: 'profiles#design') do
-    = link_to design_profile_path, title: 'デザイン', data: {placement: 'right'} do
+  = nav_link(controller: :preferences) do
+    = link_to profile_preferences_path, title: '設定', data: {placement: 'right'} do
+      -# TODO (rspeicher): Better icon?
       = icon('image fw')
       %span
-        デザイン
+        設定
   = nav_link(path: 'profiles#history') do
     = link_to history_profile_path, title: '履歴', data: {placement: 'right'} do
       = icon('history fw')

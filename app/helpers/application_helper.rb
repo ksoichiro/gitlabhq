@@ -223,18 +223,28 @@ module ApplicationHelper
   end
 
   def render_markup(file_name, file_content)
-    GitHub::Markup.render(file_name, file_content).
-      force_encoding(file_content.encoding).html_safe
+    if gitlab_markdown?(file_name)
+      Haml::Helpers.preserve(markdown(file_content))
+    elsif asciidoc?(file_name)
+      asciidoc(file_content)
+    else
+      GitHub::Markup.render(file_name, file_content).
+        force_encoding(file_content.encoding).html_safe
+    end
   rescue RuntimeError
     simple_format(file_content)
   end
 
   def markup?(filename)
-    Gitlab::MarkdownHelper.markup?(filename)
+    Gitlab::MarkupHelper.markup?(filename)
   end
 
   def gitlab_markdown?(filename)
-    Gitlab::MarkdownHelper.gitlab_markdown?(filename)
+    Gitlab::MarkupHelper.gitlab_markdown?(filename)
+  end
+
+  def asciidoc?(filename)
+    Gitlab::MarkupHelper.asciidoc?(filename)
   end
 
   # Overrides ActionView::Helpers::UrlHelper#link_to to add `rel="nofollow"` to
@@ -268,10 +278,6 @@ module ApplicationHelper
     end
 
     html_options
-  end
-
-  def escaped_autolink(text)
-    auto_link ERB::Util.html_escape(text), link: :urls
   end
 
   def promo_host
@@ -321,9 +327,14 @@ module ApplicationHelper
   end
 
   def state_filters_text_for(entity, project)
-    entity_title = "オープン" if entity == :opened
-    entity_title = "クローズ" if entity == :closed
-    entity_title = "すべて" if entity == :all
+    titles = {
+      opened: "オープン",
+      closed: "クローズ",
+      all: "すべて",
+      merged:  "承認済み"
+    }
+    
+    entity_title = titles[entity] || entity.to_s.humanize
 
     count =
       if project.nil?

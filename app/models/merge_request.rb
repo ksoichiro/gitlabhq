@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: merge_requests
@@ -26,10 +25,11 @@ require Rails.root.join("app/models/commit")
 require Rails.root.join("lib/static_model")
 
 class MergeRequest < ActiveRecord::Base
-  include Issuable
-  include Taskable
   include InternalId
+  include Issuable
+  include Referable
   include Sortable
+  include Taskable
 
   belongs_to :target_project, foreign_key: :target_project_id, class_name: "Project"
   belongs_to :source_project, foreign_key: :source_project_id, class_name: "Project"
@@ -134,7 +134,31 @@ class MergeRequest < ActiveRecord::Base
   # Closed scope for merge request should return
   # both merged and closed mr's
   scope :closed, -> { with_states(:closed, :merged) }
-  scope :declined, -> { with_states(:closed) }
+  scope :rejected, -> { with_states(:closed) }
+
+  def self.reference_prefix
+    '!'
+  end
+
+  # Pattern used to extract `!123` merge request references from text
+  #
+  # This pattern supports cross-project references.
+  def self.reference_pattern
+    %r{
+      (#{Project.reference_pattern})?
+      #{Regexp.escape(reference_prefix)}(?<merge_request>\d+)
+    }x
+  end
+
+  def to_reference(from_project = nil)
+    reference = "#{self.class.reference_prefix}#{iid}"
+
+    if cross_project_reference?(from_project)
+      reference = project.to_reference + reference
+    end
+
+    reference
+  end
 
   def validate_branches
     if target_project == source_project && target_branch == source_branch
@@ -173,7 +197,6 @@ class MergeRequest < ActiveRecord::Base
   def update_merge_request_diff
     if source_branch_changed? || target_branch_changed?
       reload_code
-      mark_as_unchecked
     end
   end
 
@@ -290,11 +313,6 @@ class MergeRequest < ActiveRecord::Base
     end
   end
 
-  # Mentionable override.
-  def gfm_reference
-    "マージリクエスト !#{iid}"
-  end
-
   def target_project_path
     if target_project
       target_project.path_with_namespace
@@ -386,5 +404,17 @@ class MergeRequest < ActiveRecord::Base
     return false unless locked?
 
     locked_at.nil? || locked_at < (Time.now - 1.day)
+  end
+
+  def has_ci?
+    source_project.ci_service && commits.any?
+  end
+
+  def branch_missing?
+    !source_branch_exists? || !target_branch_exists?
+  end
+
+  def can_be_merged_by?(user)
+    ::Gitlab::GitAccess.new(user, project).can_push_to_branch?(target_branch)
   end
 end

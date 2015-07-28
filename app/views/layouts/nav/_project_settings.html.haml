@@ -10,32 +10,27 @@
   %ul.project-settings-nav.sidebar-subnav
     = nav_link(path: 'projects#edit') do
       = link_to edit_project_path(@project), title: 'プロジェクト', class: 'stat-tab tab', data: {placement: 'right'} do
-        = icon('pencil-square-o')
+        = icon('pencil-square-o fw')
         %span
-          プロジェクト
-    = nav_link(controller: [:project_members, :teams]) do
-      = link_to namespace_project_project_members_path(@project.namespace, @project), title: 'メンバー', class: 'team-tab tab', data: {placement: 'right'} do
-        = icon('users')
-        %span
-          メンバー
+          プロジェクト設定
     = nav_link(controller: :deploy_keys) do
       = link_to namespace_project_deploy_keys_path(@project.namespace, @project), title: 'デプロイキー', data: {placement: 'right'} do
-        = icon('key')
+        = icon('key fw')
         %span
           デプロイキー
     = nav_link(controller: :hooks) do
       = link_to namespace_project_hooks_path(@project.namespace, @project), title: 'Webフック', data: {placement: 'right'} do
-        = icon('link')
+        = icon('link fw')
         %span
           Webフック
     = nav_link(controller: :services) do
       = link_to namespace_project_services_path(@project.namespace, @project), title: 'サービス', data: {placement: 'right'} do
-        = icon('cogs')
+        = icon('cogs fw')
         %span
           サービス
     = nav_link(controller: :protected_branches) do
       = link_to namespace_project_protected_branches_path(@project.namespace, @project), title: '保護ブランチ', data: {placement: 'right'} do
-        = icon('lock')
+        = icon('lock fw')
         %span
           保護ブランチ
 

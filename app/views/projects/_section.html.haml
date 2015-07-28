@@ -18,7 +18,6 @@
           %li
             = link_to namespace_project_path(@project.namespace, @project, format: :atom, private_token: current_user.private_token), title: "フィード", class: 'rss-btn' do
               %i.fa.fa-rss
-              アクティビティフィード
 
       = render 'shared/event_filter'
       %hr

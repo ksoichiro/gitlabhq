@@ -1,5 +1,6 @@
 - page_title "パスワード"
-%h3.page-title パスワード設定
+%h3.page-title
+  = page_title
 %p.light
   - if @user.password_automatically_set?
     パスワードを設定してください。

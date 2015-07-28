@@ -140,18 +140,23 @@
             .panel-heading
               ユーザの削除
             .panel-body
-              %p ユーザを削除すると以下の影響があります。
-              %ul
-                %li このユーザが作成した課題, スニペット, コメントといったすべてのコンテンツが削除されます。
-                - rp = @user.personal_projects.count
-                - unless rp.zero?
-                  %li #{rp}個のパーソナルプロジェクトが削除され、復元できなくなります。
+              - if @user.can_be_removed?
+                %p ユーザを削除すると以下の影響があります。
+                %ul
+                  %li このユーザが作成した課題, スニペット, コメントといったすべてのコンテンツが削除されます。
+                  - rp = @user.personal_projects.count
+                  - unless rp.zero?
+                    %li #{rp}個のパーソナルプロジェクトが削除され、復元できなくなります。
+                %br
+                = link_to 'ユーザを削除', [:admin, @user], data: { confirm: "ユーザ #{@user.name} は削除されます！本当に削除しますか？" }, method: :delete, class: "btn btn-remove"
+              - else
                 - if @user.solo_owned_groups.present?
-                  %li
-                    以下のグループと、グループ内のすべてのコンテンツが削除されます。
+                  %p
+                    This user is currently an owner in these groups:
+                    このユーザは現在次のグループの所有者です:
                     %strong #{@user.solo_owned_groups.map(&:name).join(', ')}
-              %br
-              = link_to 'ユーザを削除', [:admin, @user], data: { confirm: "ユーザ #{@user.name} は削除されます！本当に削除しますか？" }, method: :delete, class: "btn btn-remove"
+                  %p
+                    このユーザを削除する前に、所有権を移譲するか、これらのグループを削除する必要があります。
 
   #profile.tab-pane
     .row

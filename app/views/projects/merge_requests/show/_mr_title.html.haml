@@ -1,9 +1,9 @@
 %h4.page-title
   .issue-box{ class: issue_box_class(@merge_request) }
     - if @merge_request.merged?
-      マージ済み
+      承認済み
     - elsif @merge_request.closed?
-      クローズ
+      却下済み
     - else
       オープン
   = "マージリクエスト ##{@merge_request.iid}"

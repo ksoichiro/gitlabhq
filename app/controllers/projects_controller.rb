@@ -98,18 +98,15 @@ class ProjectsController < ApplicationController
     return access_denied! unless can?(current_user, :remove_project, @project)
 
     ::Projects::DestroyService.new(@project, current_user, {}).execute
+    flash[:alert] = 'プロジェクトを削除しました'
 
-    respond_to do |format|
-      format.html do
-        flash[:alert] = 'プロジェクトを削除しました'
-
-        if request.referer.include?('/admin')
-          redirect_to admin_namespaces_projects_path
-        else
-          redirect_to dashboard_path
-        end
-      end
+    if request.referer.include?('/admin')
+      redirect_to admin_namespaces_projects_path
+    else
+      redirect_to dashboard_path
     end
+  rescue Projects::DestroyService::DestroyError => ex
+    redirect_to edit_project_path(@project), alert: ex.message
   end
 
   def autocomplete_sources
@@ -155,7 +152,17 @@ class ProjectsController < ApplicationController
   end
 
   def markdown_preview
-    render text: view_context.markdown(params[:md_text])
+    text = params[:text] 
+
+    ext = Gitlab::ReferenceExtractor.new(@project, current_user)
+    ext.analyze(text)
+
+    render json: {
+      body:       view_context.markdown(text),
+      references: {
+        users: ext.users.map(&:username)
+      }
+    }
   end
 
   private

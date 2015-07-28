@@ -15,10 +15,11 @@
 - [課題](issues.md)
 - [ラベル](labels.md)
 - [マイルストーン](milestones.md)
-- [ノート](notes.md) (comments)
+- [ノート](notes.md) (コメント)
 - [デプロイキー](deploy_keys.md)
 - [システムフック](system_hooks.md)
 - [グループ](groups.md)
+- [ネームスペース](namespaces.md)
 
 ## クライアント
 

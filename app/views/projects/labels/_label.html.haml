@@ -1,9 +1,9 @@
 %li{id: dom_id(label)}
-  = render_colored_label(label)
+  = link_to_label(label)
   .pull-right
     %strong.append-right-20
-      = link_to namespace_project_issues_path(@project.namespace, @project, label_name: label.name) do
-        #{label.open_issues_count} 件の課題
+      = link_to_label(label) do
+        #{label.open_issues_count} 件のオープンな課題
 
     - if can? current_user, :admin_label, @project
       = link_to '編集', edit_namespace_project_label_path(@project.namespace, @project, label), class: 'btn'
