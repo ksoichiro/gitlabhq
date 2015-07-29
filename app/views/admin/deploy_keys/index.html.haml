@@ -1,9 +1,9 @@
-- page_title "Deploy Keys"
+- page_title "デプロイキー"
 .panel.panel-default
   .panel-heading
     Public deploy keys (#{@deploy_keys.count})
     .panel-head-actions
-      = link_to 'New Deploy Key', new_admin_deploy_key_path, class: "btn btn-new btn-sm"
+      = link_to '新しいデプロイキー', new_admin_deploy_key_path, class: "btn btn-new btn-sm"
   - if @deploy_keys.any?
     %table.table
       %thead.panel-heading
