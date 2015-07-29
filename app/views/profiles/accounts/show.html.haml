@@ -1,13 +1,18 @@
-- page_title "Account"
+- page_title "アカウント"
+%h3.page-title
+  = page_title
+%p.light
+  ユーザ名と基本的なアカウントの設定を行います。
+%hr
 - if current_user.ldap_user?
   .alert.alert-info
     いくつかのオプションはLDAPアカウントでは利用できません。
 
 .account-page
-  %fieldset.update-token
-    %legend
+  .panel.panel-default.update-token
+    .panel-heading
       プライベートトークンのリセット
-    %div
+    .panel-body
       = form_for @user, url: reset_private_token_profile_path, method: :put do |f|
         .data
           %p
@@ -22,21 +27,23 @@
             - if current_user.private_token
               = text_field_tag "token", current_user.private_token, class: "form-control"
               %div
-                = f.submit 'プライベートトークンをリセット', data: { confirm: "リセットしてよろしいですか？" }, class: "btn btn-primary btn-build-token"
+                = f.submit 'プライベートトークンをリセット', data: { confirm: "リセットしてよろしいですか？" }, class: "btn btn-default btn-build-token"
             - else
               %span トークンがありません。「生成」をクリックして生成してください。
-              = f.submit '生成', class: "btn success btn-build-token"
+              = f.submit '生成', class: "btn btn-default btn-build-token"
 
   - unless current_user.ldap_user?
-    %fieldset
-      - if current_user.otp_required_for_login
-        %legend.text-success
-          = icon('check')
-          二段階認証が有効
-        %div
+    .panel.panel-default
+      .panel-heading
+        二段階認証
+      .panel-body
+        - if current_user.otp_required_for_login
           .pull-right
             = link_to '二段階認証を無効にする', profile_two_factor_auth_path, method: :delete, class: 'btn btn-close btn-sm',
                 data: { confirm: '本当に無効にしますか？' }
+          %p.text-success
+            %strong
+              二段階認証は有効です
           %p
             If you lose your recovery codes you can
             %strong
@@ -44,9 +51,7 @@
                 = link_to 'generate new ones', codes_profile_two_factor_auth_path, method: :post, data: { confirm: 'Are you sure?' }
             invalidating all previous codes.
 
-      - else
-        %legend 二段階認証
-        %div
+        - else
           %p
             Increase your account's security by enabling two-factor authentication (2FA).
           %p
@@ -56,52 +61,57 @@
             = link_to '二段階認証を有効にする', new_profile_two_factor_auth_path, class: 'btn btn-success'
 
   - if show_profile_social_tab?
-    %fieldset
-      %legend 接続中アカウントConnected Accounts
-      .oauth-buttons.append-bottom-10
-        %p Click on icon to activate signin with one of the following services
-        %p 以下の各サービスを使ったサインインを有効化するには、アイコンをクリックしてください。
-        - enabled_social_providers.each do |provider|
-          .btn-group
-            = link_to oauth_image_tag(provider), omniauth_authorize_path(User, provider),
-              method: :post, class: "btn btn-lg #{'active' if oauth_active?(provider)}"
-            - if oauth_active?(provider)
-              = link_to unlink_profile_account_path(provider: provider), method: :delete, class: 'btn btn-lg' do
-                = icon('close')
+    .panel.panel-default
+      .panel-heading
+        接続中アカウント
+      .panel-body
+        .oauth-buttons.append-bottom-10
+          %p 以下の各サービスを使ったサインインを有効化するには、アイコンをクリックしてください。
+          - enabled_social_providers.each do |provider|
+            .btn-group
+              = link_to oauth_image_tag(provider), omniauth_authorize_path(User, provider),
+                method: :post, class: "btn btn-lg #{'active' if oauth_active?(provider)}"
+              - if oauth_active?(provider)
+                = link_to unlink_profile_account_path(provider: provider), method: :delete, class: 'btn btn-lg' do
+                  = icon('close')
 
   - if show_profile_username_tab?
-    %fieldset.update-username
-      %legend
+    .panel.panel-warning.update-username
+      .panel-heading
         ユーザ名の変更
-      = form_for @user, url: update_username_profile_path,  method: :put, remote: true do |f|
-        %p
-          注意：ユーザ名を変更すると、あなたの所有するすべてのプロジェクトのパスが変更されます。
-        %div
-          = f.text_field :username, required: true, class: 'form-control'
-          &nbsp;
-        .loading-gif.hide
+      .panel-body
+        = form_for @user, url: update_username_profile_path,  method: :put, remote: true do |f|
           %p
-            = icon('spinner spin')
-            ユーザ名を保存しています
-        %p.light
-          = user_url(@user)
-        %div
-          = f.submit 'ユーザ名を保存', class: "btn btn-warning"
+            ユーザ名を変更すると、あなたの所有するすべてのプロジェクトのパスが変更されます！
+          %div
+            = f.text_field :username, required: true, class: 'form-control'
+            &nbsp;
+          .loading-gif.hide
+            %p
+              = icon('spinner spin')
+              ユーザ名を保存しています
+          %p.light
+            = user_url(@user)
+          %div
+            = f.submit 'ユーザ名を保存', class: "btn btn-warning"
 
   - if show_profile_remove_tab?
-    %fieldset.remove-account
-      %legend
+    .panel.panel-danger.remove-account
+      .panel-heading
         アカウントの削除
-      %div
-        %p アカウントを削除すると以下の影響があります。
-        %ul
-          %li 課題、スニペット、コメントといった、このユーザが作成したすべてのコンテンツが削除されます
-          - rp = current_user.personal_projects.count
-          - unless rp.zero?
-            %li #{rp}個の個人プロジェクトが削除され、元に戻すことはできません
-          - if current_user.solo_owned_groups.present?
-            %li
-              以下のグループが破棄されます。移譲しなければ、削除されます。
-              %strong #{current_user.solo_owned_groups.map(&:name).join(', ')}
-        = link_to 'アカウントを削除', user_registration_path, data: { confirm: "#{current_user.name}を削除します。本当によろしいですか？" }, method: :delete, class: "btn btn-remove"
-
+      .panel-body
+        - if @user.can_be_removed?
+          %p アカウントを削除すると以下の影響があります。
+          %ul
+            %li 課題、スニペット、コメントといった、このユーザが作成したすべてのコンテンツが削除されます
+            - rp = current_user.personal_projects.count
+            - unless rp.zero?
+              %li #{rp}個の個人プロジェクトが削除され、元に戻すことはできません
+          = link_to 'アカウントを削除', user_registration_path, data: { confirm: "#{current_user.name}を削除します。本当によろしいですか？" }, method: :delete, class: "btn btn-remove"
+        - else
+          - if @user.solo_owned_groups.present?
+            %p
+              あなたのアカウントは現在次のグループの所有者です:
+              %strong #{@user.solo_owned_groups.map(&:name).join(', ')}
+            %p
+              アカウントを削除する前に、これらのグループの所有権を移譲するか、グループを削除してください。

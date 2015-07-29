@@ -6,7 +6,7 @@
         プロジェクト設定
       %hr
       .panel-body
-        = form_for [@project.namespace.becomes(Namespace), @project], remote: true, html: { multipart: true, class: "edit_project form-horizontal" }, authenticity_token: true do |f|
+        = form_for [@project.namespace.becomes(Namespace), @project], remote: true, html: { multipart: true, class: "edit_project form-horizontal fieldset-form" }, authenticity_token: true do |f|
 
           %fieldset
             .form-group.project_name_holder
@@ -41,32 +41,40 @@
             %legend
               機能:
             .form-group
-              = f.label :issues_enabled, "課題管理", class: 'control-label'
-              .col-sm-10
+              .col-sm-offset-2.col-sm-10
                 .checkbox
-                  = f.check_box :issues_enabled
-                  %span.descr このプロジェクト用の軽量な課題トラッキングシステム
+                  = f.label :issues_enabled do
+                    = f.check_box :issues_enabled
+                    %strong 課題
+                    %br
+                    %span.descr このプロジェクト用の軽量な課題トラッキングシステム
 
             .form-group
-              = f.label :merge_requests_enabled, "マージリクエスト", class: 'control-label'
-              .col-sm-10
+              .col-sm-offset-2.col-sm-10
                 .checkbox
-                  = f.check_box :merge_requests_enabled
-                  %span.descr Upstreamにマージしてもらうように変更を送信
+                  = f.label :merge_requests_enabled do
+                    = f.check_box :merge_requests_enabled
+                    %strong マージリクエスト
+                    %br
+                    %span.descr Upstreamにマージしてもらうように変更を送信
 
             .form-group
-              = f.label :wiki_enabled, "Wiki", class: 'control-label'
-              .col-sm-10
+              .col-sm-offset-2.col-sm-10
                 .checkbox
-                  = f.check_box :wiki_enabled
-                  %span.descr プロジェクトのドキュメントページ
+                  = f.label :wiki_enabled do
+                    = f.check_box :wiki_enabled
+                    %strong Wiki
+                    %br
+                    %span.descr プロジェクトのドキュメントページ
 
             .form-group
-              = f.label :snippets_enabled, "スニペット", class: 'control-label'
-              .col-sm-10
+              .col-sm-offset-2.col-sm-10
                 .checkbox
-                  = f.check_box :snippets_enabled
-                  %span.descr Gitリポジトリ外でコードをペーストして共有
+                  = f.label :snippets_enabled do
+                    = f.check_box :snippets_enabled
+                    %strong スニペット
+                    %br
+                    %span.descr Gitリポジトリ外でコードをペーストして共有
 
           %fieldset.features
             %legend

@@ -66,16 +66,26 @@ Sugar is sweet
     perform_complicated_task
     do_this_and_do_that_and_another_thing
 
-perform_complicated_task
+perform_complicated_task  
 do_this_and_do_that_and_another_thing
 
 ## URLの自動リンク
 
-GFM は、標準的なURLをコピー＆ペーストすると自動的にリンクします。つまり、(テキストのリンクの代わりに)URLをリンクしたければ、単純にURLを記述すればそのURLへのリンクができあがります。
+GFM は、URLをコピー＆ペーストするとほとんどの場合、自動的にリンクします。
 
-    http://www.google.com
+    * http://www.google.com
+    * https://google.com/
+    * ftp://ftp.us.debian.org/debian/
+    * smb://foo/bar/baz
+    * irc://irc.freenode.net/gitlab
+    * http://localhost:3000
 
-http://www.google.com
+* http://www.google.com
+* https://google.com/
+* ftp://ftp.us.debian.org/debian/
+* smb://foo/bar/baz
+* irc://irc.freenode.net/gitlab
+* http://localhost:3000
 
 ## コードとシンタックスハイライト
 

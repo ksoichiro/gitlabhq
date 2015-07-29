@@ -1,4 +1,4 @@
-- page_title "Merge Requests"
+- page_title "マージリクエスト"
 %h3.page-title
   マージリクエスト
 
@@ -9,5 +9,5 @@
     すべてのマージリクエストを確認するには #{link_to 'ダッシュボード', merge_requests_dashboard_path} を表示してください。
 %hr
 .append-bottom-20
-  = render 'shared/issuable_filter'
+  = render 'shared/issuable_filter', type: :merge_requests
 = render 'shared/merge_requests'

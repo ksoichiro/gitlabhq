@@ -1,4 +1,4 @@
-- page_title "Milestones"
+- page_title "マイルストーン"
 .pull-right
   - if can? current_user, :admin_milestone, @project
     = link_to new_namespace_project_milestone_path(@project.namespace, @project), class: "pull-right btn btn-new", title: "新しいマイルストーン" do

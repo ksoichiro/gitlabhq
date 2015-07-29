@@ -1,4 +1,4 @@
-- page_title "Members"
+- page_title "メンバー"
 - show_roles = should_user_see_group_roles?(current_user, @group)
 
 %h3.page-title
@@ -15,7 +15,7 @@
 .clearfix.js-toggle-container
   = form_tag group_group_members_path(@group), method: :get, class: 'form-inline member-search-form'  do
     .form-group
-      = search_field_tag :search, params[:search], { placeholder: 'メンバーを名前で検索', class: 'form-control search-text-input input-mn-300' }
+      = search_field_tag :search, params[:search], { placeholder: 'メンバーを名前で検索', class: 'form-control search-text-input' }
     = button_tag '検索', class: 'btn'
 
   - if current_user && current_user.can?(:admin_group, @group)

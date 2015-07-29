@@ -1,22 +1,23 @@
-- page_title "Emails"
+- page_title "メールアドレス"
 %h3.page-title
-  メールアドレス設定
+  = page_title
 %p.light
-  あなたの
-  %b プライマリメールアドレス
-  はアバターの検出やWebベースの操作(編集やマージなど)に使用されます。
-%p.light
-  あなたの
-  %b 通知メールアドレス
-  はアカウントの通知に使用されます。
-%p.light
-  あなたの
-  %b 公開メールアドレス
-  はあなたの公開プロフィールに表示されます。
-%p.light
-  すべてのメールアドレスはあなたのコミットの識別に使用されます。
-
+  あなたのアカウントに紐付けられたメールアドレスを管理します。
 %hr
+
+
+%ul
+  %li
+    %b プライマリメールアドレス
+    はアバターの検出やWebベースの操作(編集やマージなど)に使用されます。
+  %li
+    %b 通知メールアドレス
+    はアカウントの通知に使用されます。
+  %li
+    %b 公開メールアドレス
+    はあなたの公開プロフィールに表示されます。
+  %li
+    すべてのメールアドレスはあなたのコミットの識別に使用されます。
 
 .panel.panel-default
   .panel-heading
@@ -33,9 +34,9 @@
       %li
         %strong= email.email
         - if email.email === current_user.public_email
-          %span.label.label-info Public Email
+          %span.label.label-info 公開メールアドレス
         - if email.email === current_user.notification_email
-          %span.label.label-info Notification Email
+          %span.label.label-info 通知メールアドレス
         %span.cgray
           #{time_ago_with_tooltip(email.created_at)} に追加
         = link_to '削除', profile_email_path(email), data: { confirm: '本当に削除しますか？'}, method: :delete, class: 'btn btn-sm btn-remove pull-right'

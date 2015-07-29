@@ -1,6 +1,6 @@
-- page_title "Settings"
+- page_title "プロフィール"
 %h3.page-title
-  プロフィール設定
+  = page_title
 %p.light
   この情報はあなたのプロフィールに表示されます。
   - if current_user.ldap_user?
@@ -38,8 +38,11 @@
             - if @user.unconfirmed_email.present?
               %span.help-block
                 確認のメールを
-                %strong #{@user.unconfirmed_email}
+                = succeed "." do
+                  %strong #{@user.unconfirmed_email}
                 へ送信しました。続行する前にメール文中のリンクをクリックしてください
+                %p
+                = link_to "確認メールを再送信", user_confirmation_path(user: { email: @user.unconfirmed_email }), method: :post
 
             - else
               %span.help-block メールアドレスはアバターの検出にも使用されます(アップロードされていない場合)。
