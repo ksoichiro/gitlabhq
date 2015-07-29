@@ -215,7 +215,7 @@ module ApplicationHelper
   def time_ago_with_tooltip(date, placement = 'top', html_class = 'time_ago')
     capture_haml do
       haml_tag :time, date.to_s,
-        class: html_class, datetime: date.getutc.iso8601, title: date.in_time_zone.stamp('Aug 21, 2011 9:23pm'),
+        class: html_class, datetime: date.getutc.iso8601, title: date.in_time_zone.stamp('2011/08/21 21:23'),
         data: { toggle: 'tooltip', placement: placement }
 
       haml_tag :script, "$('." + html_class + "').timeago().tooltip()"
@@ -331,7 +331,8 @@ module ApplicationHelper
       opened: "オープン",
       closed: "クローズ",
       all: "すべて",
-      merged:  "承認済み"
+      merged: "承認済み",
+      rejected: "却下済み"
     }
     
     entity_title = titles[entity] || entity.to_s.humanize

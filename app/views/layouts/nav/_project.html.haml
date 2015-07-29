@@ -58,10 +58,10 @@
 
   - if project_nav_tab? :settings
     = nav_link(controller: [:project_members, :teams]) do
-      = link_to namespace_project_project_members_path(@project.namespace, @project), title: 'Members', class: 'team-tab tab', data: {placement: 'right'} do
+      = link_to namespace_project_project_members_path(@project.namespace, @project), title: 'メンバー', class: 'team-tab tab', data: {placement: 'right'} do
         = icon('users fw')
         %span
-          Members
+          メンバー
 
   - if project_nav_tab? :labels
     = nav_link(controller: :labels) do
