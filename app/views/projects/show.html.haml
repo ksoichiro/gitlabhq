@@ -15,31 +15,31 @@
   %ul.nav.nav-pills
     %li
       = link_to namespace_project_commits_path(@project.namespace, @project, @ref || @repository.root_ref) do
-        = pluralize(number_with_delimiter(@project.commit_count), 'commit')
+        = "#{number_with_delimiter(@project.commit_count)} コミット"
     %li
       = link_to namespace_project_branches_path(@project.namespace, @project) do
-        = pluralize(number_with_delimiter(@repository.branch_names.count), 'branch')
+        = "#{number_with_delimiter(@repository.branch_names.count)} ブランチ"
     %li
       = link_to namespace_project_tags_path(@project.namespace, @project) do
-        = pluralize(number_with_delimiter(@repository.tag_names.count), 'tag')
+        = "#{number_with_delimiter(@repository.tag_names.count)} タグ"
     - if @repository.changelog
       %li
         = link_to changelog_url(@project) do
-          Changelog
+          更新履歴
     - if @repository.license
       %li
         = link_to license_url(@project) do
-          License
+          ライセンス
     - if @repository.contribution_guide
       %li
         = link_to contribution_guide_url(@project) do
-          Contribution guide
+          コントリビューションガイド
 
 - if @project.archived?
   .text-warning.center.prepend-top-20
     %p
       = icon("exclamation-triangle fw")
-      Archived project! Repository is read-only
+      アーカイブされたプロジェクトです！リポジトリは読み取り専用です
 
 %hr
 %section
@@ -54,8 +54,8 @@
   - if access
     %hr
     %p.light
-      You have #{access} access to this project.
+      あなたはこのプロジェクトで #{access} の権限があります。
       - if @project.project_member_by_id(current_user)
         = link_to leave_namespace_project_project_members_path(@project.namespace, @project),
-          data: { confirm: leave_project_message(@project) }, method: :delete, title: 'Leave project', class: 'cred' do
-          Leave this project
+          data: { confirm: leave_project_message(@project) }, method: :delete, title: 'プロジェクトを離脱', class: 'cred' do
+          このプロジェクトを離脱

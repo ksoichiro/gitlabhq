@@ -1,15 +1,15 @@
-# GitLab basics
+# GitLabの基本
 
-Step-by-step guides on the basics of working with Git and GitLab.
+GitとGitLabでの作業の基本を説明するステップバイステップのガイドです。
 
-* [Start using Git on the commandline](start-using-git.md)
+* [コマンドラインでGitを使い始める](start-using-git.md)
 
-* [Create and add your SSH Keys](create-your-ssh-keys.md)
+* [SSHキーを作成・追加する](create-your-ssh-keys.md)
 
-* [Command Line basic commands](command-line-commands.md)
+* [コマンドラインでの基本的なコマンド](command-line-commands.md)
 
-* [Basic Git commands](basic-git-commands.md)
+* [基本的なGitコマンド](basic-git-commands.md)
 
-* [Create a project](create-project.md)
+* [プロジェクトを作成する](create-project.md)
 
-* [Create a group](create-group.md)
+* [グループを作成する](create-group.md)

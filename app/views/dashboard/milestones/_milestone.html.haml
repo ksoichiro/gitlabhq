@@ -9,7 +9,7 @@
       = link_to merge_requests_dashboard_path(milestone_title: milestone.title) do
         #{milestone.merge_requests_count}件のマージリクエスト
       &nbsp;
-      %span.light #{milestone.percent_complete}% complete
+      %span.light #{milestone.percent_complete}% 完了
 
     .col-sm-6
       = milestone_progress_bar(milestone)

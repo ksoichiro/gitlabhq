@@ -2,29 +2,28 @@
 %h3.page-title 招待
 
 %p
-  You have been invited
+  あなたは
   - if inviter = @member.created_by
-    by
     = link_to inviter.name, user_url(inviter)
-  to join 
+    から
   - case @member.source
   - when Project
     - project = @member.source
-    project
+    プロジェクト
     %strong
       = link_to project.name_with_namespace, namespace_project_url(project.namespace, project)
   - when Group
     - group = @member.source
-    group
+    グループ
     %strong
       = link_to group.name, group_url(group)
-  as #{@member.human_access}.
+  に #{@member.human_access} として招待されました。
 
 - if @member.source.users.include?(current_user)
   %p
-    However, you are already a member of this #{@member.source.is_a?(Group) ? "group" : "project"}.
-    Sign in using a different account to accept the invitation.
+    もしあなたが既にこの#{@member.source.is_a?(Group) ? "グループ" : "プロジェクト"} のメンバーである場合、
+    招待を承諾するには異なるアカウントを使ってサインインしてください。
 - else
   .actions
-    = link_to "Accept invitation", accept_invite_url(@token), method: :post, class: "btn btn-success"
-    = link_to "Decline", decline_invite_url(@token), method: :post, class: "btn btn-danger prepend-left-10"
+    = link_to "招待を承諾", accept_invite_url(@token), method: :post, class: "btn btn-success"
+    = link_to "拒否", decline_invite_url(@token), method: :post, class: "btn btn-danger prepend-left-10"
