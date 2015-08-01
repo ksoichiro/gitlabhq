@@ -1,0 +1,23 @@
+%h3.page-title
+  = @user.name
+  - if @user.blocked?
+    %span.cred (ブロック中)
+  - if @user.admin
+    %span.cred (管理者)
+
+  .pull-right
+    = link_to edit_admin_user_path(@user), class: "btn btn-grouped" do
+      %i.fa.fa-pencil-square-o
+      編集
+%hr
+%ul.nav.nav-tabs
+  = nav_link(path: 'users#show') do
+    = link_to "アカウント", admin_user_path(@user)
+  = nav_link(path: 'users#groups') do
+    = link_to "グループ", groups_admin_user_path(@user)
+  = nav_link(path: 'users#projects') do
+    = link_to "プロジェクト", projects_admin_user_path(@user)
+  = nav_link(path: 'users#keys') do
+    = link_to "SSHキー", keys_admin_user_path(@user)
+  = nav_link(controller: :identities) do
+    = link_to "ユーザ情報", admin_user_identities_path(@user)

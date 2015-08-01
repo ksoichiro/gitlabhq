@@ -21,7 +21,6 @@ class GitPushService
 
     project.ensure_satellite_exists
     project.repository.expire_cache
-    project.update_repository_size
 
     if push_remove_branch?(ref, newrev)
       @push_commits = []
@@ -61,6 +60,7 @@ class GitPushService
     EventCreateService.new.push(project, user, @push_data)
     project.execute_hooks(@push_data.dup, :push_hooks)
     project.execute_services(@push_data.dup, :push_hooks)
+    ProjectCacheWorker.perform_async(project.id)
   end
 
   protected
@@ -88,18 +88,24 @@ class GitPushService
         end
       end
 
-      # Create cross-reference notes for any other references. Omit any issues that were referenced in an
-      # issue-closing phrase, or have already been mentioned from this commit (probably from this commit
-      # being pushed to a different branch).
-      refs = commit.references(project, user) - issues_to_close
-      refs.reject! { |r| commit.has_mentioned?(r) }
+      if project.default_issues_tracker?
+        create_cross_reference_notes(commit, issues_to_close)
+      end
+    end
+  end
 
-      if refs.present?
-        author ||= commit_user(commit)
+  def create_cross_reference_notes(commit, issues_to_close)
+    # Create cross-reference notes for any other references. Omit any issues that were referenced in an
+    # issue-closing phrase, or have already been mentioned from this commit (probably from this commit
+    # being pushed to a different branch).
+    refs = commit.references(project, user) - issues_to_close
+    refs.reject! { |r| commit.has_mentioned?(r) }
 
-        refs.each do |r|
-          Note.create_cross_reference_note(r, commit, author)
-        end
+    if refs.present?
+      author ||= commit_user(commit)
+
+      refs.each do |r|
+        SystemNoteService.cross_reference(r, commit, author)
       end
     end
   end

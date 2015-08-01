@@ -2,69 +2,48 @@
 %h3.page-title
   = page_title
 %p.light
-  These settings allow you to customize the appearance and behavior of the site.
-  They are saved with your account and will persist to any device you use to
-  access the site.
+  サイトのデザインと動作を設定できます。
+  設定はあなたのアカウントに保存されどの端末からサイトにアクセスしても有効です。
 %hr
 
 = form_for @user, url: profile_preferences_path, remote: true, method: :put, html: {class: 'js-preferences-form form-horizontal'} do |f|
   .panel.panel-default.application-theme
     .panel-heading
-      Application theme
+      アプリケーションテーマ
     .panel-body
-      .themes_opts
+      - Gitlab::Themes.each do |theme|
         = label_tag do
-          .prev.default
-          = f.radio_button :theme_id, 1
-          Graphite
+          .preview{class: theme.css_class}
+          = f.radio_button :theme_id, theme.id
+          = theme.name
 
-        = label_tag do
-          .prev.classic
-          = f.radio_button :theme_id, 2
-          Charcoal
-
-        = label_tag do
-          .prev.modern
-          = f.radio_button :theme_id, 3
-          Green
-
-        = label_tag do
-          .prev.gray
-          = f.radio_button :theme_id, 4
-          Gray
-
-        = label_tag do
-          .prev.violet
-          = f.radio_button :theme_id, 5
-          Violet
-
-        = label_tag do
-          .prev.blue
-          = f.radio_button :theme_id, 6
-          Blue
-      %br
-      .clearfix
-
-  .panel.panel-default.code-preview-theme
+  .panel.panel-default.syntax-theme
     .panel-heading
-      Code preview theme
+      シンタックスハイライトテーマ
     .panel-body
-      .code_highlight_opts
-        - color_schemes.each do |color_scheme_id, color_scheme|
-          = label_tag do
-            .prev= image_tag "#{color_scheme}-scheme-preview.png"
-            = f.radio_button :color_scheme_id, color_scheme_id
-            = color_scheme.tr('-_', ' ').titleize
+      - color_schemes.each do |color_scheme_id, color_scheme|
+        = label_tag do
+          .preview= image_tag "#{color_scheme}-scheme-preview.png"
+          = f.radio_button :color_scheme_id, color_scheme_id
+          = color_scheme.tr('-_', ' ').titleize
 
   .panel.panel-default
     .panel-heading
-      Behavior
+      動作
     .panel-body
       .form-group
         = f.label :dashboard, class: 'control-label' do
-          Default Dashboard
+          デフォルトダッシュボード
           = link_to('(?)', help_page_path('profile', 'preferences') + '#default-dashboard', target: '_blank')
         .col-sm-10
           = f.select :dashboard, dashboard_choices, {}, class: 'form-control'
+      .form-group
+        = f.label :project_view, class: 'control-label' do
+          プロジェクトビュー
+          = link_to('(?)', help_page_path('profile', 'preferences') + '#default-project-view', target: '_blank')
+        .col-sm-10
+          = f.select :project_view, project_view_choices, {}, class: 'form-control'
+          .help-block
+            プロジェクトページを表示した時に閲覧したいコンテンツを選択してください。
     .panel-footer
-      = f.submit 'Save', class: 'btn btn-save'
+      = f.submit '保存', class: 'btn btn-save'

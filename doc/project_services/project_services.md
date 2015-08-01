@@ -1,8 +1,8 @@
-# Project Services
+# プロジェクトサービス
  
-__Project integrations with external services for continuous integration and more.__
+__CIなどのために外部サービスとプロジェクトを統合できます。__
 
-## Services
+## サービス
 
 - Assembla
 - [Atlassian Bamboo CI](bamboo.md) An Atlassian product for continuous integration.

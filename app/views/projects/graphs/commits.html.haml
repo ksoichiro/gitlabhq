@@ -1,9 +1,11 @@
 - page_title "コミット統計"
+.tree-ref-holder
+  = render 'shared/ref_switcher', destination: 'graphs_commits'
 = render 'head'
 
 %p.lead
-  Commit statistics for
-  %strong #{@repository.root_ref}
+  %strong #{@ref}
+  のコミット統計
   #{@commits_graph.start_date.strftime('%b %d')} - #{@commits_graph.end_date.strftime('%b %d')}
 
 .row
@@ -11,35 +13,34 @@
     %ul
       %li
         %p.lead
-          %strong #{@commits_graph.commits.size}
-          commits during
           %strong #{@commits_graph.duration}
-          days
+          日の間で
+          %strong #{@commits_graph.commits.size}
+          コミット
       %li
         %p.lead
-          Average
+          1日あたり平均
           %strong #{@commits_graph.commit_per_day}
-          commits per day
+          コミット
       %li
         %p.lead
-          Contributed by
           %strong #{@commits_graph.authors}
-          authors
+          人がコントリビュート
   .col-md-6
     %div
       %p.slead
-        Commits per day of month
+        過去1ヶ月間のコミット
       %canvas#month-chart{width: 800, height: 400}
 .row
   .col-md-6
     %div
       %p.slead
-        Commits per day hour (UTC)
+        コミットされた時間 (UTC)
       %canvas#hour-chart{width: 800, height: 400}
   .col-md-6
     %div
       %p.slead
-        Commits per weekday
+        コミットされた曜日
       %canvas#weekday-chart{width: 800, height: 400}
 
 :coffeescript

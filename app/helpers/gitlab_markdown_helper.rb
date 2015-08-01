@@ -1,7 +1,9 @@
+# encoding: utf-8
 require 'nokogiri'
 
 module GitlabMarkdownHelper
   include Gitlab::Markdown
+  include PreferencesHelper
 
   # Use this in places where you would normally use link_to(gfm(...), ...).
   #
@@ -95,6 +97,29 @@ module GitlabMarkdownHelper
     else
       wiki_page.formatted_content.html_safe
     end
+  end
+
+  MARKDOWN_TIPS = [
+    "改行は行末に2個以上のスペースを入れることで追加できます",
+    "インラインコードは `前後をバックティックで括る` ことで表現できます",
+    "ソースコードのブロックは3つのバックティック(```)または行頭に4つのスペースを入れると表現できます",
+    "絵文字は :emoji_name: で追加できます。例) :thumbsup:",
+    "@user_name を使うと他の参加者に通知できます",
+    "@group_name を使うと特定のグループに通知できます",
+    "@all を使うとチーム全員に通知できます",
+    "'#'を使って課題を参照できます。例) 課題 #123",
+    "'!'を使ってマージリクエストを参照できます。例) MR !123",
+    "*アスタリスク* または _アンダースコア_ で単語をイタリック体にできます",
+    "**2つのアスタリスク** または __2つのアンダースコア__ で単語や文章を太字にできます",
+    "~~2つのチルダ~~ で取消線を引けます",
+    "プラス(+)、マイナス(-)、アスタリスク(*)で箇条書きを作成できます",
+    "行頭に'>'を記述すると引用を表現できます",
+    "3個以上のハイフン(---)、アスタリスク(***)、アンダースコア(___)で水平線を作成できます"
+  ].freeze
+
+  # Returns a random markdown tip for use as a textarea placeholder
+  def random_markdown_tip
+    MARKDOWN_TIPS.sample
   end
 
   private

@@ -20,6 +20,7 @@
 - [システムフック](system_hooks.md)
 - [グループ](groups.md)
 - [ネームスペース](namespaces.md)
+- [設定](settings.md)
 
 ## クライアント
 

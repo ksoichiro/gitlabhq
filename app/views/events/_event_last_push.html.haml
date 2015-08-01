@@ -4,7 +4,7 @@
       %span あなたは
       = link_to namespace_project_commits_path(event.project.namespace, event.project, event.ref_name) do
         %strong= event.ref_name
-      ブランチを
+      %span ブランチを
       %strong= link_to_project event.project
       プロジェクトに
       #{time_ago_with_tooltip(event.created_at)}

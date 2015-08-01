@@ -1,15 +1,15 @@
-%ul.project-navigation.nav.nav-sidebar
+%ul.nav.nav-sidebar
   = nav_link do
-    = link_to project_path(@project), title: 'プロジェクトに戻る', data: {placement: 'right'} do
+    = link_to project_path(@project), title: 'プロジェクトに戻る', data: {placement: 'right'}, class: 'back-link' do
       = icon('caret-square-o-left fw')
       %span
         プロジェクトに戻る
 
   %li.separate-item
 
-  %ul.project-settings-nav.sidebar-subnav
+  %ul.sidebar-subnav
     = nav_link(path: 'projects#edit') do
-      = link_to edit_project_path(@project), title: 'プロジェクト', class: 'stat-tab tab', data: {placement: 'right'} do
+      = link_to edit_project_path(@project), title: 'プロジェクト', data: {placement: 'right'} do
         = icon('pencil-square-o fw')
         %span
           プロジェクト設定

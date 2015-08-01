@@ -4,29 +4,30 @@
 
 = render "home_panel"
 
-.center.well
-  %h3
+.center.light-well
+  %h3.page-title
     このプロジェクトのリポジトリは空です
-  %h4
-    = link_to namespace_project_new_blob_path(@project.namespace, @project, 'master'), class: 'btn btn-new btn-lg' do
-      ファイルを追加
-    &nbsp;するかコマンドラインからプッシュしてください
+  %p
+    すでにファイルがある場合は以下のコマンドラインでの手順に沿ってプッシュできます。
+    %br
+    そうでない場合は、このプロジェクトに
+    = link_to "README ファイルを追加", new_readme_path, class: 'underlined-link'
+    しましょう
 
-.well
-  = render "shared/clone_panel"
-%h4
-  %strong コマンドラインでの手順
+.prepend-top-20
+%h3.page-title
+  コマンドラインでの手順
 %div.git-empty
   %fieldset
-    %legend Gitのグローバルなセットアップ
-    %pre.dark
+    %h5 Gitのグローバルなセットアップ
+    %pre.light-well
       :preserve
         git config --global user.name "#{git_user_name}"
         git config --global user.email "#{git_user_email}"
 
   %fieldset
-    %legend リポジトリを新しく作成する場合
-    %pre.dark
+    %h5 リポジトリを新しく作成する場合
+    %pre.light-well
       :preserve
         git clone #{ content_tag(:span, default_url_to_repo, class: 'clone')}
         cd #{@project.path}
@@ -36,8 +37,8 @@
         git push -u origin master
 
   %fieldset
-    %legend 既存のフォルダまたはGitリポジトリがある場合
-    %pre.dark
+    %h5 既存のフォルダまたはGitリポジトリがある場合
+    %pre.light-well
       :preserve
         cd existing_folder
         git init

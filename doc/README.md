@@ -4,6 +4,7 @@
 
 - [API](api/README.md) シンプルで強力なAPIでGitLabを自動化します。
 - [OAuth2認証サービスプロバイダとしてのGitLab](integration/oauth_provider.md)。GitLabから他のアプリケーションにログインできるようにします。
+- [GitLabの基本](gitlab-basics/README.md) コマンドラインとGitLabでの作業の始め方をステップバイステップで説明します。
 - [GitLabへのインポート](workflow/importing/README.md)。
 - [Markdown](markdown/markdown.md) GitLabの高度なフォーマットシステムです。
 - [アクセス権](permissions/permissions.md) プロジェクトの各ロール (guest/reporter/developer/master/owner) が何をできるのか学びます。

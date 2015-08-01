@@ -3,26 +3,6 @@ require 'digest/md5'
 require 'uri'
 
 module ApplicationHelper
-  COLOR_SCHEMES = {
-    1 => 'white',
-    2 => 'dark',
-    3 => 'solarized-light',
-    4 => 'solarized-dark',
-    5 => 'monokai',
-  }
-  COLOR_SCHEMES.default = 'white'
-
-  # Helper method to access the COLOR_SCHEMES
-  #
-  # The keys are the `color_scheme_ids`
-  # The values are the `name` of the scheme.
-  #
-  # The preview images are `name-scheme-preview.png`
-  # The stylesheets should use the css class `.name`
-  def color_schemes
-    COLOR_SCHEMES.freeze
-  end
-
   # Check if a particular controller is the current one
   #
   # args - One or more controller names to check
@@ -120,8 +100,8 @@ module ApplicationHelper
     repository = @project.repository
 
     options = [
-      ['Branches', repository.branch_names],
-      ['Tags', VersionSorter.rsort(repository.tag_names)]
+      ['ブランチ', repository.branch_names],
+      ['タグ', VersionSorter.rsort(repository.tag_names)]
     ]
 
     # If reference is commit id - we should add it to branch/tag selectbox
@@ -137,18 +117,6 @@ module ApplicationHelper
     # should be an array of strings
     # so to_s can be called, because it is sufficient and to_json is too slow
     Emoji.names.to_s
-  end
-
-  def app_theme
-    Gitlab::Theme.css_class_by_id(current_user.try(:theme_id))
-  end
-
-  def theme_type
-    Gitlab::Theme.type_css_class_by_id(current_user.try(:theme_id))
-  end
-
-  def user_color_scheme_class
-    COLOR_SCHEMES[current_user.try(:color_scheme_id)] if defined?(current_user)
   end
 
   # Define whenever show last push event
@@ -212,14 +180,33 @@ module ApplicationHelper
     BroadcastMessage.current
   end
 
-  def time_ago_with_tooltip(date, placement = 'top', html_class = 'time_ago')
-    capture_haml do
-      haml_tag :time, date.to_s,
-        class: html_class, datetime: date.getutc.iso8601, title: date.in_time_zone.stamp('2011/08/21 21:23'),
-        data: { toggle: 'tooltip', placement: placement }
+  # Render a `time` element with Javascript-based relative date and tooltip
+  #
+  # time       - Time object
+  # placement  - Tooltip placement String (default: "top")
+  # html_class - Custom class for `time` element (default: "time_ago")
+  # skip_js    - When true, exclude the `script` tag (default: false)
+  #
+  # By default also includes a `script` element with Javascript necessary to
+  # initialize the `timeago` jQuery extension. If this method is called many
+  # times, for example rendering hundreds of commits, it's advisable to disable
+  # this behavior using the `skip_js` argument and re-initializing `timeago`
+  # manually once all of the elements have been rendered.
+  #
+  # A `js-timeago` class is always added to the element, even when a custom
+  # `html_class` argument is provided.
+  #
+  # Returns an HTML-safe String
+  def time_ago_with_tooltip(time, placement: 'top', html_class: 'time_ago', skip_js: false)
+    element = content_tag :time, time.to_s,
+      class: "#{html_class} js-timeago",
+      datetime: time.getutc.iso8601,
+      title: time.in_time_zone.stamp('2011/08/21 21:23'),
+      data: { toggle: 'tooltip', placement: placement }
 
-      haml_tag :script, "$('." + html_class + "').timeago().tooltip()"
-    end.html_safe
+    element += javascript_tag "$('.js-timeago').timeago()" unless skip_js
+
+    element
   end
 
   def render_markup(file_name, file_content)
@@ -227,12 +214,20 @@ module ApplicationHelper
       Haml::Helpers.preserve(markdown(file_content))
     elsif asciidoc?(file_name)
       asciidoc(file_content)
+    elsif plain?(file_name)
+      content_tag :pre, class: 'plain-readme' do
+        file_content
+      end
     else
       GitHub::Markup.render(file_name, file_content).
         force_encoding(file_content.encoding).html_safe
     end
   rescue RuntimeError
     simple_format(file_content)
+  end
+
+  def plain?(filename)
+    Gitlab::MarkupHelper.plain?(filename)
   end
 
   def markup?(filename)
@@ -245,39 +240,6 @@ module ApplicationHelper
 
   def asciidoc?(filename)
     Gitlab::MarkupHelper.asciidoc?(filename)
-  end
-
-  # Overrides ActionView::Helpers::UrlHelper#link_to to add `rel="nofollow"` to
-  # external links
-  def link_to(name = nil, options = nil, html_options = {})
-    if options.kind_of?(String)
-      if !options.start_with?('#', '/')
-        html_options = add_nofollow(options, html_options)
-      end
-    end
-
-    super
-  end
-
-  # Add `"rel=nofollow"` to external links
-  #
-  # link         - String link to check
-  # html_options - Hash of `html_options` passed to `link_to`
-  #
-  # Returns `html_options`, adding `rel: nofollow` for external links
-  def add_nofollow(link, html_options = {})
-    begin
-      uri = URI(link)
-
-      if uri && uri.absolute? && uri.host != Gitlab.config.gitlab.host
-        rel = html_options.fetch(:rel, '')
-        html_options[:rel] = (rel + ' nofollow').strip
-      end
-    rescue URI::Error
-      # noop
-    end
-
-    html_options
   end
 
   def promo_host
@@ -334,7 +296,7 @@ module ApplicationHelper
       merged: "承認済み",
       rejected: "却下済み"
     }
-    
+
     entity_title = titles[entity] || entity.to_s.humanize
 
     count =
