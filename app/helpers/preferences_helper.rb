@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Helper methods for per-User preferences
 module PreferencesHelper
   COLOR_SCHEMES = {
@@ -22,8 +23,8 @@ module PreferencesHelper
 
   # Maps `dashboard` values to more user-friendly option text
   DASHBOARD_CHOICES = {
-    projects: 'Your Projects (default)',
-    stars:    'Starred Projects'
+    projects: 'あなたのプロジェクト (デフォルト)',
+    stars:    '人気プロジェクト'
   }.with_indifferent_access.freeze
 
   # Returns an Array usable by a select field for more user-friendly option text
@@ -44,8 +45,8 @@ module PreferencesHelper
 
   def project_view_choices
     [
-      ['Readme (default)', :readme],
-      ['Activity view', :activity]
+      ['Readme (デフォルト)', :readme],
+      ['アクティビティビュー', :activity]
     ]
   end
 

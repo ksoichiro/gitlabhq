@@ -15,11 +15,11 @@
             %small.pull-right= User.admins.count
         %li.filter-two-factor-enabled{class: "#{'active' if params[:filter] == 'two_factor_enabled'}"}
           = link_to admin_users_path(filter: 'two_factor_enabled') do
-            2FA Enabled
+            二段階認証が有効
             %small.pull-right= User.with_two_factor.count
         %li.filter-two-factor-disabled{class: "#{'active' if params[:filter] == 'two_factor_disabled'}"}
           = link_to admin_users_path(filter: 'two_factor_disabled') do
-            2FA Disabled
+            二段階認証が無効
             %small.pull-right= User.without_two_factor.count
         %li{class: "#{'active' if params[:filter] == "blocked"}"}
           = link_to admin_users_path(filter: "blocked") do

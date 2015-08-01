@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'nokogiri'
 
 module GitlabMarkdownHelper
@@ -99,21 +100,21 @@ module GitlabMarkdownHelper
   end
 
   MARKDOWN_TIPS = [
-    "End a line with two or more spaces for a line-break, or soft-return",
-    "Inline code can be denoted by `surrounding it with backticks`",
-    "Blocks of code can be denoted by three backticks ``` or four leading spaces",
-    "Emoji can be added by :emoji_name:, for example :thumbsup:",
-    "Notify other participants using @user_name",
-    "Notify a specific group using @group_name",
-    "Notify the entire team using @all",
-    "Reference an issue using a hash, for example issue #123",
-    "Reference a merge request using an exclamation point, for example MR !123",
-    "Italicize words or phrases using *asterisks* or _underscores_",
-    "Bold words or phrases using **double asterisks** or __double underscores__",
-    "Strikethrough words or phrases using ~~two tildes~~",
-    "Make a bulleted list using + pluses, - minuses, or * asterisks",
-    "Denote blockquotes using > at the beginning of a line",
-    "Make a horizontal line using three or more hyphens ---, asterisks ***, or underscores ___"
+    "改行は行末に2個以上のスペースを入れることで追加できます",
+    "インラインコードは `前後をバックティックで括る` ことで表現できます",
+    "ソースコードのブロックは3つのバックティック(```)または行頭に4つのスペースを入れると表現できます",
+    "絵文字は :emoji_name: で追加できます。例) :thumbsup:",
+    "@user_name を使うと他の参加者に通知できます",
+    "@group_name を使うと特定のグループに通知できます",
+    "@all を使うとチーム全員に通知できます",
+    "'#'を使って課題を参照できます。例) 課題 #123",
+    "'!'を使ってマージリクエストを参照できます。例) MR !123",
+    "*アスタリスク* または _アンダースコア_ で単語をイタリック体にできます",
+    "**2つのアスタリスク** または __2つのアンダースコア__ で単語や文章を太字にできます",
+    "~~2つのチルダ~~ で取消線を引けます",
+    "プラス(+)、マイナス(-)、アスタリスク(*)で箇条書きを作成できます",
+    "行頭に'>'を記述すると引用を表現できます",
+    "3個以上のハイフン(---)、アスタリスク(***)、アンダースコア(___)で水平線を作成できます"
   ].freeze
 
   # Returns a random markdown tip for use as a textarea placeholder
