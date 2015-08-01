@@ -37,7 +37,7 @@
       .panel-heading
         二段階認証
       .panel-body
-        - if current_user.otp_required_for_login
+        - if current_user.two_factor_enabled?
           .pull-right
             = link_to '二段階認証を無効にする', profile_two_factor_auth_path, method: :delete, class: 'btn btn-close btn-sm',
                 data: { confirm: '本当に無効にしますか？' }

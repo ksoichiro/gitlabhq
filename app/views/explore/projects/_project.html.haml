@@ -14,7 +14,7 @@
 
     .repo-info
       - unless project.empty_repo?
-        = link_to "#{project.repository.round_commit_count} コミット", namespace_project_commits_path(project.namespace, project, project.default_branch)
+        = link_to "#{round_commit_count(project)} コミット", namespace_project_commits_path(project.namespace, project, project.default_branch)
         &middot;
         = link_to "#{project.repository.branch_names.count} ブランチ", namespace_project_branches_path(project.namespace, project)
         &middot;

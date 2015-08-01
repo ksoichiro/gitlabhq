@@ -7,7 +7,7 @@
 - [グループ](groups.md)
 - [Keyboard shortcuts](shortcuts.md)
 - [ラベル](labels.md)
-- [通知](notifications.md)
+- [通知メール](notifications.md)
 - [プロジェクトの機能](project_features.md)
 - [プロジェクトフォークワークフロー](forking_workflow.md)
 - [保護ブランチ](protected_branches.md)

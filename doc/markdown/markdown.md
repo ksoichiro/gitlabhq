@@ -342,6 +342,36 @@ H2の別表現
 - またはマイナス
 + またはプラス
 
+If a list item contains multiple paragraphs,
+each subsequent paragraph should be indented with four spaces.
+
+```no-highlight
+1.  First ordered list item
+
+    Second paragraph of first item.
+2.  Another item
+```
+
+1.  First ordered list item
+
+    Second paragraph of first item.
+2.  Another item
+
+If the second paragraph isn't indented with four spaces,
+the second list item will be incorrectly labeled as `1`.
+
+```no-highlight
+1. First ordered list item
+
+   Second paragraph of first item.
+2. Another item
+```
+
+1. First ordered list item
+
+   Second paragraph of first item.
+2. Another item
+
 ## リンク
 
 リンクを作るには、インラインスタイルとリファレンススタイルの二つの方法があります。

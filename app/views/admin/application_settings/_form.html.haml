@@ -6,44 +6,7 @@
           %p= msg
 
   %fieldset
-    %legend 機能
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        .checkbox
-          = f.label :signup_enabled, 'サインアップ' do
-            = f.check_box :signup_enabled
-            サインアップを利用
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        .checkbox
-          = f.label :signin_enabled, 'サインイン' do
-            = f.check_box :signin_enabled
-            サインインを利用
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        .checkbox
-          = f.label :gravatar_enabled, 'Gravatar' do
-            = f.check_box :gravatar_enabled
-            Gravatarを利用
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        .checkbox
-          = f.label :twitter_sharing_enabled, 'Twitter' do
-            = f.check_box :twitter_sharing_enabled, :'aria-describedby' => 'twitter_help_block'
-            Twitterを利用
-          %span.help-block#twitter_help_block 新しく作成した公開/内部プロジェクトをTwitterでシェアするボタンをユーザに表示します
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        .checkbox
-          = f.label :version_check_enabled do
-            = f.check_box :version_check_enabled
-            バージョンチェックを利用
-  %fieldset
-    %legend その他
-    .form-group
-      = f.label :default_projects_limit, '上限プロジェクト数初期値', class: 'control-label col-sm-2'
-      .col-sm-10
-        = f.number_field :default_projects_limit, class: 'form-control'
+    %legend 可視性とアクセス権制御
     .form-group
       = f.label :default_branch_protection, 'デフォルトのブランチ保護', class: 'control-label col-sm-2'
       .col-sm-10
@@ -65,6 +28,68 @@
             = level
         %span.help-block#restricted-visibility-help 選択されたレベルは、管理者以外のユーザがプロジェクトやスニペットで利用することができません
     .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :version_check_enabled, 'バージョンチェック' do
+            = f.check_box :version_check_enabled
+            バージョンチェックを利用
+
+  %fieldset
+    %legend Account and Limit Settings
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :gravatar_enabled, 'Gravatar' do
+            = f.check_box :gravatar_enabled
+            Gravatarを利用
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :twitter_sharing_enabled, 'Twitter' do
+            = f.check_box :twitter_sharing_enabled, :'aria-describedby' => 'twitter_help_block'
+            Twitterを利用
+          %span.help-block#twitter_help_block 新しく作成した公開/内部プロジェクトをTwitterでシェアするボタンをユーザに表示します
+    .form-group
+      = f.label :default_projects_limit, '上限プロジェクト数初期値', class: 'control-label col-sm-2'
+      .col-sm-10
+        = f.number_field :default_projects_limit, class: 'form-control'
+    .form-group
+      = f.label :max_attachment_size, '最大添付ファイルサイズ(MB)', class: 'control-label col-sm-2'
+      .col-sm-10
+        = f.number_field :max_attachment_size, class: 'form-control'
+    .form-group
+      = f.label :session_expire_delay, 'Session duration (minutes)', class: 'control-label col-sm-2'
+      .col-sm-10
+        = f.number_field :session_expire_delay, class: 'form-control'
+        %span.help-block#session_expire_delay_help_block GitLab restart is required to apply changes
+    .form-group
+      = f.label :user_oauth_applications, 'User OAuth applications', class: 'control-label col-sm-2'
+      .col-sm-10
+        .checkbox
+          = f.label :user_oauth_applications do
+            = f.check_box :user_oauth_applications
+            Allow users to register any application to use GitLab as an OAuth provider
+
+  %fieldset
+    %legend Sign-in Restrictions
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :signup_enabled, 'サインアップ' do
+            = f.check_box :signup_enabled
+            サインアップを利用
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :signin_enabled, 'サインイン' do
+            = f.check_box :signin_enabled
+            サインインを利用
+    .form-group
+      = f.label :restricted_signup_domains, 'Restricted domains for sign-ups', class: 'control-label col-sm-2'
+      .col-sm-10
+        = f.text_area :restricted_signup_domains_raw, placeholder: 'domain.com', class: 'form-control'
+        .help-block Only users with e-mail addresses that match these domain(s) will be able to sign-up. Wildcards allowed. Use separate lines for multiple entries. Ex: domain.com, *.domain.com
+    .form-group
       = f.label :home_page_url, 'ホームページURL', class: 'control-label col-sm-2'
       .col-sm-10
         = f.text_field :home_page_url, class: 'form-control', placeholder: 'http://company.example.com', :'aria-describedby' => 'home_help_block'
@@ -79,22 +104,6 @@
       .col-sm-10
         = f.text_area :sign_in_text, class: 'form-control', rows: 4
         .help-block Markdownを利用できます
-    .form-group
-      = f.label :max_attachment_size, 'Maximum attachment size (MB)', class: 'control-label col-sm-2'
-      .col-sm-10
-        = f.number_field :max_attachment_size, class: 'form-control'
-    .form-group
-      = f.label :restricted_signup_domains, 'Restricted domains for sign-ups', class: 'control-label col-sm-2'
-      .col-sm-10
-        = f.text_area :restricted_signup_domains_raw, placeholder: 'domain.com', class: 'form-control'
-        .help-block Only users with e-mail addresses that match these domain(s) will be able to sign-up. Wildcards allowed. Use separate lines for multiple entries. Ex: domain.com, *.domain.com
-    .form_group
-      = f.label :user_oauth_applications, 'User OAuth applications', class: 'control-label col-sm-2'
-      .col-sm-10
-        .checkbox
-          = f.label :user_oauth_applications do
-            = f.check_box :user_oauth_applications
-            Allow users to register any application to use GitLab as an OAuth provider
 
   .form-actions
     = f.submit '保存', class: 'btn btn-primary'

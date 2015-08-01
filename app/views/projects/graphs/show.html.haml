@@ -1,5 +1,8 @@
 - page_title "コントリビュータ統計"
+.tree-ref-holder
+  = render 'shared/ref_switcher', destination: 'graphs'
 = render 'head'
+
 .loading-graph
   .center
     %h3.page-title
@@ -11,7 +14,7 @@
   .header.clearfix
     %h3#date_header.page-title
     %p.light
-      マージコミットを除いた#{@project.default_branch}へのコミットが 6,000 コミットまで表示されます。
+      マージコミットを除いた#{@ref}へのコミットが 6,000 コミットまで表示されます。
     %input#brush_change{:type => "hidden"}
   .graphs
     #contributors-master
@@ -35,4 +38,3 @@
       $(".stat-graph").fadeIn();
       $(".loading-graph").hide();
     dataType: "json"
-
