@@ -9,6 +9,13 @@
 ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
 バックアップは、それを取得したGitLabと同じバージョンにのみリストアできます。(例えば、7.2.1)
 
+You need to keep a separate copy of `/etc/gitlab/gitlab-secrets.json`
+(for omnibus packages) or `/home/git/gitlab/.secret` (for installations
+from source). This file contains the database encryption key used
+for two-factor authentication. If you restore a GitLab backup without
+restoring the database encryption key, users who have two-factor
+authentication enabled will loose access to your GitLab server.
+
 If you are interested in GitLab CI backup please follow to the [CI backup documentation](https://gitlab.com/gitlab-org/gitlab-ci/blob/master/doc/raketasks/backup_restore.md)*
 
 ```
@@ -144,13 +151,35 @@ with the name of your bucket:
 ## 設定ファイルの保存
 
 バックアップでは設定ファイルは保存されないことに注意してください。
+理由の一つは、データベースは二段階認証のために暗号化された情報を含んでいることです。
+暗号化の目的からすると、暗号化された情報とそのキーを同じ場所に保存すべきではありません。
+
 Omnibusパッケージを使用している場合は、 [READMEの設定のバックアップ方法](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#backup-and-restore-omnibus-gitlab-configuration) を参照してください。
 Cookbookでインストールしている場合は、Chefに設定のコピーがあるはずです。
-ソースコードからインストールした場合は、gitlab.ymlファイル、SSLキー、証明書、[SSHホストキー](https://superuser.com/questions/532040/copy-ssh-keys-from-one-server-to-another-server/532079#532079)のバックアップを検討してください。
+ソースコードからインストールした場合は、 `.secret` ファイル、 `gitlab.yml` ファイル、SSLキー、証明書、[SSHホストキー](https://superuser.com/questions/532040/copy-ssh-keys-from-one-server-to-another-server/532079#532079)のバックアップを検討してください。
+
+データベースの暗号化キーを維持するためにバックアップしなければならない
+**最小の** ファイルは `/etc/gitlab/gitlab-secrets.json` (Omnibus)、
+`/home/git/gitlab/.secret` (ソース) のファイルです。
 
 ## 以前のバックアップへのリストア
 
 バックアップは、それを取得したGitLabと同じバージョンにのみリストアできます。(例えば、7.2.1)
+
+### Prerequisites
+
+You need to have a working GitLab installation before you can perform
+a restore. This is mainly because the system user performing the
+restore actions ('git') is usually not allowed to create or delete
+the SQL database it needs to import data into ('gitlabhq_production').
+All existing data will be either erased (SQL) or moved to a separate
+directory (repositories, uploads).
+
+If some or all of your GitLab users are using two-factor authentication
+(2FA) then you must also make sure to restore
+`/etc/gitlab/gitlab-secrets.json` (Omnibus) or `/home/git/gitlab/.secret`
+(installations from source). Note that you need to run `gitlab-ctl
+reconfigure` after changing `gitlab-secrets.json`.
 
 ### Installation from source
 
