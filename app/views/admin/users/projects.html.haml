@@ -16,12 +16,12 @@
     - if @personal_projects.present?
       = render 'users/projects', projects: @personal_projects
     - else
-      .nothing-here-block This user has no personal projects.
+      .nothing-here-block このユーザには個人プロジェクトはありません
 
 
   .col-md-6
     .panel.panel-default
-      .panel-heading Joined projects (#{@joined_projects.count})
+      .panel-heading 参加中のプロジェクト (#{@joined_projects.count})
       %ul.well-list
         - @joined_projects.sort_by(&:name_with_namespace).each do |project|
           - member = project.team.find_member(@user.id)
