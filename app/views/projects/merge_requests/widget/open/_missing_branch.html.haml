@@ -1,16 +1,16 @@
-%h4
-  マージ不可
-%p
-  このマージリクエストは以下の理由により承認できません。
-  - unless @merge_request.source_branch_exists?
-    %span.label.label-inverse= @merge_request.source_branch
-    ブランチが
-    %span.label.label-info= @merge_request.source_project_path
-    に存在しません
-  - else
-    %span.label.label-inverse= @merge_request.target_branch
-    ブランチが
-    %span.label.label-info= @merge_request.target_project_path
-    に存在しません
-  %br
-  %strong このマージリクエストをクローズするか、存在するブランチを選び直してください。
+- unless @merge_request.source_branch_exists?
+  %h4
+    = icon("exclamation-triangle")
+    マージ元のブランチ
+    %span.label-branch= source_branch_with_namespace(@merge_request)
+    が存在しません
+  %p
+    マージ元のブランチを復元するか、このマージリクエストをクローズして別のブランチで新しいマージリクエストを作成してください。
+- else
+  %h4
+    = icon("exclamation-triangle")
+    マージ先のブランチ
+    %span.label-branch= @merge_request.target_branch
+    が存在しません
+  %p
+    マージ先のブランチを復元するか、マージ先として別のブランチを使用してください

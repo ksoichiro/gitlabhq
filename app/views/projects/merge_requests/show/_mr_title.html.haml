@@ -1,10 +1,17 @@
 %h4.page-title
   .issue-box{ class: issue_box_class(@merge_request) }
     = @merge_request.state_human_name
-  = "マージリクエスト ##{@merge_request.iid}"
+  マージリクエスト ##{@merge_request.iid}
   %small.creator
     &middot;
-    #{link_to_member(@project, @merge_request.author)}が#{time_ago_with_tooltip(@merge_request.created_at)}に作成
+    created by #{link_to_member(@project, @merge_request.author)}
+    = time_ago_with_tooltip(@merge_request.created_at)
+    に作成
+    - if @merge_request.updated_at != @merge_request.created_at
+      %span
+        &middot;
+        = icon('edit', title: '編集')
+        = time_ago_with_tooltip(@merge_request.updated_at, placement: 'bottom')
 
   .issue-btn-group.pull-right
     - if can?(current_user, :update_merge_request, @merge_request)

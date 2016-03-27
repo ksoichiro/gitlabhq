@@ -7,7 +7,7 @@
 データベース、すべてのリポジトリ、すべての添付ファイルのバックアップアーカイブを作成します。
 このアーカイブは backup_path ( `config/gitlab.yml` を参照)に保存されます。
 ファイル名は `[TIMESTAMP]_gitlab_backup.tar` の形式です。このタイムスタンプはバックアップをリストアするときに使用されます。
-バックアップは、それを取得したGitLabと同じバージョンにのみリストアできます。(例えば、7.2.1)
+バックアップは、それを取得したGitLabと同じバージョンにのみリストアできます。(例えば、7.2.1) あなたのリポジトリをあるサーバから別のサーバへ移行する最適な方法は、バックアップをリストアすることです。
 
 You need to keep a separate copy of `/etc/gitlab/gitlab-secrets.json`
 (for omnibus packages) or `/home/git/gitlab/.secret` (for installations
@@ -148,6 +148,23 @@ with the name of your bucket:
 }
 ```
 
+## Backup archive permissions
+
+The backup archives created by GitLab (123456_gitlab_backup.tar) will have owner/group git:git and 0600 permissions by default.
+This is meant to avoid other system users reading GitLab's data.
+If you need the backup archives to have different permissions you can use the 'archive_permissions' setting.
+
+```
+# In /etc/gitlab/gitlab.rb, for omnibus packages
+gitlab_rails['backup_archive_permissions'] = 0644 # Makes the backup archives world-readable
+```
+
+```
+# In gitlab.yml, for installations from source:
+  backup:
+    archive_permissions: 0644 # Makes the backup archives world-readable
+```
+
 ## 設定ファイルの保存
 
 バックアップでは設定ファイルは保存されないことに注意してください。
@@ -162,9 +179,18 @@ Cookbookでインストールしている場合は、Chefに設定のコピー�
 **最小の** ファイルは `/etc/gitlab/gitlab-secrets.json` (Omnibus)、
 `/home/git/gitlab/.secret` (ソース) のファイルです。
 
-## 以前のバックアップへのリストア
+You need to have a working GitLab installation before you can perform
+a restore. This is mainly because the system user performing the
+restore actions ('git') is usually not allowed to create or delete
+the SQL database it needs to import data into ('gitlabhq_production').
+All existing data will be either erased (SQL) or moved to a separate
+directory (repositories, uploads).
 
-バックアップは、それを取得したGitLabと同じバージョンにのみリストアできます。(例えば、7.2.1)
+If some or all of your GitLab users are using two-factor authentication
+(2FA) then you must also make sure to restore
+`/etc/gitlab/gitlab-secrets.json` (Omnibus) or `/home/git/gitlab/.secret`
+(installations from source). Note that you need to run `gitlab-ctl
+reconfigure` after changing `gitlab-secrets.json`.
 
 ### Prerequisites
 
@@ -230,7 +256,7 @@ Deleting tmp directories...[DONE]
 We will assume that you have installed GitLab from an omnibus package and run
 `sudo gitlab-ctl reconfigure` at least once.
 
-First make sure your backup tar file is in `/var/opt/gitlab/backups`.
+First make sure your backup tar file is in `/var/opt/gitlab/backups` (or wherever `gitlab_rails['backup_path']` points to).
 
 ```shell
 sudo cp 1393513186_gitlab_backup.tar /var/opt/gitlab/backups/

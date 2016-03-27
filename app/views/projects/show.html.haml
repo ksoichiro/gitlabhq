@@ -22,18 +22,36 @@
     %li
       = link_to namespace_project_tags_path(@project.namespace, @project) do
         = "#{number_with_delimiter(@repository.tag_names.count)} タグ"
+
+    - if !prefer_readme? && @repository.readme
+      %li
+        = link_to 'Readme', readme_path(@project)
+
     - if @repository.changelog
       %li
-        = link_to changelog_url(@project) do
-          更新履歴
+        = link_to '更新履歴', changelog_path(@project)
+
     - if @repository.license
       %li
-        = link_to license_url(@project) do
-          ライセンス
+        = link_to 'ライセンス', license_path(@project)
+
     - if @repository.contribution_guide
       %li
-        = link_to contribution_guide_url(@project) do
-          コントリビューションガイド
+        = link_to 'コントリビューションガイド', contribution_guide_path(@project)
+
+    - if current_user && can_push_branch?(@project, @project.default_branch)
+      - unless @repository.changelog
+        %li.missing
+          = link_to add_changelog_path(@project) do
+            更新履歴を追加
+      - unless @repository.license
+        %li.missing
+          = link_to add_license_path(@project) do
+            ライセンスを追加
+      - unless @repository.contribution_guide
+        %li.missing
+          = link_to add_contribution_guide_path(@project) do
+            コントリビューションガイドを追加
 
 - if @project.archived?
   .text-warning.center.prepend-top-20

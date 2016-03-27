@@ -7,3 +7,6 @@
 
 ### 注意
 * セルフホストのGitLabインスタンスからGitLab.comに移行する場合、リモートを変更して新しいサーバにプッシュすることでリポジトリをコピーすることができますが、課題やマージリクエストはインポートされません。
+
+* Repositories are imported to GitLab via HTTP. 
+If the repository is too large, it can timeout. We have a soft limit of 10GB.

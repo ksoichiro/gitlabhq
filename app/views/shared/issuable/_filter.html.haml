@@ -36,11 +36,11 @@
       .issues-other-filters
         .filter-item.inline
           = users_select_tag(:assignee_id, selected: params[:assignee_id],
-            placeholder: '担当', class: 'trigger-submit', any_user: true, null_user: true, first_user: true)
+            placeholder: '担当', class: 'trigger-submit', any_user: true, null_user: true, first_user: true, current_user: true)
 
         .filter-item.inline
           = users_select_tag(:author_id, selected: params[:author_id],
-            placeholder: '作成', class: 'trigger-submit', any_user: true, first_user: true)
+            placeholder: '作成', class: 'trigger-submit', any_user: true, first_user: true, current_user: true)
 
         .filter-item.inline.milestone-filter
           = select_tag('milestone_title', projects_milestones_options,
@@ -60,7 +60,7 @@
       .issues_bulk_update.hide
         = form_tag bulk_update_namespace_project_issues_path(@project.namespace, @project), method: :post  do
           = select_tag('update[state_event]', options_for_select([['オープン', 'reopen'], ['クローズ', 'close']]), prompt: "ステータス", class: 'form-control')
-          = users_select_tag('update[assignee_id]', placeholder: '担当者', null_user: true)
+          = users_select_tag('update[assignee_id]', placeholder: '担当者', null_user: true, first_user: true, current_user: true)
           = select_tag('update[milestone_id]', bulk_update_milestone_options, prompt: "マイルストーン")
           = hidden_field_tag 'update[issues_ids]', []
           = hidden_field_tag :state_event, params[:state_event]
