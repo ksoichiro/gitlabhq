@@ -1,4 +1,6 @@
 - page_title "新しいマージリクエスト"
+= render "header_title"
+
 - if @merge_request.can_be_created
   = render 'new_submit'
 - else

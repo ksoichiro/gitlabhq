@@ -1,8 +1,11 @@
-- page_title "履歴", @page.title, "Wiki"
+- page_title "履歴", @page.title.capitalize, "Wiki"
+= render "header_title"
+
 = render 'nav'
-%h3.page-title
-  = link_to @page.title, namespace_project_wiki_path(@project.namespace, @project, @page)
-  %span.light の更新履歴
+.gray-content-block
+  %h3.page-title
+    = link_to @page.title, namespace_project_wiki_path(@project.namespace, @project, @page)
+    %span.light の更新履歴
 
 %table.table
   %thead

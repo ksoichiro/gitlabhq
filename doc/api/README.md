@@ -4,7 +4,7 @@
 
 - [ユーザ](users.md)
 - [セッション](session.md)
-- [プロジェクト](projects.md)
+- [プロジェクト](projects.md) including setting Webhooks
 - [プロジェクトスニペット](project_snippets.md)
 - [サービス](services.md)
 - [リポジトリ](repositories.md)
@@ -21,6 +21,7 @@
 - [グループ](groups.md)
 - [ネームスペース](namespaces.md)
 - [設定](settings.md)
+- [キー](keys.md)
 
 ## クライアント
 

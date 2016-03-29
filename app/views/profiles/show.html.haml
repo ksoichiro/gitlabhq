@@ -1,14 +1,9 @@
-- page_title "プロフィール"
-%h3.page-title
-  = page_title
-%p.light
+.gray-content-block.top-block
   この情報はあなたのプロフィールに表示されます。
   - if current_user.ldap_user?
     いくつかのオプションはLDAPアカウントでは利用できません。
-%hr
 
-
-
+.prepend-top-default
 = form_for @user, url: profile_path, method: :put, html: { multipart: true, class: "edit_user form-horizontal" }, authenticity_token: true do |f|
   -if @user.errors.any?
     %div.alert.alert-danger
@@ -100,11 +95,6 @@
             - if @user.avatar?
               %hr
               = link_to 'アバターを削除', profile_avatar_path, data: { confirm: "アバターを削除します。よろしいですか？"}, method: :delete, class: "btn btn-remove btn-sm remove-avatar"
-
-      - if @user.public_profile?
-        .alert.alert-info
-          %h4 公開プロフィール
-          %p 公開プロジェクトに所属しているため、あなたのプロフィールは誰でも閲覧可能です。
 
 
   .row

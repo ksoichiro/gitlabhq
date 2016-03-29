@@ -1,16 +1,25 @@
-- page_title "新しいファイル", @ref
-%h3.page-title 新しいファイル
+- page_title "新しいファイル", @path.presence, @ref
+= render "header_title"
+
+.gray-content-block.top-block
+  新しいファイルを作成または既存のファイルを
+  = link_to 'アップロード', '#modal-upload-blob',
+    { class: 'upload-link', 'data-target' => '#modal-upload-blob', 'data-toggle' => 'modal'}
+
+= render 'projects/blob/upload', title: 'アップロード', placeholder: '新しいファイルをアップロード', button_title: 'ファイルをアップロード', form_path: namespace_project_create_blob_path(@project.namespace, @project, @id), method: :post
+
 .file-editor
   = form_tag(namespace_project_create_blob_path(@project.namespace, @project, @id), method: :post, class: 'form-horizontal form-new-file js-requires-input') do
     = render 'projects/blob/editor', ref: @ref
     = render 'shared/commit_message_container', params: params,
              placeholder: '新しいファイルを追加'
 
-    .form-group.branch
-      = label_tag 'branch', class: 'control-label' do
-        ブランチ
-      .col-sm-10
-        = text_field_tag 'new_branch', @ref, class: "form-control"
+    - unless @project.empty_repo?
+      .form-group.branch
+        = label_tag 'branch', class: 'control-label' do
+          ブランチ
+        .col-sm-10
+          = text_field_tag 'new_branch', @ref, class: "form-control"
 
     = hidden_field_tag 'content', '', id: 'file-content'
     = render 'projects/commit_button', ref: @ref,

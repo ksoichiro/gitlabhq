@@ -1,7 +1,7 @@
 - page_title "プロジェクトのフォーク"
 %h3.page-title プロジェクトのフォーク
 %p.lead
-  プロジェクトをユーザまたはグループにForkするには、クリックしてください。
+  プロジェクトをユーザまたはグループにフォークするには、クリックしてください。
 %hr
 
 .fork-namespaces
@@ -10,31 +10,32 @@
       - group.each do |namespace|
         .col-md-2.col-sm-3
           - if fork = namespace.find_fork_of(@project)
-            .thumbnail.fork-exists-thumbnail
+            .fork-thumbnail
               = link_to project_path(fork), title: "Visit project fork", class: 'has_tooltip' do
-                = image_tag namespace_icon(namespace, 200)
+                = image_tag namespace_icon(namespace, 100)
                 .caption
-                  %h4=namespace.human_name
-                  %p
-                    = namespace.path
+                  %strong
+                    = namespace.human_name
+                  %div.text-primary
+                    Already forked
+
           - else
-            .thumbnail.fork-thumbnail
+            .fork-thumbnail
               = link_to namespace_project_fork_path(@project.namespace, @project, namespace_key: namespace.id), title: "Fork here", method: "POST", class: 'has_tooltip' do
-                = image_tag namespace_icon(namespace, 200)
+                = image_tag namespace_icon(namespace, 100)
                 .caption
-                  %h4=namespace.human_name
-                  %p
-                    = namespace.path
+                  %strong
+                    = namespace.human_name
 
   %p.light
-    Forkはプロジェクトリポジトリのコピーです。
+    フォークはプロジェクトリポジトリのコピーです。
     %br
-    プロジェクトをForkすると、元のプロジェクトに影響を及ぼすことなく変更を加えることができます。
+    プロジェクトをフォークすると、元のプロジェクトに影響を及ぼすことなく変更を加えることができます。
 
 .save-project-loader.hide
   .center
     %h2
       %i.fa.fa-spinner.fa-spin
-      リポジトリをForkしています
+      リポジトリをフォークしています
     %p 準備ができ次第、自動的に更新されますのでお待ちください
 

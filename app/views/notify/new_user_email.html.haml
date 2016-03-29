@@ -14,4 +14,4 @@
   %p
     = link_to "クリックしてパスワードを設定", edit_password_url(@user, reset_password_token: @token)
   %p
-    = reset_token_expire_message
+    = raw reset_token_expire_message

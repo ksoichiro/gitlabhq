@@ -8,7 +8,7 @@ module API
       expose :id, :state, :avatar_url
 
       expose :web_url do |user, options|
-        Rails.application.routes.url_helpers.user_url(user)
+        Gitlab::Application.routes.url_helpers.user_url(user)
       end
     end
 
@@ -81,7 +81,7 @@ module API
       expose :avatar_url
 
       expose :web_url do |group, options|
-        Rails.application.routes.url_helpers.group_url(group)
+        Gitlab::Application.routes.url_helpers.group_url(group)
       end
     end
 
@@ -199,6 +199,10 @@ module API
       expose :id, :title, :key, :created_at
     end
 
+    class SSHKeyWithUser < SSHKey
+      expose :user, using: Entities::UserFull
+    end
+
     class Note < Grape::Entity
       expose :id
       expose :note, as: :body
@@ -221,6 +225,7 @@ module API
       expose(:line) { |note| note.diff_new_line }
       expose(:line_type) { |note| note.diff_line_type }
       expose :author, using: Entities::UserBasic
+      expose :created_at
     end
 
     class Event < Grape::Entity

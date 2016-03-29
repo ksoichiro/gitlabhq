@@ -412,7 +412,7 @@ the second list item will be incorrectly labeled as `1`.
 
 相対パスのリンクでは、Wikiページ内のプロジェクトファイルやプロジェクトファイル内のWikiページを参照することはできません。理由は、GitLabではWikiが常に別のGitリポジトリに分けられているためです。例えば
 
-`[リファレンススタイルのリンクです][style]`
+`[リファレンススタイルのリンクです](style)`
 
 は Wiki の Markdown ファイル内でのリンクならば `wikis/style` へリンクします。
 

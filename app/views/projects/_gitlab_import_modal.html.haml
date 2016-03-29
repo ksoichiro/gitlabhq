@@ -7,7 +7,8 @@
       .modal-body
         GitLab.com からのプロジェクトのインポートを有効にするには、
         - if current_user.admin?
-          あなたが
+          管理者として
         - else
-          管理者が
-        == #{link_to 'OAuthによる統合をセットアップ', 'https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/integration/gitlab.md'}する必要があります。
+          GitLabの管理者に依頼して
+        == #{link_to 'OAuthによる統合', help_page_path("integration", "gitlab")}.
+        をセットアップしてください。

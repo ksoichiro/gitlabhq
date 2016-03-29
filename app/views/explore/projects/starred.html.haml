@@ -1,11 +1,17 @@
-- page_title "人気プロジェクト"
-.explore-trending-block
-  %p.lead
-    %i.fa.fa-star
-    最もスターがつけられたプロジェクトを見てみましょう
-  %hr
-  .public-projects
-    %ul.bordered-list
-      = render @starred_projects
+- page_title    "プロジェクト"
+- header_title  "プロジェクト", root_path
 
+- if current_user
+  = render 'dashboard/projects_head'
+- else
+  = render 'explore/head'
+
+.explore-trending-block
+  .gray-content-block
+    .pull-right
+      = render 'explore/projects/dropdown'
+    .oneline
+      %i.fa.fa-star
+      See most starred projects
+  = render 'projects', projects: @starred_projects
   = paginate @starred_projects, theme: 'gitlab'

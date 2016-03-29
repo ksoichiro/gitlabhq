@@ -1,0 +1,16 @@
+- page_title "ラベル"
+= link_to new_admin_label_path, class: "pull-right btn btn-new" do
+  新しいラベル
+%h3.page-title
+  ラベル
+%hr
+
+.labels
+  - if @labels.present?
+    %ul.bordered-list.manage-labels-list
+      = render @labels
+    = paginate @labels, theme: 'gitlab'
+  - else
+    .light-well
+      .nothing-here-block ラベルがありません
+      

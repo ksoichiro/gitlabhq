@@ -28,6 +28,20 @@
             = level
         %span.help-block#restricted-visibility-help 選択されたレベルは、管理者以外のユーザがプロジェクトやスニペットで利用することができません
     .form-group
+      = f.label :import_sources, class: 'control-label col-sm-2'
+      .col-sm-10
+        - data_attrs = { toggle: 'buttons' }
+        .btn-group{ data: data_attrs }
+          - import_sources_checkboxes('import-sources-help').each do |source|
+            = source
+        %span.help-block#import-sources-help
+          Enabled sources for code import during project creation. OmniAuth must be configured for GitHub
+          = link_to "(?)", help_page_path("integration", "github")
+          , Bitbucket
+          = link_to "(?)", help_page_path("integration", "bitbucket")
+          and GitLab.com
+          = link_to "(?)", help_page_path("integration", "gitlab")
+    .form-group
       .col-sm-offset-2.col-sm-10
         .checkbox
           = f.label :version_check_enabled, 'バージョンチェック' do
@@ -104,6 +118,20 @@
       .col-sm-10
         = f.text_area :sign_in_text, class: 'form-control', rows: 4
         .help-block Markdownを利用できます
+    .form-group
+      = f.label :help_page_text, class: 'control-label col-sm-2'
+      .col-sm-10
+        = f.text_area :help_page_text, class: 'form-control', rows: 4
+        .help-block Markdown enabled
+
+  %fieldset
+    %legend Continuous Integration
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label :ci_enabled do
+            = f.check_box :ci_enabled
+            Disable to prevent CI usage until rake ci:migrate is run (8.0 only)
 
   .form-actions
     = f.submit '保存', class: 'btn btn-primary'

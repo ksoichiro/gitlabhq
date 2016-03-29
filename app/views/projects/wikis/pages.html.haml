@@ -1,8 +1,11 @@
 - page_title "すべてのページ", "Wiki"
+= render "header_title"
+
 = render 'nav'
-%h3.page-title
-  すべてのページ
-%ul.bordered-list
+.gray-content-block
+  %h3.page-title
+    すべてのページ
+%ul.content-list
   - @wiki_pages.each do |wiki_page|
     %li
       %h4

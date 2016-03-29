@@ -1,11 +1,12 @@
 - page_title "SSHキー"
-%h3.page-title
-  = page_title
+- header_title page_title, profile_keys_path
+
+.gray-content-block.top-block
   .pull-right
     = link_to "SSHキーを追加", new_profile_key_path, class: "btn btn-new"
-%p.light
-  SSHキーを追加する前に
-  = link_to "SSHキーを生成してください", help_page_path("ssh", "README")
-%hr
+  .oneline
+    SSHキーを追加する前に
+    = link_to "SSHキーを生成してください", help_page_path("ssh", "README")
 
+.prepend-top-default
 = render 'key_table'

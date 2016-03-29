@@ -1,0 +1,10 @@
+%ul.center-top-menu
+  = nav_link(path: ['projects#index', 'root#index']) do
+    = link_to dashboard_projects_path, title: 'ホーム', class: 'shortcuts-activity', data: {placement: 'right'} do
+      あなたのプロジェクト
+  = nav_link(page: starred_dashboard_projects_path) do
+    = link_to starred_dashboard_projects_path, title: 'スターをつけたプロジェクト', data: {placement: 'right'} do
+      スターをつけたプロジェクト
+  = nav_link(page: [explore_root_path, trending_explore_projects_path, starred_explore_projects_path, explore_projects_path], html_options: { class: 'hidden-xs' }) do
+    = link_to explore_root_path, title: '探す', data: {placement: 'right'} do
+      プロジェクトを探す

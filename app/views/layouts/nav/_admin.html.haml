@@ -4,7 +4,7 @@
       = icon('dashboard fw')
       %span
         概要
-  = nav_link(controller: :projects) do
+  = nav_link(controller: [:admin, :projects]) do
     = link_to admin_namespaces_projects_path, title: 'プロジェクト', data: {placement: 'right'} do
       = icon('cube fw')
       %span
@@ -24,6 +24,11 @@
       = icon('key fw')
       %span
         デプロイキー
+  = nav_link do
+    = link_to ci_admin_projects_path, title: 'CI', data: {placement: 'right'} do
+      = icon('building fw')
+      %span
+        CI
   = nav_link(controller: :logs) do
     = link_to admin_logs_path, title: 'ログ', data: {placement: 'right'} do
       = icon('file-text fw')
@@ -56,6 +61,12 @@
       = icon('copy fw')
       %span
         サービステンプレート
+
+  = nav_link(controller: :labels) do
+    = link_to admin_labels_path, title: 'ラベル', data: {placement: 'right'} do
+      = icon('tags fw')
+      %span
+        ラベル
 
   = nav_link(controller: :abuse_reports) do
     = link_to admin_abuse_reports_path, title: "Abuse reports" do

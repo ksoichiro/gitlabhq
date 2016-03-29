@@ -105,22 +105,9 @@ Log directory writable? ... yes
 Tmp directory writable? ... yes
 Init script exists? ... yes
 Init script up-to-date? ... yes
-Projects have satellites? ... yes
 Redis version >= 2.0.0? ... yes
 
 Checking GitLab ... Finished
-```
-
-## サテライトリポジトリの(再)作成
-
-このコマンドはすべてのプロジェクトのサテライトリポジトリを作成します。
-
-必要に応じて、 `repo_satellites` ディレクトリを削除して以下のコマンドを再実行します。
-
-```
-sudo -u git -H mkdir -p /home/git/gitlab-satellites
-sudo -u git -H bundle exec rake gitlab:satellites:create RAILS_ENV=production
-sudo chmod u+rwx,g=rx,o-rwx /home/git/gitlab-satellites
 ```
 
 ## Rebuild authorized_keys file

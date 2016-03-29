@@ -26,6 +26,7 @@ class WebHook < ActiveRecord::Base
   default_value_for :note_events, false
   default_value_for :merge_requests_events, false
   default_value_for :tag_push_events, false
+  default_value_for :enable_ssl_verification, true
 
   # HTTParty timeout
   default_timeout Gitlab.config.gitlab.webhook_timeout
@@ -42,7 +43,7 @@ class WebHook < ActiveRecord::Base
                      "Content-Type" => "application/json",
                      "X-Gitlab-Event" => hook_name.singularize.titleize
                    },
-                   verify: false)
+                   verify: enable_ssl_verification)
     else
       post_url = url.gsub("#{parsed_url.userinfo}@", "")
       auth = {
@@ -55,7 +56,7 @@ class WebHook < ActiveRecord::Base
                      "Content-Type" => "application/json",
                      "X-Gitlab-Event" => hook_name.singularize.titleize
                    },
-                   verify: false,
+                   verify: enable_ssl_verification,
                    basic_auth: auth)
     end
   rescue SocketError, Errno::ECONNRESET, Errno::ECONNREFUSED, Net::OpenTimeout => e

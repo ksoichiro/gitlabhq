@@ -1,8 +1,7 @@
 - page_title "メンバー"
+- header_title group_title(@group, "メンバー", group_group_members_path(@group))
 - show_roles = should_user_see_group_roles?(current_user, @group)
 
-%h3.page-title
-  グループメンバー
 - if show_roles
   %p.light
     このグループのメンバーはこのグループのすべてのプロジェクトにアクセスできます。
@@ -10,7 +9,6 @@
     %strong= link_to "こちら", help_page_path("permissions", "permissions"), class: "vlink"
     から確認できます。
 
-%hr
 
 .clearfix.js-toggle-container
   = form_tag group_group_members_path(@group), method: :get, class: 'form-inline member-search-form'  do

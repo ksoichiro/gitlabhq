@@ -17,6 +17,9 @@
     GitLabは5万以上の組織で使われており、もっともポピュラーなオンプレミスGitリポジトリ管理のソリューションです。
     %br
     GitLabについての詳細は #{link_to promo_host, promo_url, target: '_blank'} でご確認ください。
+    - if current_application_settings.help_page_text.present?
+      %hr
+      = markdown(current_application_settings.help_page_text)
 
 %hr
 

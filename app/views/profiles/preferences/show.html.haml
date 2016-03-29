@@ -1,10 +1,10 @@
 - page_title '設定'
-%h3.page-title
-  = page_title
-%p.light
+- header_title page_title, profile_preferences_path
+- @blank_container = true
+
+.alert.alert-help
   サイトのデザインと動作を設定できます。
   設定はあなたのアカウントに保存されどの端末からサイトにアクセスしても有効です。
-%hr
 
 = form_for @user, url: profile_preferences_path, remote: true, method: :put, html: {class: 'js-preferences-form form-horizontal'} do |f|
   .panel.panel-default.application-theme
@@ -21,11 +21,11 @@
     .panel-heading
       シンタックスハイライトテーマ
     .panel-body
-      - color_schemes.each do |color_scheme_id, color_scheme|
+      - Gitlab::ColorSchemes.each do |scheme|
         = label_tag do
-          .preview= image_tag "#{color_scheme}-scheme-preview.png"
-          = f.radio_button :color_scheme_id, color_scheme_id
-          = color_scheme.tr('-_', ' ').titleize
+          .preview= image_tag "#{scheme.css_class}-scheme-preview.png"
+          = f.radio_button :color_scheme_id, scheme.id
+          = scheme.name
 
   .panel.panel-default
     .panel-heading

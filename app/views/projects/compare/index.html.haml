@@ -1,9 +1,8 @@
 - page_title "比較"
+= render "projects/commits/header_title"
 = render "projects/commits/head"
 
-%h3.page-title
-  比較ビュー
-%p.slead
+.gray-content-block
   ブランチ、タグ、コミットの範囲で比較できます。
   %br
   コミットのリストとコード差分を確認するには、入力フォームに
@@ -14,4 +13,5 @@
   %br
   変更は1つ目の <b>from</b> のバージョンから2つ目の <b>to</b> のバージョンまでの範囲で表示されます。
 
-= render "form"
+.prepend-top-20
+  = render "form"

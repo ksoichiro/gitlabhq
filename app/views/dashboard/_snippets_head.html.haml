@@ -1,0 +1,7 @@
+%ul.center-top-menu
+  = nav_link(page: dashboard_snippets_path, html_options: {class: 'home'}) do
+    = link_to dashboard_snippets_path, title: 'あなたのスニペット', data: {placement: 'right'} do
+      あなたのスニペット
+  = nav_link(page: explore_snippets_path) do
+    = link_to explore_snippets_path, title: 'スニペットを探す', data: {placement: 'right'} do
+      スニペットを探す

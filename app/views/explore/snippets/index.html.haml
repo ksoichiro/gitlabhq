@@ -1,0 +1,18 @@
+- page_title    "スニペット"
+- header_title  "スニペット", snippets_path
+
+- if current_user
+  = render 'dashboard/snippets_head'
+- else
+  = render 'explore/head'
+
+.gray-content-block
+  - if current_user
+    .pull-right
+      = link_to new_snippet_path, class: "btn btn-new", title: "新しいスニペット" do
+        新しいスニペットを追加
+
+  .oneline
+    Public snippets created by you and other users are listed here
+
+= render 'snippets/snippets'
