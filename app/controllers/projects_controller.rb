@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
     if @project.saved?
       redirect_to(
         project_path(@project),
-        notice: 'プロジェクトが作成されました'
+        notice: "プロジェクト '#{@project.name}' が作成されました"
       )
     else
       render 'new'
@@ -37,11 +37,11 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if status
-        flash[:notice] = 'プロジェクトが更新されました'
+        flash[:notice] = "プロジェクト '#{@project.name}' が更新されました"
         format.html do
           redirect_to(
             edit_project_path(@project),
-            notice: 'プロジェクトが更新されました'
+            notice: "プロジェクト '#{@project.name}' が更新されました"
           )
         end
         format.js
@@ -101,7 +101,7 @@ class ProjectsController < ApplicationController
     return access_denied! unless can?(current_user, :remove_project, @project)
 
     ::Projects::DestroyService.new(@project, current_user, {}).execute
-    flash[:alert] = 'プロジェクトを削除しました'
+    flash[:alert] = "プロジェクト '#{@project.name}' が削除されました"
 
     if request.referer.include?('/admin')
       redirect_to admin_namespaces_projects_path

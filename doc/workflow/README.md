@@ -10,6 +10,7 @@
 - [通知メール](notifications.md)
 - [プロジェクトの機能](project_features.md)
 - [プロジェクトフォークワークフロー](forking_workflow.md)
+- [プロジェクトユーザの追加](add-user/add-user.md)
 - [保護ブランチ](protected_branches.md)
 - [Webエディタ](web_editor.md)
 - ["Work In Progress" マージリクエスト](wip_merge_requests.md)

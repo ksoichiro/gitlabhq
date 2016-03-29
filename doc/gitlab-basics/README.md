@@ -13,3 +13,13 @@ GitとGitLabでの作業の基本を説明するステップバイステップ�
 * [プロジェクトを作成する](create-project.md)
 
 * [グループを作成する](create-group.md)
+
+* [ブランチを作成する](create-branch.md)
+
+* [プロジェクトをフォークする](fork-project.md)
+
+* [ファイルを追加する](add-file.md)
+
+* [画像を追加する](add-image.md)
+
+* [マージリクエストを作成する](add-merge-request.md)

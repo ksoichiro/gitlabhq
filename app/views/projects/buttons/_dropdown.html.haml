@@ -1,31 +1,32 @@
 - if current_user
   %span.dropdown
     %a.dropdown-toggle.btn.btn-new{href: '#', "data-toggle" => "dropdown"}
-      %i.fa.fa-plus
+      = icon('plus')
     %ul.dropdown-menu
-      - if @project.issues_enabled && can?(current_user, :create_issue, @project)
+      - if can?(current_user, :create_issue, @project)
         %li
-          = link_to url_for_new_issue, title: "新しい課題" do
+          = link_to url_for_new_issue do
+            = icon('exclamation-circle fw')
             新しい課題
-      - if @project.merge_requests_enabled && can?(current_user, :create_merge_request, @project)
+      - if can?(current_user, :create_merge_request, @project)
         %li
-          = link_to new_namespace_project_merge_request_path(@project.namespace, @project), title: "新しいマージリクエスト" do
+          = link_to new_namespace_project_merge_request_path(@project.namespace, @project) do
+            = icon('tasks fw')
             新しいマージリクエスト
-      - if @project.snippets_enabled && can?(current_user, :create_snippet, @project)
+      - if can?(current_user, :create_snippet, @project)
         %li
-          = link_to new_namespace_project_snippet_path(@project.namespace, @project), title: "新しいスニペット" do
+          = link_to new_namespace_project_snippet_path(@project.namespace, @project) do
+            = icon('file-text-o fw')
             新しいスニペット
-      - if can?(current_user, :admin_project_member, @project)
-        %li
-          = link_to namespace_project_project_members_path(@project.namespace, @project), title: "新しいプロジェクトメンバー" do
-            新しいプロジェクトメンバー
-      - if can? current_user, :push_code, @project
+      - if can?(current_user, :push_code, @project)
         %li.divider
         %li
           = link_to new_namespace_project_branch_path(@project.namespace, @project) do
-            新しいGitブランチ
+            = icon('code-fork fw')
+            新しいブランチ
         %li
           = link_to new_namespace_project_tag_path(@project.namespace, @project) do
-            新しいGitタグ
+            = icon('tags fw')
+            新しいタグ
 
 

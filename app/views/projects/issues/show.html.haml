@@ -9,7 +9,14 @@
           オープン
       課題 ##{@issue.iid}
       %small.creator
-        &middot; #{link_to_member(@project, @issue.author)}が#{issue_timestamp(@issue)}
+        &middot; #{link_to_member(@project, @issue.author)}が
+        = time_ago_with_tooltip(@issue.created_at, placement: 'bottom', html_class: 'issue_created_ago')
+        に作成
+        - if @issue.updated_at != @issue.created_at
+          %span
+            &middot;
+            = icon('edit', title: '編集')
+            = time_ago_with_tooltip(@issue.updated_at, placement: 'bottom', html_class: 'issue_edited_ago')
 
       .pull-right
         - if can?(current_user, :create_issue, @project)

@@ -1,5 +1,5 @@
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  = f.text_field :login, class: "form-control top", placeholder: "ユーザ名またはメールアドレス", autofocus: "autofocus"
+  = f.text_field :login, class: "form-control top", placeholder: "ユーザ名またはメールアドレス", autofocus: "autofocus", autocapitalize: "off", autocorrect: "off"
   = f.password_field :password, class: "form-control bottom", placeholder: "パスワード"
   - if devise_mapping.rememberable?
     .remember-me.checkbox

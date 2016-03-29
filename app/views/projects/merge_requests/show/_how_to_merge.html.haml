@@ -3,42 +3,45 @@
     .modal-content
       .modal-header
         %a.close{href: "#", "data-dismiss" => "modal"} ×
-        %h3 マージする方法
+        %h3 チェックアウト、レビュー、マージをローカルで実行
       .modal-body
-        - if @merge_request.for_fork?
-          - source_remote = @merge_request.source_project.namespace.nil? ? "source" :@merge_request.source_project.namespace.path
-          - target_remote = @merge_request.target_project.namespace.nil? ? "target" :@merge_request.target_project.namespace.path
-          %p
-            %strong ステップ1.
-            ソースコードをフェッチして新しいブランチを作成し、そのコードを指すようにしてください。
-          %pre.dark
+        %p
+          %strong ステップ1. 
+          ソースコードをフェッチし、このマージリクエスト用の新しいブランチを作成してください。
+        %pre.dark
+          - if @merge_request.for_fork?
             :preserve
               git fetch #{@merge_request.source_project.http_url_to_repo} #{@merge_request.source_branch}
               git checkout -b #{@merge_request.source_project_path}-#{@merge_request.source_branch} FETCH_HEAD
-          %p
-            %strong ステップ2.
-            ブランチをマージして変更をGitLabにプッシュしてください。
-          %pre.dark
-            :preserve
-              git checkout #{@merge_request.target_branch}
-              git merge --no-ff #{@merge_request.source_project_path}-#{@merge_request.source_branch}
-              git push origin #{@merge_request.target_branch}
-        - else
-          %p
-            %strong ステップ1.
-            リポジトリを更新してマージするブランチをチェックアウトしてください。
-          %pre.dark
+          - else
             :preserve
               git fetch origin
               git checkout -b #{@merge_request.source_branch} origin/#{@merge_request.source_branch}
-          %p
-            %strong ステップ2.
-            ブランチをマージして変更をGitLabにプッシュしてください。
-          %pre.dark
+        %p
+          %strong ステップ2.
+          ローカルで変更をレビュー
+
+        %p
+          %strong ステップ3.
+          ブランチをマージし、競合がある場合は修正してください。
+        %pre.dark
+          - if @merge_request.for_fork?
+            :preserve
+              git checkout #{@merge_request.target_branch}
+              git merge --no-ff #{@merge_request.source_project_path}-#{@merge_request.source_branch}
+          - else
             :preserve
               git checkout #{@merge_request.target_branch}
               git merge --no-ff #{@merge_request.source_branch}
-              git push origin #{@merge_request.target_branch}
+        %p
+          %strong ステップ4.
+          マージの結果をGitLabにプッシュしてください。
+        %pre.dark
+          :preserve
+            git push origin #{@merge_request.target_branch}
+        - unless @merge_request.can_be_merged_by?(current_user)
+          %p
+            Note that pushing to GitLab requires write access to this repository.
 
 :javascript
   $(function(){

@@ -25,7 +25,7 @@ class GroupsController < Groups::ApplicationController
 
     if @group.save
       @group.add_owner(current_user)
-      redirect_to @group, notice: 'グループが作成されました'
+      redirect_to @group, notice: "グループ '#{@group.name}' が作成されました"
     else
       render action: "new"
     end
@@ -76,7 +76,7 @@ class GroupsController < Groups::ApplicationController
 
   def update
     if @group.update_attributes(group_params)
-      redirect_to edit_group_path(@group), notice: 'グループが更新されました'
+      redirect_to edit_group_path(@group), notice: "グループ '#{@group.name}' が更新されました"
     else
       render action: "edit"
     end
@@ -85,7 +85,7 @@ class GroupsController < Groups::ApplicationController
   def destroy
     DestroyGroupService.new(@group, current_user).execute
 
-    redirect_to root_path, notice: 'グループが削除されました'
+    redirect_to root_path, alert: "グループ '#{@group.name} が削除されました"
   end
 
   protected

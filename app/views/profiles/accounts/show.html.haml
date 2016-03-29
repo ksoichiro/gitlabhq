@@ -60,22 +60,22 @@
           %div
             = link_to '二段階認証を有効にする', new_profile_two_factor_auth_path, class: 'btn btn-success'
 
-  - if show_profile_social_tab?
+  - if button_based_providers.any?
     .panel.panel-default
       .panel-heading
         接続中アカウント
       .panel-body
         .oauth-buttons.append-bottom-10
           %p 以下の各サービスを使ったサインインを有効化するには、アイコンをクリックしてください。
-          - enabled_social_providers.each do |provider|
+          - button_based_providers.each do |provider|
             .btn-group
-              = link_to oauth_image_tag(provider), omniauth_authorize_path(User, provider),
-                method: :post, class: "btn btn-lg #{'active' if oauth_active?(provider)}"
-              - if oauth_active?(provider)
+              = link_to provider_image_tag(provider), user_omniauth_authorize_path(provider), method: :post, class: "btn btn-lg #{'active' if auth_active?(provider)}", "data-no-turbolink" => "true"
+                  
+              - if auth_active?(provider)
                 = link_to unlink_profile_account_path(provider: provider), method: :delete, class: 'btn btn-lg' do
                   = icon('close')
 
-  - if show_profile_username_tab?
+  - if current_user.can_change_username?
     .panel.panel-warning.update-username
       .panel-heading
         ユーザ名の変更
@@ -95,7 +95,7 @@
           %div
             = f.submit 'ユーザ名を保存', class: "btn btn-warning"
 
-  - if show_profile_remove_tab?
+  - if signup_enabled?
     .panel.panel-danger.remove-account
       .panel-heading
         アカウントの削除

@@ -83,12 +83,12 @@
                 アバターを変更
                 - if Gitlab.config.gravatar.enabled
                   %br
-                  またはアバターを #{link_to "gravatar.com", "http://gravatar.com"} に戻す
+                  またはアバターを #{link_to Gitlab.config.gravatar.host, "http://" + Gitlab.config.gravatar.host} に戻すために現在のアバターを削除する
               - else
                 アバターをアップロード
                 - if Gitlab.config.gravatar.enabled
                   %br
-                  または #{link_to "gravatar.com", "http://gravatar.com"} で変更
+                  または #{link_to Gitlab.config.gravatar.host, "http://" + Gitlab.config.gravatar.host} で変更
             %hr
             %a.choose-btn.btn.btn-sm.js-choose-user-avatar-button
               %i.fa.fa-paperclip
