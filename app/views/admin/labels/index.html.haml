@@ -1,8 +1,8 @@
-- page_title "Labels"
+- page_title "ラベル"
 = link_to new_admin_label_path, class: "pull-right btn btn-new" do
-  New label
+  新しいラベル
 %h3.page-title
-  Labels
+  ラベル
 %hr
 
 .labels
@@ -12,5 +12,5 @@
     = paginate @labels, theme: 'gitlab'
   - else
     .light-well
-      .nothing-here-block There are no any labels yet
+      .nothing-here-block ラベルがありません
       

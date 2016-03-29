@@ -6,7 +6,7 @@
       - if @merge_request.assignee
         %strong= link_to_member(@project, @merge_request.assignee, size: 24)
       - else
-        none
+        なし
     .issuable-context-selectbox
       - if can?(current_user, :modify_merge_request, @merge_request)
         = users_select_tag('merge_request[assignee_id]', placeholder: '担当者を選択', class: 'custom-form-control js-select2 js-assignee', selected: @merge_request.assignee_id, project: @target_project, null_user: true)

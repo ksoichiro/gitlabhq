@@ -25,7 +25,7 @@
           = link_to namespace_project_branches_path(sort: 'last_updated') do
             = sort_title_oldest_updated
   .oneline
-    Protected branches can be managed in project settings
+    保護ブランチはプロジェクトの設定で管理できます
 - unless @branches.empty?
   %ul.content-list.all-branches
     - @branches.each do |branch|

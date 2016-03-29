@@ -68,7 +68,7 @@ module ProjectsHelper
   end
 
   def transfer_project_message(project)
-    "You are going to transfer #{project.name_with_namespace} to another owner. Are you ABSOLUTELY sure?"
+    "#{project.name_with_namespace} を別のオーナーに移譲します。本郷によろしいですか？"
   end
 
   def project_nav_tabs

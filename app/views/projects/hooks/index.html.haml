@@ -56,12 +56,12 @@
           %p.light
             マージリクエストが作成されたときにこのURLをリクエストします
   .form-group
-    = f.label :enable_ssl_verification, "SSL verification", class: 'control-label checkbox'
+    = f.label :enable_ssl_verification, "SSLの検証", class: 'control-label checkbox'
     .col-sm-10
       .checkbox
         = f.label :enable_ssl_verification do
           = f.check_box :enable_ssl_verification
-          %strong Enable SSL verification
+          %strong SSLの検証を有効にする
   .form-actions
     = f.submit "Webフックを追加", class: "btn btn-create"
 

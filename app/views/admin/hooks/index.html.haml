@@ -19,12 +19,12 @@
     .col-sm-10
       = f.text_field :url, class: "form-control"
   .form-group
-    = f.label :enable_ssl_verification, "SSL verification", class: 'control-label checkbox'
+    = f.label :enable_ssl_verification, "SSLの検証", class: 'control-label checkbox'
     .col-sm-10
       .checkbox
         = f.label :enable_ssl_verification do
           = f.check_box :enable_ssl_verification
-          %strong Enable SSL verification
+          %strong SSLの検証を有効にする
   .form-actions
     = f.submit "システムフックを追加", class: "btn btn-create"
 %hr
@@ -39,7 +39,7 @@
           .list-item-name
             = link_to admin_hook_path(hook) do
               %strong= hook.url
-            %p SSL Verification: #{hook.enable_ssl_verification ? "enabled" : "disabled"}
+            %p SSLの検証: #{hook.enable_ssl_verification ? "有効" : "無効"}
 
           .pull-right
             = link_to 'フックをテスト', admin_hook_test_path(hook), class: "btn btn-sm"
