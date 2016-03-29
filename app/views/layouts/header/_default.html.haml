@@ -1,10 +1,5 @@
 %header.navbar.navbar-fixed-top.navbar-gitlab{ class: nav_header_class }
-  .container
-    .header-logo
-      = link_to root_path, class: 'home', title: 'ダッシュボード', id: 'js-shortcuts-home', data: {toggle: 'tooltip', placement: 'bottom'} do
-        = brand_header_logo
-        .gitlab-text-container
-          %h3 GitLab
+  %div{ class: fluid_layout ? "container-fluid" : "container-fluid" }
     .header-content
       %button.navbar-toggle{type: 'button'}
         %span.sr-only Toggle navigation
@@ -12,31 +7,20 @@
 
       .navbar-collapse.collapse
         %ul.nav.navbar-nav.pull-right
-          %li.hidden-sm.hidden-xs
-            = render 'layouts/search'
+          - unless @disable_search_panel
+            %li.hidden-sm.hidden-xs
+              = render 'layouts/search'
           %li.visible-sm.visible-xs
             = link_to search_path, title: '検索', data: {toggle: 'tooltip', placement: 'bottom'} do
               = icon('search')
-          %li.hidden-xs
-            = link_to help_path, title: 'ヘルプ', data: {toggle: 'tooltip', placement: 'bottom'} do
-              = icon('question-circle fw')
-          %li
-            = link_to explore_root_path, title: '探索', data: {toggle: 'tooltip', placement: 'bottom'} do
-              = icon('globe fw')
-          %li
-            = link_to user_snippets_path(current_user), title: 'マイスニペット', data: {toggle: 'tooltip', placement: 'bottom'} do
-              = icon('clipboard fw')
           - if current_user.is_admin?
             %li
               = link_to admin_root_path, title: '管理', data: {toggle: 'tooltip', placement: 'bottom'} do
                 = icon('wrench fw')
           - if current_user.can_create_project?
-            %li.hidden-xs
+            %li
               = link_to new_project_path, title: '新しいプロジェクト', data: {toggle: 'tooltip', placement: 'bottom'} do
                 = icon('plus fw')
-          %li
-            = link_to profile_path, title: 'プロフィール設定', data: {toggle: 'tooltip', placement: 'bottom'} do
-              = icon('cog fw')
           %li
             = link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'サインアウト', data: {toggle: 'tooltip', placement: 'bottom'} do
               = icon('sign-out')

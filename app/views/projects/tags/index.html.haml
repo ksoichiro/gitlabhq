@@ -1,21 +1,19 @@
 - page_title "タグ"
+= render "projects/commits/header_title"
 = render "projects/commits/head"
 
-%h3.page-title
-  Gitタグ
+.gray-content-block
   - if can? current_user, :push_code, @project
     .pull-right
       = link_to new_namespace_project_tag_path(@project.namespace, @project), class: 'btn btn-create new-tag-btn' do
         %i.fa.fa-add-sign
         タグを作成
-
-%p.light
-  タグを使うと、コミット履歴上で重要なポイントをマークすることができます。
-%hr
+  .oneline
+    タグを使うと、コミット履歴上で重要なポイントをマークすることができます。
 
 .tags
   - unless @tags.empty?
-    %ul.bordered-list
+    %ul.content-list
       - @tags.each do |tag|
         = render 'tag', tag: @repository.find_tag(tag)
 

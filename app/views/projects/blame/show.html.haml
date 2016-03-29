@@ -1,4 +1,6 @@
 - page_title "Blame", @blob.path, @ref
+- header_title project_title(@project, "Files", project_files_path(@project))
+
 %h3.page-title Blame view
 
 #tree-holder.tree-holder
@@ -27,7 +29,7 @@
                 .light
                   = commit_author_link(commit, avatar: false)
                   authored
-                  #{time_ago_with_tooltip(commit.committed_date)}
+                  #{time_ago_with_tooltip(commit.committed_date, skip_js: true)}
             %td.lines.blame-numbers
               %pre
                 - line_count = blame_group[:lines].count

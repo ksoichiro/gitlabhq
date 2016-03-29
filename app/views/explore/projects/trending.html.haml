@@ -1,15 +1,16 @@
-- page_title "トレンドプロジェクト"
-.explore-title
-  %h3
-    GitLabを探索
-  %p.lead
-    プロジェクトとグループを見つけましょう。あなたのプロジェクトをシェアしましょう
-%hr
+- page_title    "プロジェクト"
+- header_title  "プロジェクト", root_path
+
+- if current_user
+  = render 'dashboard/projects_head'
+- else
+  = render 'explore/head'
+
 .explore-trending-block
-  %p.lead
-    %i.fa.fa-comments-o
-    この1ヶ月で最も議論されたプロジェクトを見てみましょう
-  %hr
-  .public-projects
-    %ul.bordered-list
-      = render @trending_projects
+  .gray-content-block
+    .pull-right
+      = render 'explore/projects/dropdown'
+    .oneline
+      %i.fa.fa-comments-o
+      この1ヶ月で最も議論されたプロジェクトを見てみましょう
+  = render 'projects', projects: @trending_projects

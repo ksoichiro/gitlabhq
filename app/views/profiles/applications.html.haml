@@ -1,13 +1,12 @@
 - page_title "アプリケーション"
-%h3.page-title
-  = page_title
-%p.light
+- header_title page_title, applications_profile_path
+
+.gray-content-block.top-block
   - if user_oauth_applications?
     GitLabをOAuthプロバイダとして使用できるアプリケーション、
     あなたのアカウントを使用することを認可したアプリケーションを管理します。
   - else
     あなたのアカウントを使用することを認可したアプリケーションを管理します。
-%hr
 
 - if user_oauth_applications?
   .oauth-applications

@@ -1,5 +1,8 @@
 - page_title "監査ログ"
-%h3.page-title 監査ログ
-%p.light 認証の履歴です。
+- header_title page_title, audit_log_profile_path
 
+.gray-content-block.top-block
+  認証の履歴です。
+
+.prepend-top-default
 = render 'event_table', events: @events

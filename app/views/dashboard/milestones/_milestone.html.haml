@@ -1,20 +1,22 @@
 %li{class: "milestone milestone-#{milestone.closed? ? 'closed' : 'open'}", id: dom_id(milestone.milestones.first) }
-  %h4
-    = link_to_gfm truncate(milestone.title, length: 100), dashboard_milestone_path(milestone.safe_title, title: milestone.title)
+  .row
+    .col-sm-6
+      %strong
+        = link_to_gfm truncate(milestone.title, length: 100), dashboard_milestone_path(milestone.safe_title, title: milestone.title)
+    .col-sm-6nryou
+      .pull-right.light #{milestone.percent_complete}% 完了
   .row
     .col-sm-6
       = link_to issues_dashboard_path(milestone_title: milestone.title) do
         #{milestone.issue_count}件の課題
-      &nbsp;
+      &middot;
       = link_to merge_requests_dashboard_path(milestone_title: milestone.title) do
         #{milestone.merge_requests_count}件のマージリクエスト
-      &nbsp;
-      %span.light #{milestone.percent_complete}% 完了
-
     .col-sm-6
       = milestone_progress_bar(milestone)
-  %div
-    - milestone.milestones.each do |milestone|
-      = link_to milestone_path(milestone) do
-        %span.label.label-gray
-          = milestone.project.name_with_namespace
+  .row
+    .col-sm-6
+      - milestone.milestones.each do |milestone|
+        = link_to milestone_path(milestone) do
+          %span.label.label-gray
+            = milestone.project.name_with_namespace

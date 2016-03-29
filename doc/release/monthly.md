@@ -1,8 +1,9 @@
 # Monthly Release
 
-NOTE: This is a guide used by the GitLab B.V. developers.
+NOTE: This is a guide used by the GitLab the company to release GitLab.
+As an end user you do not need to use this guide.
 
-It starts 7 working days before the release.
+The process starts 7 working days before the release.
 The release manager doesn't have to perform all the work but must ensure someone is assigned.
 The current release manager must schedule the appointment of the next release manager.
 The new release manager should create overall issue to track the progress.
@@ -156,6 +157,7 @@ Tweet about the RC release:
 1. Also check the CI changelog
 1. Add a proposed tweet text to the blog post WIP MR description.
 1. Create a WIP MR for the blog post
+1. Make sure merge request title starts with `WIP` so it can not be accidently merged until ready.
 1. Ask Dmitriy (or a team member with OS X) to add screenshots to the WIP MR.
 1. Decide with core team who will be the MVP user.
 1. Create WIP MR for adding MVP to MVP page on website
@@ -163,7 +165,7 @@ Tweet about the RC release:
 1. Create a merge request on [GitLab.com](https://gitlab.com/gitlab-com/www-gitlab-com/tree/master)
 1. Assign to one reviewer who will fix spelling issues by editing the branch (either with a git client or by using the online editor)
 1. Comment to the reviewer: '@person Please mention the whole team as soon as you are done (3 workdays before release at the latest)'
-1. Create a complete copy of the [release blog template](https://gitlab.com/gitlab-com/www-gitlab-com/blob/master/doc/release_blog_template.md) for the release after this.
+1. Create a new merge request with complete copy of the [release blog template](https://gitlab.com/gitlab-com/www-gitlab-com/blob/master/doc/release_blog_template.md) for the next release using the branch name `release-x-x-x`.
 
 ## Create CE, EE, CI stable versions
 
@@ -193,7 +195,7 @@ This can happen before tagging because Omnibus uses tags in its own repo and SHA
 ## Update GitLab.com with the stable version
 
 - Deploy the package (should not need downtime because of the small difference with RC1)
-- Deploy the package for ci.gitlab.com
+- Deploy the package for gitlab.com/ci
 
 ## Release CE, EE and CI
 

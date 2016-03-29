@@ -1,6 +1,6 @@
 %ul.nav.nav-sidebar
   = nav_link do
-    = link_to root_path, title: 'Back to dashboard', data: {placement: 'right'}, class: 'back-link' do
+    = link_to root_path, title: 'ダッシュボードに戻る', data: {placement: 'right'}, class: 'back-link' do
       = icon('caret-square-o-left fw')
       %span
         ダッシュボードに戻る
@@ -11,7 +11,7 @@
     = link_to profile_path, title: 'プロフィール', data: {placement: 'right'} do
       = icon('user fw')
       %span
-        プロフィール
+        プロフィール設定
   = nav_link(controller: [:accounts, :two_factor_auths]) do
     = link_to profile_account_path, title: 'アカウント', data: {placement: 'right'} do
       = icon('gear fw')

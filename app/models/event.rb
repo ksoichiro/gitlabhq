@@ -28,6 +28,7 @@ class Event < ActiveRecord::Base
   MERGED    = 7
   JOINED    = 8 # User joined project
   LEFT      = 9 # User left project
+  DESTROYED = 10
 
   delegate :name, :email, to: :author, prefix: true, allow_nil: true
   delegate :title, to: :issue, prefix: true, allow_nil: true
@@ -49,6 +50,7 @@ class Event < ActiveRecord::Base
   scope :code_push, -> { where(action: PUSHED) }
   scope :in_projects, ->(project_ids) { where(project_id: project_ids).recent }
   scope :with_associations, -> { includes(project: :namespace) }
+  scope :for_milestone_id, ->(milestone_id) { where(target_type: "Milestone", target_id: milestone_id) }
 
   class << self
     def reset_event_cache_for(target)
@@ -72,7 +74,7 @@ class Event < ActiveRecord::Base
     elsif created_project?
       true
     else
-      (issue? || merge_request? || note? || milestone?) && target
+      ((issue? || merge_request? || note?) && target) || milestone?
     end
   end
 
@@ -116,6 +118,10 @@ class Event < ActiveRecord::Base
     action == LEFT
   end
 
+  def destroyed?
+    action == DESTROYED
+  end
+
   def commented?
     action == COMMENTED
   end
@@ -125,7 +131,7 @@ class Event < ActiveRecord::Base
   end
 
   def created_project?
-    created? && !target
+    created? && !target && target_type.nil?
   end
 
   def created_target?
@@ -181,6 +187,8 @@ class Event < ActiveRecord::Base
       'joined'
     elsif left?
       'left'
+    elsif destroyed?
+      'destroyed'
     elsif commented?
       "commented on"
     elsif created_project?

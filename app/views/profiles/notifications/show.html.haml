@@ -1,10 +1,10 @@
 - page_title "通知"
-%h3.page-title
-  = page_title
-%p.light
-  これらはグローバルな通知設定です。
-%hr
+- header_title page_title, profile_notifications_path
 
+.gray-content-block.top-block
+  これらはグローバルな通知設定です。
+
+.prepend-top-default
 = form_for @user, url: profile_notifications_path, method: :put, html: { class: 'update-notifications form-horizontal global-notifications-form' } do |f|
   -if @user.errors.any?
     %div.alert.alert-danger
@@ -48,7 +48,7 @@
           = f.radio_button :notification_level, Notification::N_WATCH
           .level-title
             ウォッチ
-          %p 参加中のプロジェクトからのすべての通知を受け取ります
+          %p すべてのアクティビティの通知を受け取ります
 
   .form-actions
     = f.submit '変更を保存', class: "btn btn-create"

@@ -1,6 +1,6 @@
 %ul.nav.nav-sidebar
   = nav_link do
-    = link_to root_path, title: 'Back to dashboard', data: {placement: 'right'}, class: 'back-link' do
+    = link_to root_path, title: 'ダッシュボードに戻る', data: {placement: 'right'}, class: 'back-link' do
       = icon('caret-square-o-left fw')
       %span
         ダッシュボードに戻る
@@ -11,35 +11,36 @@
     = link_to group_path(@group), title: 'ホーム', data: {placement: 'right'} do
       = icon('dashboard fw')
       %span
-        アクティビティ
-  - if current_user
-    = nav_link(controller: [:group, :milestones]) do
-      = link_to group_milestones_path(@group), title: 'マイルストーン', data: {placement: 'right'} do
-        = icon('clock-o fw')
+        グループ
+  - if can?(current_user, :read_group, @group)
+    - if current_user
+      = nav_link(controller: [:group, :milestones]) do
+        = link_to group_milestones_path(@group), title: 'マイルストーン', data: {placement: 'right'} do
+          = icon('clock-o fw')
+          %span
+            マイルストーン
+    = nav_link(path: 'groups#issues') do
+      = link_to issues_group_path(@group), title: '課題', data: {placement: 'right'} do
+        = icon('exclamation-circle fw')
         %span
-          マイルストーン
-  = nav_link(path: 'groups#issues') do
-    = link_to issues_group_path(@group), title: '課題', data: {placement: 'right'} do
-      = icon('exclamation-circle fw')
-      %span
-        課題
-        - if current_user
-          %span.count= Issue.opened.of_group(@group).count
-  = nav_link(path: 'groups#merge_requests') do
-    = link_to merge_requests_group_path(@group), title: 'マージリクエスト', data: {placement: 'right'} do
-      = icon('tasks fw')
-      %span
-        マージリクエスト
-        - if current_user
-          %span.count= MergeRequest.opened.of_group(@group).count
-  = nav_link(controller: [:group_members]) do
-    = link_to group_group_members_path(@group), title: 'メンバー', data: {placement: 'right'} do
-      = icon('users fw')
-      %span
-        メンバー
-  - if can?(current_user, :admin_group, @group)
-    = nav_link(html_options: { class: "separate-item" }) do
-      = link_to edit_group_path(@group), title: '設定', data: {placement: 'right'} do
-        = icon ('cogs fw')
+          課題
+          - if current_user
+            %span.count= Issue.opened.of_group(@group).count
+    = nav_link(path: 'groups#merge_requests') do
+      = link_to merge_requests_group_path(@group), title: 'マージリクエスト', data: {placement: 'right'} do
+        = icon('tasks fw')
         %span
-          設定
+          マージリクエスト
+          - if current_user
+            %span.count= MergeRequest.opened.of_group(@group).count
+    = nav_link(controller: [:group_members]) do
+      = link_to group_group_members_path(@group), title: 'メンバー', data: {placement: 'right'} do
+        = icon('users fw')
+        %span
+          メンバー
+    - if can?(current_user, :admin_group, @group)
+      = nav_link(html_options: { class: "separate-item" }) do
+        = link_to edit_group_path(@group), title: '設定', data: {placement: 'right'} do
+          = icon ('cogs fw')
+          %span
+            設定

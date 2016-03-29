@@ -14,10 +14,14 @@ class Projects::ForksController < Projects::ApplicationController
     @forked_project = ::Projects::ForkService.new(project, current_user, namespace: namespace).execute
 
     if @forked_project.saved? && @forked_project.forked?
-      redirect_to(
-        namespace_project_path(@forked_project.namespace, @forked_project),
-        notice: 'プロジェクトがフォークされました'
-      )
+      if @forked_project.import_in_progress?
+        redirect_to namespace_project_import_path(@forked_project.namespace, @forked_project)
+      else
+        redirect_to(
+          namespace_project_path(@forked_project.namespace, @forked_project),
+          notice: 'プロジェクトがフォークされました'
+        )
+      end
     else
       render :error
     end

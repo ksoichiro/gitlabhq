@@ -1,17 +1,13 @@
-- page_title "公開スニペット"
-%h3.page-title
-  公開スニペット
+- page_title "By #{@user.name}", "スニペット"
 
-  .pull-right
-    - if current_user
-      = link_to new_snippet_path, class: "btn btn-new btn-grouped", title: "新しいスニペット" do
-        新しいスニペットを作成
-      = link_to user_snippets_path(current_user), class: "btn btn-grouped"  do
-        マイスニペット
+%ol.breadcrumb
+  %li
+    = link_to snippets_path do
+      スニペット
+  %li
+    = @user.name
+  .pull-right.hidden-xs
+    = link_to user_path(@user) do
+      #{@user.name}のプロフィールページ
 
-%p.light
-  あなたや他のユーザが作成した公開スニペットが表示されています。
-
-%hr
 = render 'snippets'
-

@@ -1,24 +1,24 @@
 - page_title "課題"
+- header_title group_title(@group, "課題", issues_group_path(@group))
 = content_for :meta_tags do
   - if current_user
     = auto_discovery_link_tag(:atom, issues_group_url(@group, format: :atom, private_token: current_user.private_token), title: "#{@group.name} issues")
 
-%h3.page-title
-  課題
 
-%p.light
-  %strong #{@group.name}
-  グループの課題だけが表示されています。
-  - if current_user
-    すべての課題を確認するには #{link_to 'ダッシュボード', issues_dashboard_path} を表示してください。
-%hr
 
-.append-bottom-20
+= render 'shared/issuable/filter', type: :issues
+.gray-content-block.second-block
   .pull-right
     - if current_user
       .hidden-xs.pull-left
-        = link_to issues_group_url(@group, format: :atom, private_token: current_user.private_token), class: 'btn' do
+        = link_to issues_group_url(@group, format: :atom, private_token: current_user.private_token) do
           %i.fa.fa-rss
+  %div
+    Only issues from
+    %strong #{@group.name}
+    group are listed here.
+    - if current_user
+      To see all issues you should visit #{link_to 'dashboard', issues_dashboard_path} page.
 
-  = render 'shared/issuable/filter', type: :issues
-= render 'shared/issues'
+.prepend-top-default
+  = render 'shared/issues'

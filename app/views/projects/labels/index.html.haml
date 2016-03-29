@@ -1,14 +1,16 @@
 - page_title "ラベル"
-- if can? current_user, :admin_label, @project
-  = link_to new_namespace_project_label_path(@project.namespace, @project), class: "pull-right btn btn-new" do
-    新しいラベル
-%h3.page-title
-  ラベル
-%hr
+= render "header_title"
+
+.gray-content-block.top-block
+  - if can? current_user, :admin_label, @project
+    = link_to new_namespace_project_label_path(@project.namespace, @project), class: "pull-right btn btn-new" do
+      新しいラベル
+  .oneline
+    ラベルは課題とマージリクエストに適用することができます。
 
 .labels
   - if @labels.present?
-    %ul.bordered-list.manage-labels-list
+    %ul.content-list.manage-labels-list
       = render @labels
     = paginate @labels, theme: 'gitlab'
   - else

@@ -21,7 +21,7 @@
   .form-group.wiki-content
     = f.label :content, '内容', class: 'control-label'
     .col-sm-10
-      = render layout: 'projects/md_preview', locals: { preview_class: "wiki" } do
+      = render layout: 'projects/md_preview', locals: { preview_class: "md-preview" } do
         = render 'projects/zen', f: f, attr: :content, classes: 'description form-control'
         .col-sm-12.hint
           .pull-left Wikiの内容は#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}記法でパースされます

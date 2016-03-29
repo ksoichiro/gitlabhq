@@ -14,11 +14,6 @@
         %span
           %i.fa.fa-ban
           クローズ
-      - else
-        %span.hidden-xs.hidden-sm
-          %span.label-branch<
-            %i.fa.fa-code-fork
-            %span= merge_request.target_branch
       - note_count = merge_request.mr_and_commit_notes.user.count
       - if merge_request.assignee
         &nbsp;
@@ -48,4 +43,4 @@
         = merge_request.task_status
 
     .pull-right.hidden-xs
-      %small #{time_ago_with_tooltip(merge_request.updated_at, placement: 'bottom', html_class: 'merge_request_updated_ago')} に更新
+      %span #{time_ago_with_tooltip(merge_request.updated_at, placement: 'bottom', html_class: 'merge_request_updated_ago')} に更新

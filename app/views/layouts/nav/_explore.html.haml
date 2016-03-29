@@ -1,18 +1,21 @@
 %ul.nav.nav-sidebar
-  = nav_link(path: 'projects#trending') do
-    = link_to explore_root_path, title: 'トレンドプロジェクト', data: {placement: 'right'} do
-      = icon('comments fw')
-      %span トレンドプロジェクト
-  = nav_link(path: 'projects#starred') do
-    = link_to starred_explore_projects_path, title: '人気プロジェクト', data: {placement: 'right'} do
-      = icon('star fw')
-      %span 人気プロジェクト
-  = nav_link(path: 'projects#index') do
-    = link_to explore_projects_path, title: 'すべてのプロジェクト', data: {placement: 'right'} do
-      = icon('bookmark fw')
-      %span すべてのプロジェクト
+  = nav_link(path: ['dashboard#show', 'root#show', 'projects#trending', 'projects#starred', 'projects#index'], html_options: {class: 'home'}) do
+    = link_to explore_root_path, title: 'プロジェクト', data: {placement: 'right'} do
+      = icon('home fw')
+      %span
+        プロジェクト
   = nav_link(controller: :groups) do
-    = link_to explore_groups_path, title: 'すべてのグループ', data: {placement: 'right'} do
+    = link_to explore_groups_path, title: 'グループ', data: {placement: 'right'} do
       = icon('group fw')
-      %span すべてのグループ
-
+      %span
+        グループ
+  = nav_link(controller: :snippets) do
+    = link_to explore_snippets_path, title: 'スニペット', data: {placement: 'right'} do
+      = icon('clipboard fw')
+      %span
+        スニペット
+  = nav_link(controller: :help) do
+    = link_to help_path, title: 'ヘルプ', data: {placement: 'right'} do
+      = icon('question-circle fw')
+      %span
+        ヘルプ
