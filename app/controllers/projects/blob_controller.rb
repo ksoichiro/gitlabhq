@@ -2,6 +2,7 @@
 # Controller for viewing a file's blame
 class Projects::BlobController < Projects::ApplicationController
   include ExtractsPath
+  include CreatesMergeRequestForCommit
   include ActionView::Helpers::SanitizeHelper
 
   # Raised when given an invalid file path
@@ -23,21 +24,9 @@ class Projects::BlobController < Projects::ApplicationController
   end
 
   def create
-    result = Files::CreateService.new(@project, current_user, @commit_params).execute
-
-    if result[:status] == :success
-      flash[:notice] = "変更は正常にコミットされました"
-      respond_to do |format|
-        format.html { redirect_to namespace_project_blob_path(@project.namespace, @project, File.join(@target_branch, @file_path)) }
-        format.json { render json: { message: "success", filePath: namespace_project_blob_path(@project.namespace, @project, File.join(@target_branch, @file_path)) } }
-      end
-    else
-      flash[:alert] = result[:message]
-      respond_to do |format|
-        format.html { render :new }
-        format.json { render json: { message: "failed", filePath: namespace_project_blob_path(@project.namespace, @project, @id) } }
-      end
-    end
+    create_commit(Files::CreateService, success_path: after_create_path,
+                                        failure_view: :new,
+                                        failure_path: namespace_project_new_blob_path(@project.namespace, @project, @ref))
   end
 
   def show
@@ -48,21 +37,9 @@ class Projects::BlobController < Projects::ApplicationController
   end
 
   def update
-    result = Files::UpdateService.new(@project, current_user, @commit_params).execute
-
-    if result[:status] == :success
-      flash[:notice] = "変更は正常にコミットされました"
-      respond_to do |format|
-        format.html { redirect_to after_edit_path }
-        format.json { render json: { message: "success", filePath: after_edit_path } }
-      end
-    else
-      flash[:alert] = result[:message]
-      respond_to do |format|
-        format.html { render :edit }
-        format.json { render json: { message: "failed", filePath: namespace_project_new_blob_path(@project.namespace, @project, @id) } }
-      end
-    end
+    create_commit(Files::UpdateService, success_path: after_edit_path,
+                                        failure_view: :edit,
+                                        failure_path: namespace_project_blob_path(@project.namespace, @project, @id))
   end
 
   def preview
@@ -78,7 +55,7 @@ class Projects::BlobController < Projects::ApplicationController
 
     if result[:status] == :success
       flash[:notice] = "変更は正常にコミットされました"
-      redirect_to namespace_project_tree_path(@project.namespace, @project, @target_branch)
+      redirect_to after_destroy_path
     else
       flash[:alert] = result[:message]
       render :show
@@ -132,15 +109,51 @@ class Projects::BlobController < Projects::ApplicationController
     render_404
   end
 
+  def create_commit(service, success_path:, failure_view:, failure_path:)
+    result = service.new(@project, current_user, @commit_params).execute
+
+    if result[:status] == :success
+      flash[:notice] = "Your changes have been successfully committed"
+      respond_to do |format|
+        format.html { redirect_to success_path }
+        format.json { render json: { message: "success", filePath: success_path } }
+      end
+    else
+      flash[:alert] = result[:message]
+      respond_to do |format|
+        format.html { render failure_view }
+        format.json { render json: { message: "failed", filePath: failure_path } }
+      end
+    end
+  end
+
+  def after_create_path
+    @after_create_path ||=
+      if create_merge_request?
+        new_merge_request_path
+      else
+        namespace_project_blob_path(@project.namespace, @project, File.join(@new_branch, @file_path))
+      end
+  end
+
   def after_edit_path
     @after_edit_path ||=
-      if from_merge_request
+      if create_merge_request?
+        new_merge_request_path
+      elsif from_merge_request && @new_branch == @ref
         diffs_namespace_project_merge_request_path(from_merge_request.target_project.namespace, from_merge_request.target_project, from_merge_request) +
           "#file-path-#{hexdigest(@path)}"
-      elsif @target_branch.present?
-        namespace_project_blob_path(@project.namespace, @project, File.join(@target_branch, @path))
       else
-        namespace_project_blob_path(@project.namespace, @project, @id)
+        namespace_project_blob_path(@project.namespace, @project, File.join(@new_branch, @path))
+      end
+  end
+
+  def after_destroy_path
+    @after_destroy_path ||=
+      if create_merge_request?
+        new_merge_request_path
+      else
+        namespace_project_tree_path(@project.namespace, @project, @new_branch)
       end
   end
 
@@ -155,14 +168,14 @@ class Projects::BlobController < Projects::ApplicationController
 
   def editor_variables
     @current_branch = @ref
-    @target_branch = params[:new_branch].present? ? sanitized_new_branch_name : @ref
+    @new_branch = params[:new_branch].present? ? sanitized_new_branch_name : @ref
 
     @file_path =
       if action_name.to_s == 'create'
         if params[:file].present?
           params[:file_name] = params[:file].original_filename
         end
-        File.join(@path, File.basename(params[:file_name]))
+        File.join(@path, params[:file_name])
       else
         @path
       end
@@ -175,7 +188,7 @@ class Projects::BlobController < Projects::ApplicationController
     @commit_params = {
       file_path: @file_path,
       current_branch: @current_branch,
-      target_branch: @target_branch,
+      target_branch: @new_branch,
       commit_message: params[:commit_message],
       file_content: params[:content],
       file_content_encoding: params[:encoding]

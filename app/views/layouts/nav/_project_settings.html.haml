@@ -34,7 +34,7 @@
         %span
           保護ブランチ
 
-    - if @project.gitlab_ci?
+    - if @project.builds_enabled?
       = nav_link(controller: :runners) do
         = link_to namespace_project_runners_path(@project.namespace, @project), title: 'Runners', data: {placement: 'right'} do
           = icon('cog fw')
@@ -65,8 +65,3 @@
           = icon('share fw')
           %span
             CI Services
-      = nav_link path: 'events#index' do
-        = link_to ci_project_events_path(@project.gitlab_ci_project) do
-          = icon('book fw')
-          %span
-            CI Events

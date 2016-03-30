@@ -37,30 +37,44 @@ module Gitlab
         # Only push these customizations once
         return if customized?(whitelist[:transformers])
 
-        # Only push these customizations once
-        unless customized?(whitelist[:transformers])
-          # Allow code highlighting
-          whitelist[:attributes]['pre'] = %w(class)
-          whitelist[:attributes]['span'] = %w(class)
+        # Allow code highlighting
+        whitelist[:attributes]['pre'] = %w(class)
+        whitelist[:attributes]['span'] = %w(class)
 
-          # Allow table alignment
-          whitelist[:attributes]['th'] = %w(style)
-          whitelist[:attributes]['td'] = %w(style)
+        # Allow table alignment
+        whitelist[:attributes]['th'] = %w(style)
+        whitelist[:attributes]['td'] = %w(style)
 
-          # Allow span elements
-          whitelist[:elements].push('span')
+        # Allow span elements
+        whitelist[:elements].push('span')
 
-          # Remove `rel` attribute from `a` elements
-          whitelist[:transformers].push(remove_rel)
+        # Allow any protocol in `a` elements...
+        whitelist[:protocols].delete('a')
 
-          # Remove `class` attribute from non-highlight spans
-          whitelist[:transformers].push(clean_spans)
-        end
+        # ...but then remove links with the `javascript` protocol
+        whitelist[:transformers].push(remove_javascript_links)
+
+        # Remove `rel` attribute from `a` elements
+        whitelist[:transformers].push(remove_rel)
+
+        # Remove `class` attribute from non-highlight spans
+        whitelist[:transformers].push(clean_spans)
 
         whitelist
       end
 
-      private
+      def remove_javascript_links
+        lambda do |env|
+          node = env[:node]
+
+          return unless node.name == 'a'
+          return unless node.has_attribute?('href')
+
+          if node['href'].start_with?('javascript', ':javascript')
+            node.remove_attribute('href')
+          end
+        end
+      end
 
       def remove_rel
         lambda do |env|
@@ -83,10 +97,6 @@ module Gitlab
 
           { node_whitelist: [node] }
         end
-      end
-
-      def customized?(transformers)
-        transformers.last.source_location[0] == __FILE__
       end
     end
   end

@@ -5,8 +5,10 @@
       .nothing-here-block マージリクエストはありません
 
 - if @merge_requests.present?
-  .pull-right
-    %span.cgray.pull-right #{@merge_requests.total_count} 個のマージリクエストに絞り込まれています
+  .issuable-filter-count
+    %span.pull-right
+      = @merge_requests.total_count
+      個のマージリクエストに絞り込まれています
 
   = paginate @merge_requests, theme: "gitlab"
 

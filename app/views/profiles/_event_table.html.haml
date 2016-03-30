@@ -1,15 +1,16 @@
-%table.table#audits
-  %thead
-    %tr
-      %th アクション
-      %th 日時
-
-  %tbody
-    - events.each do |event|
+.table-holder
+  %table.table#audits
+    %thead
       %tr
-        %td
-          %span
-            %b= event.details[:with]
-            認証でサインイン
-        %td #{time_ago_in_words event.created_at}前
+        %th アクション
+        %th 日時
+
+    %tbody
+      - events.each do |event|
+        %tr
+          %td
+            %span
+              %b= event.details[:with]
+              認証でサインイン
+          %td #{time_ago_in_words event.created_at} ago
 = paginate events, theme: "gitlab"

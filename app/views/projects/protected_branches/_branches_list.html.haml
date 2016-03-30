@@ -1,34 +1,35 @@
 - unless @branches.empty?
   %br
   %h4 保護中のブランチ:
-  %table.table.protected-branches-list
-    %thead
-      %tr.no-border
-        %th ブランチ
-        %th Developerがプッシュ可能
-        %th 最終コミット
-        %th
+  .table-holder
+    %table.table.protected-branches-list
+      %thead
+        %tr.no-border
+          %th ブランチ
+          %th Developerがプッシュ可能
+          %th 最終コミット
+          %th
 
-    %tbody
-      - @branches.each do |branch|
-        - @url = namespace_project_protected_branch_path(@project.namespace, @project, branch)
-        %tr
-          %td
-            = link_to namespace_project_commits_path(@project.namespace, @project, branch.name) do
-              %strong= branch.name
-              - if @project.root_ref?(branch.name)
-                %span.label.label-info デフォルト
+      %tbody
+        - @branches.each do |branch|
+          - @url = namespace_project_protected_branch_path(@project.namespace, @project, branch)
+          %tr
             %td
-              = check_box_tag "developers_can_push", branch.id, branch.developers_can_push, "data-url" => @url
-            %td
-              - if commit = branch.commit
-                = link_to namespace_project_commit_path(@project.namespace, @project, commit.id), class: 'commit_short_id' do
-                  = commit.short_id
-                &middot;
-                #{time_ago_with_tooltip(commit.committed_date)}
-              - else
-                (ブランチはリポジトリから削除されました)
-            %td
-              .pull-right
-                - if can? current_user, :admin_project, @project
-                  = link_to '保護を解除', [@project.namespace.becomes(Namespace), @project, branch], data: { confirm: 'ブランチにDeveloperが書き込みできるようになります。よろしいですか？' }, method: :delete, class: "btn btn-remove btn-sm"
+              = link_to namespace_project_commits_path(@project.namespace, @project, branch.name) do
+                %strong= branch.name
+                - if @project.root_ref?(branch.name)
+                  %span.label.label-info デフォルト
+              %td
+                = check_box_tag "developers_can_push", branch.id, branch.developers_can_push, "data-url" => @url
+              %td
+                - if commit = branch.commit
+                  = link_to namespace_project_commit_path(@project.namespace, @project, commit.id), class: 'commit_short_id' do
+                    = commit.short_id
+                  &middot;
+                  #{time_ago_with_tooltip(commit.committed_date)}
+                - else
+                  (ブランチはリポジトリから削除されました)
+              %td
+                .pull-right
+                  - if can? current_user, :admin_project, @project
+                    = link_to '保護を解除', [@project.namespace.becomes(Namespace), @project, branch], data: { confirm: 'ブランチにDeveloperが書き込みできるようになります。よろしいですか？' }, method: :delete, class: "btn btn-remove btn-sm"

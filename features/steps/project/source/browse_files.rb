@@ -78,6 +78,10 @@ class Spinach::Features::ProjectSourceBrowseFiles < Spinach::FeatureSteps
     fill_in :file_name, with: 'Spaces Not Allowed'
   end
 
+  step 'I fill the new file name with a new directory' do
+    fill_in :file_name, with: new_file_name_with_directory
+  end
+
   step 'I fill the commit message' do
     fill_in :commit_message, with: 'Not yet a commit message.', visible: true
   end
@@ -94,12 +98,12 @@ class Spinach::Features::ProjectSourceBrowseFiles < Spinach::FeatureSteps
     click_button 'Create directory'
   end
 
-  step 'I click on "Remove"' do
-    click_button 'Remove'
+  step 'I click on "Delete"' do
+    click_button 'Delete'
   end
 
-  step 'I click on "Remove file"' do
-    click_button 'Remove file'
+  step 'I click on "Delete file"' do
+    click_button 'Delete file'
   end
 
   step 'I click on "Replace"' do
@@ -138,7 +142,7 @@ class Spinach::Features::ProjectSourceBrowseFiles < Spinach::FeatureSteps
   end
 
   step 'I can see new file page' do
-    expect(page).to have_content "new file"
+    expect(page).to have_content "Create New File"
     expect(page).to have_content "Commit message"
   end
 
@@ -221,10 +225,6 @@ class Spinach::Features::ProjectSourceBrowseFiles < Spinach::FeatureSteps
     expect(current_path).to eq(namespace_project_blob_path(@project.namespace, @project, 'master/.gitignore'))
   end
 
-  step 'I am redirected to the ".gitignore" on new branch' do
-    expect(current_path).to eq(namespace_project_blob_path(@project.namespace, @project, 'new_branch_name/.gitignore'))
-  end
-
   step 'I am redirected to the permalink URL' do
     expect(current_path).to(
       eq(namespace_project_blob_path(@project.namespace, @project,
@@ -238,20 +238,13 @@ class Spinach::Features::ProjectSourceBrowseFiles < Spinach::FeatureSteps
       @project.namespace, @project, 'master/' + new_file_name))
   end
 
-  step 'I am redirected to the new file on new branch' do
+  step 'I am redirected to the new file with directory' do
     expect(current_path).to eq(namespace_project_blob_path(
-      @project.namespace, @project, 'new_branch_name/' + new_file_name))
+      @project.namespace, @project, 'master/' + new_file_name_with_directory))
   end
 
-  step 'I am redirected to the uploaded file on new branch' do
-    expect(current_path).to eq(namespace_project_blob_path(
-      @project.namespace, @project,
-      'new_branch_name/' + File.basename(test_text_file)))
-  end
-
-  step 'I am redirected to the new directory' do
-    expect(current_path).to eq(namespace_project_tree_path(
-      @project.namespace, @project, 'new_branch_name/' + new_dir_name))
+  step 'I am redirected to the new merge request page' do
+    expect(current_path).to eq(new_namespace_project_merge_request_path(@project.namespace, @project))
   end
 
   step 'I am redirected to the root directory' do
@@ -333,6 +326,12 @@ class Spinach::Features::ProjectSourceBrowseFiles < Spinach::FeatureSteps
   # not a filename present at root of the seed repository.
   def new_file_name
     'not_a_file.md'
+  end
+
+  # Constant value that is a valid filename with directory and
+  # not a filename present at root of the seed repository.
+  def new_file_name_with_directory
+    'foo/bar/baz.txt'
   end
 
   # Constant value that is a valid directory and

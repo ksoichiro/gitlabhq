@@ -43,7 +43,7 @@ GFM は以下の場所で使うことができます。
 
 ## 改行
 
-GFMは [段落と改行の取り扱い](http://daringfireball.net/projects/markdown/syntax#p) での Markdown 仕様にならっています。
+GFMは [段落と改行の取り扱い](https://daringfireball.net/projects/markdown/syntax#p) での Markdown 仕様にならっています。
 
 段落は単純に1行以上の空行で分けられた、1行以上のテキストです。
 ラインブレーク、ソフトリターンを使うには行末に2つ以上のスペースを入れます。
@@ -72,14 +72,14 @@ do_this_and_do_that_and_another_thing
 
 GFM は、URLをコピー＆ペーストするとほとんどの場合、自動的にリンクします。
 
-    * http://www.google.com
+    * https://www.google.com
     * https://google.com/
     * ftp://ftp.us.debian.org/debian/
     * smb://foo/bar/baz
     * irc://irc.freenode.net/gitlab
     * http://localhost:3000
 
-* http://www.google.com
+* https://www.google.com
 * https://google.com/
 * ftp://ftp.us.debian.org/debian/
 * smb://foo/bar/baz
@@ -389,7 +389,7 @@ the second list item will be incorrectly labeled as `1`.
 
     [arbitrary case-insensitive reference text]: https://www.mozilla.org
     [1]: http://slashdot.org
-    [link text itself]: http://www.reddit.com
+    [link text itself]: https://www.reddit.com
 
 [インラインスタイルのリンクです](https://www.google.com)
 
@@ -405,7 +405,7 @@ the second list item will be incorrectly labeled as `1`.
 
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
 [1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
+[link text itself]: https://www.reddit.com
 
 **注意**
 
@@ -580,5 +580,5 @@ ___
 ## リファレンス
 
 - このドキュメントは [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) に多いに参考にしています。
-- Daring Fireball の [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) は標準の Markdown について詳細に説明しているすばらしいリソースです。
+- Daring Fireball の [Markdown Syntax Guide](https://daringfireball.net/projects/markdown/syntax) は標準の Markdown について詳細に説明しているすばらしいリソースです。
 - [Dillinger.io](http://dillinger.io) は標準の Markdown をテストできる便利なツールです。

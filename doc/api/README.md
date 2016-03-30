@@ -10,6 +10,7 @@
 - [リポジトリ](repositories.md)
 - [リポジトリファイル](repository_files.md)
 - [コミット](commits.md)
+- [タグ](tags.md)
 - [ブランチ](branches.md)
 - [マージリクエスト](merge_requests.md)
 - [課題](issues.md)

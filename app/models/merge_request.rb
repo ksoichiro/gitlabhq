@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: merge_requests
@@ -21,6 +20,7 @@
 #  position          :integer          default(0)
 #  locked_at         :datetime
 #  updated_by_id     :integer
+#  merge_error       :string(255)
 #
 
 require Rails.root.join("app/models/commit")
@@ -41,7 +41,7 @@ class MergeRequest < ActiveRecord::Base
   after_create :create_merge_request_diff
   after_update :update_merge_request_diff
 
-  delegate :commits, :diffs, to: :merge_request_diff, prefix: nil
+  delegate :commits, :diffs, :diffs_no_whitespace, to: :merge_request_diff, prefix: nil
 
   # When this attribute is true some MR validation is ignored
   # It allows us to close or modify broken merge requests
@@ -160,11 +160,11 @@ class MergeRequest < ActiveRecord::Base
 
   def last_commit
     merge_request_diff ? merge_request_diff.last_commit : compare_commits.last
-  end 
+  end
 
   def first_commit
     merge_request_diff ? merge_request_diff.first_commit : compare_commits.first
-  end 
+  end
 
   def last_commit_short_sha
     last_commit.short_id
@@ -258,7 +258,7 @@ class MergeRequest < ActiveRecord::Base
 
     Note.where(
       "(project_id = :target_project_id AND noteable_type = 'MergeRequest' AND noteable_id = :mr_id) OR" +
-      "(project_id = :source_project_id AND noteable_type = 'Commit' AND commit_id IN (:commit_ids))",
+      "((project_id = :source_project_id OR project_id = :target_project_id) AND noteable_type = 'Commit' AND commit_id IN (:commit_ids))",
       mr_id: id,
       commit_ids: commit_ids,
       target_project_id: target_project_id,
@@ -426,11 +426,11 @@ class MergeRequest < ActiveRecord::Base
 
   def state_human_name
     if merged?
-      "マージ済み"
+      "Merged"
     elsif closed?
-      "クローズ"
+      "Closed"
     else
-      "オープン"
+      "Open"
     end
   end
 
@@ -469,6 +469,12 @@ class MergeRequest < ActiveRecord::Base
       yield
     ensure
       unlock_mr if locked?
+    end
+  end
+
+  def ci_commit
+    if last_commit and source_project
+      source_project.ci_commit(last_commit.id)
     end
   end
 end

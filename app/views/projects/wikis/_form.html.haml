@@ -23,9 +23,7 @@
     .col-sm-10
       = render layout: 'projects/md_preview', locals: { preview_class: "md-preview" } do
         = render 'projects/zen', f: f, attr: :content, classes: 'description form-control js-quick-submit'
-        .col-sm-12.hint
-          .pull-left Wikiの内容は#{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'}記法でパースされます
-          .pull-right ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector' }してファイルを添付
+        = render 'projects/notes/hints'
 
       .clearfix
       .error-alert

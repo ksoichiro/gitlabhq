@@ -1,17 +1,13 @@
 - page_title "スニペット"
 = render "header_title"
 
-%h3.page-title
-  スニペット
-  - if can? current_user, :create_project_snippet, @project
-    = link_to new_namespace_project_snippet_path(@project.namespace, @project), class: "btn btn-new pull-right", title: "新しいスニペット" do
-      新しいスニペットを追加
+.gray-content-block.top-block
+  .pull-right
+    = link_to new_namespace_project_snippet_path(@project.namespace, @project), class: "btn btn-new", title: "新しいスニペット" do
+      = icon('plus')
+      新しいスニペット
 
-%p.light
-  コードをGitリポジトリの外で共有しましょう。
+  .oneline
+    コードをGitリポジトリの外で共有しましょう。
 
-%ul.bordered-list
-  = render partial: "shared/snippets/snippet", collection: @snippets
-  - if @snippets.empty?
-    %li
-      .nothing-here-block スニペットはありません
+= render 'snippets/snippets'

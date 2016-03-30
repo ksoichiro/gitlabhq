@@ -14,8 +14,8 @@
       = render @labels
     = paginate @labels, theme: 'gitlab'
   - else
-    .light-well
+    .nothing-here-block
       - if can? current_user, :admin_label, @project
-        .nothing-here-block 最初のラベルを追加 または 標準のラベルセットを#{link_to '生成', generate_namespace_project_labels_path(@project.namespace, @project), method: :post}
+        最初のラベルを追加 または 標準のラベルセットを#{link_to '生成', generate_namespace_project_labels_path(@project.namespace, @project), method: :post}
       - else
-        .nothing-here-block ラベルがありません
+        ラベルがありません

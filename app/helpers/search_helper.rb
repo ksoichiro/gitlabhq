@@ -71,7 +71,7 @@ module SearchHelper
 
   # Autocomplete results for the current user's groups
   def groups_autocomplete(term, limit = 5)
-    current_user.authorized_groups.search(term).limit(limit).map do |group|
+    GroupsFinder.new.execute(current_user).search(term).limit(limit).map do |group|
       {
         label: "グループ: #{search_result_sanitize(group.name)}",
         url: group_path(group)

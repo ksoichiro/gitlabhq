@@ -1,5 +1,9 @@
 # encoding: utf-8
 module DiffHelper
+  def diff_view
+    params[:view] == 'parallel' ? 'parallel' : 'inline'
+  end
+
   def allowed_diff_size
     if diff_hard_limit_enabled?
       Commit::DIFF_HARD_LIMIT_FILES
@@ -138,7 +142,7 @@ module DiffHelper
     # Always use HTML to handle case where JSON diff rendered this button
     params_copy.delete(:format)
 
-    link_to url_for(params_copy), id: "inline-diff-btn", class: (params[:view] != 'parallel' ? 'btn btn-sm active' : 'btn btn-sm') do
+    link_to url_for(params_copy), id: "inline-diff-btn", class: (diff_view == 'inline' ? 'btn active' : 'btn') do
       'インライン'
     end
   end
@@ -149,7 +153,7 @@ module DiffHelper
     # Always use HTML to handle case where JSON diff rendered this button
     params_copy.delete(:format)
 
-    link_to url_for(params_copy), id: "parallel-diff-btn", class: (params[:view] == 'parallel' ? 'btn active btn-sm' : 'btn btn-sm') do
+    link_to url_for(params_copy), id: "parallel-diff-btn", class: (diff_view == 'parallel' ? 'btn active' : 'btn') do
       'Side-by-side'
     end
   end
@@ -172,7 +176,7 @@ module DiffHelper
   def commit_for_diff(diff)
     if diff.deleted_file
       first_commit = @first_commit || @commit
-      first_commit.parent
+      first_commit.parent || @first_commit
     else
       @commit
     end

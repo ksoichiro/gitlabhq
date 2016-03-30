@@ -77,12 +77,13 @@
   });
 
 
-:coffeescript
-
-  $(".merge-request-form").on 'submit', ->
-    if $("#merge_request_source_branch").val() is "" or $('#merge_request_target_branch').val() is ""
-      $(".mr-compare-errors").html("マージ元・マージ先のブランチを選択してください")
-      $(".mr-compare-errors").fadeIn()
-      event.preventDefault()
-      return
+:javascript
+  $(".merge-request-form").on('submit', function () {
+    if ($("#merge_request_source_branch").val() === "" || $('#merge_request_target_branch').val() === "") {
+      $(".mr-compare-errors").html("マージ元・マージ先のブランチを選択してください");
+      $(".mr-compare-errors").fadeIn();
+      event.preventDefault();
+      return;
+    }
+  });
 

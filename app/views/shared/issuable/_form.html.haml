@@ -27,13 +27,7 @@
     = render layout: 'projects/md_preview', locals: { preview_class: "md-preview", referenced_users: true } do
       = render 'projects/zen', f: f, attr: :description,
                                classes: 'description form-control js-quick-submit'
-      .col-sm-12.hint
-        .pull-left
-          #{link_to 'GitLab Flavored Markdown', help_page_path('markdown', 'markdown'), target: '_blank'}
-          としてパースされます
-        .pull-right
-          ドラッグ &amp; ドロップまたは#{link_to 'ファイルを選択', '#', class: 'markdown-selector' }してファイルを添付
-
+      = render 'projects/notes/hints'
       .clearfix
       .error-alert
   %hr

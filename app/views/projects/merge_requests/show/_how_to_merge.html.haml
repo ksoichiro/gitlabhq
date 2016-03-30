@@ -6,8 +6,9 @@
         %h3 チェックアウト、レビュー、マージをローカルで実行
       .modal-body
         %p
-          %strong ステップ1. 
+          %strong ステップ1.
           ソースコードをフェッチし、このマージリクエスト用の新しいブランチを作成してください。
+        = clipboard_button
         %pre.dark
           - if @merge_request.for_fork?
             :preserve
@@ -24,6 +25,7 @@
         %p
           %strong ステップ3.
           ブランチをマージし、競合がある場合は修正してください。
+        = clipboard_button
         %pre.dark
           - if @merge_request.for_fork?
             :preserve
@@ -36,12 +38,14 @@
         %p
           %strong ステップ4.
           マージの結果をGitLabにプッシュしてください。
+        = clipboard_button
         %pre.dark
           :preserve
             git push origin #{h @merge_request.target_branch}
         - unless @merge_request.can_be_merged_by?(current_user)
           %p
             Note that pushing to GitLab requires write access to this repository.
+            プッシュするにはGitLabでこのリポジトリに対する書き込み権限が必要です。
 
 :javascript
   $(function(){

@@ -4,15 +4,15 @@
       .modal-header
         %a.close{href: "#", "data-dismiss" => "modal"} ×
         %h3.page-title #{@blob.name}を削除
-        %p.light
-          %strong= @ref
-          ブランチから
 
       .modal-body
-        = form_tag namespace_project_blob_path(@project.namespace, @project, @id), method: :delete, class: 'form-horizontal js-requires-input' do
-          = render 'shared/commit_message_container', params: params,
-                   placeholder: '...のためファイルを削除'
+        = form_tag namespace_project_blob_path(@project.namespace, @project, @id), method: :delete, class: 'form-horizontal js-replace-blob-form js-requires-input' do
+          = render 'shared/new_commit_form', placeholder: "Delete #{@blob.name}"
+
           .form-group
             .col-sm-offset-2.col-sm-10
               = button_tag 'ファイルを削除', class: 'btn btn-remove btn-remove-file'
               = link_to "キャンセル", '#', class: "btn btn-cancel", "data-dismiss" => "modal"
+
+:javascript
+  new NewCommitForm($('.js-replace-blob-form'))

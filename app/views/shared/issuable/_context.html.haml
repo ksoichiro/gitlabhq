@@ -45,6 +45,6 @@
         .description-block.subscribed{class: ( 'hidden' unless subscribed )}
           あなたはこのスレッドからの通知を受信しています。
 
-:coffeescript
-  new Subscription("#{toggle_subscription_path(issuable)}")
-  new IssuableContext()
+:javascript
+  new Subscription("#{toggle_subscription_path(issuable)}");
+  new IssuableContext();
