@@ -6,7 +6,14 @@
 
 Webフックは、外部の課題トラッカーの更新、CIビルドの起動、バックアップミラーの更新、本番サーバへのデプロイなどに利用することができます。
 
-WebフックをSSLエンドポイントへ送信した場合、自己署名の証明書が使われている場合が多いため [証明書は検証されません](https://gitlab.com/gitlab-org/gitlab-ce/blob/ccd617e58ea71c42b6b073e692447d0fe3c00be6/app/models/web_hook.rb#L35)。
+## SSLの検証
+
+デフォルトでは、WebフックのエンドポイントのSSL証明書は内部の認証局のリストで 
+検証されます。つまり、自己署名の証明書は使用できません。
+
+これはGitLabプロジェクトのWebフックの設定から無効化することができます。
+
+![SSLの検証](ssl.png)
 
 ## プッシュイベント
 
@@ -34,7 +41,7 @@ X-Gitlab-Event: Push Hook
     "name": "Diaspora",
     "url": "git@example.com:mike/diasporadiaspora.git",
     "description": "",
-    "homepage": "http://example.com/mike/diaspora", 
+    "homepage": "http://example.com/mike/diaspora",
     "git_http_url":"http://example.com/mike/diaspora.git",
     "git_ssh_url":"git@example.com:mike/diaspora.git",
     "visibility_level":0
@@ -306,7 +313,8 @@ X-Gitlab-Event: Note Hook
         "name": "John Smith",
         "email": "john@example.com"
       }
-    }
+    },
+    "work_in_progress": false
   }
 }
 ```
@@ -492,6 +500,7 @@ X-Gitlab-Event: Merge Request Hook
         "email": "gitlabdev@dv6700.(none)"
       }
     },
+    "work_in_progress": false,
     "url": "http://example.com/diaspora/merge_requests/1",
     "action": "open"
   }
@@ -513,8 +522,8 @@ server.mount_proc '/' do |req, res|
   puts req.body
 end
 
-trap 'INT' do 
-  server.shutdown 
+trap 'INT' do
+  server.shutdown
 end
 server.start
 ```

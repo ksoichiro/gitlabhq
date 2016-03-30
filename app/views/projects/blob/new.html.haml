@@ -2,11 +2,7 @@
 = render "header_title"
 
 .gray-content-block.top-block
-  新しいファイルを作成または既存のファイルを
-  = link_to 'アップロード', '#modal-upload-blob',
-    { class: 'upload-link', 'data-target' => '#modal-upload-blob', 'data-toggle' => 'modal'}
-
-= render 'projects/blob/upload', title: 'アップロード', placeholder: '新しいファイルをアップロード', button_title: 'ファイルをアップロード', form_path: namespace_project_create_blob_path(@project.namespace, @project, @id), method: :post
+  新しいファイルを作成
 
 .file-editor
   = form_tag(namespace_project_create_blob_path(@project.namespace, @project, @id), method: :post, class: 'form-horizontal form-new-file js-requires-input') do
@@ -19,7 +15,7 @@
         = label_tag 'branch', class: 'control-label' do
           ブランチ
         .col-sm-10
-          = text_field_tag 'new_branch', @ref, class: "form-control"
+          = text_field_tag 'new_branch', @ref, class: "form-control js-quick-submit"
 
     = hidden_field_tag 'content', '', id: 'file-content'
     = render 'projects/commit_button', ref: @ref,

@@ -17,7 +17,9 @@
 class Milestone < ActiveRecord::Base
   # Represents a "No Milestone" state used for filtering Issues and Merge
   # Requests that have no milestone assigned.
-  None = Struct.new(:title).new('マイルストーンはありません')
+  MilestoneStruct = Struct.new(:title, :name)
+  None = MilestoneStruct.new('No Milestone', 'No Milestone')
+  Any = MilestoneStruct.new('Any', '')
 
   include InternalId
   include Sortable
@@ -47,6 +49,8 @@ class Milestone < ActiveRecord::Base
 
     state :active
   end
+
+  alias_attribute :name, :title
 
   class << self
     def search(query)

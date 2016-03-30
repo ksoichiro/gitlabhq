@@ -15,6 +15,9 @@ class Projects::IssuesController < Projects::ApplicationController
   # Allow issues bulk update
   before_action :authorize_admin_issues!, only: [:bulk_update]
 
+  # Cross-reference merge requests
+  before_action :closed_by_merge_requests, only: [:show]
+
   respond_to :html
 
   def index
@@ -56,9 +59,9 @@ class Projects::IssuesController < Projects::ApplicationController
   end
 
   def show
-    @participants = @issue.participants(current_user, @project)
+    @participants = @issue.participants(current_user)
     @note = @project.notes.new(noteable: @issue)
-    @notes = @issue.notes.inc_author.fresh
+    @notes = @issue.notes.with_associations.fresh
     @noteable = @issue
 
     respond_with(@issue)
@@ -104,13 +107,17 @@ class Projects::IssuesController < Projects::ApplicationController
 
   def bulk_update
     result = Issues::BulkUpdateService.new(project, current_user, bulk_update_params).execute
-    redirect_to :back, notice: "#{result[:count]}件の課題が更新されました"
+    redirect_back_or_default(default: { action: 'index' }, options: { notice: "#{result[:count]} 件の課題が更新されました" })
   end
 
   def toggle_subscription
     @issue.toggle_subscription(current_user)
 
     render nothing: true
+  end
+
+  def closed_by_merge_requests
+    @closed_by_merge_requests ||= @issue.closed_by_merge_requests(current_user)
   end
 
   protected

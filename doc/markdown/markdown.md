@@ -33,7 +33,6 @@ GitLabでは、"GitLab Flavored Markdown" (GFM)と呼ばれるものを開発し
 
 GFM は以下の場所で使うことができます。
 
-- コミットメッセージ
 - コメント
 - 課題
 - マージリクエスト
@@ -274,7 +273,7 @@ H2の別表現
 1. 単語構成文字以外のすべての文字(句読点、HTMLなど)は削除されます
 1. すべての空白はハイフンに変換されます
 1. 連続する2個以上のハイフンは1つのハイフンに変換されます
-1. 同じIDを持つヘッダがすでに生成されていた場合、一意となる連番が付加されます
+1. 同じIDを持つヘッダがすでに生成されていた場合、1から開始する一意となる連番が付加されます
 
 例:
 
@@ -291,8 +290,8 @@ H2の別表現
 1. `this-header-has-spaces-in-it`
 1. `this-header-has-a-in-it`
 1. `this-header-has-unicode-in-it-한글`
+1. `this-header-has-spaces-in-it`
 1. `this-header-has-spaces-in-it-1`
-1. `this-header-has-spaces-in-it-2`
 
 絵文字はヘッダのIDが生成される前に処理されるため、絵文字は画像に変換され、IDからは削除されます。
 

@@ -1,52 +1,57 @@
-- if current_user && can?(current_user, :download_code, @project)
-  = render 'shared/no_ssh'
-  = render 'shared/no_password'
+.alert_holder
+  - if current_user && can?(current_user, :download_code, @project)
+    = render 'shared/no_ssh'
+    = render 'shared/no_password'
 
 = render "home_panel"
 
 .gray-content-block.center
   %h3.page-title
     このプロジェクトのリポジトリは空です
-  %p
-    すでにファイルがある場合は以下のコマンドラインでの手順に沿ってプッシュできます。
-    %br
-    そうでない場合は、このプロジェクトに
-    = link_to "README ファイルを追加", new_readme_path, class: 'underlined-link'
-    しましょう
+  - if can?(current_user, :download_code, @project)
+    %p
+      すでにファイルがある場合は以下のコマンドラインでの手順に沿ってプッシュできます。
+      %br
+      - if can?(current_user, :push_code, @project)
+        そうでない場合は、このプロジェクトにまず
+        = link_to "README ファイルを追加", new_readme_path, class: 'underlined-link'
+        しましょう
 
-.prepend-top-20
-%h3.page-title
-  コマンドラインでの手順
-%div.git-empty
-  %fieldset
-    %h5 Gitのグローバルなセットアップ
-    %pre.light-well
-      :preserve
-        git config --global user.name "#{h git_user_name}"
-        git config --global user.email "#{h git_user_email}"
-
-  %fieldset
-    %h5 リポジトリを新しく作成する場合
-    %pre.light-well
-      :preserve
-        git clone #{ content_tag(:span, default_url_to_repo, class: 'clone')}
-        cd #{h @project.path}
-        touch README.md
-        git add README.md
-        git commit -m "add README"
-        git push -u origin master
-
-  %fieldset
-    %h5 既存のフォルダまたはGitリポジトリがある場合
-    %pre.light-well
-      :preserve
-        cd existing_folder
-        git init
-        git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
-        git add .
-        git commit
-        git push -u origin master
-
-- if can? current_user, :remove_project, @project
+- if can?(current_user, :download_code, @project)
   .prepend-top-20
-    = link_to 'プロジェクトを削除', [@project.namespace.becomes(Namespace), @project], data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"
+  .empty_wrapper
+    %h3.page-title-empty
+      コマンドラインでの手順
+    %div.git-empty
+      %fieldset
+        %h5 Gitのグローバルなセットアップ
+        %pre.light-well
+          :preserve
+            git config --global user.name "#{h git_user_name}"
+            git config --global user.email "#{h git_user_email}"
+
+      %fieldset
+        %h5 リポジトリを新しく作成する場合
+        %pre.light-well
+          :preserve
+            git clone #{ content_tag(:span, default_url_to_repo, class: 'clone')}
+            cd #{h @project.path}
+            touch README.md
+            git add README.md
+            git commit -m "add README"
+            git push -u origin master
+
+      %fieldset
+        %h5 既存のフォルダまたはGitリポジトリがある場合
+        %pre.light-well
+          :preserve
+            cd existing_folder
+            git init
+            git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
+            git add .
+            git commit
+            git push -u origin master
+
+        - if can? current_user, :remove_project, @project
+          .prepend-top-20
+            = link_to 'プロジェクトを削除', [@project.namespace.becomes(Namespace), @project], data: { confirm: remove_project_message(@project)}, method: :delete, class: "btn btn-remove pull-right"

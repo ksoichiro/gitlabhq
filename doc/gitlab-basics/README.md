@@ -23,3 +23,5 @@ GitとGitLabでの作業の基本を説明するステップバイステップ�
 * [画像を追加する](add-image.md)
 
 * [マージリクエストを作成する](add-merge-request.md)
+
+* [課題を作成する](create-issue.md)

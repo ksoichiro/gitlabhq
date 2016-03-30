@@ -1,10 +1,19 @@
 # encoding: utf-8
 # Helper methods for per-User preferences
 module PreferencesHelper
+  def layout_choices
+    [
+        ['Fixed', :fixed],
+        ['Fluid', :fluid]
+    ]
+  end
+
   # Maps `dashboard` values to more user-friendly option text
   DASHBOARD_CHOICES = {
     projects: 'あなたのプロジェクト (デフォルト)',
-    stars:    '人気プロジェクト'
+    stars:    'スターをつけたプロジェクト',
+    project_activity: "あなたのプロジェクトのアクティビティ",
+    starred_project_activity: "スターをつけたプロジェクトのアクティビティ"
   }.with_indifferent_access.freeze
 
   # Returns an Array usable by a select field for more user-friendly option text

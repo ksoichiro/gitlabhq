@@ -15,7 +15,7 @@
         type: 'button', |
         class: "btn #{ 'active' if default_clone_protocol == 'http' }#{ ' has_tooltip' if current_user && current_user.require_password? }", |
         :"data-clone" => project.http_url_to_repo, |
-        :"data-title" => "Set a password on your account<br> to pull or push via #{gitlab_config.protocol.upcase}",
+        :"data-title" => "#{gitlab_config.protocol.upcase}でプル/プッシュするにはパスワードを設定してください",
         :"data-html" => "true",
         :"data-container" => "body"}
         = gitlab_config.protocol.upcase
@@ -24,4 +24,4 @@
     .input-group-addon
       .visibility-level-label.has_tooltip{'data-title' => "#{visibility_level_label(project.visibility_level)} プロジェクト" }
         = visibility_level_icon(project.visibility_level)
-        = visibility_level_label(project.visibility_level).downcase
+   
