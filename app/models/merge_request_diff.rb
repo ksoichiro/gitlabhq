@@ -55,6 +55,10 @@ class MergeRequestDiff < ActiveRecord::Base
     commits.first
   end
 
+  def first_commit
+    commits.last
+  end
+
   def last_commit_short_sha
     @last_commit_short_sha ||= last_commit.short_id
   end
@@ -123,12 +127,12 @@ class MergeRequestDiff < ActiveRecord::Base
     if new_diffs.any?
       if new_diffs.size > Commit::DIFF_HARD_LIMIT_FILES
         self.state = :overflow_diff_files_limit
-        new_diffs = new_diffs.first[Commit::DIFF_HARD_LIMIT_LINES]
+        new_diffs = new_diffs.first(Commit::DIFF_HARD_LIMIT_LINES)
       end
 
       if new_diffs.sum { |diff| diff.diff.lines.count } > Commit::DIFF_HARD_LIMIT_LINES
         self.state = :overflow_diff_lines_limit
-        new_diffs = new_diffs.first[Commit::DIFF_HARD_LIMIT_LINES]
+        new_diffs = new_diffs.first(Commit::DIFF_HARD_LIMIT_LINES)
       end
     end
 
@@ -144,12 +148,10 @@ class MergeRequestDiff < ActiveRecord::Base
   # Collect array of Git::Diff objects
   # between target and source branches
   def unmerged_diffs
-    diffs = compare_result.diffs
-    diffs ||= []
-    diffs
-  rescue Gitlab::Git::Diff::TimeoutError => ex
+    compare_result.diffs || []
+  rescue Gitlab::Git::Diff::TimeoutError
     self.state = :timeout
-    diffs = []
+    []
   end
 
   def repository
@@ -165,7 +167,8 @@ class MergeRequestDiff < ActiveRecord::Base
         merge_request.fetch_ref
 
         # Get latest sha of branch from source project
-        source_sha = merge_request.source_project.commit(source_branch).sha
+        source_commit = merge_request.source_project.commit(source_branch)
+        source_sha = source_commit.try(:sha)
 
         Gitlab::CompareResult.new(
           Gitlab::Git::Compare.new(

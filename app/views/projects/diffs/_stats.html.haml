@@ -1,38 +1,35 @@
 .js-toggle-container
   .commit-stat-summary
     = link_to '#', class: 'js-toggle-button' do
-      %strong #{diffs.count}件の変更されたファイル
-    を表示中
-    - if current_controller?(:commit)
-      - unless @commit.has_zero_stats?
-        ,&nbsp;
-        %strong.cgreen #{@commit.stats.additions} 行の追加
-        と
-        %strong.cred #{@commit.stats.deletions} 行の削除
+      %strong #{diff_files.count}件の変更されたファイル
+    を表示中,&nbsp;
+    %strong.cgreen #{diff_files.sum(&:added_lines)} 行の追加
+    と
+    %strong.cred #{diff_files.sum(&:removed_lines)} 行の削除
   .file-stats.js-toggle-content.hide
     %ul
-      - diffs.each_with_index do |diff, i|
+      - diff_files.each_with_index do |diff_file, i|
         %li
-          - if diff.deleted_file
+          - if diff_file.deleted_file
             %span.deleted-file
               %a{href: "#diff-#{i}"}
                 %i.fa.fa-minus
-                = diff.old_path
-          - elsif diff.renamed_file
+                = diff_file.old_path
+          - elsif diff_file.renamed_file
             %span.renamed-file
               %a{href: "#diff-#{i}"}
                 %i.fa.fa-minus
-                = diff.old_path
+                = diff_file.old_path
                 &rarr;
-                = diff.new_path
-          - elsif diff.new_file
+                = diff_file.new_path
+          - elsif diff_file.new_file
             %span.new-file
               %a{href: "#diff-#{i}"}
                 %i.fa.fa-plus
-                = diff.new_path
+                = diff_file.new_path
           - else
             %span.edit-file
               %a{href: "#diff-#{i}"}
                 %i.fa.fa-adjust
-                = diff.new_path
+                = diff_file.new_path
 

@@ -1,9 +1,10 @@
 %h3.page-title
   新しいマージリクエスト
 %p.slead
-  %strong.label-branch #{@merge_request.source_project_namespace}:#{@merge_request.source_branch}
+  - source_title, target_title = format_mr_branch_names(@merge_request)
+  %strong.label-branch #{source_title}
   %span を
-  %strong.label-branch #{@merge_request.target_project_namespace}:#{@merge_request.target_branch}
+  %strong.label-branch #{target_title}
   %span にマージ
 
   %span.pull-right

@@ -1,10 +1,6 @@
 - if current_user
   = link_to toggle_star_namespace_project_path(@project.namespace, @project), class: 'btn star-btn toggle-star', method: :post, remote: true do
     = icon('star fw')
-    - if current_user.starred?(@project)
-      スターを解除
-    - else
-      スターをつける
     %span.count
       = @project.star_count
 
@@ -12,11 +8,10 @@
     $('.project-home-panel .toggle-star').on 'ajax:success', (e, data, status, xhr) ->
       $(@).replaceWith(data.html)
     .on 'ajax:error', (e, xhr, status, error) ->
-      new Flash('Star toggle failed. Try again later.', 'alert')
+      new Flash('スターの変更に失敗しました。後ほどもう一度お試しください。', 'alert')
 
 - else
-  = link_to new_user_session_path, class: 'btn has_tooltip star-btn', title: 'You must sign in to star a project' do
+  = link_to new_user_session_path, class: 'btn has_tooltip star-btn', title: 'スターを付けるにはサインインしてください。' do
     = icon('star fw')
-    Star
     %span.count
       = @project.star_count

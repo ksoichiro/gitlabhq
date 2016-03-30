@@ -89,7 +89,7 @@ class GroupsController < Groups::ApplicationController
   def destroy
     DestroyGroupService.new(@group, current_user).execute
 
-    redirect_to root_path, alert: "グループ '#{@group.name} が削除されました"
+    redirect_to root_path, alert: "グループ '#{@group.name}' が削除されました"
   end
 
   protected

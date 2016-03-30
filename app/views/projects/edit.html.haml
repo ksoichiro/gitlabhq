@@ -193,13 +193,13 @@
         .panel.panel-default.panel.panel-danger
           .panel-heading プロジェクトを削除
           .panel-body
-            = form_tag(namespace_project_path(@project.namespace, @project), method: :delete, html: { class: 'form-horizontal'}) do
+            = form_tag(namespace_project_path(@project.namespace, @project), method: :delete, class: 'form-horizontal') do
               %p
                 プロジェクトを削除すると、リポジトリや課題、マージリクエストなどの関連するリソースすべてが削除されます。
                 %br
                 %strong 削除されたプロジェクトは元に戻すことができません！
 
-              = link_to 'プロジェクトを削除', '#', class: "btn btn-remove js-confirm-danger", data: { "confirm-danger-message" => remove_project_message(@project) }
+              = button_to 'プロジェクトを削除', '#', class: "btn btn-remove js-confirm-danger", data: { "confirm-danger-message" => remove_project_message(@project) }
       - else
         .nothing-here-block プロジェクトの所有者だけがプロジェクトを削除することができます。
 

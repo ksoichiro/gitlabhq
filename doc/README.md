@@ -51,7 +51,7 @@
 
 ### 管理者向けドキュメント
 
-+ [ユーザ権限](permissions/README.md)
++ [ユーザ権限](permissions/permissions.md)
 + [API](api/README.md)
 
 ## コントリビュータ向けドキュメント

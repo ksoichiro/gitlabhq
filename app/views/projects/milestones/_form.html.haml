@@ -16,13 +16,13 @@
       .form-group
         = f.label :title, "タイトル", class: "control-label"
         .col-sm-10
-          = f.text_field :title, maxlength: 255, class: "form-control", required: true
+          = f.text_field :title, maxlength: 255, class: "form-control js-quick-submit", required: true
           %p.hint 必須
       .form-group.milestone-description
         = f.label :description, "説明", class: "control-label"
         .col-sm-10
           = render layout: 'projects/md_preview', locals: { preview_class: "md-preview" } do
-            = render 'projects/zen', f: f, attr: :description, classes: 'description form-control'
+            = render 'projects/zen', f: f, attr: :description, classes: 'description form-control js-quick-submit'
             .hint
               .pull-left マイルストーンは #{link_to "GitLab Flavored Markdown", help_page_path("markdown", "markdown"), target: '_blank'} 記法でパースされます。
               .pull-left ドラッグ &amp; ドロップまたは#{link_to "ファイルを選択", '#', class: 'markdown-selector' }してファイルを添付

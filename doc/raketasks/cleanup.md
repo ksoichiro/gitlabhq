@@ -12,7 +12,8 @@ sudo gitlab-rake gitlab:cleanup:dirs
 bundle exec rake gitlab:cleanup:dirs RAILS_ENV=production
 ```
 
-`/home/git/repositories` から、GitLabのデータベースに存在しないリポジトリ(現在のところはグローバルなもののみ)を削除します。
+`/home/git/repositories` のリポジトリのうちGitLabのデータベースに存在しないリポジトリをリネームします。
+新しいリポジトリが作成できるように、リポジトリには `+orphaned+TIMESTAMP` の接尾辞がつけられます。
 
 ```
 # omnibus-gitlab

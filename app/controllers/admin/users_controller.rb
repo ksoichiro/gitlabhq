@@ -34,34 +34,40 @@ class Admin::UsersController < Admin::ApplicationController
 
   def block
     if user.block
-      redirect_to :back, notice: "正常にブロックしました"
+      redirect_back_or_admin_user(notice: "正常にブロックしました")
     else
-      redirect_to :back, alert: "エラーが発生しました。ユーザはブロックされませんでした"
+      redirect_back_or_admin_user(alert: "エラーが発生しました。ユーザはブロックされませんでした")
     end
   end
 
   def unblock
     if user.activate
-      redirect_to :back, notice: "正常にブロック解除しました"
+      redirect_back_or_admin_user(notice: "正常にブロック解除しました")
     else
-      redirect_to :back, alert: "エラーが発生しました。ユーザはブロック解除されませんでした"
+      redirect_back_or_admin_user(alert: "エラーが発生しました。ユーザはブロック解除されませんでした")
     end
   end
 
   def unlock
     if user.unlock_access!
-      redirect_to :back, alert: "Successfully unlocked"
+      redirect_back_or_admin_user(alert: "Successfully unlocked")
     else
-      redirect_to :back, alert: "Error occurred. User was not unlocked"
+      redirect_back_or_admin_user(alert: "Error occurred. User was not unlocked")
     end
   end
 
   def confirm
     if user.confirm
-      redirect_to :back, notice: "Successfully confirmed"
+      redirect_back_or_admin_user(notice: "Successfully confirmed")
     else
-      redirect_to :back, alert: "Error occurred. User was not confirmed"
+      redirect_back_or_admin_user(alert: "Error occurred. User was not confirmed")
     end
+  end
+
+  def login_as
+    sign_in(user)
+    flash[:alert] = "Logged in as #{user.username}"
+    redirect_to root_path
   end
 
   def disable_two_factor
@@ -133,7 +139,7 @@ class Admin::UsersController < Admin::ApplicationController
     user.update_secondary_emails!
 
     respond_to do |format|
-      format.html { redirect_to :back, notice: "Successfully removed email." }
+      format.html { redirect_back_or_admin_user(notice: "Successfully removed email.") }
       format.js { render nothing: true }
     end
   end
@@ -151,5 +157,13 @@ class Admin::UsersController < Admin::ApplicationController
       :extern_uid, :provider, :password_expires_at, :avatar, :hide_no_ssh_key, :hide_no_password,
       :projects_limit, :can_create_group, :admin, :key_id
     )
+  end
+
+  def redirect_back_or_admin_user(options = {})
+    redirect_back_or_default(default: default_route, options: options)
+  end
+
+  def default_route
+    [:admin, @user]
   end
 end

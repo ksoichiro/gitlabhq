@@ -8,6 +8,14 @@ class Repository
 
   attr_accessor :raw_repository, :path_with_namespace, :project
 
+  def self.clean_old_archives
+    repository_downloads_path = Gitlab.config.gitlab.repository_downloads_path
+
+    return unless File.directory?(repository_downloads_path)
+
+    Gitlab::Popen.popen(%W(find #{repository_downloads_path} -not -path #{repository_downloads_path} -mmin +120 -delete))
+  end
+
   def initialize(path_with_namespace, default_branch = nil, project = nil)
     @path_with_namespace = path_with_namespace
     @project = project
@@ -269,14 +277,6 @@ class Repository
   end
 
   # Remove archives older than 2 hours
-  def clean_old_archives
-    repository_downloads_path = Gitlab.config.gitlab.repository_downloads_path
-
-    return unless File.directory?(repository_downloads_path)
-
-    Gitlab::Popen.popen(%W(find #{repository_downloads_path} -not -path #{repository_downloads_path} -mmin +120 -delete))
-  end
-
   def branches_sorted_by(value)
     case value
     when 'recently_updated'
@@ -312,13 +312,7 @@ class Repository
   end
 
   def blob_for_diff(commit, diff)
-    file = blob_at(commit.id, diff.new_path)
-
-    unless file
-      file = prev_blob_for_diff(commit, diff)
-    end
-
-    file
+    blob_at(commit.id, diff.file_path)
   end
 
   def prev_blob_for_diff(commit, diff)
@@ -373,11 +367,25 @@ class Repository
     @root_ref ||= raw_repository.root_ref
   end
 
-  def commit_file(user, path, content, message, branch)
+  def commit_dir(user, path, message, branch)
     commit_with_hooks(user, branch) do |ref|
-      path[0] = '' if path[0] == '/'
+      committer = user_to_committer(user)
+      options = {}
+      options[:committer] = committer
+      options[:author] = committer
 
-      committer = user_to_comitter(user)
+      options[:commit] = {
+        message: message,
+        branch: ref,
+      }
+
+      raw_repository.mkdir(path, options)
+    end
+  end
+
+  def commit_file(user, path, content, message, branch, update)
+    commit_with_hooks(user, branch) do |ref|
+      committer = user_to_committer(user)
       options = {}
       options[:committer] = committer
       options[:author] = committer
@@ -388,7 +396,8 @@ class Repository
 
       options[:file] = {
         content: content,
-        path: path
+        path: path,
+        update: update
       }
 
       Gitlab::Git::Blob.commit(raw_repository, options)
@@ -397,9 +406,7 @@ class Repository
 
   def remove_file(user, path, message, branch)
     commit_with_hooks(user, branch) do |ref|
-      path[0] = '' if path[0] == '/'
-
-      committer = user_to_comitter(user)
+      committer = user_to_committer(user)
       options = {}
       options[:committer] = committer
       options[:author] = committer
@@ -416,7 +423,7 @@ class Repository
     end
   end
 
-  def user_to_comitter(user)
+  def user_to_committer(user)
     {
       email: user.email,
       name: user.name,
@@ -465,6 +472,10 @@ class Repository
     else
       nil
     end
+  end
+
+  def merge_base(first_commit_id, second_commit_id)
+    rugged.merge_base(first_commit_id, second_commit_id)
   end
 
   def search_files(query, ref)
@@ -549,7 +560,7 @@ class Repository
 
       # Run GitLab post receive hook
       post_receive_hook = Gitlab::Git::Hook.new('post-receive', path_to_repo)
-      status = post_receive_hook.trigger(gl_id, oldrev, newrev, ref)
+      post_receive_hook.trigger(gl_id, oldrev, newrev, ref)
     else
       # Remove tmp ref and return error to user
       rugged.references.delete(tmp_ref)

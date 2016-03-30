@@ -1,9 +1,10 @@
 %div
   %h1
     GitLab
-    %span= Gitlab::VERSION
-    %small= Gitlab::REVISION
-    - if current_application_settings.version_check_enabled
+    Community Edition
+    - if user_signed_in?
+      %span= Gitlab::VERSION
+      %small= Gitlab::REVISION
       = version_status_badge
   %p.slead
     GitLabはコードを共同編集するためのオープンソースソフトウェアです。
@@ -27,29 +28,14 @@
   .col-md-8
     .documentation-index
       = preserve do
-        - readme_text = File.read(Rails.root.join("doc", "README.md"))
-        - text = readme_text.dup
-        - readme_text.scan(/\]\(([^(]+)\)/) { |match| text.gsub!(match.first, "help/#{match.first}") }
-        = markdown text
-
+        = markdown(@help_index)
   .col-md-4
     .panel.panel-default
       .panel-heading
         クイックヘルプ
       %ul.well-list
-        %li
-          = link_to 'Webサイトのヘルプ', promo_url + '/getting-help/'
-          を見る
-        %li
-          ページトップの
-          = link_to '検索バー', '#', onclick: 'Shortcuts.focusSearch(event)'
-          を使う
-        %li
-          = link_to 'ショートカット', '#', onclick: 'Shortcuts.showHelp(event)'
-          を使う
-        %li
-          サポートサブスクリプションを
-          = link_to '購入', 'https://about.gitlab.com/pricing/'
-        %li
-          GitLabのEditionを
-          = link_to '比較', 'https://about.gitlab.com/features/#compare'
+        %li= link_to 'Webサイトのヘルプを見る', promo_url + '/getting-help/'
+        %li= link_to 'ページトップの検索バーを使う', '#', onclick: 'Shortcuts.focusSearch(event)'
+        %li= link_to 'ショートカットを使う', '#', onclick: 'Shortcuts.showHelp(event)'
+        %li= link_to 'サポートサブスクリプションを購入', 'https://about.gitlab.com/pricing/'
+        %li= link_to 'GitLabのEditionを比較', 'https://about.gitlab.com/features/#compare'

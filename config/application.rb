@@ -76,7 +76,7 @@ module Gitlab
         origins '*'
         resource '/api/*',
           headers: :any,
-          methods: [:get, :post, :options, :put, :delete],
+          methods: :any,
           expose: ['Link']
       end
     end
