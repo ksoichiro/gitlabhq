@@ -40,9 +40,10 @@
             このメールに直接返信 または
             #{link_to "GitLabで表示", @target_url}.
           - else
-            #{link_to "GitLabで表示", @target_url}
+            #{link_to "GitLabで表示", @target_url}.
           %br
-          この通知は、あなたが #{link_to Gitlab.config.gitlab.host, root_url} のメンバーであるため送信されています。 
+          -# Don't link the host is the line below, one link in the email is easier to quickly click than two.
+          この通知は、あなたが #{Gitlab.config.gitlab.host} のメンバーであるため送信されています。
           受信するメールの通知を減らしたい場合は、通知の設定で変更することができます。
 
           = email_action @target_url

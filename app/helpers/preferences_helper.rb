@@ -35,7 +35,8 @@ module PreferencesHelper
   def project_view_choices
     [
       ['Readme (デフォルト)', :readme],
-      ['アクティビティビュー', :activity]
+      ['アクティビティビュー', :activity],
+      ['ファイルビュー', :files]
     ]
   end
 
@@ -47,8 +48,7 @@ module PreferencesHelper
     Gitlab::ColorSchemes.for_user(current_user).css_class
   end
 
-  def prefer_readme?
-    !current_user ||
-      current_user.project_view == 'readme'
+  def default_project_view
+    current_user ? current_user.project_view : 'readme'
   end
 end

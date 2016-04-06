@@ -1,10 +1,9 @@
-# encoding: utf-8
 module ProjectsHelper
   def remove_from_project_team_message(project, member)
     if member.user
-      "#{member.user.name} をプロジェクト #{project.name} から削除します。よろしいですか？"
+      "You are going to remove #{member.user.name} from #{project.name} project team. Are you sure?"
     else
-      "#{member.invite_email} への #{project.name} への招待を取り消します。よろしいですか？"
+      "You are going to revoke the invitation for #{member.invite_email} to join #{project.name} project team. Are you sure?"
     end
   end
 
@@ -25,7 +24,7 @@ module ProjectsHelper
     default_opts = { avatar: true, name: true, size: 16, author_class: 'author' }
     opts = default_opts.merge(opts)
 
-    return "(削除済み)" unless author
+    return "(deleted)" unless author
 
     author_html =  ""
 
@@ -64,11 +63,15 @@ module ProjectsHelper
   end
 
   def remove_project_message(project)
-    "プロジェクト #{project.name_with_namespace} を削除します。\n削除されたプロジェクトは元に戻せません！\n本当に、本当に削除してよろしいですか？"
+    "You are going to remove #{project.name_with_namespace}.\n Removed project CANNOT be restored!\n Are you ABSOLUTELY sure?"
   end
 
   def transfer_project_message(project)
-    "#{project.name_with_namespace} を別のオーナーに移譲します。本郷によろしいですか？"
+    "You are going to transfer #{project.name_with_namespace} to another owner. Are you ABSOLUTELY sure?"
+  end
+
+  def remove_fork_project_message(project)
+    "You are going to remove the fork relationship to source project #{@project.forked_from_project.name_with_namespace}.  Are you ABSOLUTELY sure?"
   end
 
   def project_nav_tabs
@@ -114,7 +117,7 @@ module ProjectsHelper
       nav_tabs << :merge_requests
     end
 
-    if project.gitlab_ci? && can?(current_user, :read_build, project)
+    if project.builds_enabled? && can?(current_user, :read_build, project)
       nav_tabs << :builds
     end
 
@@ -183,7 +186,7 @@ module ProjectsHelper
     if project.last_activity_at
       time_ago_with_tooltip(project.last_activity_at, placement: 'bottom', html_class: 'last_activity_time_ago')
     else
-      "なし"
+      "Never"
     end
   end
 
@@ -248,14 +251,6 @@ module ProjectsHelper
 
   def version_path(project)
     filename_path(project, :version)
-  end
-
-  def hidden_pass_url(original_url)
-    result = URI(original_url)
-    result.password = '*****' unless result.password.nil?
-    result
-  rescue
-    original_url
   end
 
   def project_wiki_path_with_version(proj, page, version, is_newest)

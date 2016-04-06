@@ -1,4 +1,4 @@
-- ci_commit = @merge_request.source_project.ci_commit(@merge_request.source_sha)
+- ci_commit = @merge_request.ci_commit
 - if ci_commit
   - status = ci_commit.status
   .mr-widget-heading
@@ -38,6 +38,7 @@
       = icon("times-circle")
       Could not connect to the CI server. Please check your settings and try again.
 
-  :coffeescript
-    $ ->
-      merge_request_widget.getCiStatus()
+  :javascript
+    $(function() {
+      merge_request_widget.getCiStatus();
+    });

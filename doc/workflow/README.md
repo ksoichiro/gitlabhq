@@ -13,5 +13,7 @@
 - [プロジェクトユーザの追加](add-user/add-user.md)
 - [保護ブランチ](protected_branches.md)
 - [Webエディタ](web_editor.md)
+- [リリース](releases.md)
+- [マイルストーン](milestones.md)
 - [マージリクエスト](merge_requests.md)
 - ["Work In Progress" マージリクエスト](wip_merge_requests.md)

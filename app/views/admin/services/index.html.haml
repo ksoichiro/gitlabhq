@@ -2,22 +2,23 @@
 %h3.page-title サービステンプレート
 %p.light サービステンプレートを使うと、プロジェクトサービスのデフォルト値を設定することができます。
 
-%table.table
-  %thead
-    %tr
-      %th
-      %th サービス
-      %th 説明
-      %th 最終更新
-  - @services.sort_by(&:title).each do |service|
-    %tr
-      %td
-        = icon("copy", class: 'clgray')
-      %td
-        = link_to edit_admin_application_settings_service_path(service.id) do
-          %strong= service.title
-      %td
-        = service.description
-      %td.light
-        = time_ago_in_words service.updated_at
-        前
+.table-holder
+  %table.table
+    %thead
+      %tr
+        %th
+        %th サービス
+        %th 説明
+        %th 最終更新
+    - @services.sort_by(&:title).each do |service|
+      %tr
+        %td
+          = icon("copy", class: 'clgray')
+        %td
+          = link_to edit_admin_application_settings_service_path(service.id) do
+            %strong= service.title
+        %td
+          = service.description
+        %td.light
+          = time_ago_in_words service.updated_at
+          ago

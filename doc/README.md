@@ -17,20 +17,22 @@
 
 ## CIドキュメント
 
-+ [クイックスタート](ci/quick_start/README.md)
-+ [プロジェクトの設定 (.gitlab-ci.yml)](ci/yaml/README.md)
-+ [ランナーの設定](ci/runners/README.md)
-+ [デプロイの設定](ci/deployment/README.md)
-+ [Dockerイメージの利用](ci/docker/using_docker_images.md)
-+ [Docker Buildの利用](ci/docker/using_docker_build.md)
-+ [変数の利用](ci/variables/README.md)
+- [クイックスタート](ci/quick_start/README.md)
+- [プロジェクトの設定 (.gitlab-ci.yml)](ci/yaml/README.md)
+- [ランナーの設定](ci/runners/README.md)
+- [デプロイの設定](ci/deployment/README.md)
+- [Dockerイメージの利用](ci/docker/using_docker_images.md)
+- [Docker Buildの利用](ci/docker/using_docker_build.md)
+- [変数の利用](ci/variables/README.md)
+- [ユーザ権限](ci/permissions/README.md)
+- [API](ci/api/README.md)
 
 ### CIの例
 
-+ [RubyアプリケーションのテストとHerokuへのデプロイ](ci/examples/test-and-deploy-ruby-application-to-heroku.md)
-+ [PythonアプリケーションのテストとHerokuへのデプロイ](ci/examples/test-and-deploy-python-application-to-heroku.md)
-+ [Closureアプリケーションのテスト](ci/examples/test-clojure-application.md)
-+ あなたのお気に入りのプログラミング言語でのガイドをマージリクエストしてください。
+- [RubyアプリケーションのテストとHerokuへのデプロイ](ci/examples/test-and-deploy-ruby-application-to-heroku.md)
+- [PythonアプリケーションのテストとHerokuへのデプロイ](ci/examples/test-and-deploy-python-application-to-heroku.md)
+- [Closureアプリケーションのテスト](ci/examples/test-clojure-application.md)
+- あなたのお気に入りのプログラミング言語でのガイドをマージリクエストしてください。
 
 ## 管理者向けドキュメント
 
@@ -48,11 +50,6 @@
 - [ウェルカムメッセージ](customization/welcome_message.md) サインインページにカスタムのメッセージを追加する方法
 - [メールで返信](incoming_email/README.md) 通知メールへの返信で課題やマージリクエストにコメントすることを許可する方法
 - [GitLab CIをCE/EEに移行](migrate_ci_to_ce/README.md) 既存のGitLab CIのデータをGitLab CE/EEに移行するためのガイド
-
-### 管理者向けドキュメント
-
-+ [ユーザ権限](permissions/permissions.md)
-+ [API](api/README.md)
 
 ## コントリビュータ向けドキュメント
 

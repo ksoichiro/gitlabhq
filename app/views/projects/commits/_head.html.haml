@@ -12,7 +12,7 @@
       ブランチ
       %span.badge.js-totalbranch-count= @repository.branches.size
 
-  = nav_link(controller: :tags) do
+  = nav_link(controller: [:tags, :releases]) do
     = link_to namespace_project_tags_path(@project.namespace, @project) do
       タグ
       %span.badge.js-totaltags-count= @repository.tags.length

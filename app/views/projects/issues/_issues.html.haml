@@ -5,8 +5,9 @@
       .nothing-here-block 課題はありません
 
 - if @issues.present?
-  .pull-right
-    %span.issue_counter #{@issues.total_count}
-    個の課題に絞り込まれています
+  .issuable-filter-count
+    %span.pull-right
+      = @issues.total_count
+      個の課題に絞り込まれています
 
   = paginate @issues, theme: "gitlab"
